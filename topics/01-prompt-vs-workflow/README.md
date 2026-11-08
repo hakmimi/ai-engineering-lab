@@ -73,21 +73,33 @@ _From real runs on 2026-11-08: 30 claims × 3 repeats per level, prompt caching 
 
 ## When to use it, when not to
 
-_To fill after the runs._
+_DRAFT notes from the runs above. Rewrite in your own words._
 
 | Option | Use it when… | Skip it when… |
 |---|---|---|
-| One big prompt | | |
-| Route | | |
-| Parallel | | |
-| Chain | | |
+| One big prompt | All the rules and documents fit in one prompt and the model can read them together. Here it was the most accurate on the small model (100% main, 94% hard), the cheapest and the fastest. | It starts missing things you can name and test. Then try a bigger model first: here that was one change and still the fastest option. |
+| Route | Each type needs very different rules, or the full rule set is too long for one prompt. It cost almost nothing extra and kept accuracy (99% / 94%). | Everything already fits in one prompt: it adds a call and one more answer to read without adding accuracy. Read its answer forgivingly, or a wrong tag sends good claims to a person (76% on the first try). |
+| Parallel | The checks are truly independent and each one fits in one short rule, or speed across many documents matters. | A check needs the rest of the claim to judge it. A checker that sees one document took the claim word for word: a parked car "has no driver", the net claim "doesn't match" the receipts (25–30% false alarms on the hard set). |
+| Chain | You need to show each step, or the math must be exact and auditable, so code does it. Amounts were rarely the problem. | A step needs facts another step owns (the "covered?" step could not see when the policy was bought), or the outcome has a case the code cannot express ("partial because part is excluded"). |
+
+**In one line (DRAFT):** start with one prompt and a small test set with an answer key; split only the step you can show is failing, and measure again.
 
 ## Caveats
 
-_To fill: what broke, what surprised us, and the limits of this test (made-up data, 30 claims, one model family)._
+_DRAFT notes._
+
+- Made-up data: 3 short policy wordings, 30 + 30 claims. Real files are longer and messier.
+- One model family (OpenAI gpt-6-luna and gpt-6.1-sol), 3 repeats per level.
+- The workflow prompts were fixed once, on the main set. The hard set was never tuned on; its numbers are the fairer ones.
+- The answer key is one expert's reading. One claim (the water heater) could be read two ways; the author ruled after the run and scores were re-computed, not re-run.
+- Prompt caching was on everywhere, which helps the long single prompt most.
+- Costs are tiny here (under $0.002 per claim at every level). The 3–5× cost and 2× time of the workflow matter more at real volume.
 
 ## Left for a better version
 
+- A fixed answer format from the API (structured output) instead of reading tags
+- Document checks that see the whole claim, or one check for all documents
+- Let the chain say "partial because part is excluded"
 - Split a claim into damage components (pipe, wall, cabinet)
 - Refer to an assessor or investigator
 - Wait for missing documents, then re-check
@@ -99,7 +111,8 @@ _To fill: what broke, what surprised us, and the limits of this test (made-up da
 01-prompt-vs-workflow/
 ├── README.md        ← this file
 ├── design/          ← design document and process diagram
-├── data/            ← made-up policies, customers, claims, answer key
+├── claimsflow/      ← the code: levels 0–3, runner, scoring, report
+├── data/            ← made-up policies, customers, claims, answer key (hard/ = held-out set)
 ├── evals/           ← offline tests
 └── results.md       ← measured results (real runs only)
 ```
