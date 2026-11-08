@@ -30,22 +30,27 @@
 
 ## What we found
 
-_From real runs on 2026-11-08: 30 claims × 3 repeats per level, prompt caching on. Full table: [`results.md`](results.md)._
+_From real runs on 2026-11-08: 30 claims × 3 repeats per level, prompt caching on. Full table: [`results.md`](results.md). "First try" numbers are from commit be6ed1d._
 
 | Level | Decision right | Amount right | Doc problems caught | False doc alarms | Time / claim | Cost / claim |
 |---|---|---|---|---|---|---|
 | 0 (gpt-6-luna) | 100% | 100% | 100% | 0% | 3.0 s | $0.0001 |
-| 1 | 76% | 89% | 72% | 0% | 3.6 s | $0.0001 |
-| 2 | 60% | 80% | 33% | 28% | 5.0 s | $0.0004 |
-| 3 | 59% | 81% | 33% | 31% | 6.2 s | $0.0005 |
+| 1, first try | 76% | 89% | 72% | 0% | 3.6 s | $0.0001 |
+| 2, first try | 60% | 80% | 33% | 28% | 5.0 s | $0.0004 |
+| 3, first try | 59% | 81% | 33% | 31% | 6.2 s | $0.0005 |
+| 1, fixed | 99% | 99% | 100% | 0% | 4.2 s | $0.0001 |
+| 2, fixed | 96% | 97% | 72% | 0% | 5.9 s | $0.0004 |
+| 3, fixed | 94% | 97% | 78% | 0% | 7.8 s | $0.0005 |
 | 0+ (gpt-6.1-sol) | 100% | 100% | 100% | 0% | 2.9 s | $0.0015 |
 
+**The two fixes:** the router answer is read even when the label sits in the wrong tag; each document check gets a one-line rule for how that document is matched to the claim (car, address, supplier), instead of "it must name the insured".
+
 **Observations (DRAFT notes):**
-- One big prompt on the small model was right every time. On this data there was nothing left for a workflow to fix.
-- Every step we added made results worse, not better.
-- The router often picked the right travel type but wrote it in the wrong tag, so the code read "unclear" and sent the claim to a person (14–20 of 90 runs per level).
-- Each document checker sees one document alone and applied "names the insured" literally. Quotes and assessor reports name the car or the address, not the person, so it asked for documents that were fine (19–20 of 90).
-- The workflow cost about 5× more and took about 2× longer. The bigger model cost about 15× more for the same 100%.
+- One big prompt on the small model was right every time. On this data no workflow beat it, even after fixing.
+- The first try of the workflow was much worse (59–76%). Both causes were in the glue, not the patterns: a reader that broke on a wrong tag, and a rule each narrow checker took word for word.
+- After fixing, the workflow came close (94–99%) but still made new mistakes one prompt didn't: a narrow "is it covered?" step declined two cancellations because it could not see when the policy was bought.
+- My cancellation-proof rule let a parent's own letter pass as proof of a child's illness (CAN-07). Each narrow rule is one more thing to get right.
+- The workflow cost about 5× more and took about 2.5× longer. The fixes were tuned on these same 30 claims, so the "fixed" numbers are a best case.
 
 ## When to use it, when not to
 
