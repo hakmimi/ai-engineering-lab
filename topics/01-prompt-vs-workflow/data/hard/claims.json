@@ -1,0 +1,730 @@
+[
+ {
+  "claim_id": "H-CAR-01",
+  "customer_id": "C002",
+  "submitted": "2026-03-20",
+  "description": "Hi, this is Yossi. On the night of the big storm our car was parked outside the building and got hit by hail the size of golf balls. The garage gave me a quote and the assessor came the next day. Both are attached. Please pay the garage's number, the assessor missed some dents.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Yossi Cohen\nCustomer ID: C002\nEvent date: 2026-03-15\nWhat happened: Hail storm while parked outside the building; roof, hood and trunk dented, windscreen cracked. Driver: none (parked).\nAmount claimed: 21,300 ₪\nSigned: Yossi Cohen"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): dozens of round dents on roof and hood, cracked windscreen"
+   },
+   {
+    "filename": "drivers_license.txt",
+    "text": "DRIVER'S LICENSE — State of Israel\nName: Yossi Cohen\nDate of birth: 1979-09-02\nLicense number: 6620193\nVehicle classes: B\nValid until: 2031-06-30"
+   },
+   {
+    "filename": "garage_quote.txt",
+    "text": "GARAGE QUOTE — Cohen & Sons Body Shop\nVehicle: Kia Sportage, plate 71-604-33\nFull hail repair incl. new roof panel: 21,300 ₪"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT\nAssessor: Eli Navon, licensed assessor no. 4471\nInspected: Kia Sportage, plate 71-604-33\nInspection date: 2026-03-16\nThis report was prepared at the request of Meridian Mutual under the standard assessment terms. The assessor examined the vehicle in daylight at the garage named below. Prices follow the 2026 importer price list for original parts unless stated otherwise. Labour is priced at the garage's agreed hourly rate. The assessor is not responsible for hidden damage found after the vehicle is taken apart; such damage requires a supplementary report. VAT is included in all amounts. This report does not decide liability or cover; those are decided by the insurer.\n\nParts and labour:\n  Hood, original                               3,920 ₪\n  Roof panel repair and paint                  4,880 ₪\n  Trunk lid, paint                             1,760 ₪\n  Windscreen                                   2,340 ₪\n  Left mirror housing                          610 ₪\n  Paintless dent repair, 38 dents              3,150 ₪\n  Labour, 9.5 h                                1,980 ₪\nNote: roof panel can be repaired; replacement not approved.\nApproved repair cost: 18,640 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAR-02",
+  "customer_id": "C004",
+  "submitted": "2026-05-12",
+  "description": "Our car hit a wall in a narrow underground parking garage. The right side is scratched and dented.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Avi Peretz\nCustomer ID: C004\nEvent date: 2026-05-09\nWhat happened: Underground parking at the mall, level -3. The ramp is very narrow and the car scraped the wall on the right side. I was sitting in the passenger seat and my son Ido was driving, he has had his license for two years. Nobody was hurt. We drove home slowly and called the agent the next morning.\nAmount claimed: 6,900 ₪\nSigned: Avi Peretz"
+   },
+   {
+    "filename": "drivers_license.txt",
+    "text": "DRIVER'S LICENSE — State of Israel\nName: Ido Peretz\nDate of birth: 2001-02-17\nLicense number: 9034418\nVehicle classes: B\nValid until: 2031-06-30"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): long scrapes and dents along the right doors and rear fender"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT\nAssessor: Eli Navon, licensed assessor no. 4471\nInspected: Toyota Corolla, plate 52-118-90\nInspection date: 2026-05-10\nThis report was prepared at the request of Meridian Mutual under the standard assessment terms. The assessor examined the vehicle in daylight at the garage named below. Prices follow the 2026 importer price list for original parts unless stated otherwise. Labour is priced at the garage's agreed hourly rate. The assessor is not responsible for hidden damage found after the vehicle is taken apart; such damage requires a supplementary report. VAT is included in all amounts. This report does not decide liability or cover; those are decided by the insurer.\n\nParts and labour:\n  Right doors, repair and paint                3,800 ₪\n  Rear right fender                            1,900 ₪\n  Labour                                       1,200 ₪\n\nApproved repair cost: 6,900 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAR-03",
+  "customer_id": "C001",
+  "submitted": "2026-09-08",
+  "description": "Someone opened their door into my car in the supermarket parking and the side is dented.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Dana Levi\nCustomer ID: C001\nEvent date: 2026-09-05\nVehicle: Mazda 3, plate 45-221-67\nWhat happened: Parked at the supermarket; another car's door hit mine, left rear door dented. Driver: none (parked).\nAmount claimed: 3,100 ₪\nSigned: Dana Levi"
+   },
+   {
+    "filename": "drivers_license.txt",
+    "text": "DRIVER'S LICENSE — State of Israel\nName: Dana Levi\nDate of birth: 1985-04-12\nLicense number: 7712045\nVehicle classes: B\nValid until: 2031-06-30"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): dent and paint chip on the left rear door"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT\nAssessor: Eli Navon, licensed assessor no. 4471\nInspected: Mazda 3, plate 45-212-67\nInspection date: 2026-08-28\nThis report was prepared at the request of Meridian Mutual under the standard assessment terms. The assessor examined the vehicle in daylight at the garage named below. Prices follow the 2026 importer price list for original parts unless stated otherwise. Labour is priced at the garage's agreed hourly rate. The assessor is not responsible for hidden damage found after the vehicle is taken apart; such damage requires a supplementary report. VAT is included in all amounts. This report does not decide liability or cover; those are decided by the insurer.\n\nParts and labour:\n  Left rear door, repair and paint             2,400 ₪\n  Labour                                       700 ₪\n\nApproved repair cost: 3,100 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAR-04",
+  "customer_id": "C001",
+  "submitted": "2027-01-04",
+  "description": "On New Year's Eve I slid on a wet road and hit the guard rail. The front is damaged.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Dana Levi\nCustomer ID: C001\nEvent date: 2026-12-31\nWhat happened: Slid on a wet road near Haifa and hit the guard rail; front bumper, grille and right headlight damaged. Driver: Dana Levi.\nAmount claimed: 7,450 ₪\nSigned: Dana Levi"
+   },
+   {
+    "filename": "drivers_license.txt",
+    "text": "DRIVER'S LICENSE — State of Israel\nName: Dana Levi\nDate of birth: 1985-04-12\nLicense number: 7712045\nVehicle classes: B\nValid until: 2031-06-30"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): front bumper torn, grille broken, right headlight cracked"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT\nAssessor: Eli Navon, licensed assessor no. 4471\nInspected: Mazda 3, plate 45-221-67\nInspection date: 2027-01-02\nThis report was prepared at the request of Meridian Mutual under the standard assessment terms. The assessor examined the vehicle in daylight at the garage named below. Prices follow the 2026 importer price list for original parts unless stated otherwise. Labour is priced at the garage's agreed hourly rate. The assessor is not responsible for hidden damage found after the vehicle is taken apart; such damage requires a supplementary report. VAT is included in all amounts. This report does not decide liability or cover; those are decided by the insurer.\n\nParts and labour:\n  Front bumper                                 2,900 ₪\n  Grille                                       1,150 ₪\n  Right headlight                              2,400 ₪\n  Labour                                       1,000 ₪\n\nApproved repair cost: 7,450 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAR-05",
+  "customer_id": "C006",
+  "submitted": "2026-01-22",
+  "description": "Water damage!! The underground parking of our building flooded in the storm and the water came up to the doors of my car. The interior is soaked and the car won't start.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Moshe Friedman\nCustomer ID: C006\nEvent date: 2026-01-19\nWhat happened: Flood in the building's underground parking during the storm; car stood in water up to the doors. Driver: none (parked).\nAmount claimed: 9,870 ₪\nSigned: Moshe Friedman"
+   },
+   {
+    "filename": "drivers_license.txt",
+    "text": "DRIVER'S LICENSE — State of Israel\nName: Moshe Friedman\nDate of birth: 1966-08-08\nLicense number: 3301786\nVehicle classes: B\nValid until: 2031-06-30"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): water line on the car doors, wet carpets, mud on seats"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT\nAssessor: Eli Navon, licensed assessor no. 4471\nInspected: Hyundai i30, plate 38-447-12\nInspection date: 2026-01-20\nThis report was prepared at the request of Meridian Mutual under the standard assessment terms. The assessor examined the vehicle in daylight at the garage named below. Prices follow the 2026 importer price list for original parts unless stated otherwise. Labour is priced at the garage's agreed hourly rate. The assessor is not responsible for hidden damage found after the vehicle is taken apart; such damage requires a supplementary report. VAT is included in all amounts. This report does not decide liability or cover; those are decided by the insurer.\n\nParts and labour:\n  Interior carpets and seats, cleaning and drying 2,650 ₪\n  Starter motor and ECU (water damage)         5,420 ₪\n  Labour                                       1,800 ₪\nCause: flood water entered the cabin and engine bay while parked.\nApproved repair cost: 9,870 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAR-06",
+  "customer_id": "C007",
+  "submitted": "2026-07-03",
+  "description": "My car was badly damaged on the highway: there was a loud bang from the engine and it stopped. The repair is very expensive.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Rina Katz\nCustomer ID: C007\nEvent date: 2026-06-30\nWhat happened: On Route 6 the engine made a loud noise and stopped; towed to the garage. Driver: Rina Katz.\nAmount claimed: 12,400 ₪\nSigned: Rina Katz"
+   },
+   {
+    "filename": "drivers_license.txt",
+    "text": "DRIVER'S LICENSE — State of Israel\nName: Rina Katz\nDate of birth: 1990-03-27\nLicense number: 5528841\nVehicle classes: B\nValid until: 2031-06-30"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): engine bay, no external damage to the body"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT\nAssessor: Eli Navon, licensed assessor no. 4471\nInspected: Skoda Octavia, plate 63-902-55\nInspection date: 2026-07-01\nThis report was prepared at the request of Meridian Mutual under the standard assessment terms. The assessor examined the vehicle in daylight at the garage named below. Prices follow the 2026 importer price list for original parts unless stated otherwise. Labour is priced at the garage's agreed hourly rate. The assessor is not responsible for hidden damage found after the vehicle is taken apart; such damage requires a supplementary report. VAT is included in all amounts. This report does not decide liability or cover; those are decided by the insurer.\n\nParts and labour:\n  Timing belt and water pump                   2,100 ₪\n  Cylinder head repair                         7,900 ₪\n  Labour                                       2,400 ₪\nFinding: no sign of external impact. The timing belt broke from wear (overdue for replacement by 40,000 km), damaging the valves.\nApproved repair cost: 12,400 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAR-07",
+  "customer_id": "C008",
+  "submitted": "2026-10-15",
+  "description": "My car was hit while parked on the street, the driver left a note. I am sending all the papers I have, including from my claim last year.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Tal Avraham\nCustomer ID: C008\nEvent date: 2026-10-12\nWhat happened: Parked on Ben Yehuda St; a van reversed into the front. Driver: none (parked).\nAmount claimed: 6,420 ₪\nSigned: Tal Avraham"
+   },
+   {
+    "filename": "drivers_license.txt",
+    "text": "DRIVER'S LICENSE — State of Israel\nName: Tal Avraham\nDate of birth: 1988-12-05\nLicense number: 8841207\nVehicle classes: B\nValid until: 2031-06-30"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): front bumper pushed in, bonnet edge bent"
+   },
+   {
+    "filename": "assessor_report_2025_old_claim.txt",
+    "text": "ASSESSOR'S REPORT\nAssessor: Eli Navon, licensed assessor no. 4471\nInspected: Honda Civic, plate 29-310-84\nInspection date: 2025-03-09\nThis report was prepared at the request of Meridian Mutual under the standard assessment terms. The assessor examined the vehicle in daylight at the garage named below. Prices follow the 2026 importer price list for original parts unless stated otherwise. Labour is priced at the garage's agreed hourly rate. The assessor is not responsible for hidden damage found after the vehicle is taken apart; such damage requires a supplementary report. VAT is included in all amounts. This report does not decide liability or cover; those are decided by the insurer.\n\nParts and labour:\n  Rear bumper                                  4,100 ₪\n  Tailgate                                     5,300 ₪\n  Labour                                       1,800 ₪\n(claim 2025-0311)\nApproved repair cost: 11,200 ₪"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT\nAssessor: Eli Navon, licensed assessor no. 4471\nInspected: Honda Civic, plate 29-310-84\nInspection date: 2026-10-13\nThis report was prepared at the request of Meridian Mutual under the standard assessment terms. The assessor examined the vehicle in daylight at the garage named below. Prices follow the 2026 importer price list for original parts unless stated otherwise. Labour is priced at the garage's agreed hourly rate. The assessor is not responsible for hidden damage found after the vehicle is taken apart; such damage requires a supplementary report. VAT is included in all amounts. This report does not decide liability or cover; those are decided by the insurer.\n\nParts and labour:\n  Front bumper                                 2,950 ₪\n  Bonnet edge repair and paint                 2,370 ₪\n  Labour                                       1,100 ₪\n\nApproved repair cost: 6,420 ₪"
+   },
+   {
+    "filename": "note_from_other_driver.txt",
+    "text": "Sorry, I hit your car while reversing. Gil, 052-0000000"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAR-08",
+  "customer_id": "C018",
+  "submitted": "2026-04-28",
+  "description": "I hit a pole at the gas station. I attached everything: form, license, photos and the assessor's report.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Nir Oren\nCustomer ID: C018\nEvent date: 2026-04-25\nWhat happened: Turning at the gas station I hit a concrete pole; left front fender and door damaged. Driver: Nir Oren.\nAmount claimed: 5,300 ₪\nSigned: Nir Oren"
+   },
+   {
+    "filename": "license.txt",
+    "text": "VEHICLE LICENSE (registration) — Ministry of Transport\nOwner: Nir Oren\nVehicle: Subaru XV, plate 80-552-19\nAnnual test valid until: 2027-01-31"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): left front fender crushed, door dented"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT\nAssessor: Eli Navon, licensed assessor no. 4471\nInspected: Subaru XV, plate 80-552-19\nInspection date: 2026-04-26\nThis report was prepared at the request of Meridian Mutual under the standard assessment terms. The assessor examined the vehicle in daylight at the garage named below. Prices follow the 2026 importer price list for original parts unless stated otherwise. Labour is priced at the garage's agreed hourly rate. The assessor is not responsible for hidden damage found after the vehicle is taken apart; such damage requires a supplementary report. VAT is included in all amounts. This report does not decide liability or cover; those are decided by the insurer.\n\nParts and labour:\n  Left front fender                            2,100 ₪\n  Left front door                              2,300 ₪\n  Labour                                       900 ₪\n\nApproved repair cost: 5,300 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAR-09",
+  "customer_id": "C002",
+  "submitted": "2026-11-03",
+  "description": "My wife hit a wild boar at night on the road near the Carmel. The front is smashed. The car was towed, I paid for the tow.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Yossi Cohen\nCustomer ID: C002\nEvent date: 2026-10-30\nWhat happened: At night on Route 721 a wild boar ran into the road; front of the car smashed. Driver: Michal Cohen.\nAmount claimed: 24,100 ₪\nSigned: Yossi Cohen"
+   },
+   {
+    "filename": "drivers_license.txt",
+    "text": "DRIVER'S LICENSE — State of Israel\nName: Michal Cohen\nDate of birth: 1981-01-15\nLicense number: 6620540\nVehicle classes: B\nValid until: 2031-06-30"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): front bumper and grille smashed, radiator leaking"
+   },
+   {
+    "filename": "towing_receipt.txt",
+    "text": "TOWING RECEIPT — Carmel Towing\nPaid by: Yossi Cohen\nAmount: 650 ₪"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT\nAssessor: Eli Navon, licensed assessor no. 4471\nInspected: Kia Sportage, plate 71-604-33\nInspection date: 2026-10-31\nThis report was prepared at the request of Meridian Mutual under the standard assessment terms. The assessor examined the vehicle in daylight at the garage named below. Prices follow the 2026 importer price list for original parts unless stated otherwise. Labour is priced at the garage's agreed hourly rate. The assessor is not responsible for hidden damage found after the vehicle is taken apart; such damage requires a supplementary report. VAT is included in all amounts. This report does not decide liability or cover; those are decided by the insurer.\n\nParts and labour:\n  Front bumper                                 3,100 ₪\n  Grille                                       1,250 ₪\n  Radiator                                     2,900 ₪\n  Condenser                                    2,200 ₪\n  Both headlights                              5,600 ₪\n  Bonnet                                       3,800 ₪\n  Sensors and calibration                      1,900 ₪\n  Labour                                       2,700 ₪\nTowing is not part of the repair cost.\nApproved repair cost: 23,450 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAR-10",
+  "customer_id": "C011",
+  "submitted": "2026-08-21",
+  "description": "Hello. Last weekend we went with friends to the beach for a picnic. On the way the car got stuck and the underside was damaged. I would like to claim the repair.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Omer Golan\nCustomer ID: C011\nEvent date: 2026-08-15\nWhat happened: We drove with two other jeeps into the sand dunes at Nitzanim to reach a quiet spot on the beach. Going up a dune the car got stuck and the underside hit a buried rock; oil pan and front skid plate damaged. Friends pulled us out. Driver: Omer Golan.\nAmount claimed: 4,600 ₪\nSigned: Omer Golan"
+   },
+   {
+    "filename": "drivers_license.txt",
+    "text": "DRIVER'S LICENSE — State of Israel\nName: Omer Golan\nDate of birth: 1983-05-19\nLicense number: 4410982\nVehicle classes: B\nValid until: 2031-06-30"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): bent skid plate, cracked oil pan, sand in the wheel arches"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT\nAssessor: Eli Navon, licensed assessor no. 4471\nInspected: Suzuki Jimny, plate 17-845-60\nInspection date: 2026-08-17\nThis report was prepared at the request of Meridian Mutual under the standard assessment terms. The assessor examined the vehicle in daylight at the garage named below. Prices follow the 2026 importer price list for original parts unless stated otherwise. Labour is priced at the garage's agreed hourly rate. The assessor is not responsible for hidden damage found after the vehicle is taken apart; such damage requires a supplementary report. VAT is included in all amounts. This report does not decide liability or cover; those are decided by the insurer.\n\nParts and labour:\n  Oil pan                                      1,700 ₪\n  Skid plate                                   1,900 ₪\n  Labour                                       1,000 ₪\n\nApproved repair cost: 4,600 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-WAT-01",
+  "customer_id": "C002",
+  "submitted": "2026-02-11",
+  "description": "The water heater on the roof burst and water came down into the bathroom and hallway.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Yossi Cohen\nCustomer ID: C002\nEvent date: 2026-02-08\nWhat happened: Water heater burst; bathroom ceiling and hallway walls soaked.\nAmount claimed: 14,900 ₪\nSigned: Yossi Cohen"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): stained bathroom ceiling, peeling paint in the hallway"
+   },
+   {
+    "filename": "plumber_finding.txt",
+    "text": "PLUMBER'S FINDING\nPlumber: Avi Ezra (Meridian network plumber)\nAddress: 7 Hagefen St, Ramat Gan\nGeneral: the inspection covered the visible pipes, the connections to appliances and the shut-off valves. Moisture readings were taken with a calibrated meter at several points. The plumber does not open walls beyond what is needed to find the source. Recommendations about drying and repair are given for the home owner's information only.\nSource of the water: the water heater tank inside the home\nCause: sudden rupture of the tank seam"
+   },
+   {
+    "filename": "repair_quote.txt",
+    "text": "REPAIR QUOTE\nContractor: B.S. Renovations\nAddress of works: 7 Hagefen St, Ramat Gan\nWork:\n  Replace bathroom ceiling                           6,200 ₪\n  Hallway walls, plaster and paint                   4,700 ₪\n  Replace water heater                               4,000 ₪\nTotal: 14,900 ₪"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT (home)\nAssessor: Dov Har, no. 2290\nAddress: 7 Hagefen St, Ramat Gan\nApproved: ceiling 5,400 ₪; walls 3,950 ₪; water heater 2,000 ₪\nTotal approved: 11,350 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-WAT-02",
+  "customer_id": "C007",
+  "submitted": "2026-05-06",
+  "description": "A pipe under the kitchen sink burst at night and the kitchen was flooded. I called my own plumber because it was urgent.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Rina Katz\nCustomer ID: C007\nEvent date: 2026-05-03\nWhat happened: Pipe under the kitchen sink burst; floor and cabinets soaked.\nAmount claimed: 12,600 ₪\nSigned: Rina Katz"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): standing water in the kitchen, swollen cabinet bases"
+   },
+   {
+    "filename": "plumber_finding.txt",
+    "text": "PLUMBER'S FINDING\nPlumber: Shlomi Hadad (private plumber, not in the Meridian network)\nAddress: 22 Arlozorov St, Tel Aviv\nGeneral: the inspection covered the visible pipes, the connections to appliances and the shut-off valves. Moisture readings were taken with a calibrated meter at several points. The plumber does not open walls beyond what is needed to find the source. Recommendations about drying and repair are given for the home owner's information only.\nSource of the water: cold water supply pipe under the kitchen sink\nCause: sudden burst of a fitting"
+   },
+   {
+    "filename": "repair_quote.txt",
+    "text": "REPAIR QUOTE\nContractor: B.S. Renovations\nAddress of works: 22 Arlozorov St, Tel Aviv\nWork:\n  Open and replace pipe section                      1,350 ₪\n  Dry the floor (5 days, machines)                   1,800 ₪\n  Replace 4 lower kitchen cabinets                   5,200 ₪\n  Countertop remove and refit                        1,150 ₪\n  Floor tiles, 6 m²                                  1,900 ₪\n  Paint kitchen walls                                700 ₪\n  Removal of debris                                  500 ₪\nPrices include VAT."
+   }
+  ]
+ },
+ {
+  "claim_id": "H-WAT-03",
+  "customer_id": "C009",
+  "submitted": "2026-06-17",
+  "description": "I found water on the bathroom floor and the wall is wet. My plumber found the pipe inside the wall was leaking.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Lior Ben-David\nCustomer ID: C009\nEvent date: 2026-06-14\nWhat happened: Water on the bathroom floor; wall behind the shower wet.\nAmount claimed: 6,800 ₪\nSigned: Lior Ben-David"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): wet wall behind the shower, mould spots near the floor"
+   },
+   {
+    "filename": "plumber_finding.txt",
+    "text": "PLUMBER'S FINDING\nPlumber: Avi Ezra (Meridian network plumber)\nAddress: 3 Hashalom St, Haifa\nGeneral: the inspection covered the visible pipes, the connections to appliances and the shut-off valves. Moisture readings were taken with a calibrated meter at several points. The plumber does not open walls beyond what is needed to find the source. Recommendations about drying and repair are given for the home owner's information only.\nSource of the water: hot water pipe inside the wall behind the shower\nCause: pinhole leak\nRemarks: the pipe section is heavily corroded along 40 cm. Mould and the stain pattern on the wall show the leak has been going on for several months."
+   },
+   {
+    "filename": "repair_quote.txt",
+    "text": "REPAIR QUOTE\nContractor: B.S. Renovations\nAddress of works: 3 Hashalom St, Haifa\nWork:\n  Open wall, replace pipe                            2,300 ₪\n  Mould treatment                                    1,500 ₪\n  Tiles and plaster                                  3,000 ₪\nTotal: 6,800 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-WAT-04",
+  "customer_id": "C010",
+  "submitted": "2026-03-24",
+  "description": "Water started dripping from my bedroom ceiling and ruined the ceiling and the wardrobe.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Hila Shapiro\nCustomer ID: C010\nEvent date: 2026-03-21\nWhat happened: Water dripping from the bedroom ceiling; ceiling and built-in wardrobe damaged.\nAmount claimed: 7,200 ₪\nSigned: Hila Shapiro"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): brown stain on the bedroom ceiling, swollen wardrobe doors"
+   },
+   {
+    "filename": "plumber_finding.txt",
+    "text": "PLUMBER'S FINDING\nPlumber: Avi Ezra (Meridian network plumber)\nAddress: 9 Hanevi'im St, Jerusalem, flat 4\nGeneral: the inspection covered the visible pipes, the connections to appliances and the shut-off valves. Moisture readings were taken with a calibrated meter at several points. The plumber does not open walls beyond what is needed to find the source. Recommendations about drying and repair are given for the home owner's information only.\nSource of the water: bathroom drain pipe of the apartment above (flat 7)\nCause: sudden crack in the neighbor's drain"
+   },
+   {
+    "filename": "repair_quote.txt",
+    "text": "REPAIR QUOTE\nContractor: B.S. Renovations\nAddress of works: 9 Hanevi'im St, Jerusalem, flat 4\nWork:\n  Ceiling repair and paint                           3,100 ₪\n  Wardrobe doors and base                            4,100 ₪\nTotal: 7,200 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-WAT-05",
+  "customer_id": "C012",
+  "submitted": "2026-11-09",
+  "description": "While we were on holiday in Greece the washing machine hose burst, and when we came back on November 6 the whole apartment was flooded. The trip itself was fine, it's about the apartment.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Maya Rosen\nCustomer ID: C012\nEvent date: 2026-11-06\nWhat happened: Washing machine hose burst while we were away; found flooding when we returned.\nAmount claimed: 7,300 ₪\nSigned: Maya Rosen"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): water across the living room and laundry room floors, swollen door frames"
+   },
+   {
+    "filename": "plumber_finding.txt",
+    "text": "PLUMBER'S FINDING\nPlumber: Avi Ezra (Meridian network plumber)\nAddress: 15 Weizmann St, Rehovot\nGeneral: the inspection covered the visible pipes, the connections to appliances and the shut-off valves. Moisture readings were taken with a calibrated meter at several points. The plumber does not open walls beyond what is needed to find the source. Recommendations about drying and repair are given for the home owner's information only.\nSource of the water: washing machine inlet hose\nCause: sudden burst of the hose"
+   },
+   {
+    "filename": "repair_quote.txt",
+    "text": "REPAIR QUOTE\nContractor: B.S. Renovations\nAddress of works: 15 Weizmann St, Rehovot\nWork:\n  Dry floors (7 days)                                2,100 ₪\n  Replace 3 door frames                              3,200 ₪\n  Parquet repair                                     2,000 ₪\nTotal: 7,300 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-WAT-06",
+  "customer_id": "C018",
+  "submitted": "2026-08-12",
+  "description": "The dishwasher leaked and the parquet in the kitchen is ruined.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Nir Oren\nCustomer ID: C018\nEvent date: 2026-08-09\nWhat happened: Dishwasher leaked overnight; kitchen parquet swollen. Address: 41 Herzl St, Haifa.\nAmount claimed: 5,600 ₪\nSigned: Nir Oren"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): swollen parquet boards in front of the dishwasher"
+   },
+   {
+    "filename": "plumber_finding.txt",
+    "text": "PLUMBER'S FINDING\nPlumber: Avi Ezra (Meridian network plumber)\nAddress: 14 Herzl St, Haifa\nGeneral: the inspection covered the visible pipes, the connections to appliances and the shut-off valves. Moisture readings were taken with a calibrated meter at several points. The plumber does not open walls beyond what is needed to find the source. Recommendations about drying and repair are given for the home owner's information only.\nSource of the water: dishwasher drain hose\nCause: sudden split in the hose"
+   },
+   {
+    "filename": "repair_quote.txt",
+    "text": "REPAIR QUOTE\nContractor: B.S. Renovations\nAddress of works: 41 Herzl St, Haifa\nWork:\n  Replace kitchen parquet                            4,600 ₪\n  Skirting and finish                                1,000 ₪\nTotal: 5,600 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-WAT-07",
+  "customer_id": "C006",
+  "submitted": "2026-04-15",
+  "description": "A pipe burst in the wall between the kitchen and the living room. Everything is attached. I have home insurance with you for years.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Moshe Friedman\nCustomer ID: C006\nEvent date: 2026-04-12\nWhat happened: Pipe burst inside the kitchen wall; living room floor flooded.\nAmount claimed: 9,100 ₪\nSigned: Moshe Friedman"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): wet living room floor, open wall section"
+   },
+   {
+    "filename": "plumber_finding.txt",
+    "text": "PLUMBER'S FINDING\nPlumber: Avi Ezra (Meridian network plumber)\nAddress: 28 Rothschild St, Rishon LeZion\nGeneral: the inspection covered the visible pipes, the connections to appliances and the shut-off valves. Moisture readings were taken with a calibrated meter at several points. The plumber does not open walls beyond what is needed to find the source. Recommendations about drying and repair are given for the home owner's information only.\nSource of the water: cold water pipe inside the kitchen wall\nCause: sudden burst"
+   },
+   {
+    "filename": "repair_quote.txt",
+    "text": "REPAIR QUOTE\nContractor: B.S. Renovations\nAddress of works: 28 Rothschild St, Rishon LeZion\nWork:\n  Open wall, replace pipe                            2,100 ₪\n  Floor drying and repair                            7,000 ₪\nTotal: 9,100 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-WAT-08",
+  "customer_id": "C001",
+  "submitted": "2026-10-07",
+  "description": "The dishwasher flooded the kitchen. The contractor's quote is lower than what the assessor wrote, I don't mind which you use.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Dana Levi\nCustomer ID: C001\nEvent date: 2026-10-04\nWhat happened: Dishwasher inlet valve failed; kitchen floor and cabinet bases soaked.\nAmount claimed: 6,500 ₪\nSigned: Dana Levi"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): water under the cabinets, swollen kickboards"
+   },
+   {
+    "filename": "plumber_finding.txt",
+    "text": "PLUMBER'S FINDING\nPlumber: Avi Ezra (Meridian network plumber)\nAddress: 12 Herzl St, Haifa\nGeneral: the inspection covered the visible pipes, the connections to appliances and the shut-off valves. Moisture readings were taken with a calibrated meter at several points. The plumber does not open walls beyond what is needed to find the source. Recommendations about drying and repair are given for the home owner's information only.\nSource of the water: dishwasher inlet valve\nCause: sudden failure of the valve"
+   },
+   {
+    "filename": "repair_quote.txt",
+    "text": "REPAIR QUOTE\nContractor: B.S. Renovations\nAddress of works: 12 Herzl St, Haifa\nWork:\n  Cabinet bases and kickboards                       3,900 ₪\n  Floor repair                                       2,600 ₪\nTotal: 6,500 ₪"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT (home)\nAssessor: Dov Har, no. 2290\nAddress: 12 Herzl St, Haifa\nApproved: cabinets 4,180 ₪; floor 2,800 ₪\nTotal approved: 6,980 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-WAT-09",
+  "customer_id": "C009",
+  "submitted": "2026-01-14",
+  "description": "During the storm water came through the ceiling of the top-floor bedroom and damaged the ceiling and the bed.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Lior Ben-David\nCustomer ID: C009\nEvent date: 2026-01-11\nWhat happened: Storm; water came through the bedroom ceiling.\nAmount claimed: 5,400 ₪\nSigned: Lior Ben-David"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): wet ceiling with dripping marks, displaced roof tiles seen from outside"
+   },
+   {
+    "filename": "plumber_finding.txt",
+    "text": "PLUMBER'S FINDING\nPlumber: Avi Ezra (Meridian network plumber)\nAddress: 3 Hashalom St, Haifa\nGeneral: the inspection covered the visible pipes, the connections to appliances and the shut-off valves. Moisture readings were taken with a calibrated meter at several points. The plumber does not open walls beyond what is needed to find the source. Recommendations about drying and repair are given for the home owner's information only.\nSource of the water: none of the pipes; all pipes tested dry\nCause: rain water entered through displaced roof tiles above the bedroom"
+   },
+   {
+    "filename": "repair_quote.txt",
+    "text": "REPAIR QUOTE\nContractor: B.S. Renovations\nAddress of works: 3 Hashalom St, Haifa\nWork:\n  Ceiling repair and paint                           2,900 ₪\n  Roof tiles                                         2,500 ₪\nTotal: 5,400 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-WAT-10",
+  "customer_id": "C010",
+  "submitted": "2026-09-30",
+  "description": "The water pipe to the toilet burst and the bathroom and hallway flooded. My regular plumber fixed it.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Hila Shapiro\nCustomer ID: C010\nEvent date: 2026-09-27\nWhat happened: Supply pipe to the toilet burst; bathroom and hallway flooded.\nAmount claimed: 16,000 ₪\nSigned: Hila Shapiro"
+   },
+   {
+    "filename": "damage_photos.txt",
+    "text": "PHOTOS (described): water in hallway, damaged door frames, lifted floor tiles"
+   },
+   {
+    "filename": "plumber_finding.txt",
+    "text": "PLUMBER'S FINDING\nPlumber: Shlomi Hadad (private plumber, not in the Meridian network)\nAddress: 9 Hanevi'im St, Jerusalem, flat 4\nGeneral: the inspection covered the visible pipes, the connections to appliances and the shut-off valves. Moisture readings were taken with a calibrated meter at several points. The plumber does not open walls beyond what is needed to find the source. Recommendations about drying and repair are given for the home owner's information only.\nSource of the water: supply pipe to the toilet\nCause: sudden burst of the flexible connector"
+   },
+   {
+    "filename": "repair_quote.txt",
+    "text": "REPAIR QUOTE\nContractor: B.S. Renovations\nAddress of works: 9 Hanevi'im St, Jerusalem, flat 4\nWork:\n  Bathroom floor                                     7,000 ₪\n  Hallway floor                                      5,000 ₪\n  Door frames                                        4,000 ₪\nTotal: 16,000 ₪"
+   },
+   {
+    "filename": "assessor_report.txt",
+    "text": "ASSESSOR'S REPORT (home)\nAssessor: Dov Har, no. 2290\nAddress: 9 Hanevi'im St, Jerusalem, flat 4\nApproved: bathroom floor 6,300 ₪; hallway floor 5,000 ₪; door frames 3,900 ₪\nTotal approved: 15,200 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-MED-01",
+  "customer_id": "C013",
+  "submitted": "2026-09-14",
+  "description": "I fell on the stairs at the hotel in Prague and hurt my back. I was in hospital for two nights. All the receipts are attached.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Eitan Azulay\nCustomer ID: C013\nEvent date: 2026-09-04\nWhat happened: Fell on the hotel stairs in Prague; back injury, hospitalized two nights.\nAmount claimed: 14,730 ₪\nSigned: Eitan Azulay"
+   },
+   {
+    "filename": "medical_summary.txt",
+    "text": "MEDICAL SUMMARY\nPatient: Eitan Azulay\nDate of treatment: 2026-09-04 to 2026-09-08\nProvider: Nemocnice Praha (Meridian network provider)\nThis summary is issued at the patient's request for insurance purposes. It reflects the treatment given at this facility only. Prices are listed in the receipts issued separately by the billing office.\nDiagnosis: compression injury of the lower back\nTreatment: CT, 2-night admission, pain medication, physiotherapy\nHistory: No relevant medical history."
+   },
+   {
+    "filename": "receipts.txt",
+    "text": "RECEIPT\nIssued to: Eitan Azulay\nProvider: Nemocnice Praha\nDate: 2026-09-04\nFor: Emergency room visit\nPaid: 2,860 ₪\n\nRECEIPT\nIssued to: Eitan Azulay\nProvider: Nemocnice Praha\nDate: 2026-09-04\nFor: CT scan\nPaid: 3,450 ₪\n\nRECEIPT\nIssued to: Eitan Azulay\nProvider: Nemocnice Praha\nDate: 2026-09-05\nFor: Hospital stay, 2 nights\nPaid: 6,200 ₪\n\nRECEIPT\nIssued to: Eitan Azulay\nProvider: Nemocnice Praha\nDate: 2026-09-06\nFor: Medicines\nPaid: 780 ₪\n\nRECEIPT\nIssued to: Eitan Azulay\nProvider: Nemocnice Praha\nDate: 2026-09-07\nFor: Doctor follow-up\nPaid: 640 ₪\n\nRECEIPT\nIssued to: Eitan Azulay\nProvider: Nemocnice Praha\nDate: 2026-09-08\nFor: Physiotherapy session\nPaid: 800 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-MED-02",
+  "customer_id": "C014",
+  "submitted": "2026-06-16",
+  "description": "My friend and I both got a bad stomach infection in Bangkok. We went to a private clinic together. Receipts for both of us are attached.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Gal Weiss\nCustomer ID: C014\nEvent date: 2026-06-08\nWhat happened: Stomach infection in Bangkok; private clinic visit and medicines.\nAmount claimed: 4,350 ₪\nSigned: Gal Weiss"
+   },
+   {
+    "filename": "medical_summary.txt",
+    "text": "MEDICAL SUMMARY\nPatient: Gal Weiss\nDate of treatment: 2026-06-08\nProvider: Bangkok Wellness Clinic (private provider, not in the Meridian network)\nThis summary is issued at the patient's request for insurance purposes. It reflects the treatment given at this facility only. Prices are listed in the receipts issued separately by the billing office.\nDiagnosis: acute gastroenteritis\nTreatment: examination, IV fluids, medicines\nHistory: No relevant medical history."
+   },
+   {
+    "filename": "receipts.txt",
+    "text": "RECEIPT\nIssued to: Gal Weiss\nProvider: Bangkok Wellness Clinic\nDate: 2026-06-08\nFor: Examination\nPaid: 1,200 ₪\n\nRECEIPT\nIssued to: Gal Weiss\nProvider: Bangkok Wellness Clinic\nDate: 2026-06-08\nFor: IV fluids\nPaid: 1,650 ₪\n\nRECEIPT\nIssued to: Gal Weiss\nProvider: Bangkok Wellness Clinic\nDate: 2026-06-09\nFor: Medicines\nPaid: 550 ₪\n\nRECEIPT\nIssued to: Noam Bar\nProvider: Bangkok Wellness Clinic\nDate: 2026-06-08\nFor: Examination and medicines\nPaid: 950 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-MED-03",
+  "customer_id": "C015",
+  "submitted": "2026-04-22",
+  "description": "I got very sick in Barcelona and had to be hospitalized for three days. It was really scary.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Yael Dahan\nCustomer ID: C015\nEvent date: 2026-04-13\nWhat happened: Became very ill in Barcelona; hospitalized three days.\nAmount claimed: 18,400 ₪\nSigned: Yael Dahan"
+   },
+   {
+    "filename": "medical_summary.txt",
+    "text": "MEDICAL SUMMARY\nPatient: Yael Dahan\nDate of treatment: 2026-04-13 to 2026-04-15\nProvider: Hospital Clínic Barcelona (Meridian network provider)\nThis summary is issued at the patient's request for insurance purposes. It reflects the treatment given at this facility only. Prices are listed in the receipts issued separately by the billing office.\nDiagnosis: diabetic ketoacidosis\nTreatment: IV insulin and fluids, ICU monitoring for 24 h, then ward\nHistory: Type 1 diabetes since 2011, treated with insulin pump. Patient reports the pump ran out of supplies on day 2 of the trip."
+   },
+   {
+    "filename": "receipts.txt",
+    "text": "RECEIPT\nIssued to: Yael Dahan\nProvider: Hospital Clínic Barcelona\nDate: 2026-04-15\nFor: Hospital stay, 3 days\nPaid: 18,400 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-MED-04",
+  "customer_id": "C017",
+  "submitted": "2026-11-02",
+  "description": "I sprained my ankle on a hike in Crete and needed treatment there, and then a follow-up when I got back.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Sarit Amar\nCustomer ID: C017\nEvent date: 2026-10-23\nWhat happened: Sprained ankle on a hike in Crete; clinic visit, brace and medicine, follow-up after returning.\nAmount claimed: 3,220 ₪\nSigned: Sarit Amar"
+   },
+   {
+    "filename": "medical_summary.txt",
+    "text": "MEDICAL SUMMARY\nPatient: Sarit Amar\nDate of treatment: 2026-10-23\nProvider: Chania Medical Center (Meridian network provider)\nThis summary is issued at the patient's request for insurance purposes. It reflects the treatment given at this facility only. Prices are listed in the receipts issued separately by the billing office.\nDiagnosis: grade 2 ankle sprain\nTreatment: X-ray, brace, pain medication; follow-up recommended\nHistory: No relevant medical history."
+   },
+   {
+    "filename": "receipts.txt",
+    "text": "RECEIPT\nIssued to: Sarit Amar\nProvider: Chania Medical Center\nDate: 2026-10-23\nFor: Examination and X-ray\nPaid: 2,100 ₪\n\nRECEIPT\nIssued to: Sarit Amar\nProvider: Chania Pharmacy\nDate: 2026-10-24\nFor: Brace and medicine\nPaid: 640 ₪\n\nRECEIPT\nIssued to: Sarit Amar\nProvider: Maccabi clinic, Tel Aviv\nDate: 2026-10-29\nFor: Orthopedic follow-up\nPaid: 480 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-MED-05",
+  "customer_id": "C019",
+  "submitted": "2026-07-25",
+  "description": "On the first day of our trip to London I had a terrible toothache and an infection and had to see a doctor.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Amit Zur\nCustomer ID: C019\nEvent date: 2026-07-18\nWhat happened: Dental infection in London on arrival; emergency doctor and antibiotics.\nAmount claimed: 1,900 ₪\nSigned: Amit Zur"
+   },
+   {
+    "filename": "medical_summary.txt",
+    "text": "MEDICAL SUMMARY\nPatient: Amit Zur\nDate of treatment: 2026-07-18\nProvider: London Urgent Care (Meridian network provider)\nThis summary is issued at the patient's request for insurance purposes. It reflects the treatment given at this facility only. Prices are listed in the receipts issued separately by the billing office.\nDiagnosis: dental abscess\nTreatment: drainage, antibiotics\nHistory: No relevant medical history."
+   },
+   {
+    "filename": "receipts.txt",
+    "text": "RECEIPT\nIssued to: Amit Zur\nProvider: London Urgent Care\nDate: 2026-07-18\nFor: Emergency visit and drainage\nPaid: 1,500 ₪\n\nRECEIPT\nIssued to: Amit Zur\nProvider: Boots Pharmacy\nDate: 2026-07-18\nFor: Antibiotics\nPaid: 400 ₪"
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAN-01",
+  "customer_id": "C016",
+  "submitted": "2026-09-20",
+  "description": "We had to cancel our trip to Vienna because my mother was rushed to hospital two days before the flight.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Ronen Levy\nCustomer ID: C016\nEvent date: 2026-09-12\nWhat happened: Trip to Vienna (14-21 Sep) cancelled: my mother was hospitalized with a stroke.\nAmount claimed: 7,190 ₪\nSigned: Ronen Levy"
+   },
+   {
+    "filename": "cancellation_proof.txt",
+    "text": "MEDICAL CERTIFICATE\nPatient: Rivka Levy (mother of Ronen Levy)\nAdmitted: 2026-09-12, Ichilov Hospital\nDiagnosis: ischemic stroke\nDr. Amos Ben-Ari"
+   },
+   {
+    "filename": "payment_receipts.txt",
+    "text": "PAYMENT RECEIPTS (paid in advance)\nAustrian Airlines — booked 2026-06-02: 3,980 ₪\nHotel Sacher — booked 2026-06-02: 2,450 ₪\nDanube day tour — booked 2026-06-10: 760 ₪"
+   },
+   {
+    "filename": "supplier_refund_letters.txt",
+    "text": "LETTER FROM AUSTRIAN AIRLINES\nRe: cancelled booking\nWe confirm a refund of 1,100 ₪.\n\nLETTER FROM HOTEL SACHER\nRe: cancelled booking\nWe confirm a refund of 2,450 ₪.\n\nLETTER FROM DANUBE DAY TOUR\nRe: cancelled booking\nUnder our terms this booking is non-refundable. No refund will be made."
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAN-02",
+  "customer_id": "C019",
+  "submitted": "2026-07-15",
+  "description": "I got an emergency reserve duty call-up and we had to cancel our trip to London.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Amit Zur\nCustomer ID: C019\nEvent date: 2026-07-03\nWhat happened: Trip to London (20-30 Jul) cancelled: emergency reserve duty call-up.\nAmount claimed: 9,500 ₪\nSigned: Amit Zur"
+   },
+   {
+    "filename": "cancellation_proof.txt",
+    "text": "CALL-UP ORDER (Order 8)\nName: Amit Zur\nIssued: 2026-07-02\nReport for duty: 2026-07-05, for 30 days"
+   },
+   {
+    "filename": "payment_receipts.txt",
+    "text": "PAYMENT RECEIPTS (paid in advance)\nEl Al flights x3 — booked 2026-03-15: 7,200 ₪\nLondon apartment, 10 nights — booked 2026-03-15: 4,100 ₪\nWest End show tickets — booked 2026-04-01: 1,100 ₪"
+   },
+   {
+    "filename": "supplier_refund_letters.txt",
+    "text": "LETTER FROM EL AL\nRe: cancelled booking\nWe confirm a refund of 2,900 ₪.\n\nLETTER FROM LONDON APARTMENT\nRe: cancelled booking\nUnder our terms this booking is non-refundable. No refund will be made.\n\nLETTER FROM WEST END SHOW\nRe: cancelled booking\nUnder our terms this booking is non-refundable. No refund will be made."
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAN-03",
+  "customer_id": "C021",
+  "submitted": "2026-11-12",
+  "description": "I had reserve duty and could not travel to Rome, so we cancelled the trip.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Boaz Hadad\nCustomer ID: C021\nEvent date: 2026-11-08\nWhat happened: Trip to Rome (15-22 Nov) cancelled: reserve duty.\nAmount claimed: 4,200 ₪\nSigned: Boaz Hadad"
+   },
+   {
+    "filename": "cancellation_proof.txt",
+    "text": "CALL-UP ORDER\nName: Boaz Hadad\nIssued: 2026-02-10\nReport for duty: 2026-11-10, for 21 days"
+   },
+   {
+    "filename": "payment_receipts.txt",
+    "text": "PAYMENT RECEIPTS (paid in advance)\nITA Airways — booked 2026-04-01: 3,100 ₪\nHotel Roma — booked 2026-04-01: 1,900 ₪"
+   },
+   {
+    "filename": "supplier_refund_letters.txt",
+    "text": "LETTER FROM ITA AIRWAYS\nRe: cancelled booking\nUnder our terms this booking is non-refundable. No refund will be made.\n\nLETTER FROM HOTEL ROMA\nRe: cancelled booking\nWe confirm a refund of 800 ₪."
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAN-04",
+  "customer_id": "C017",
+  "submitted": "2026-10-25",
+  "description": "I am so upset. I was supposed to fly to Crete for a week of rest that I really needed. Two days before, my manager moved the annual conference to that week and I had to be there. I've been feeling sick from all the stress. Please help me get my money back.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Sarit Amar\nCustomer ID: C017\nEvent date: 2026-10-18\nWhat happened: Trip to Crete (20-27 Oct) cancelled: had to attend the company conference.\nAmount claimed: 3,600 ₪\nSigned: Sarit Amar"
+   },
+   {
+    "filename": "cancellation_proof.txt",
+    "text": "EMAIL from Orly Mizrahi, HR Manager\nTo: Sarit Amar\nSubject: Conference moved\nThe annual conference is moved to 21-23 October. Attendance is mandatory for team leads."
+   },
+   {
+    "filename": "payment_receipts.txt",
+    "text": "PAYMENT RECEIPTS (paid in advance)\nAegean Airlines — booked 2026-07-01: 2,200 ₪\nChania hotel — booked 2026-07-01: 1,900 ₪"
+   },
+   {
+    "filename": "supplier_refund_letters.txt",
+    "text": "LETTER FROM AEGEAN AIRLINES\nRe: cancelled booking\nWe confirm a refund of 500 ₪.\n\nLETTER FROM CHANIA HOTEL\nRe: cancelled booking\nUnder our terms this booking is non-refundable. No refund will be made."
+   }
+  ]
+ },
+ {
+  "claim_id": "H-CAN-05",
+  "customer_id": "C012",
+  "submitted": "2026-10-30",
+  "description": "We had a death in the family and cancelled our trip.",
+  "attachments": [
+   {
+    "filename": "claim_form.txt",
+    "text": "CLAIM FORM — Meridian Mutual\nPolicyholder: Maya Rosen\nCustomer ID: C012\nEvent date: 2026-10-29\nWhat happened: Trip (1-6 Nov) cancelled: death of my cousin, funeral and shiva.\nAmount claimed: 4,800 ₪\nSigned: Maya Rosen"
+   },
+   {
+    "filename": "cancellation_proof.txt",
+    "text": "DEATH NOTICE\nThe family announces the passing of Yoav Rosen, cousin of Maya Rosen, on 2026-10-28. Funeral on 2026-10-30."
+   },
+   {
+    "filename": "payment_receipts.txt",
+    "text": "PAYMENT RECEIPTS (paid in advance)\nWizz Air — booked 2026-08-12: 1,600 ₪\nBudapest hotel — booked 2026-08-12: 3,400 ₪"
+   },
+   {
+    "filename": "supplier_refund_letters.txt",
+    "text": "LETTER FROM WIZZ AIR\nRe: cancelled booking\nUnder our terms this booking is non-refundable. No refund will be made.\n\nLETTER FROM BUDAPEST HOTEL\nRe: cancelled booking\nWe confirm a refund of 200 ₪."
+   }
+  ]
+ }
+]

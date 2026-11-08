@@ -9,6 +9,8 @@ from pathlib import Path
 from claimsflow.models import Attachment, Claim, Customer, Figures, Policy, Result
 
 DATA = Path(__file__).resolve().parent.parent / "data"
+HARD = DATA / "hard"  # held-out set: its own claims and answer key, same customers and wordings
+SETS = {"main": DATA, "hard": HARD}
 
 _WORDING_FILES = {"car": "car.md", "home": "water_damage.md", "travel": "travel.md"}
 

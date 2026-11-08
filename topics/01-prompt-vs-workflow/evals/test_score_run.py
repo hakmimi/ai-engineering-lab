@@ -88,3 +88,20 @@ def test_report_has_a_row_per_level(monkeypatch, key_set, cheap, tmp_path):
     main(["--level", "1", "--limit", "2", "--repeats", "2", "--yes", "--runs-dir", str(tmp_path)])
     report = build_report(tmp_path)
     assert "| 1 |" in report and "level-1-" in report
+
+
+def test_run_on_hard_set_uses_hard_claims_and_own_folder(monkeypatch, key_set, cheap, tmp_path):
+    seen = []
+    monkeypatch.setitem(LEVELS, "0", lambda claim, ctx: seen.append(claim.claim_id) or Result("decline", 0, [], "x", "car"))
+    assert main(["--level", "0", "--set", "hard", "--limit", "2", "--repeats", "1", "--yes", "--runs-dir", str(tmp_path)]) == 0
+    assert seen and all(cid.startswith("H-") for cid in seen)
+    assert list((tmp_path / "hard").glob("level-0-*.json")) and not list(tmp_path.glob("level-0-*.json"))
+
+
+def test_report_has_a_section_per_set(monkeypatch, key_set, cheap, tmp_path):
+    from claimsflow.report import build_results
+
+    monkeypatch.setitem(LEVELS, "0", lambda claim, ctx: Result("decline", 0, [], "x", "car"))
+    main(["--level", "0", "--set", "hard", "--limit", "1", "--repeats", "1", "--yes", "--runs-dir", str(tmp_path)])
+    text = build_results(tmp_path)
+    assert "## Main set" in text and "## Hard set" in text and "level-0-" in text.split("## Hard set")[1]

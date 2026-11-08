@@ -21,6 +21,7 @@ From the repo root (PowerShell):
 $env:PYTHONPATH = ".;topics/01-prompt-vs-workflow"
 .venv\\Scripts\\python -m claimsflow.run --level 3 --dry-run     # cost estimate only
 .venv\\Scripts\\python -m claimsflow.run --level 3 --repeats 3 --yes
+.venv\\Scripts\\python -m claimsflow.run --level 3 --repeats 3 --yes --set hard
 .venv\\Scripts\\python -m claimsflow.report                       # rewrites this file
 ```
 """
@@ -57,24 +58,37 @@ def _row(level: str, run: dict) -> str:
     return "| " + " | ".join(cells) + " |"
 
 
-def build_report(runs_dir: Path = RUNS_DIR) -> str:
-    head = "# Results\n\n"
+def _table(runs_dir: Path) -> str:
     runs = _latest_runs(runs_dir) if runs_dir.exists() else {}
     if not runs:
-        return head + "Not run yet.\n\n" + HOW_TO_RUN
+        return "Not run yet.\n"
     lines = [
-        head + "Averages over repeats, from the latest run file of each level. Prompt caching was on at every level.\n",
+        "Averages over repeats, from the latest run file of each level. Prompt caching was on at every level.\n",
         "| Level | Model | Decision right | Amount right | Doc problems caught | False doc alarms | Seconds / claim | $ / claim | Calls / claim | Cached input | Errors / repeat |",
         "|---|---|---|---|---|---|---|---|---|---|---|",
     ]
     lines += [_row(lvl, runs[lvl][1]) for lvl in LEVEL_ORDER if lvl in runs]
     lines.append("\nRun files:\n")
     lines += [f"- `{runs[lvl][0].name}`: {runs[lvl][1]['claims']} claims × {len(runs[lvl][1]['repeats'])} repeats" for lvl in LEVEL_ORDER if lvl in runs]
-    return "\n".join(lines) + "\n\n" + HOW_TO_RUN
+    return "\n".join(lines) + "\n"
+
+
+def build_report(runs_dir: Path = RUNS_DIR) -> str:
+    """One set's results as a page."""
+    return "# Results\n\n" + _table(runs_dir) + "\n" + HOW_TO_RUN
+
+
+def build_results(runs_dir: Path = RUNS_DIR) -> str:
+    """results.md: the main set, then the hard held-out set (runs_dir/hard)."""
+    return (
+        "# Results\n\n## Main set\n\n" + _table(runs_dir)
+        + "\n## Hard set\n\nHeld-out claims (`data/hard/`): longer documents, extra attachments, sums and conflicting numbers. "
+        "No prompt was tuned on them.\n\n" + _table(runs_dir / "hard") + "\n" + HOW_TO_RUN
+    )
 
 
 def main() -> int:
-    RESULTS.write_text(build_report(), encoding="utf-8")
+    RESULTS.write_text(build_results(), encoding="utf-8")
     print(f"Wrote {RESULTS}")
     return 0
 

@@ -1,0 +1,293 @@
+{
+ "H-CAR-01": {
+  "claim_type": "car",
+  "decision": "approve_full",
+  "amount": 17140,
+  "doc_problems": [],
+  "reason": "Hail while parked is covered. Recognized = assessor's 18,640 (garage quote does not count) − 1,500 = 17,140.",
+  "figures": {
+   "recognized_amount": 18640,
+   "provider": null
+  }
+ },
+ "H-CAR-02": {
+  "claim_type": "car",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "Driver Ido Peretz is not a listed driver (only Avi Peretz is).",
+  "figures": null
+ },
+ "H-CAR-03": {
+  "claim_type": "car",
+  "decision": "request_documents",
+  "amount": 0,
+  "doc_problems": [
+   "assessor_report"
+  ],
+  "reason": "The assessor's report is for plate 45-212-67, inspected before the event; it belongs to another vehicle/event.",
+  "figures": null
+ },
+ "H-CAR-04": {
+  "claim_type": "car",
+  "decision": "approve_full",
+  "amount": 5950,
+  "doc_problems": [],
+  "reason": "Event on 2026-12-31, the last day of the policy (both days included). 7,450 − 1,500 = 5,950.",
+  "figures": {
+   "recognized_amount": 7450,
+   "provider": null
+  }
+ },
+ "H-CAR-05": {
+  "claim_type": "car",
+  "decision": "approve_full",
+  "amount": 8370,
+  "doc_problems": [],
+  "reason": "Flood is covered under the car policy (not a home water-damage claim). 9,870 − 1,500 = 8,370.",
+  "figures": {
+   "recognized_amount": 9870,
+   "provider": null
+  }
+ },
+ "H-CAR-06": {
+  "claim_type": "car",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "Mechanical failure from wear (worn timing belt) is excluded.",
+  "figures": null
+ },
+ "H-CAR-07": {
+  "claim_type": "car",
+  "decision": "approve_full",
+  "amount": 4920,
+  "doc_problems": [],
+  "reason": "Hit while parked is covered. Use the current assessor's report (6,420), not last year's. 6,420 − 1,500 = 4,920.",
+  "figures": {
+   "recognized_amount": 6420,
+   "provider": null
+  }
+ },
+ "H-CAR-08": {
+  "claim_type": "car",
+  "decision": "request_documents",
+  "amount": 0,
+  "doc_problems": [
+   "drivers_license"
+  ],
+  "reason": "The 'license' attached is the vehicle registration, not the driver's license.",
+  "figures": null
+ },
+ "H-CAR-09": {
+  "claim_type": "car",
+  "decision": "approve_full",
+  "amount": 21950,
+  "doc_problems": [],
+  "reason": "Collision with an animal, listed driver Michal. Assessor 23,450 (towing not included) − 1,500 = 21,950.",
+  "figures": {
+   "recognized_amount": 23450,
+   "provider": null
+  }
+ },
+ "H-CAR-10": {
+  "claim_type": "car",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "Driving in sand dunes is off-road driving, which is excluded.",
+  "figures": null
+ },
+ "H-WAT-01": {
+  "claim_type": "water_damage",
+  "decision": "approve_full",
+  "amount": 10350,
+  "doc_problems": [],
+  "reason": "Covered sudden burst, network plumber. Recognized = assessor's 11,350 (not the 14,900 quote) − 1,000 = 10,350.",
+  "figures": {
+   "recognized_amount": 11350,
+   "provider": "network"
+  }
+ },
+ "H-WAT-02": {
+  "claim_type": "water_damage",
+  "decision": "approve_partial",
+  "amount": 10340,
+  "doc_problems": [],
+  "reason": "Covered. Quote items sum to 12,600. Private plumber 90%: 11,340 − 1,000 = 10,340.",
+  "figures": {
+   "recognized_amount": 12600,
+   "provider": "private"
+  }
+ },
+ "H-WAT-03": {
+  "claim_type": "water_damage",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "Slow leak over months from a corroded pipe is excluded.",
+  "figures": null
+ },
+ "H-WAT-04": {
+  "claim_type": "water_damage",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "Water came from the neighbor's home; excluded (claim from the neighbor).",
+  "figures": null
+ },
+ "H-WAT-05": {
+  "claim_type": "water_damage",
+  "decision": "approve_full",
+  "amount": 6300,
+  "doc_problems": [],
+  "reason": "Home water damage (not travel). Sudden hose burst, network plumber. 7,300 − 1,000 = 6,300.",
+  "figures": {
+   "recognized_amount": 7300,
+   "provider": "network"
+  }
+ },
+ "H-WAT-06": {
+  "claim_type": "water_damage",
+  "decision": "request_documents",
+  "amount": 0,
+  "doc_problems": [
+   "plumber_finding"
+  ],
+  "reason": "The plumber's finding is for 14 Herzl St, not the insured home at 41 Herzl St.",
+  "figures": null
+ },
+ "H-WAT-07": {
+  "claim_type": "water_damage",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "The home policy has no water_damage add-on.",
+  "figures": null
+ },
+ "H-WAT-08": {
+  "claim_type": "water_damage",
+  "decision": "approve_full",
+  "amount": 5980,
+  "doc_problems": [],
+  "reason": "Covered, network plumber. Recognized = assessor's report (6,980) even though it is higher than the quote. 6,980 − 1,000 = 5,980.",
+  "figures": {
+   "recognized_amount": 6980,
+   "provider": "network"
+  }
+ },
+ "H-WAT-09": {
+  "claim_type": "water_damage",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "Rain entering through the roof is excluded.",
+  "figures": null
+ },
+ "H-WAT-10": {
+  "claim_type": "water_damage",
+  "decision": "approve_partial",
+  "amount": 12680,
+  "doc_problems": [],
+  "reason": "Covered. Assessor 15,200 × 90% (private plumber) = 13,680 − 1,000 = 12,680.",
+  "figures": {
+   "recognized_amount": 15200,
+   "provider": "private"
+  }
+ },
+ "H-MED-01": {
+  "claim_type": "travel_medical",
+  "decision": "approve_full",
+  "amount": 14730,
+  "doc_problems": [],
+  "reason": "Covered, network hospital, inside the trip. Receipts sum to 14,730; no deductible.",
+  "figures": {
+   "recognized_amount": 14730,
+   "provider": "network"
+  }
+ },
+ "H-MED-02": {
+  "claim_type": "travel_medical",
+  "decision": "approve_partial",
+  "amount": 2720,
+  "doc_problems": [],
+  "reason": "Covered. Only Gal's receipts count (Noam Bar is not insured): 3,400 × 80% (private) = 2,720.",
+  "figures": {
+   "recognized_amount": 3400,
+   "provider": "private"
+  }
+ },
+ "H-MED-03": {
+  "claim_type": "travel_medical",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "Treatment of a pre-existing condition (type 1 diabetes since 2011) without the pre_existing add-on.",
+  "figures": null
+ },
+ "H-MED-04": {
+  "claim_type": "travel_medical",
+  "decision": "approve_partial",
+  "amount": 2740,
+  "doc_problems": [],
+  "reason": "Covered abroad during the trip: 2,100 + 640 = 2,740. The 29 Oct follow-up in Tel Aviv is after the trip end (27 Oct) and not abroad.",
+  "figures": {
+   "recognized_amount": 2740,
+   "provider": "network"
+  }
+ },
+ "H-MED-05": {
+  "claim_type": "travel_medical",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "Treatment on 18 July, before the policy start date (20 July).",
+  "figures": null
+ },
+ "H-CAN-01": {
+  "claim_type": "travel_cancellation",
+  "decision": "approve_full",
+  "amount": 3640,
+  "doc_problems": [],
+  "reason": "Mother is close family, doctor confirmed. Paid 7,190 − refunds 3,550 = 3,640, under the 5,000 cap.",
+  "figures": {
+   "recognized_amount": 3640,
+   "provider": null
+  }
+ },
+ "H-CAN-02": {
+  "claim_type": "travel_cancellation",
+  "decision": "approve_partial",
+  "amount": 8000,
+  "doc_problems": [],
+  "reason": "Call-up issued after booking. Paid 12,400 − refunds 2,900 = 9,500, capped at 8,000 (this customer's cancellation cap).",
+  "figures": {
+   "recognized_amount": 9500,
+   "provider": null
+  }
+ },
+ "H-CAN-03": {
+  "claim_type": "travel_cancellation",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "The call-up order was issued on 10 Feb, before the trip was booked on 1 Apr; covered only if received after booking.",
+  "figures": null
+ },
+ "H-CAN-04": {
+  "claim_type": "travel_cancellation",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "A work conference is not a covered cancellation reason; stress is not doctor-confirmed illness.",
+  "figures": null
+ },
+ "H-CAN-05": {
+  "claim_type": "travel_cancellation",
+  "decision": "decline",
+  "amount": 0,
+  "doc_problems": [],
+  "reason": "A cousin is not a close family member (spouse, parent, child, sibling).",
+  "figures": null
+ }
+}

@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Callable
 
 from claimsflow import prompts
-from claimsflow.data import load_answer_key, load_claims, load_customers, load_wordings
+from claimsflow.data import SETS, load_answer_key, load_claims, load_customers, load_wordings
 from claimsflow.levels import Ctx, run_level0, run_level1, run_level2, run_level3
 from claimsflow.models import Claim, Result
 from claimsflow.rules import CLAIM_TYPES, REQUIRED_DOCS
@@ -82,15 +82,19 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--yes", action="store_true", help="do not ask for confirmation")
     parser.add_argument("--dry-run", action="store_true", help="print the estimate and stop")
     parser.add_argument("--runs-dir", type=Path, default=RUNS_DIR)
+    parser.add_argument("--set", default="main", choices=list(SETS), help="which claims: main, or the hard held-out set")
     args = parser.parse_args(argv)
 
     require_api_key(model_for(args.level))
-    claims = load_claims()[: args.limit] if args.limit else load_claims()
-    key = load_answer_key()
+    data_dir = SETS[args.set]
+    all_claims = load_claims(data_dir)
+    claims = all_claims[: args.limit] if args.limit else all_claims
+    key = load_answer_key(data_dir)
+    runs_dir = args.runs_dir if args.set == "main" else args.runs_dir / args.set
     base = Ctx(load_customers(), load_wordings(), model_for(args.level), Tracker())
 
     estimate = estimate_cost_usd(args.level, claims, base, args.repeats)
-    print(f"Level {args.level} on {base.model}: {len(claims)} claims × {args.repeats} repeats. Estimated cost ${estimate:.2f}")
+    print(f"Level {args.level} on {base.model}, {args.set} set: {len(claims)} claims × {args.repeats} repeats. Estimated cost ${estimate:.2f}")
     if args.dry_run:
         return 0
     if estimate > args.budget:
@@ -110,10 +114,10 @@ def main(argv: list[str] | None = None) -> int:
         repeats.append({"results": results, "scores": scores.as_dict()})
         print(f"  repeat {i + 1}: decision right {scores.decision_right:.0%}, amount right {scores.amount_right:.0%}, errors {scores.errors}")
 
-    args.runs_dir.mkdir(parents=True, exist_ok=True)
+    runs_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    path = args.runs_dir / f"level-{args.level}-{stamp}.json"
-    run = {"level": args.level, "model": base.model, "created": stamp, "claims": len(claims), "repeats": repeats}
+    path = runs_dir / f"level-{args.level}-{stamp}.json"
+    run = {"level": args.level, "model": base.model, "set": args.set, "created": stamp, "claims": len(claims), "repeats": repeats}
     path.write_text(json.dumps(run, indent=1, ensure_ascii=False), encoding="utf-8")
     spent = sum(o["cost_usd"] for r in repeats for o in r["results"].values())
     print(f"Saved {path.name}. Spent ${spent:.4f}")
