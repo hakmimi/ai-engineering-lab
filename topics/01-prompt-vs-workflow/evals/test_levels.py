@@ -208,3 +208,25 @@ def test_level3_unreadable_figures_is_error(monkeypatch):
         "covered": COVERED_YES, "excluded": EXCLUDED_NO, "figures": "<recognized_amount>about twelve</recognized_amount>",
     })
     assert run_level3(claim_for(CAR_CUSTOMER), ctx()).decision == "error"
+
+
+def test_read_claim_type_accepts_label_in_wrong_tag():
+    from claimsflow.levels import read_claim_type
+
+    assert read_claim_type("<travel_medical>travel_medical</travel_medical>") == "travel_medical"
+    assert read_claim_type("<claim_type>car</claim_type>") == "car"
+    assert read_claim_type("travel cancellation") == "travel_cancellation"
+
+
+def test_read_claim_type_unclear_or_ambiguous_is_none():
+    from claimsflow.levels import read_claim_type
+
+    assert read_claim_type("<claim_type>unclear</claim_type>") is None
+    assert read_claim_type("car or water_damage") is None
+    assert read_claim_type("") is None
+
+
+def test_level1_routes_label_written_in_wrong_tag(monkeypatch):
+    calls = fake_llm(monkeypatch, {"route": "<travel_medical>travel_medical</travel_medical>", "decide": FULL_APPROVE_XML})
+    result = run_level1(claim_for("C008"), ctx())  # C008 holds a travel policy
+    assert result.claim_type == "travel_medical" and [c.label for c in calls] == ["route", "decide"]

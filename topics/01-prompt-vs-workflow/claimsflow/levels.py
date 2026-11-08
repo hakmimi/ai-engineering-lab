@@ -77,9 +77,23 @@ def run_level0(claim: Claim, ctx: Ctx) -> Result:
 
 
 # ---------------------------------------------------------------- level 1
+def read_claim_type(text: str) -> str | None:
+    """The router's answer. Trust <claim_type> when present; otherwise accept the one label the text names.
+
+    The small model sometimes writes the right label in the wrong tag (<travel_medical>travel_medical</travel_medical>).
+    Reading that as "unclear" sent good claims to a person, so a single unambiguous label is accepted.
+    """
+    tagged = extract_xml(text, "claim_type")
+    if tagged:
+        return normalize_type(tagged)
+    flat = re.sub(r"[\s\-]+", "_", text.lower())
+    found = {t for t in CLAIM_TYPES if re.search(rf"(?<![a-z]){t}(?![a-z])", flat)}
+    return found.pop() if len(found) == 1 else None
+
+
 def route(claim: Claim, ctx: Ctx) -> str | None:
     text = _call(ctx, f"Customer's description:\n{claim.description}", "route", prompts.ROUTE_SYSTEM)
-    return normalize_type(extract_xml(text, "claim_type"))
+    return read_claim_type(text)
 
 
 def _route_and_policy(claim: Claim, ctx: Ctx):
