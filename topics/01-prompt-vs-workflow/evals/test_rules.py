@@ -55,6 +55,15 @@ def test_payout_never_negative():
     assert compute_payout(car_policy(deductible=1500, cap=None), Figures(900)) == (0, "approve_full")
 
 
+def test_find_policy_resolves_cap_for_the_claim_type():
+    p = travel_policy(cap=None)
+    p.caps_by_type = {"travel_medical": 200000, "travel_cancellation": 5000}
+    c = Customer("C1", "Dana Levi", [p])
+    assert find_policy(c, "travel_cancellation").cap == 5000
+    assert find_policy(c, "travel_medical").cap == 200000
+    assert p.cap is None  # the stored policy is not changed
+
+
 def test_find_policy_by_line_and_missing_line():
     c = Customer("C1", "Dana Levi", [car_policy(), travel_policy()])
     assert find_policy(c, "travel_cancellation").line == "travel"

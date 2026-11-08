@@ -33,6 +33,7 @@ class Policy:
     addons: list[str]
     listed_drivers: list[dict]
     min_driver_age: int | None
+    caps_by_type: dict[str, int] = field(default_factory=dict)  # travel: separate caps per claim type
 
 
 @dataclass
@@ -55,3 +56,4 @@ class Result:
     doc_problems: list[str] = field(default_factory=list)  # [] means documents complete
     reason: str = ""
     claim_type: str | None = None
+    figures: Figures | None = None  # answer key only: the numbers behind the amount

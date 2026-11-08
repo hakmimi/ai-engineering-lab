@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
+
 from claimsflow.models import Customer, Figures, Policy
+
+DECISIONS = ("approve_full", "approve_partial", "decline", "request_documents", "hand_to_person")
 
 CLAIM_TYPES = ("car", "water_damage", "travel_medical", "travel_cancellation")
 
@@ -22,8 +26,12 @@ REQUIRED_DOCS: dict[str, list[str]] = {
 
 
 def find_policy(customer: Customer, claim_type: str) -> Policy | None:
+    """The customer's policy for this claim type, with the cap that applies to this type."""
     line = LINE_FOR_TYPE[claim_type]
-    return next((p for p in customer.policies if p.line == line), None)
+    policy = next((p for p in customer.policies if p.line == line), None)
+    if policy is None or claim_type not in policy.caps_by_type:
+        return policy
+    return replace(policy, cap=policy.caps_by_type[claim_type])
 
 
 def compute_payout(policy: Policy, figures: Figures) -> tuple[int, str]:

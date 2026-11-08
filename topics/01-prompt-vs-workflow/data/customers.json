@@ -1,0 +1,642 @@
+{
+  "C001": {
+    "customer_id": "C001",
+    "name": "Dana Levi",
+    "policies": [
+      {
+        "policy_number": "CAR-001",
+        "line": "car",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1500,
+        "cap": null,
+        "private_rate": 1.0,
+        "addons": [],
+        "listed_drivers": [
+          {
+            "name": "Dana Levi",
+            "birth_date": "1985-04-12"
+          }
+        ],
+        "min_driver_age": 24,
+        "caps_by_type": {}
+      },
+      {
+        "policy_number": "HOM-001",
+        "line": "home",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1000,
+        "cap": null,
+        "private_rate": 0.9,
+        "addons": [
+          "water_damage"
+        ],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {}
+      },
+      {
+        "policy_number": "TRV-001",
+        "line": "travel",
+        "start": "2026-07-01",
+        "end": "2026-07-14",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  },
+  "C002": {
+    "customer_id": "C002",
+    "name": "Yossi Cohen",
+    "policies": [
+      {
+        "policy_number": "CAR-002",
+        "line": "car",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1500,
+        "cap": null,
+        "private_rate": 1.0,
+        "addons": [],
+        "listed_drivers": [
+          {
+            "name": "Yossi Cohen",
+            "birth_date": "1979-09-02"
+          },
+          {
+            "name": "Michal Cohen",
+            "birth_date": "1981-01-15"
+          }
+        ],
+        "min_driver_age": 24,
+        "caps_by_type": {}
+      },
+      {
+        "policy_number": "HOM-002",
+        "line": "home",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1000,
+        "cap": null,
+        "private_rate": 0.9,
+        "addons": [
+          "water_damage"
+        ],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {}
+      }
+    ]
+  },
+  "C003": {
+    "customer_id": "C003",
+    "name": "Noa Mizrahi",
+    "policies": [
+      {
+        "policy_number": "CAR-003",
+        "line": "car",
+        "start": "2025-03-01",
+        "end": "2026-02-28",
+        "deductible": 1500,
+        "cap": null,
+        "private_rate": 1.0,
+        "addons": [],
+        "listed_drivers": [
+          {
+            "name": "Noa Mizrahi",
+            "birth_date": "1992-11-30"
+          }
+        ],
+        "min_driver_age": 24,
+        "caps_by_type": {}
+      }
+    ]
+  },
+  "C004": {
+    "customer_id": "C004",
+    "name": "Avi Peretz",
+    "policies": [
+      {
+        "policy_number": "CAR-004",
+        "line": "car",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1500,
+        "cap": null,
+        "private_rate": 1.0,
+        "addons": [],
+        "listed_drivers": [
+          {
+            "name": "Avi Peretz",
+            "birth_date": "1970-06-20"
+          }
+        ],
+        "min_driver_age": 24,
+        "caps_by_type": {}
+      }
+    ]
+  },
+  "C005": {
+    "customer_id": "C005",
+    "name": "Shira Biton",
+    "policies": [
+      {
+        "policy_number": "CAR-005",
+        "line": "car",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1500,
+        "cap": null,
+        "private_rate": 1.0,
+        "addons": [],
+        "listed_drivers": [
+          {
+            "name": "Shira Biton",
+            "birth_date": "1975-02-10"
+          },
+          {
+            "name": "Eden Biton",
+            "birth_date": "2004-11-03"
+          }
+        ],
+        "min_driver_age": 24,
+        "caps_by_type": {}
+      }
+    ]
+  },
+  "C006": {
+    "customer_id": "C006",
+    "name": "Moshe Friedman",
+    "policies": [
+      {
+        "policy_number": "CAR-006",
+        "line": "car",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1500,
+        "cap": null,
+        "private_rate": 1.0,
+        "addons": [],
+        "listed_drivers": [
+          {
+            "name": "Moshe Friedman",
+            "birth_date": "1966-08-08"
+          }
+        ],
+        "min_driver_age": 24,
+        "caps_by_type": {}
+      },
+      {
+        "policy_number": "HOM-006",
+        "line": "home",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1000,
+        "cap": null,
+        "private_rate": 0.9,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {}
+      }
+    ]
+  },
+  "C007": {
+    "customer_id": "C007",
+    "name": "Rina Katz",
+    "policies": [
+      {
+        "policy_number": "CAR-007",
+        "line": "car",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1500,
+        "cap": null,
+        "private_rate": 1.0,
+        "addons": [],
+        "listed_drivers": [
+          {
+            "name": "Rina Katz",
+            "birth_date": "1990-03-27"
+          }
+        ],
+        "min_driver_age": 24,
+        "caps_by_type": {}
+      },
+      {
+        "policy_number": "HOM-007",
+        "line": "home",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1000,
+        "cap": null,
+        "private_rate": 0.9,
+        "addons": [
+          "water_damage"
+        ],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {}
+      }
+    ]
+  },
+  "C008": {
+    "customer_id": "C008",
+    "name": "Tal Avraham",
+    "policies": [
+      {
+        "policy_number": "CAR-008",
+        "line": "car",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1500,
+        "cap": null,
+        "private_rate": 1.0,
+        "addons": [],
+        "listed_drivers": [
+          {
+            "name": "Tal Avraham",
+            "birth_date": "1988-12-05"
+          }
+        ],
+        "min_driver_age": 24,
+        "caps_by_type": {}
+      },
+      {
+        "policy_number": "TRV-008",
+        "line": "travel",
+        "start": "2026-05-10",
+        "end": "2026-05-20",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  },
+  "C009": {
+    "customer_id": "C009",
+    "name": "Lior Ben-David",
+    "policies": [
+      {
+        "policy_number": "HOM-009",
+        "line": "home",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1000,
+        "cap": null,
+        "private_rate": 0.9,
+        "addons": [
+          "water_damage"
+        ],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {}
+      },
+      {
+        "policy_number": "TRV-009",
+        "line": "travel",
+        "start": "2026-08-03",
+        "end": "2026-08-17",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  },
+  "C010": {
+    "customer_id": "C010",
+    "name": "Hila Shapiro",
+    "policies": [
+      {
+        "policy_number": "HOM-010",
+        "line": "home",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1000,
+        "cap": null,
+        "private_rate": 0.9,
+        "addons": [
+          "water_damage"
+        ],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {}
+      },
+      {
+        "policy_number": "TRV-010",
+        "line": "travel",
+        "start": "2026-12-10",
+        "end": "2026-12-17",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  },
+  "C011": {
+    "customer_id": "C011",
+    "name": "Omer Golan",
+    "policies": [
+      {
+        "policy_number": "CAR-011",
+        "line": "car",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1500,
+        "cap": null,
+        "private_rate": 1.0,
+        "addons": [],
+        "listed_drivers": [
+          {
+            "name": "Omer Golan",
+            "birth_date": "1983-05-19"
+          }
+        ],
+        "min_driver_age": 24,
+        "caps_by_type": {}
+      }
+    ]
+  },
+  "C012": {
+    "customer_id": "C012",
+    "name": "Maya Rosen",
+    "policies": [
+      {
+        "policy_number": "HOM-012",
+        "line": "home",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1000,
+        "cap": null,
+        "private_rate": 0.9,
+        "addons": [
+          "water_damage"
+        ],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {}
+      },
+      {
+        "policy_number": "TRV-012",
+        "line": "travel",
+        "start": "2026-11-01",
+        "end": "2026-11-06",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  },
+  "C013": {
+    "customer_id": "C013",
+    "name": "Eitan Azulay",
+    "policies": [
+      {
+        "policy_number": "TRV-013",
+        "line": "travel",
+        "start": "2026-09-02",
+        "end": "2026-09-09",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  },
+  "C014": {
+    "customer_id": "C014",
+    "name": "Gal Weiss",
+    "policies": [
+      {
+        "policy_number": "TRV-014",
+        "line": "travel",
+        "start": "2026-06-05",
+        "end": "2026-06-12",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  },
+  "C015": {
+    "customer_id": "C015",
+    "name": "Yael Dahan",
+    "policies": [
+      {
+        "policy_number": "TRV-015",
+        "line": "travel",
+        "start": "2026-04-11",
+        "end": "2026-04-18",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  },
+  "C016": {
+    "customer_id": "C016",
+    "name": "Ronen Levy",
+    "policies": [
+      {
+        "policy_number": "TRV-016",
+        "line": "travel",
+        "start": "2026-09-14",
+        "end": "2026-09-21",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  },
+  "C017": {
+    "customer_id": "C017",
+    "name": "Sarit Amar",
+    "policies": [
+      {
+        "policy_number": "TRV-017",
+        "line": "travel",
+        "start": "2026-10-20",
+        "end": "2026-10-27",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  },
+  "C018": {
+    "customer_id": "C018",
+    "name": "Nir Oren",
+    "policies": [
+      {
+        "policy_number": "CAR-018",
+        "line": "car",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1500,
+        "cap": null,
+        "private_rate": 1.0,
+        "addons": [],
+        "listed_drivers": [
+          {
+            "name": "Nir Oren",
+            "birth_date": "1977-01-09"
+          }
+        ],
+        "min_driver_age": 24,
+        "caps_by_type": {}
+      },
+      {
+        "policy_number": "HOM-018",
+        "line": "home",
+        "start": "2026-01-01",
+        "end": "2026-12-31",
+        "deductible": 1000,
+        "cap": null,
+        "private_rate": 0.9,
+        "addons": [
+          "water_damage"
+        ],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {}
+      }
+    ]
+  },
+  "C019": {
+    "customer_id": "C019",
+    "name": "Amit Zur",
+    "policies": [
+      {
+        "policy_number": "TRV-019",
+        "line": "travel",
+        "start": "2026-07-20",
+        "end": "2026-07-30",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 8000
+        }
+      }
+    ]
+  },
+  "C020": {
+    "customer_id": "C020",
+    "name": "Keren Sasson",
+    "policies": [
+      {
+        "policy_number": "TRV-020",
+        "line": "travel",
+        "start": "2026-03-05",
+        "end": "2026-03-12",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  },
+  "C021": {
+    "customer_id": "C021",
+    "name": "Boaz Hadad",
+    "policies": [
+      {
+        "policy_number": "TRV-021",
+        "line": "travel",
+        "start": "2026-11-15",
+        "end": "2026-11-22",
+        "deductible": 0,
+        "cap": null,
+        "private_rate": 0.8,
+        "addons": [],
+        "listed_drivers": [],
+        "min_driver_age": null,
+        "caps_by_type": {
+          "travel_medical": 200000,
+          "travel_cancellation": 5000
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,293 @@
+{
+  "CAR-01": {
+    "claim_type": "car",
+    "decision": "approve_full",
+    "amount": 10500,
+    "doc_problems": [],
+    "reason": "Covered collision, listed driver. 12,000 − deductible 1,500 = 10,500.",
+    "figures": {
+      "recognized_amount": 12000,
+      "provider": null
+    }
+  },
+  "CAR-02": {
+    "claim_type": "car",
+    "decision": "approve_full",
+    "amount": 4900,
+    "doc_problems": [],
+    "reason": "Covered: hit while parked. 6,400 − 1,500 = 4,900.",
+    "figures": {
+      "recognized_amount": 6400,
+      "provider": null
+    }
+  },
+  "CAR-03": {
+    "claim_type": "car",
+    "decision": "decline",
+    "amount": 0,
+    "doc_problems": [],
+    "reason": "Event on 2026-03-10 is after the policy ended on 2026-02-28.",
+    "figures": null
+  },
+  "CAR-04": {
+    "claim_type": "car",
+    "decision": "decline",
+    "amount": 0,
+    "doc_problems": [],
+    "reason": "Driver Daniel Peretz is not a listed driver.",
+    "figures": null
+  },
+  "CAR-05": {
+    "claim_type": "car",
+    "decision": "decline",
+    "amount": 0,
+    "doc_problems": [],
+    "reason": "Eden Biton is 21 on the event date; the minimum driver age is 24.",
+    "figures": null
+  },
+  "CAR-06": {
+    "claim_type": "car",
+    "decision": "request_documents",
+    "amount": 0,
+    "doc_problems": [
+      "assessor_report"
+    ],
+    "reason": "No assessor's report. A garage quote does not replace it.",
+    "figures": null
+  },
+  "CAR-07": {
+    "claim_type": "car",
+    "decision": "request_documents",
+    "amount": 0,
+    "doc_problems": [
+      "drivers_license"
+    ],
+    "reason": "The license belongs to Tali Avrahami, not to the driver Tal Avraham.",
+    "figures": null
+  },
+  "CAR-08": {
+    "claim_type": "car",
+    "decision": "approve_full",
+    "amount": 2300,
+    "doc_problems": [],
+    "reason": "Covered: hail. 3,800 − 1,500 = 2,300.",
+    "figures": {
+      "recognized_amount": 3800,
+      "provider": null
+    }
+  },
+  "WAT-01": {
+    "claim_type": "water_damage",
+    "decision": "approve_full",
+    "amount": 7000,
+    "doc_problems": [],
+    "reason": "Sudden burst, network plumber. 8,000 − 1,000 = 7,000.",
+    "figures": {
+      "recognized_amount": 8000,
+      "provider": "network"
+    }
+  },
+  "WAT-02": {
+    "claim_type": "water_damage",
+    "decision": "approve_partial",
+    "amount": 6200,
+    "doc_problems": [],
+    "reason": "Covered. Private plumber 90%: 8,000 × 0.9 = 7,200 − 1,000 = 6,200.",
+    "figures": {
+      "recognized_amount": 8000,
+      "provider": "private"
+    }
+  },
+  "WAT-03": {
+    "claim_type": "water_damage",
+    "decision": "approve_full",
+    "amount": 13500,
+    "doc_problems": [],
+    "reason": "Covered. Assessor's report (14,500) sets the amount, not the quote. 14,500 − 1,000 = 13,500.",
+    "figures": {
+      "recognized_amount": 14500,
+      "provider": "network"
+    }
+  },
+  "WAT-04": {
+    "claim_type": "water_damage",
+    "decision": "decline",
+    "amount": 0,
+    "doc_problems": [],
+    "reason": "The home policy has no water_damage add-on.",
+    "figures": null
+  },
+  "WAT-05": {
+    "claim_type": "water_damage",
+    "decision": "decline",
+    "amount": 0,
+    "doc_problems": [],
+    "reason": "Slow leak over a long period from a corroded pipe is excluded.",
+    "figures": null
+  },
+  "WAT-06": {
+    "claim_type": "water_damage",
+    "decision": "request_documents",
+    "amount": 0,
+    "doc_problems": [
+      "plumber_finding"
+    ],
+    "reason": "No plumber's finding: the source and cause of the water are not documented.",
+    "figures": null
+  },
+  "WAT-07": {
+    "claim_type": "water_damage",
+    "decision": "decline",
+    "amount": 0,
+    "doc_problems": [],
+    "reason": "No matching policy: the customer has no home policy.",
+    "figures": null
+  },
+  "WAT-08": {
+    "claim_type": "water_damage",
+    "decision": "approve_full",
+    "amount": 2200,
+    "doc_problems": [],
+    "reason": "Covered. 3,200 − 1,000 = 2,200.",
+    "figures": {
+      "recognized_amount": 3200,
+      "provider": "network"
+    }
+  },
+  "MED-01": {
+    "claim_type": "travel_medical",
+    "decision": "approve_full",
+    "amount": 1850,
+    "doc_problems": [],
+    "reason": "Emergency treatment during the trip, network clinic. 1,850 paid in full.",
+    "figures": {
+      "recognized_amount": 1850,
+      "provider": "network"
+    }
+  },
+  "MED-02": {
+    "claim_type": "travel_medical",
+    "decision": "approve_partial",
+    "amount": 7200,
+    "doc_problems": [],
+    "reason": "Covered. Private provider 80%: 9,000 × 0.8 = 7,200.",
+    "figures": {
+      "recognized_amount": 9000,
+      "provider": "private"
+    }
+  },
+  "MED-03": {
+    "claim_type": "travel_medical",
+    "decision": "decline",
+    "amount": 0,
+    "doc_problems": [],
+    "reason": "Treatment on 2026-06-14 is after the trip ended on 2026-06-12.",
+    "figures": null
+  },
+  "MED-04": {
+    "claim_type": "travel_medical",
+    "decision": "decline",
+    "amount": 0,
+    "doc_problems": [],
+    "reason": "Pre-existing heart condition and no pre_existing add-on.",
+    "figures": null
+  },
+  "MED-05": {
+    "claim_type": "travel_medical",
+    "decision": "request_documents",
+    "amount": 0,
+    "doc_problems": [
+      "receipts"
+    ],
+    "reason": "The receipt is in the name of Ronit Sela, not the insured Yael Dahan.",
+    "figures": null
+  },
+  "MED-06": {
+    "claim_type": "travel_medical",
+    "decision": "approve_full",
+    "amount": 640,
+    "doc_problems": [],
+    "reason": "Covered, network provider. 640 paid in full.",
+    "figures": {
+      "recognized_amount": 640,
+      "provider": "network"
+    }
+  },
+  "CAN-01": {
+    "claim_type": "travel_cancellation",
+    "decision": "approve_partial",
+    "amount": 5000,
+    "doc_problems": [],
+    "reason": "Covered reason. 10,000 paid − 3,000 refunded = 7,000, cap 5,000.",
+    "figures": {
+      "recognized_amount": 7000,
+      "provider": null
+    }
+  },
+  "CAN-02": {
+    "claim_type": "travel_cancellation",
+    "decision": "approve_full",
+    "amount": 3200,
+    "doc_problems": [],
+    "reason": "Covered reason. 4,200 − 1,000 = 3,200, under the 5,000 cap.",
+    "figures": {
+      "recognized_amount": 3200,
+      "provider": null
+    }
+  },
+  "CAN-03": {
+    "claim_type": "travel_cancellation",
+    "decision": "decline",
+    "amount": 0,
+    "doc_problems": [],
+    "reason": "A work meeting is not a covered reason for cancelling.",
+    "figures": null
+  },
+  "CAN-04": {
+    "claim_type": "travel_cancellation",
+    "decision": "request_documents",
+    "amount": 0,
+    "doc_problems": [
+      "supplier_refund_letters"
+    ],
+    "reason": "No supplier refund letters, so the refunded amount is not known.",
+    "figures": null
+  },
+  "CAN-05": {
+    "claim_type": "travel_cancellation",
+    "decision": "approve_full",
+    "amount": 3500,
+    "doc_problems": [],
+    "reason": "Covered reason. 6,000 − 2,500 = 3,500, under the 8,000 cap.",
+    "figures": {
+      "recognized_amount": 3500,
+      "provider": null
+    }
+  },
+  "CAN-06": {
+    "claim_type": "travel_cancellation",
+    "decision": "decline",
+    "amount": 0,
+    "doc_problems": [],
+    "reason": "Fear of flying is not a covered reason.",
+    "figures": null
+  },
+  "CAN-07": {
+    "claim_type": "travel_cancellation",
+    "decision": "request_documents",
+    "amount": 0,
+    "doc_problems": [
+      "cancellation_proof"
+    ],
+    "reason": "No proof of the reason (no medical certificate for the daughter).",
+    "figures": null
+  },
+  "UNC-01": {
+    "claim_type": null,
+    "decision": "hand_to_person",
+    "amount": 0,
+    "doc_problems": [],
+    "reason": "The description does not say what happened or what was damaged.",
+    "figures": null
+  }
+}
