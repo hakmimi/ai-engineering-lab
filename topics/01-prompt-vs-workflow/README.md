@@ -154,14 +154,11 @@ I reviewed the answer key before the run. After the run I made one ruling (the b
 
 **What this means:**
 
-- **Now one prompt does fail, but only a little (94%).** Once it missed a call-up order dated before the trip was booked. And every time it asked for new receipts when one of them was a friend's. Every small-model level did that, because my own prompt says a document in another person's name is "wrong". That one can be read two ways.
-- **Routing (level 1) didn't help or hurt.** It caught both routing traps. It just added a call.
-- **The narrow document checks hurt most.** Each checker sees one document and takes the claim at its word:
-  - a parked car "has no driver", so the driver's license is "wrong"
-  - the amount claimed is the loss after refunds, so the receipts "don't match"
-  - photos of an engine with no outside damage "show no damage"
-- **The chain can't say "part of it".** The "any exclusion?" step answers yes or no for the whole claim, so one excluded visit after a trip declined the whole medical claim, every time. Even past that step, the math code could only have called it "full", never "partial because part is excluded".
-- **The bigger single model was the most accurate and the fastest**, at about 11× the small model's cost and 3× the full workflow's. Its one repeated miss: it paid for the burst water heater itself, which the wording doesn't cover.
+- **Now one prompt does fail, but only a little (94%).** It missed a buried date once, and a friend's receipt split it every time (that claim can be read two ways).
+- **Routing (level 1) didn't help or hurt.** It caught both routing traps, but added a call.
+- **The narrow document checks hurt most (25–30% false alarms).** A checker that sees one document takes the claim word for word: a parked car "has no driver", so the license is "wrong".
+- **The chain can't answer "part of it".** One excluded visit declined a whole medical claim, every time.
+- **The bigger single model was the most accurate (96%) and the fastest**, at about 11× the small model's cost and 3× the workflow's.
 
 ## When to use what
 
