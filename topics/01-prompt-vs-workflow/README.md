@@ -30,17 +30,22 @@
 
 ## What we found
 
-_Not run yet. This section is filled only from real runs in [`results.md`](results.md)._
+_From real runs on 2026-11-08: 30 claims × 3 repeats per level, prompt caching on. Full table: [`results.md`](results.md)._
 
-| Level | Decision right | Amount right | Doc problems caught | Time / claim | Cost / claim |
-|---|---|---|---|---|---|
-| 0 | – | – | – | – | – |
-| 1 | – | – | – | – | – |
-| 2 | – | – | – | – | – |
-| 3 | – | – | – | – | – |
-| 0+ | – | – | – | – | – |
+| Level | Decision right | Amount right | Doc problems caught | False doc alarms | Time / claim | Cost / claim |
+|---|---|---|---|---|---|---|
+| 0 (gpt-6-luna) | 100% | 100% | 100% | 0% | 3.0 s | $0.0001 |
+| 1 | 76% | 89% | 72% | 0% | 3.6 s | $0.0001 |
+| 2 | 60% | 80% | 33% | 28% | 5.0 s | $0.0004 |
+| 3 | 59% | 81% | 33% | 31% | 6.2 s | $0.0005 |
+| 0+ (gpt-6.1-sol) | 100% | 100% | 100% | 0% | 2.9 s | $0.0015 |
 
-**Observations:** _to fill after the runs_
+**Observations (DRAFT notes):**
+- One big prompt on the small model was right every time. On this data there was nothing left for a workflow to fix.
+- Every step we added made results worse, not better.
+- The router often picked the right travel type but wrote it in the wrong tag, so the code read "unclear" and sent the claim to a person (14–20 of 90 runs per level).
+- Each document checker sees one document alone and applied "names the insured" literally. Quotes and assessor reports name the car or the address, not the person, so it asked for documents that were fine (19–20 of 90).
+- The workflow cost about 5× more and took about 2× longer. The bigger model cost about 15× more for the same 100%.
 
 ## When to use it, when not to
 
