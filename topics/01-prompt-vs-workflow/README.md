@@ -126,11 +126,8 @@ The shared model helper is outside this folder, in [`shared/llm.py`](../../share
 **What I found:**
 
 - **One big prompt was right every time**, even on the small model. On these claims the workflow had nothing to fix.
-- **The first try of the workflow was much worse (59–76%).** Both problems were in the glue between the steps, not in the patterns themselves:
-  - The router often picked the right claim type but wrote it inside the wrong XML tag. My code read that as "unclear" and sent good claims to a person.
-  - Each document checker sees one document alone, and I had told it the document must name the insured. Repair quotes and assessor's reports name the car or the address, not the person, so it asked for documents that were fine.
-- **After the fixes the workflow got close (94–99%) but never beat one prompt.** It also made new mistakes. The "is it covered?" step was told "the event must be inside the policy period", which is wrong for trip cancellations (they're covered before the trip starts). One big prompt read the full wording and got those right.
-- **My own document rule let a parent's letter pass as proof** of a child's illness (CAN-07). Every narrow rule is one more thing to get right.
+- **The first try of the workflow was much worse (59–76%).** Both bugs were in the glue between steps: a router answer my code couldn't read, and a document rule each checker took word for word.
+- **After fixing, the workflow came close (94–99%) but never beat one prompt.** Each narrow step adds its own chances to fail: the "is it covered?" step, for example, got a rule that's wrong for trip cancellations.
 - **The workflow cost about 4–5× more and took about 2.5× longer.**
 
 I tuned the fixes on these same 30 claims, so the "fixed" rows are a best case. That's why I built a second set.
