@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -24,7 +23,7 @@ from claimsflow.levels import Ctx, run_level0, run_level1, run_level2, run_level
 from claimsflow.models import Claim, Result
 from claimsflow.rules import CLAIM_TYPES, REQUIRED_DOCS
 from claimsflow.score import score
-from shared.llm import DEFAULT_MODEL, PRICES, Tracker, cost_usd, require_api_key
+from shared.llm import PRICES, Tracker, cost_usd, default_model, require_api_key
 
 RUNS_DIR = Path(__file__).resolve().parent.parent / "runs"
 
@@ -40,9 +39,7 @@ OUTPUT_TOKENS_PER_CALL = 1500  # rough: includes thinking, which is billed as ou
 
 
 def model_for(level: str) -> str:
-    if level == "0+":
-        return os.environ.get("CLAIMS_MODEL_LARGE", "claude-opus-5-5")
-    return os.environ.get("CLAIMS_MODEL", DEFAULT_MODEL)
+    return default_model("large" if level == "0+" else "small")
 
 
 def estimate_cost_usd(level: str, claims: list[Claim], ctx: Ctx, repeats: int) -> float:
@@ -87,7 +84,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--runs-dir", type=Path, default=RUNS_DIR)
     args = parser.parse_args(argv)
 
-    require_api_key()
+    require_api_key(model_for(args.level))
     claims = load_claims()[: args.limit] if args.limit else load_claims()
     key = load_answer_key()
     base = Ctx(load_customers(), load_wordings(), model_for(args.level), Tracker())

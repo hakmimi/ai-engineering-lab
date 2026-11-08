@@ -1,5 +1,6 @@
-"""Small helper around the Anthropic SDK, shared by every topic.
+"""Small helper around the OpenAI and Anthropic SDKs, shared by every topic.
 
+The provider follows the model name: "claude-..." goes to Anthropic, anything else to OpenAI.
 llm_call() sends one prompt and returns the text answer. Every call can be
 recorded in a Tracker (time, tokens, cost) so a topic can compare approaches.
 """
@@ -17,13 +18,26 @@ from dotenv import load_dotenv
 
 ENV_FILE = Path(__file__).resolve().parent.parent / ".env"
 
-# USD per million tokens (Claude API list prices). Cache writes use the 5-minute TTL (1.25x input).
+# USD per million tokens, standard tier list prices (checked 2026-11-08).
+# Anthropic: cache writes use the 5-minute TTL (1.25x input). OpenAI: caching is automatic, no write premium.
 PRICES: dict[str, dict[str, float]] = {
+    "gpt-6-luna": {"input": 0.10, "output": 0.50, "cache_write": 0.10, "cache_read": 0.01},
+    "gpt-6.1-sol": {"input": 2.00, "output": 10.00, "cache_write": 2.00, "cache_read": 0.10},
     "claude-haiku-5-5": {"input": 0.10, "output": 0.50, "cache_write": 0.125, "cache_read": 0.01},
     "claude-opus-5-5": {"input": 4.00, "output": 20.00, "cache_write": 5.00, "cache_read": 0.20},
 }
 
-DEFAULT_MODEL = "claude-haiku-5-5"
+DEFAULT_MODELS = {"small": "gpt-6-luna", "large": "gpt-6.1-sol"}
+DEFAULT_MODEL = DEFAULT_MODELS["small"]
+
+
+def default_model(size: str = "small") -> str:
+    env = {"small": "CLAIMS_MODEL", "large": "CLAIMS_MODEL_LARGE"}[size]
+    return os.environ.get(env, DEFAULT_MODELS[size])
+
+
+def is_anthropic(model: str) -> bool:
+    return model.startswith("claude")
 
 
 @dataclass
@@ -66,25 +80,31 @@ class Tracker:
         return sum(cost_usd(r) for r in self.records)
 
 
-def require_api_key() -> None:
+def require_api_key(model: str | None = None) -> None:
     load_dotenv(ENV_FILE)
-    if not os.environ.get("ANTHROPIC_API_KEY", "").strip():
-        raise RuntimeError("Missing ANTHROPIC_API_KEY: add it to .env")
+    name = "ANTHROPIC_API_KEY" if is_anthropic(model or default_model()) else "OPENAI_API_KEY"
+    if not os.environ.get(name, "").strip():
+        raise RuntimeError(f"Missing {name}: add it to .env")
 
 
-_client = None
+_clients: dict[str, object] = {}
 _client_lock = threading.Lock()
 
 
-def _default_client():
-    global _client
+def _default_client(model: str):
+    provider = "anthropic" if is_anthropic(model) else "openai"
     with _client_lock:
-        if _client is None:
-            import anthropic
+        if provider not in _clients:
+            require_api_key(model)
+            if provider == "anthropic":
+                import anthropic
 
-            require_api_key()
-            _client = anthropic.Anthropic(max_retries=4)
-        return _client
+                _clients[provider] = anthropic.Anthropic(max_retries=4)
+            else:
+                import openai
+
+                _clients[provider] = openai.OpenAI(max_retries=4)
+        return _clients[provider]
 
 
 def llm_call(
@@ -103,8 +123,10 @@ def llm_call(
     cached_system: fixed text (policies, instructions) sent first and marked for prompt caching.
     system: extra system text that is not cached.
     """
-    model = model or os.environ.get("CLAIMS_MODEL", DEFAULT_MODEL)
-    client = client or _default_client()
+    model = model or default_model()
+    client = client or _default_client(model)
+    if not is_anthropic(model):
+        return _openai_call(prompt, cached_system, system, model, label, tracker, max_tokens, client)
 
     kwargs = {"model": model, "max_tokens": max_tokens, "messages": [{"role": "user", "content": prompt}]}
     blocks = []
@@ -133,6 +155,35 @@ def llm_call(
             )
         )
     return "".join(b.text for b in response.content if b.type == "text")
+
+
+def _openai_call(prompt, cached_system, system, model, label, tracker, max_tokens, client) -> str:
+    """OpenAI Responses API. Caching is automatic for a repeated prefix, so fixed text goes first."""
+    instructions = "\n\n".join(t for t in (cached_system, system) if t)
+    kwargs = {"model": model, "input": prompt, "max_output_tokens": max_tokens}
+    if instructions:
+        kwargs["instructions"] = instructions
+
+    start = time.perf_counter()
+    response = client.responses.create(**kwargs)
+    seconds = time.perf_counter() - start
+
+    if tracker is not None:
+        u = response.usage
+        details = getattr(u, "input_tokens_details", None)
+        cached = (getattr(details, "cached_tokens", 0) or 0) if details else 0
+        tracker.add(
+            CallRecord(
+                label=label,
+                model=model,
+                seconds=seconds,
+                input_tokens=(u.input_tokens or 0) - cached,
+                output_tokens=u.output_tokens or 0,
+                cache_write_tokens=0,
+                cache_read_tokens=cached,
+            )
+        )
+    return response.output_text or ""
 
 
 def extract_xml(text: str, tag: str) -> str:

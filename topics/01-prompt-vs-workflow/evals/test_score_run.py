@@ -16,6 +16,7 @@ def R(decision, amount, docs):
 @pytest.fixture
 def key_set(monkeypatch):
     monkeypatch.setenv("ANTHROPIC_API_KEY", "test")
+    monkeypatch.setenv("OPENAI_API_KEY", "test")
 
 
 @pytest.fixture
@@ -49,8 +50,10 @@ def test_run_aborts_over_budget(monkeypatch, key_set, tmp_path):
 
 def test_run_requires_key(monkeypatch, tmp_path):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     monkeypatch.setattr("shared.llm.load_dotenv", lambda *a, **k: None)
-    with pytest.raises(RuntimeError, match="Missing ANTHROPIC_API_KEY"):
+    monkeypatch.setitem(LEVELS, "0", lambda claim, ctx: pytest.fail("must stop before any level call"))
+    with pytest.raises(RuntimeError, match="Missing (OPENAI|ANTHROPIC)_API_KEY"):
         main(["--level", "0", "--yes", "--runs-dir", str(tmp_path)])
 
 

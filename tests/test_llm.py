@@ -63,4 +63,51 @@ def test_require_api_key_message(monkeypatch):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     monkeypatch.setattr("shared.llm.load_dotenv", lambda *a, **k: None)
     with pytest.raises(RuntimeError, match="Missing ANTHROPIC_API_KEY: add it to .env"):
-        require_api_key()
+        require_api_key("claude-haiku-5-5")
+
+
+# ---------------------------------------------------------------- OpenAI path
+class FakeOpenAI:
+    """Stands in for openai.OpenAI: records the request, returns a Responses-API-shaped answer."""
+
+    def __init__(self, text, input_tokens=0, output_tokens=0, cached=0):
+        self.last_kwargs = None
+        usage = SimpleNamespace(
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
+            input_tokens_details=SimpleNamespace(cached_tokens=cached),
+        )
+        self._response = SimpleNamespace(output_text=text, usage=usage)
+        self.responses = SimpleNamespace(create=self._create)
+
+    def _create(self, **kwargs):
+        self.last_kwargs = kwargs
+        return self._response
+
+
+def test_openai_model_uses_responses_api_and_counts_cached_tokens():
+    fake = FakeOpenAI(text="ok", input_tokens=1000, output_tokens=50, cached=800)
+    t = Tracker()
+    out = llm_call("hello", cached_system="POLICY TEXT", system="extra", model="gpt-6-luna", label="route", tracker=t, client=fake)
+    assert out == "ok"
+    assert fake.last_kwargs["instructions"].startswith("POLICY TEXT") and "extra" in fake.last_kwargs["instructions"]
+    assert fake.last_kwargs["input"] == "hello"
+    r = t.records[0]
+    assert (r.input_tokens, r.cache_read_tokens, r.cache_write_tokens, r.output_tokens) == (200, 800, 0, 50)
+
+
+def test_openai_prices_present_for_default_models():
+    assert {"gpt-6-luna", "gpt-6.1-sol"} <= set(PRICES)
+
+
+def test_default_model_is_openai():
+    from shared.llm import default_model
+
+    assert default_model() == "gpt-6-luna" and default_model("large") == "gpt-6.1-sol"
+
+
+def test_require_api_key_picks_the_key_for_the_model(monkeypatch):
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.setattr("shared.llm.load_dotenv", lambda *a, **k: None)
+    with pytest.raises(RuntimeError, match="Missing OPENAI_API_KEY: add it to .env"):
+        require_api_key("gpt-6-luna")

@@ -95,19 +95,19 @@ The deliverable of the experiment is `results.md`: one table across levels, plus
 ## 6. How it gets made
 
 Decided:
-- Python, using Anthropic's official Python SDK.
+- Python. **Provider: OpenAI** (decided by the author on 2026-11-08, after the Anthropic account had no credit), through OpenAI's official Python SDK and the Responses API. The shared helper keeps the Anthropic path: a model name starting with `claude-` goes to Anthropic.
 - A shared helper in `shared/`: `llm_call` (prompt in, text out), `extract_xml` (as in the article), and per-call tracking of latency and input/output tokens.
-- The API key is read from `ANTHROPIC_API_KEY` in the repo's `.env` file (exists, git-ignored, filled in by the author). The key is never printed, logged or committed.
+- The API key is read from `OPENAI_API_KEY` (or `ANTHROPIC_API_KEY` for Claude models) in the repo's `.env` file (exists, git-ignored, filled in by the author). The key is never printed, logged or committed.
 - Tests run without network by replacing `llm_call` with a fake.
 - The code lives in the public repo. Commits are local; pushing happens only when the author asks.
 
 Claude's calls (the author can change them):
-- **Models:** levels 0–3 use one small, cheap current model (`claude-haiku-5-5`). Level 0+ uses a larger one (`claude-opus-5-5`). Both are set by environment variables.
+- **Models:** levels 0–3 use `gpt-6-luna` ($0.10 / $0.50 per million tokens). Level 0+ uses `gpt-6.1-sol` ($2 / $10). Both are set by environment variables (`CLAIMS_MODEL`, `CLAIMS_MODEL_LARGE`).
 - **Repeats:** every level runs the full claim set 3 times; results report the average, so one lucky or unlucky run doesn't decide the outcome.
 - **Budget:** the whole experiment should cost a few dollars. The runner prints an estimated cost before it starts and stops if the estimate is over $10.
 - **Folder layout:** the earlier plan had `quick_setup/` and `better_version/`. This topic uses the levels instead: level 0 is the "quick" version and level 3 is the "better" one.
 - **Concurrency for step 2:** a thread pool like the article's `parallel()`.
-- **Prompt caching:** on, and used the same way at every level (cache the policy wordings and other fixed text). Production systems would cache, so leaving it off would make level 0 look worse than it really is. `results.md` states that caching was on and shows cached vs uncached tokens.
+- **Prompt caching:** on, and used the same way at every level (fixed text such as the policy wordings goes first; OpenAI caches a repeated prefix automatically). Production systems would cache, so leaving it off would make level 0 look worse than it really is. `results.md` states that caching was on and shows cached vs uncached tokens.
 
 ## 7. Goals, non-goals, anti-goals
 
