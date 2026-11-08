@@ -28,11 +28,11 @@ Averages over repeats, from the latest run file of each level. Prompt caching wa
 
 | Level | Model | Decision right | Amount right | Doc problems caught | False doc alarms | Seconds / claim | $ / claim | Calls / claim | Cached input | Errors / repeat |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 0 | gpt-6-luna | 91% | 90% | 89% | 4% | 3.5 | $0.0002 | 1.0 | 92% | 0.0 |
-| 1 | gpt-6-luna | 91% | 91% | 89% | 6% | 5.4 | $0.0002 | 2.0 | 69% | 0.0 |
+| 0 | gpt-6-luna | 94% | 93% | 89% | 4% | 3.5 | $0.0002 | 1.0 | 92% | 0.0 |
+| 1 | gpt-6-luna | 94% | 94% | 89% | 6% | 5.4 | $0.0002 | 2.0 | 69% | 0.0 |
 | 2 | gpt-6-luna | 76% | 83% | 67% | 25% | 6.6 | $0.0005 | 5.5 | 23% | 0.0 |
 | 3 | gpt-6-luna | 70% | 80% | 67% | 30% | 7.7 | $0.0006 | 6.2 | 17% | 0.0 |
-| 0+ | gpt-6.1-sol | 99% | 99% | 100% | 1% | 3.0 | $0.0018 | 1.0 | 92% | 0.0 |
+| 0+ | gpt-6.1-sol | 96% | 96% | 100% | 1% | 3.0 | $0.0018 | 1.0 | 92% | 0.0 |
 
 Run files:
 

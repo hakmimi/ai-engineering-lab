@@ -14,4 +14,4 @@ Date: 2026-11-08. Data: `data/hard/claims.json`, `data/hard/answer_key.json`. Sa
 
 **Rules for the key:** same decisions and payout order as the main set. "Approve partial" also covers "part of the claim excluded" (a friend's receipt, a visit after the trip), which the level-3 code cannot express on its own (its payout code decides full vs partial from rate and cap only). This is kept on purpose: it is a real limit of "code does the math".
 
-**Status:** answer key drafted by Claude; the author reviews it before the measured run.
+**Status:** answer key drafted by Claude and approved by the author before the run. After the run the author ruled on H-WAT-01: the burst water heater itself is not covered (partial 8,350, was full 10,350). Scores are re-computed from the saved runs; nothing was re-run.

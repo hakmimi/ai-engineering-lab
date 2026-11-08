@@ -100,12 +100,12 @@
  },
  "H-WAT-01": {
   "claim_type": "water_damage",
-  "decision": "approve_full",
-  "amount": 10350,
+  "decision": "approve_partial",
+  "amount": 8350,
   "doc_problems": [],
-  "reason": "Covered sudden burst, network plumber. Recognized = assessor's 11,350 (not the 14,900 quote) − 1,000 = 10,350.",
+  "reason": "Covered sudden burst, network plumber. Assessor 11,350 minus the water heater itself (2,000; the wording covers the home, finding the leak and the pipe, not the appliance) = 9,350 − 1,000 = 8,350. Part excluded, so partial.",
   "figures": {
-   "recognized_amount": 11350,
+   "recognized_amount": 9350,
    "provider": "network"
   }
  },
