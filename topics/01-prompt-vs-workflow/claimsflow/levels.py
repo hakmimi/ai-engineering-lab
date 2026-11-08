@@ -2,16 +2,19 @@
 
 Level 0: one big prompt.
 Level 1: route first, then a prompt for that claim type.
+Level 2: + check all required documents at the same time.
 """
 
 from __future__ import annotations
 
 import re
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
+from typing import Callable, TypeVar
 
 from claimsflow import prompts
-from claimsflow.models import Claim, Customer, Result
-from claimsflow.rules import CLAIM_TYPES, DECISIONS, find_policy
+from claimsflow.models import Claim, Customer, Policy, Result
+from claimsflow.rules import CLAIM_TYPES, DECISIONS, REQUIRED_DOCS, find_policy
 from shared.llm import Tracker, extract_xml, llm_call
 
 
@@ -101,3 +104,46 @@ def run_level1(claim: Claim, ctx: Ctx) -> Result:
     if early:
         return early
     return _decide(claim, claim_type, policy, ctx)
+
+
+# ---------------------------------------------------------------- level 2
+T = TypeVar("T")
+R = TypeVar("R")
+
+
+def parallel(fn: Callable[[T], R], items: list[T], n_workers: int = 4) -> list[R]:
+    """Run fn on every item at the same time; results come back in input order."""
+    with ThreadPoolExecutor(max_workers=n_workers) as pool:
+        return list(pool.map(fn, items))
+
+
+def check_documents(claim: Claim, claim_type: str, policy: Policy, ctx: Ctx) -> list[tuple[str, str]]:
+    """One call per required document, all at once. Returns (doc_id, problem) for each problem, in REQUIRED_DOCS order."""
+    customer_text = prompts.render_customer(ctx.customers[claim.customer_id], [policy])
+    claim_text = prompts.render_claim(claim)
+
+    def check(doc_id: str):
+        prompt = prompts.doc_check_prompt(doc_id, customer_text, claim_text)
+        text = _call(ctx, prompt, f"doc:{doc_id}", prompts.DOC_CHECK_SYSTEM)
+        status = extract_xml(text, "status").lower()
+        if status == "ok":
+            return None
+        problem = extract_xml(text, "problem") or f"{doc_id}: unclear answer from the document check"
+        return doc_id, problem
+
+    return [p for p in parallel(check, REQUIRED_DOCS[claim_type]) if p]
+
+
+def _docs_or_none(claim: Claim, claim_type: str, policy: Policy, ctx: Ctx) -> Result | None:
+    problems = check_documents(claim, claim_type, policy, ctx)
+    if not problems:
+        return None
+    reason = " ".join(problem for _, problem in problems)
+    return Result("request_documents", 0, [d for d, _ in problems], reason, claim_type)
+
+
+def run_level2(claim: Claim, ctx: Ctx) -> Result:
+    claim_type, policy, early = _route_and_policy(claim, ctx)
+    if early:
+        return early
+    return _docs_or_none(claim, claim_type, policy, ctx) or _decide(claim, claim_type, policy, ctx, docs_verified=True)

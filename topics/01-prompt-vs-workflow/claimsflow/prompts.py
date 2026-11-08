@@ -136,3 +136,24 @@ def decide_system(wording: str, claim_type: str, docs_verified: bool = False) ->
         for p in [ROLE, f"This is a {claim_type} claim.", note, DECISION_RULES, required_docs_text([claim_type]), OUTPUT_FORMAT, "## Policy wording", wording]
         if p
     )
+
+
+# ---------------------------------------------------------------- level 2: document check
+DOC_CHECK_SYSTEM = """\
+You check one required document for an insurance claim at Meridian Mutual.
+You only answer: is this document attached, and is it the right one for this claim?
+- ok: a matching document is attached, it is the right kind of document, it names the right person (the insured, or for a driver's license the driver named in the claim), and its details (dates, amounts, places) match the claim
+- missing: no attachment is this kind of document
+- wrong: an attachment looks like this document but it is the wrong kind, or in another person's name, or its details do not match the claim
+Do not judge coverage, policy dates, driver age or exclusions. Those are checked later.
+Answer with these tags only:
+<status>ok, missing or wrong</status>
+<problem>one sentence, or none</problem>
+"""
+
+
+def doc_check_prompt(doc_id: str, customer_text: str, claim_text: str) -> str:
+    return (
+        f"Required document: {doc_id} = {DOC_DESCRIPTIONS[doc_id]}\n\n"
+        f"{customer_text}\n\n{claim_text}"
+    )

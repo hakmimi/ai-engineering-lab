@@ -82,3 +82,58 @@ def test_level1_decide_sees_only_its_own_wording(monkeypatch):
     run_level1(claim_for(CAR_CUSTOMER), ctx())
     cached = calls[1].kwargs["cached_system"]
     assert "CAR-2026" in cached and "HOME-2026" not in cached and "TRAVEL-2026" not in cached
+
+
+# ---------------------------------------------------------------- level 2
+from claimsflow.levels import parallel, run_level2  # noqa: E402
+from claimsflow.rules import REQUIRED_DOCS  # noqa: E402
+from evals.helpers import TRAVEL_CUSTOMER, claim_with_no_attachments  # noqa: E402
+
+
+def test_parallel_keeps_order():
+    assert parallel(lambda x: x * 2, [3, 1, 2]) == [6, 2, 4]
+
+
+def test_level2_missing_doc_requests_documents(monkeypatch):
+    fake_llm(monkeypatch, {
+        "route": "<claim_type>car</claim_type>",
+        "doc:assessor_report": "<status>missing</status><problem>No assessor report</problem>",
+        "doc:": "<status>ok</status>",
+    })
+    r = run_level2(claim_for(CAR_CUSTOMER), ctx())
+    assert r.decision == "request_documents" and r.doc_problems == ["assessor_report"] and r.amount == 0
+    assert "No assessor report" in r.reason
+
+
+def test_level2_one_doc_call_per_required_doc(monkeypatch):
+    calls = fake_llm(monkeypatch, {
+        "route": "<claim_type>travel_medical</claim_type>",
+        "doc:": "<status>ok</status>",
+        "decide": FULL_APPROVE_XML,
+    })
+    run_level2(claim_for(TRAVEL_CUSTOMER), ctx())
+    doc_labels = sorted(c.label for c in calls if c.label.startswith("doc:"))
+    assert doc_labels == sorted(f"doc:{d}" for d in REQUIRED_DOCS["travel_medical"])
+
+
+def test_level2_docs_ok_then_decide_told_docs_verified(monkeypatch):
+    calls = fake_llm(monkeypatch, {
+        "route": "<claim_type>car</claim_type>",
+        "doc:": "<status>ok</status>",
+        "decide": FULL_APPROVE_XML,
+    })
+    r = run_level2(claim_for(CAR_CUSTOMER), ctx())
+    assert r.decision == "approve_full"
+    assert "already checked" in calls[-1].kwargs["cached_system"]
+
+
+def test_level2_no_attachments_all_missing(monkeypatch):
+    fake_llm(monkeypatch, {"route": "<claim_type>car</claim_type>", "doc:": "<status>missing</status><problem>Not attached</problem>"})
+    r = run_level2(claim_with_no_attachments(CAR_CUSTOMER), ctx())
+    assert r.doc_problems == REQUIRED_DOCS["car"]
+
+
+def test_level2_unreadable_status_counts_as_problem(monkeypatch):
+    fake_llm(monkeypatch, {"route": "<claim_type>car</claim_type>", "doc:drivers_license": "I am not sure.", "doc:": "<status>ok</status>"})
+    r = run_level2(claim_for(CAR_CUSTOMER), ctx())
+    assert r.doc_problems == ["drivers_license"]
