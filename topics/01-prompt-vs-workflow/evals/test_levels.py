@@ -230,3 +230,19 @@ def test_level1_routes_label_written_in_wrong_tag(monkeypatch):
     calls = fake_llm(monkeypatch, {"route": "<travel_medical>travel_medical</travel_medical>", "decide": FULL_APPROVE_XML})
     result = run_level1(claim_for("C008"), ctx())  # C008 holds a travel policy
     assert result.claim_type == "travel_medical" and [c.label for c in calls] == ["route", "decide"]
+
+
+def test_every_required_document_has_a_matching_rule():
+    from claimsflow.prompts import BELONGS_TO_CLAIM
+    from claimsflow.rules import REQUIRED_DOCS
+
+    for docs in REQUIRED_DOCS.values():
+        for d in docs:
+            assert BELONGS_TO_CLAIM.get(d, "").strip(), f"write the matching rule for {d}"
+
+
+def test_doc_check_prompt_carries_the_matching_rule():
+    from claimsflow.prompts import BELONGS_TO_CLAIM, DOC_CHECK_SYSTEM, doc_check_prompt
+
+    assert BELONGS_TO_CLAIM["repair_quote"] in doc_check_prompt("repair_quote", "C", "X")
+    assert "names the right person" not in DOC_CHECK_SYSTEM

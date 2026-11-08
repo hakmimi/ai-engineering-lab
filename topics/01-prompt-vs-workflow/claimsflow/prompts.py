@@ -139,12 +139,33 @@ def decide_system(wording: str, claim_type: str, docs_verified: bool = False) ->
 
 
 # ---------------------------------------------------------------- level 2: document check
+# How the checker tells that a document belongs to THIS claim. A checker sees one document at a time,
+# so it applies this rule literally: write what a claims handler actually looks at for each document.
+# In the data, quotes and reports name the car (plate) or the home address, not the person.
+BELONGS_TO_CLAIM: dict[str, str] = {
+    "claim_form": "it is in the policyholder's name and describes this event",
+    "drivers_license": "it is in the name of the driver named in the claim",
+    "medical_summary": "the patient is the insured and the treatment date matches the claim",
+    "receipts": "they are issued to the insured for the treatment in the claim",
+    # These name a car, an address or a supplier, not a person. A missing name is not a problem.
+    "damage_photos": "they show damage that fits what happened in the claim",
+    "assessor_report": "it is an assessor's report (not a garage quote) on the damage described in the claim, dated on or after the event; "
+    "it names the car, not the person",
+    "plumber_finding": "it states where the water came from and why, for the damage described in the claim; it names the plumber and the address, not the person",
+    "repair_quote": "the work it describes fits the damage in the claim; it names the address of works, not the person",
+    "cancellation_proof": "it states the reason for cancelling that the claim gives, for the person the claim names; "
+    "whether that reason is covered is decided later, so a personal letter still counts as stating it",
+    "payment_receipts": "they show what was paid in advance for the trip in the claim; they name suppliers, not the person",
+    "supplier_refund_letters": "they show what the trip's suppliers refunded; they name suppliers, not the person",
+}
+
 DOC_CHECK_SYSTEM = """\
 You check one required document for an insurance claim at Meridian Mutual.
 You only answer: is this document attached, and is it the right one for this claim?
-- ok: a matching document is attached, it is the right kind of document, it names the right person (the insured, or for a driver's license the driver named in the claim), and its details (dates, amounts, places) match the claim
+- ok: a matching document is attached, it is the right kind of document, it passes the matching rule given with it, and its details (dates, amounts, places) match the claim
 - missing: no attachment is this kind of document
-- wrong: an attachment looks like this document but it is the wrong kind, or in another person's name, or its details do not match the claim
+- wrong: an attachment looks like this document but it is the wrong kind, it fails the matching rule, or its details do not match the claim
+Do not ask for anything the matching rule does not ask for.
 Do not judge coverage, policy dates, driver age or exclusions. Those are checked later.
 Answer with these tags only:
 <status>ok, missing or wrong</status>
@@ -154,7 +175,8 @@ Answer with these tags only:
 
 def doc_check_prompt(doc_id: str, customer_text: str, claim_text: str) -> str:
     return (
-        f"Required document: {doc_id} = {DOC_DESCRIPTIONS[doc_id]}\n\n"
+        f"Required document: {doc_id} = {DOC_DESCRIPTIONS[doc_id]}\n"
+        f"Matching rule (how to tell it belongs to this claim): {BELONGS_TO_CLAIM[doc_id]}\n\n"
         f"{customer_text}\n\n{claim_text}"
     )
 
