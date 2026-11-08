@@ -105,3 +105,13 @@ def test_report_has_a_section_per_set(monkeypatch, key_set, cheap, tmp_path):
     main(["--level", "0", "--set", "hard", "--limit", "1", "--repeats", "1", "--yes", "--runs-dir", str(tmp_path)])
     text = build_results(tmp_path)
     assert "## Main set" in text and "## Hard set" in text and "level-0-" in text.split("## Hard set")[1]
+
+
+def test_report_scores_against_the_current_answer_key(monkeypatch, key_set, cheap, tmp_path):
+    from claimsflow import report
+
+    monkeypatch.setitem(LEVELS, "0", lambda claim, ctx: Result("decline", 0, [], "x", "car"))
+    main(["--level", "0", "--set", "hard", "--limit", "1", "--repeats", "1", "--yes", "--runs-dir", str(tmp_path)])
+    first = load_claims(report.SETS["hard"])[0].claim_id
+    monkeypatch.setattr(report, "load_answer_key", lambda d: {first: Result("decline", 0, [], "", "car")})
+    assert "| 0 | gpt-6-luna | 100% | 100% |" in report.build_results(tmp_path).split("## Hard set")[1]

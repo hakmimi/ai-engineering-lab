@@ -7,7 +7,10 @@ import sys
 from pathlib import Path
 from statistics import mean
 
+from claimsflow.data import SETS, load_answer_key
+from claimsflow.models import Result
 from claimsflow.run import RUNS_DIR
+from claimsflow.score import score
 
 RESULTS = Path(__file__).resolve().parent.parent / "results.md"
 LEVEL_ORDER = ["0", "1", "2", "3", "0+"]
@@ -41,7 +44,9 @@ def _row(level: str, run: dict) -> str:
     calls = [c for o in outs for c in o["calls"]]
     fresh = sum(c["input_tokens"] + c["cache_write_tokens"] for c in calls)
     cached = sum(c["cache_read_tokens"] for c in calls)
-    s = {k: mean(r["scores"][k] for r in reps) for k in ("decision_right", "amount_right", "doc_caught", "doc_false_alarms", "errors")}
+    key = load_answer_key(SETS[run.get("set", "main")])  # score against the current key, so a key fix needs no rerun
+    rescored = [score({cid: Result(o["decision"], o["amount"], o["doc_problems"], o["reason"], o["claim_type"]) for cid, o in r["results"].items()}, key).as_dict() for r in reps]
+    s = {k: mean(r[k] for r in rescored) for k in ("decision_right", "amount_right", "doc_caught", "doc_false_alarms", "errors")}
     cells = [
         level,
         run["model"],

@@ -52,6 +52,25 @@ _From real runs on 2026-11-08: 30 claims × 3 repeats per level, prompt caching 
 - My cancellation-proof rule let a parent's own letter pass as proof of a child's illness (CAN-07). Each narrow rule is one more thing to get right.
 - The workflow cost about 5× more and took about 2.5× longer. The fixes were tuned on these same 30 claims, so the "fixed" numbers are a best case.
 
+### Hard set (held-out)
+
+30 new claims no prompt was tuned on ([`design/hard-set.md`](design/hard-set.md)): longer documents, extra attachments, sums, numbers that conflict, facts buried in text. Answer key reviewed by the author before the run.
+
+| Level | Decision right | Amount right | Doc problems caught | False doc alarms | Time / claim | Cost / claim |
+|---|---|---|---|---|---|---|
+| 0 (gpt-6-luna) | 91% | 90% | 89% | 4% | 3.5 s | $0.0002 |
+| 1 | 91% | 91% | 89% | 6% | 5.4 s | $0.0002 |
+| 2 | 76% | 83% | 67% | 25% | 6.6 s | $0.0005 |
+| 3 | 70% | 80% | 67% | 30% | 7.7 s | $0.0006 |
+| 0+ (gpt-6.1-sol) | 99% | 99% | 100% | 1% | 3.0 s | $0.0018 |
+
+**Observations (DRAFT notes):**
+- Now one prompt on the small model does fail (91%): once it missed a call-up dated before the booking. Two claims split opinions every time: it left the burst water heater itself out of the payout, and asked for new receipts when one was a friend's (every small-model level did that).
+- Routing alone (level 1) did not help or hurt. It still caught both traps (a flooded car, a home flood after a holiday).
+- The narrow document checks hurt most. Each sees one document and takes the claim at its word: a parked car "has no driver" so the license is "wrong"; the claimed amount is the net loss, so the receipts "do not match"; photos of an engine with no outside damage "show no damage".
+- Level 3's math code cannot say "partial because part is excluded" (a visit after the trip), so it declined that claim every time.
+- The bigger single model was the best and the fastest: 99%, at about 9× the small model's cost and 3× the full workflow's.
+
 ## When to use it, when not to
 
 _To fill after the runs._
