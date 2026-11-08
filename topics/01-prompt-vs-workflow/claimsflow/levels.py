@@ -3,6 +3,7 @@
 Level 0: one big prompt.
 Level 1: route first, then a prompt for that claim type.
 Level 2: + check all required documents at the same time.
+Level 3: + decide step by step (covered? excluded? figures), and code computes the amount.
 """
 
 from __future__ import annotations
@@ -13,8 +14,8 @@ from dataclasses import dataclass
 from typing import Callable, TypeVar
 
 from claimsflow import prompts
-from claimsflow.models import Claim, Customer, Policy, Result
-from claimsflow.rules import CLAIM_TYPES, DECISIONS, REQUIRED_DOCS, find_policy
+from claimsflow.models import Claim, Customer, Figures, Policy, Result
+from claimsflow.rules import CLAIM_TYPES, DECISIONS, REQUIRED_DOCS, compute_payout, find_policy
 from shared.llm import Tracker, extract_xml, llm_call
 
 
@@ -147,3 +148,66 @@ def run_level2(claim: Claim, ctx: Ctx) -> Result:
     if early:
         return early
     return _docs_or_none(claim, claim_type, policy, ctx) or _decide(claim, claim_type, policy, ctx, docs_verified=True)
+
+
+# ---------------------------------------------------------------- level 3
+def _yes_no(text: str, tag: str) -> bool | None:
+    value = extract_xml(text, tag).strip().lower()
+    return {"yes": True, "no": False}.get(value)
+
+
+def _read_figures(text: str, claim_type: str) -> Figures | None:
+    provider = extract_xml(text, "provider").strip().lower()
+    provider = provider if provider in ("network", "private") else None
+    if claim_type == "travel_cancellation":
+        paid, refunds = parse_int(extract_xml(text, "paid")), parse_int(extract_xml(text, "refunds"))
+        if paid is None or refunds is None:
+            return None
+        return Figures(max(0, paid - refunds), provider)
+    amount = parse_int(extract_xml(text, "recognized_amount"))
+    return None if amount is None else Figures(amount, provider)
+
+
+def _explain(policy: Policy, figures: Figures, amount: int) -> str:
+    steps = [f"recognized {figures.recognized_amount:,}"]
+    if figures.provider == "private" and policy.private_rate < 1:
+        steps.append(f"× private rate {policy.private_rate:g}")
+    if policy.cap:
+        steps.append(f"cap {policy.cap:,}")
+    if policy.deductible:
+        steps.append(f"− deductible {policy.deductible:,}")
+    return ", ".join(steps) + f" = {amount:,}"
+
+
+def run_level3(claim: Claim, ctx: Ctx) -> Result:
+    claim_type, policy, early = _route_and_policy(claim, ctx)
+    if early:
+        return early
+    docs = _docs_or_none(claim, claim_type, policy, ctx)
+    if docs:
+        return docs
+
+    customer = ctx.customers[claim.customer_id]
+    prompt = prompts.render_customer(customer, [policy]) + "\n\n" + prompts.render_claim(claim)
+    wording = ctx.wordings[policy.line]
+
+    text = _call(ctx, prompt, "covered", prompts.covered_system(wording, claim_type))
+    covered = _yes_no(text, "covered")
+    if covered is None:
+        return Result("error", 0, [], f"Unreadable coverage answer: {text[:200]}", claim_type)
+    if not covered:
+        return Result("decline", 0, [], extract_xml(text, "reason"), claim_type)
+
+    text = _call(ctx, prompt, "excluded", prompts.excluded_system(wording, claim_type))
+    excluded = _yes_no(text, "excluded")
+    if excluded is None:
+        return Result("error", 0, [], f"Unreadable exclusion answer: {text[:200]}", claim_type)
+    if excluded:
+        return Result("decline", 0, [], extract_xml(text, "reason"), claim_type)
+
+    text = _call(ctx, prompt, "figures", prompts.figures_system(claim_type))
+    figures = _read_figures(text, claim_type)
+    if figures is None:
+        return Result("error", 0, [], f"Unreadable figures: {text[:200]}", claim_type)
+    amount, decision = compute_payout(policy, figures)
+    return Result(decision, amount, [], _explain(policy, figures, amount), claim_type, figures)

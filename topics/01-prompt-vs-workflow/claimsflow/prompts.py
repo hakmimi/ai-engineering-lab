@@ -157,3 +157,50 @@ def doc_check_prompt(doc_id: str, customer_text: str, claim_text: str) -> str:
         f"Required document: {doc_id} = {DOC_DESCRIPTIONS[doc_id]}\n\n"
         f"{customer_text}\n\n{claim_text}"
     )
+
+
+# ---------------------------------------------------------------- level 3: the chain
+def covered_system(wording: str, claim_type: str) -> str:
+    return "\n\n".join([
+        ROLE,
+        f"This is a {claim_type} claim. Answer one question only: is this event a covered event under this policy?",
+        "Check: the event date is inside the policy period; any add-on the cover needs is in the schedule; "
+        "the kind of event is one the wording covers. Do not check exclusions or amounts here.",
+        "Answer with these tags only:\n<covered>yes or no</covered>\n<reason>one sentence</reason>",
+        "## Policy wording", wording,
+    ])
+
+
+def excluded_system(wording: str, claim_type: str) -> str:
+    return "\n\n".join([
+        ROLE,
+        f"This is a {claim_type} claim that is a covered event. Answer one question only: does an exclusion in the wording apply?",
+        "Check the exclusions and the conditions on who may drive, pre-existing conditions, and the cancellation reason. "
+        "Use the policy schedule (listed drivers, birth dates, minimum age, add-ons) and the documents. Do not compute amounts.",
+        "Answer with these tags only:\n<excluded>yes or no</excluded>\n<reason>one sentence</reason>",
+        "## Policy wording", wording,
+    ])
+
+
+FIGURES_SOURCE = {
+    "car": "recognized_amount = the approved repair cost in the assessor's report.",
+    "water_damage": "recognized_amount = the total in the assessor's report if there is one, otherwise the total in the repair quote. "
+    "provider = network if the plumber is in the Meridian network, otherwise private.",
+    "travel_medical": "recognized_amount = the total of the receipts. "
+    "provider = network if the clinic or hospital is in the Meridian network, otherwise private.",
+    "travel_cancellation": "paid = the total paid in advance; refunds = the total the suppliers refunded.",
+}
+
+
+def figures_system(claim_type: str) -> str:
+    tags = (
+        "<paid>digits only</paid>\n<refunds>digits only</refunds>\n<provider>none</provider>"
+        if claim_type == "travel_cancellation"
+        else "<recognized_amount>digits only</recognized_amount>\n<provider>network, private or none</provider>"
+    )
+    return "\n\n".join([
+        ROLE,
+        f"This is an approved {claim_type} claim. Read the numbers from the documents. Do not apply the deductible, cap or rate: code does that.",
+        FIGURES_SOURCE[claim_type],
+        f"Answer with these tags only:\n{tags}",
+    ])

@@ -137,3 +137,74 @@ def test_level2_unreadable_status_counts_as_problem(monkeypatch):
     fake_llm(monkeypatch, {"route": "<claim_type>car</claim_type>", "doc:drivers_license": "I am not sure.", "doc:": "<status>ok</status>"})
     r = run_level2(claim_for(CAR_CUSTOMER), ctx())
     assert r.doc_problems == ["drivers_license"]
+
+
+# ---------------------------------------------------------------- level 3
+from claimsflow.levels import run_level3  # noqa: E402
+
+COVERED_YES = "<covered>yes</covered><reason>ok</reason>"
+EXCLUDED_NO = "<excluded>no</excluded><reason>ok</reason>"
+
+
+def test_level3_chain_order_and_code_math(monkeypatch):
+    calls = fake_llm(monkeypatch, {
+        "route": "<claim_type>car</claim_type>", "doc:": "<status>ok</status>",
+        "covered": COVERED_YES, "excluded": EXCLUDED_NO,
+        "figures": "<recognized_amount>12000</recognized_amount><provider>none</provider>",
+    })
+    r = run_level3(claim_for(CAR_CUSTOMER), ctx())  # C001 car deductible 1,500
+    assert (r.decision, r.amount) == ("approve_full", 10500)
+    assert [c.label for c in calls if not c.label.startswith("doc:")] == ["route", "covered", "excluded", "figures"]
+    assert "10,500" in r.reason
+
+
+def test_level3_not_covered_stops_chain(monkeypatch):
+    calls = fake_llm(monkeypatch, {
+        "route": "<claim_type>car</claim_type>", "doc:": "<status>ok</status>",
+        "covered": "<covered>no</covered><reason>Policy not active on the event date</reason>",
+    })
+    r = run_level3(claim_for(CAR_CUSTOMER), ctx())
+    assert r.decision == "decline" and r.reason == "Policy not active on the event date"
+    assert "excluded" not in [c.label for c in calls]
+
+
+def test_level3_exclusion_declines(monkeypatch):
+    calls = fake_llm(monkeypatch, {
+        "route": "<claim_type>car</claim_type>", "doc:": "<status>ok</status>",
+        "covered": COVERED_YES, "excluded": "<excluded>yes</excluded><reason>Driver not listed</reason>",
+    })
+    r = run_level3(claim_for(CAR_CUSTOMER), ctx())
+    assert (r.decision, r.reason) == ("decline", "Driver not listed")
+    assert "figures" not in [c.label for c in calls]
+
+
+def test_level3_cancellation_uses_paid_minus_refunds(monkeypatch):
+    fake_llm(monkeypatch, {
+        "route": "<claim_type>travel_cancellation</claim_type>", "doc:": "<status>ok</status>",
+        "covered": COVERED_YES, "excluded": EXCLUDED_NO,
+        "figures": "<paid>10,000</paid><refunds>3,000</refunds><provider>none</provider>",
+    })
+    r = run_level3(claim_for(CAR_CUSTOMER), ctx())  # C001 travel: cancellation cap 5,000, no deductible
+    assert (r.decision, r.amount) == ("approve_partial", 5000)
+
+
+def test_level3_doc_problem_stops_before_chain(monkeypatch):
+    calls = fake_llm(monkeypatch, {
+        "route": "<claim_type>car</claim_type>",
+        "doc:assessor_report": "<status>missing</status><problem>No assessor report</problem>", "doc:": "<status>ok</status>",
+    })
+    r = run_level3(claim_for(CAR_CUSTOMER), ctx())
+    assert r.decision == "request_documents" and "covered" not in [c.label for c in calls]
+
+
+def test_level3_unreadable_covered_is_error(monkeypatch):
+    fake_llm(monkeypatch, {"route": "<claim_type>car</claim_type>", "doc:": "<status>ok</status>", "covered": "hmm"})
+    assert run_level3(claim_for(CAR_CUSTOMER), ctx()).decision == "error"
+
+
+def test_level3_unreadable_figures_is_error(monkeypatch):
+    fake_llm(monkeypatch, {
+        "route": "<claim_type>car</claim_type>", "doc:": "<status>ok</status>",
+        "covered": COVERED_YES, "excluded": EXCLUDED_NO, "figures": "<recognized_amount>about twelve</recognized_amount>",
+    })
+    assert run_level3(claim_for(CAR_CUSTOMER), ctx()).decision == "error"
