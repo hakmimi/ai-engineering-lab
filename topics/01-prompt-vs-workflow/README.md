@@ -32,44 +32,46 @@
 
 _From real runs on 2026-11-08: 30 claims × 3 repeats per level, prompt caching on. Full table: [`results.md`](results.md). "First try" numbers are from commit be6ed1d._
 
-| Level | Decision right | Amount right | Doc problems caught | False doc alarms | Time / claim | Cost / claim |
+| Level | Decision right | Amount right | Doc problems caught | False doc alarms | Time / claim | $ per 1,000 claims |
 |---|---|---|---|---|---|---|
-| 0 (gpt-6-luna) | 100% | 100% | 100% | 0% | 3.0 s | $0.0001 |
-| 1, first try | 76% | 89% | 72% | 0% | 3.6 s | $0.0001 |
-| 2, first try | 60% | 80% | 33% | 28% | 5.0 s | $0.0004 |
-| 3, first try | 59% | 81% | 33% | 31% | 6.2 s | $0.0005 |
-| 1, fixed | 99% | 99% | 100% | 0% | 4.2 s | $0.0001 |
-| 2, fixed | 96% | 97% | 72% | 0% | 5.9 s | $0.0004 |
-| 3, fixed | 94% | 97% | 78% | 0% | 7.8 s | $0.0005 |
-| 0+ (gpt-6.1-sol) | 100% | 100% | 100% | 0% | 2.9 s | $0.0015 |
+| 0 (gpt-6-luna) | 100% | 100% | 100% | 0% | 3.0 s | $0.11* |
+| 1, first try | 76% | 89% | 72% | 0% | 3.6 s | $0.13 |
+| 2, first try | 60% | 80% | 33% | 28% | 5.0 s | $0.39 |
+| 3, first try | 59% | 81% | 33% | 31% | 6.2 s | $0.46 |
+| 1, fixed | 99% | 99% | 100% | 0% | 4.2 s | $0.12 |
+| 2, fixed | 96% | 97% | 72% | 0% | 5.9 s | $0.43 |
+| 3, fixed | 94% | 97% | 78% | 0% | 7.8 s | $0.53 |
+| 0+ (gpt-6.1-sol) | 100% | 100% | 100% | 0% | 2.9 s | $1.50 |
+
+\* Level 0 on the main set ran minutes after an identical accidental run (see Caveats), so almost its whole prompt was already cached. With normal caching it would be about $0.14.
 
 **The two fixes:** the router answer is read even when the label sits in the wrong tag; each document check gets a one-line rule for how that document is matched to the claim (car, address, supplier), instead of "it must name the insured".
 
 **Observations (DRAFT notes):**
 - One big prompt on the small model was right every time. On this data no workflow beat it, even after fixing.
 - The first try of the workflow was much worse (59–76%). Both causes were in the glue, not the patterns: a reader that broke on a wrong tag, and a rule each narrow checker took word for word.
-- After fixing, the workflow came close (94–99%) but still made new mistakes one prompt didn't: a narrow "is it covered?" step declined two cancellations because it could not see when the policy was bought.
+- After fixing, the workflow came close (94–99%) but still made new mistakes one prompt didn't: a narrow "is it covered?" step declined two cancellations. Its short instructions say "the event date is inside the policy period", which is wrong for cancellations (they are covered before the trip starts). One big prompt read the whole wording instead.
 - My cancellation-proof rule let a parent's own letter pass as proof of a child's illness (CAN-07). Each narrow rule is one more thing to get right.
-- The workflow cost about 5× more and took about 2.5× longer. The fixes were tuned on these same 30 claims, so the "fixed" numbers are a best case.
+- The workflow cost about 4–5× more and took about 2.5× longer. The fixes were tuned on these same 30 claims, so the "fixed" numbers are a best case.
 
 ### Hard set (held-out)
 
 30 new claims no prompt was tuned on ([`design/hard-set.md`](design/hard-set.md)): longer documents, extra attachments, sums, numbers that conflict, facts buried in text. Answer key reviewed by the author before the run; after it, the author ruled the burst water heater itself is not covered (H-WAT-01), and scores were re-computed from the saved runs.
 
-| Level | Decision right | Amount right | Doc problems caught | False doc alarms | Time / claim | Cost / claim |
+| Level | Decision right | Amount right | Doc problems caught | False doc alarms | Time / claim | $ per 1,000 claims |
 |---|---|---|---|---|---|---|
-| 0 (gpt-6-luna) | 94% | 93% | 89% | 4% | 3.5 s | $0.0002 |
-| 1 | 94% | 94% | 89% | 6% | 5.4 s | $0.0002 |
-| 2 | 76% | 83% | 67% | 25% | 6.6 s | $0.0005 |
-| 3 | 70% | 80% | 67% | 30% | 7.7 s | $0.0006 |
-| 0+ (gpt-6.1-sol) | 96% | 96% | 100% | 1% | 3.0 s | $0.0018 |
+| 0 (gpt-6-luna) | 94% | 93% | 89% | 4% | 3.5 s | $0.15 |
+| 1 | 94% | 94% | 89% | 6% | 5.4 s | $0.20 |
+| 2 | 76% | 83% | 67% | 25% | 6.6 s | $0.55 |
+| 3 | 70% | 80% | 67% | 30% | 7.7 s | $0.61 |
+| 0+ (gpt-6.1-sol) | 96% | 96% | 100% | 1% | 3.0 s | $1.76 |
 
 **Observations (DRAFT notes):**
-- Now one prompt on the small model does fail (94%): once it missed a call-up dated before the booking, and every time it asked for new receipts when one was a friend's (every small-model level did that).
+- Now one prompt on the small model does fail (94%): once it missed a call-up dated before the booking, and every time it asked for new receipts when one was a friend's (every small-model level did that; the prompt's own rule says a document in another person's name is "wrong", so this one can be read two ways).
 - Routing alone (level 1) did not help or hurt. It still caught both traps (a flooded car, a home flood after a holiday).
 - The narrow document checks hurt most. Each sees one document and takes the claim at its word: a parked car "has no driver" so the license is "wrong"; the claimed amount is the net loss, so the receipts "do not match"; photos of an engine with no outside damage "show no damage".
-- Level 3's math code cannot say "partial because part is excluded" (a visit after the trip), so it declined that claim every time.
-- The bigger single model was the best and the fastest: 96%, at about 9× the small model's cost and 3× the full workflow's. Its one repeated miss: it paid for the burst water heater itself, which the wording does not cover.
+- Level 3's "any exclusion?" step answers yes or no for the whole claim, so one excluded visit (after the trip) declined the whole claim every time. Even past that step, the math code could only have called it full, not "partial because part is excluded".
+- The bigger single model was the best and the fastest: 96%, at about 11× the small model's cost and 3× the full workflow's. Its one repeated miss: it paid for the burst water heater itself, which the wording does not cover.
 
 ## When to use it, when not to
 
@@ -80,7 +82,7 @@ _DRAFT notes from the runs above. Rewrite in your own words._
 | One big prompt | All the rules and documents fit in one prompt and the model can read them together. Here it was the most accurate on the small model (100% main, 94% hard), the cheapest and the fastest. | It starts missing things you can name and test. Then try a bigger model first: here that was one change and still the fastest option. |
 | Route | Each type needs very different rules, or the full rule set is too long for one prompt. It cost almost nothing extra and kept accuracy (99% / 94%). | Everything already fits in one prompt: it adds a call and one more answer to read without adding accuracy. Read its answer forgivingly, or a wrong tag sends good claims to a person (76% on the first try). |
 | Parallel | The checks are truly independent and each one fits in one short rule, or speed across many documents matters. | A check needs the rest of the claim to judge it. A checker that sees one document took the claim word for word: a parked car "has no driver", the net claim "doesn't match" the receipts (25–30% false alarms on the hard set). |
-| Chain | You need to show each step, or the math must be exact and auditable, so code does it. Amounts were rarely the problem. | A step needs facts another step owns (the "covered?" step could not see when the policy was bought), or the outcome has a case the code cannot express ("partial because part is excluded"). |
+| Chain | You need to show each step, or the math must be exact and auditable, so code does it. Amounts were rarely the problem. | A step's short instructions leave out a rule the full wording has (the "covered?" step was told "event inside the policy period", wrong for cancellations), a step must answer yes/no where the real answer is "part of it", or the outcome has a case the code cannot express ("partial because part is excluded"). |
 
 **In one line (DRAFT):** start with one prompt and a small test set with an answer key; split only the step you can show is failing, and measure again.
 
@@ -93,7 +95,8 @@ _DRAFT notes._
 - The workflow prompts were fixed once, on the main set. The hard set was never tuned on; its numbers are the fairer ones.
 - The answer key is one expert's reading. One claim (the water heater) could be read two ways; the author ruled after the run and scores were re-computed, not re-run.
 - Prompt caching was on everywhere, which helps the long single prompt most.
-- Costs are tiny here (under $0.002 per claim at every level). The 3–5× cost and 2× time of the workflow matter more at real volume.
+- Costs are tiny here (under $2 per 1,000 claims at every level). The workflow's 4–5× cost and 2–2.5× time matter more at real volume.
+- Cache warmth depends on run order: main-set level 0 ran right after an identical accidental run, and the fixed levels 1–3 ran soon after their first try, so their costs are a little low. The hard-set costs are the fairer ones.
 
 ## Left for a better version
 

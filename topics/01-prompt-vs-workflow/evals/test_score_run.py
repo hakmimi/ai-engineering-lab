@@ -115,3 +115,21 @@ def test_report_scores_against_the_current_answer_key(monkeypatch, key_set, chea
     first = load_claims(report.SETS["hard"])[0].claim_id
     monkeypatch.setattr(report, "load_answer_key", lambda d: {first: Result("decline", 0, [], "", "car")})
     assert "| 0 | gpt-6-luna | 100% | 100% |" in report.build_results(tmp_path).split("## Hard set")[1]
+
+
+def test_model_set_in_env_file_is_used_for_the_key_check(monkeypatch, tmp_path):
+    # CLAIMS_MODEL lives only in .env: the runner must read .env before it picks the model and checks the key
+    monkeypatch.delenv("CLAIMS_MODEL", raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test")
+
+    def fake_env_file(*a, **k):
+        monkeypatch.setenv("CLAIMS_MODEL", "claude-haiku-5-5")
+
+    monkeypatch.setattr("shared.llm.load_dotenv", fake_env_file)
+    assert main(["--level", "0", "--dry-run", "--runs-dir", str(tmp_path)]) == 0
+
+
+def test_error_never_counts_as_amount_right():
+    s = score({"a": R("error", 0, [])}, {"a": R("decline", 0, [])})
+    assert s.amount_right == 0.0

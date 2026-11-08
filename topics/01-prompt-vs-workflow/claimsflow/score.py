@@ -31,7 +31,7 @@ def score(results: dict[str, Result], key: dict[str, Result]) -> Scores:
     return Scores(
         n=len(ids),
         decision_right=_share(sum(results[c].decision == key[c].decision for c in ids), len(ids)),
-        amount_right=_share(sum(results[c].amount == key[c].amount for c in ids), len(ids)),
+        amount_right=_share(sum(results[c].decision != "error" and results[c].amount == key[c].amount for c in ids), len(ids)),
         doc_caught=_share(
             sum(
                 results[c].decision == "request_documents" and set(results[c].doc_problems) == set(key[c].doc_problems)

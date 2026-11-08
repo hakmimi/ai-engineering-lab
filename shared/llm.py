@@ -80,8 +80,13 @@ class Tracker:
         return sum(cost_usd(r) for r in self.records)
 
 
-def require_api_key(model: str | None = None) -> None:
+def load_env() -> None:
+    """Read the repo's .env (keys and CLAIMS_MODEL settings). Call before choosing a model."""
     load_dotenv(ENV_FILE)
+
+
+def require_api_key(model: str | None = None) -> None:
+    load_env()
     name = "ANTHROPIC_API_KEY" if is_anthropic(model or default_model()) else "OPENAI_API_KEY"
     if not os.environ.get(name, "").strip():
         raise RuntimeError(f"Missing {name}: add it to .env")

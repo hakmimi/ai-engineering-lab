@@ -23,7 +23,7 @@ from claimsflow.levels import Ctx, run_level0, run_level1, run_level2, run_level
 from claimsflow.models import Claim, Result
 from claimsflow.rules import CLAIM_TYPES, REQUIRED_DOCS
 from claimsflow.score import score
-from shared.llm import PRICES, Tracker, cost_usd, default_model, require_api_key
+from shared.llm import PRICES, Tracker, cost_usd, default_model, load_env, require_api_key
 
 RUNS_DIR = Path(__file__).resolve().parent.parent / "runs"
 
@@ -85,6 +85,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--set", default="main", choices=list(SETS), help="which claims: main, or the hard held-out set")
     args = parser.parse_args(argv)
 
+    load_env()  # before model_for(): CLAIMS_MODEL may be set only in .env
     require_api_key(model_for(args.level))
     data_dir = SETS[args.set]
     all_claims = load_claims(data_dir)
