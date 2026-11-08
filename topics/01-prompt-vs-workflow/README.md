@@ -10,6 +10,30 @@ So the question for this topic is:
 
 > **When is one long prompt enough, and when does a more structured workflow pay off?**
 
+## Spoiler alert: the bottom line
+
+**For this job, one well-written prompt beat the multi-step workflow. And when one prompt wasn't enough, a smarter model fixed it better than splitting the job did.**
+
+I gave insurance claims to an AI in two ways. One way was a single big prompt ("here's everything, decide"). The other was a workflow that splits the job into small steps: sort the claim, check each document on its own, then decide step by step. Every answer was checked against right answers I wrote in advance.
+
+| | Easy claims | Hard claims | Cost | Speed |
+|---|---|---|---|---|
+| **One big prompt** (small model) | **100%** right | **94%** | cheapest | fast |
+| **Workflow, all steps** (small model) | 94% | 70% | 4–5× more | 2.5× slower |
+| **One big prompt** (bigger model) | **100%** | **96%** | about 11× more | fastest |
+
+**Why the workflow lost:**
+- **Each small step sees only part of the claim.** A step that checks one document doesn't know the rest of the story ("the car was parked, so why is there a driver's license?"), so it flags things that are fine.
+- **Every split adds more things to get right:** more prompts, more rules, more hand-offs between steps. Most of the mistakes happened there, not in the model's thinking. My first try of the workflow got only about 60% right, until I fixed two bugs in that glue.
+
+**What the workflow is still good for:**
+- **Sorting claims by type (routing)** didn't hurt and cost almost nothing. It's useful when the rules are too long for one prompt.
+- **Letting code do the math** keeps the amounts exact and easy to check.
+
+**The lesson:** start with one prompt and a test set with known answers. Split the job only where you can show a step is failing, then measure again.
+
+**A fair warning:** my data is small and made up. With real, long policies that don't fit in one prompt, the workflow might win. That's the next test.
+
 ## What I did
 
 - **Simulated the data.** I wrote three short policy wordings for a made-up insurer, 21 customers with their policies, and two sets of 30 claims, each with its documents and a known right answer. The second set is harder, and I only used it at the end.
