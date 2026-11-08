@@ -89,16 +89,20 @@ Every answer is compared to the answer key. For each level:
 
 **`claimsflow/`, one file per job:**
 
-| File | What it does |
-|---|---|
-| `models.py` | The data shapes as **dataclasses**: `Claim`, `Attachment`, `Policy`, `Customer`, `Figures`, `Result`. |
-| `data.py` | Loads policies, customers, claims and the answer key from `data/` (main or hard set). |
-| `rules.py` | The fixed business rules in plain code: required documents per claim type, finding the customer's policy, and `compute_payout` (rate, then cap, then deductible). |
-| `prompts.py` | All prompt text: one place to read what each step is told. |
-| `levels.py` | Levels 0–3. The router, the parallel document check (a thread pool, like the article's `parallel()`), and the chain. Model answers come back in **XML tags** and are parsed here. |
-| `score.py` | Compares answers with the key and computes the metrics. |
-| `run.py` | The command-line runner: prints a **cost estimate first**, stops if it's over budget (default $10), runs the claims, saves a run file. |
-| `report.py` | Builds `results.md` from the run files. Nothing in it is typed by hand. |
+```
+claimsflow/
+├── models.py    ← the data shapes as dataclasses: Claim, Attachment, Policy, Customer, Figures, Result
+├── data.py      ← loads policies, customers, claims and the answer key (main or hard set)
+├── rules.py     ← fixed business rules in plain code: required documents per claim type,
+│                  finding the customer's policy, compute_payout (rate, then cap, then deductible)
+├── prompts.py   ← all prompt text: one place to read what each step is told
+├── levels.py    ← levels 0–3: the router, the parallel document check (a thread pool,
+│                  like the article's parallel()) and the chain; parses the XML-tag answers
+├── score.py     ← compares answers with the key and computes the metrics
+├── run.py       ← command-line runner: cost estimate first, stops over budget (default $10),
+│                  runs the claims, saves a run file
+└── report.py    ← builds results.md from the run files; nothing in it is typed by hand
+```
 
 The shared model helper is outside this folder, in [`shared/llm.py`](../../shared/llm.py): one `llm_call()` for OpenAI or Anthropic, plus time, tokens and cost tracking per call. The tests in `evals/` replace the model with a fake, and the root `conftest.py` blocks any real API call during tests.
 
