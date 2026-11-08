@@ -1,0 +1,149 @@
+<title>Claims Intake Flow</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one reading column; three-step flow first, then one panel per claim type, then the test plan. */
+  :root {
+    --bg: #f6f7f9; --surface: #ffffff; --fg: #1b2230; --muted: #5a6475; --line: #dde1e8;
+    --route: #4f46e5; --parallel: #b45309; --chain: #0f766e; --code: #334155; --stop: #be123c;
+    --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442;
+    --route: #a5a1ff; --parallel: #f4b267; --chain: #5fd3c4; --code: #b8c4d6; --stop: #fb7f9b; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442;
+    --route: #a5a1ff; --parallel: #f4b267; --chain: #5fd3c4; --code: #b8c4d6; --stop: #fb7f9b; color-scheme: dark; }
+
+  body { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--sans); }
+  .wrap { max-width: 1000px; margin: 0 auto; padding-block: 40px 64px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: grid; gap: 40px; }
+  header { display: grid; gap: 8px; max-width: 68ch; }
+  .kicker { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: 2rem; line-height: 1.15; margin: 0; text-wrap: balance; }
+  h2 { font-size: 1.25rem; margin: 0 0 14px; text-wrap: balance; }
+  h3 { font-size: 1rem; margin: 0; }
+  p { margin: 0; }
+  .lede { color: var(--muted); }
+
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .step { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--c); border-radius: 10px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+  .step .n { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--c); }
+  .step p { font-size: 15px; color: var(--muted); }
+  @media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+
+  .flow { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 16px; margin-top: 14px; display: grid; justify-items: center; gap: 0; }
+  .box { border: 1.5px solid var(--c, var(--muted)); background: color-mix(in oklab, var(--c, var(--muted)) 9%, var(--surface)); border-radius: 8px; padding: 10px 14px; text-align: center; font-size: 15px; line-height: 1.4; max-width: 100%; }
+  .box b { display: block; font-weight: 600; }
+  .box small { display: block; color: var(--muted); font-size: 13px; }
+  .arrow { color: var(--muted); font-size: 18px; line-height: 1; padding: 6px 0; text-align: center; }
+  .arrow small { display: block; font: 12px var(--mono); }
+  .group { border: 1.5px dashed var(--c); border-radius: 10px; padding: 10px 12px 12px; display: grid; gap: 8px; justify-items: center; width: min(100%, 640px); }
+  .group > .tag { font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--c); }
+  .row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; }
+  .row .sep { color: var(--muted); }
+  .split { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; }
+
+  .lines { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+  .label { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; font-size: 15px; }
+  .calc { font: 13px/1.7 var(--mono); background: var(--bg); border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
+  .calc b { font-weight: 500; color: var(--chain); }
+
+  .tbl { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  th { font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  td:first-child { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .note { font-size: 14px; color: var(--muted); margin-top: 10px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="kicker">Topic 1 · 01-prompt-vs-workflow · Design draft</p>
+    <h1>Claims Intake Flow</h1>
+    <p class="lede">One claim, three steps. Each step uses one workflow pattern. Car comprehensive, home water damage and travel claims, all made up.</p>
+  </header>
+
+  <section>
+    <h2>Three steps</h2>
+    <div class="steps">
+      <div class="step" style="--c:var(--route)"><span class="n">1 · Route</span><h3>What kind of claim?</h3><p>Sort it: car, water damage or travel. Each type gets its own document list and rules.</p></div>
+      <div class="step" style="--c:var(--parallel)"><span class="n">2 · Parallel</span><h3>Check all documents at once</h3><p>For each required document: is it there, and is it the right one? Missing or wrong stops the claim.</p></div>
+      <div class="step" style="--c:var(--chain)"><span class="n">3 · Chain</span><h3>Decide step by step</h3><p>Covered? Any exclusion? How much? The AI decides, plain code does the math.</p></div>
+    </div>
+
+    <div class="flow" role="img" aria-label="A new claim is sorted by type, all its documents are checked at the same time, missing or wrong documents send a request to the customer, otherwise the claim is decided step by step: covered, any exclusion, how much, and a result is returned.">
+      <div class="box"><b>New claim</b><small>description · policy number · attached documents</small></div>
+      <div class="arrow">↓</div>
+      <div class="group" style="--c:var(--route)"><span class="tag">1 · Route</span>
+        <div class="box" style="--c:var(--route)"><b>What kind of claim?</b></div>
+        <div class="row"><span class="box" style="--c:var(--route)">Car</span><span class="box" style="--c:var(--route)">Water damage</span><span class="box" style="--c:var(--route)">Travel</span></div>
+      </div>
+      <div class="arrow">↓<small>required list for this claim type</small></div>
+      <div class="group" style="--c:var(--parallel)"><span class="tag">2 · Parallel: all documents at once</span>
+        <div class="row"><span class="box" style="--c:var(--parallel)"><b>Document A</b><small>there? right one?</small></span><span class="box" style="--c:var(--parallel)"><b>Document B</b><small>there? right one?</small></span><span class="box" style="--c:var(--parallel)"><b>Document C</b><small>there? right one?</small></span></div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="split"><div class="box" style="--c:var(--parallel)"><b>All documents OK?</b></div><span class="arrow">no →</span><div class="box" style="--c:var(--stop)"><b>Ask the customer</b><small>names what is missing or wrong</small></div></div>
+      <div class="arrow">↓<small>yes</small></div>
+      <div class="group" style="--c:var(--chain)"><span class="tag">3 · Chain: decide step by step</span>
+        <div class="row"><span class="box" style="--c:var(--chain)"><b>Covered?</b></span><span class="sep">→</span><span class="box" style="--c:var(--chain)"><b>Any exclusion?</b></span><span class="sep">→</span><span class="box" style="--c:var(--code)"><b>How much?</b><small>plain code: cap · deductible · refund rate</small></span></div>
+        <small style="color:var(--muted);font-size:13px">not covered or excluded → straight to the result, with the reason</small>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="box"><b>Result</b><small>decision · amount · document status</small></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What each claim type checks</h2>
+    <div class="lines">
+      <article class="panel">
+        <h3>Car · comprehensive</h3>
+        <div class="label">Required documents</div>
+        <ul><li>Claim form</li><li>Driver's license</li><li>Photos of the damage</li><li>Assessor's report</li></ul>
+        <div class="label">Typical exclusions</div>
+        <ul><li>Driver not listed, or under the agreed age</li><li>Policy not active on the date</li></ul>
+        <div class="calc">repair 12,000 ₪ − deductible 1,500 ₪<br>= pays <b>10,500 ₪</b></div>
+      </article>
+      <article class="panel">
+        <h3>Home · water damage</h3>
+        <div class="label">Required documents</div>
+        <ul><li>Claim form</li><li>Photos of the damage</li><li>Plumber's finding (water source)</li><li>Repair quote</li></ul>
+        <div class="label">Typical exclusions</div>
+        <ul><li>No water-damage cover bought</li><li>Pipe wear or corrosion</li></ul>
+        <div class="calc">quote 8,000 ₪ − deductible 1,000 ₪<br>= pays <b>7,000 ₪</b></div>
+      </article>
+      <article class="panel">
+        <h3>Travel · medical or cancellation</h3>
+        <div class="label">Required documents</div>
+        <ul><li>Claim form</li><li>Medical summary, or proof of the cancel reason</li><li>Receipts, or supplier refund letters</li></ul>
+        <div class="label">Typical exclusions</div>
+        <ul><li>Event outside the trip dates</li><li>Reason not on the covered list</li></ul>
+        <div class="calc">paid 10,000 ₪ − refunds 3,000 ₪ = 7,000 ₪<br>cap 5,000 ₪ → pays <b>5,000 ₪</b></div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>What we compare</h2>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Level</th><th>How the claim is handled</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>One big prompt: all policies and the claim, one answer</td></tr>
+          <tr><td>1</td><td>Add step 1: sort first, then a prompt for that claim type</td></tr>
+          <tr><td>2</td><td>Add step 2: check the documents at the same time</td></tr>
+          <tr><td>3</td><td>Add step 3: decide step by step, code does the math</td></tr>
+          <tr><td>0+</td><td>Level 0 again with a larger model</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Same 30 made-up claims at every level, each with a known right answer. We score: decision right, amount right, document problems caught, time, cost.</p>
+  </section>
+</div>
