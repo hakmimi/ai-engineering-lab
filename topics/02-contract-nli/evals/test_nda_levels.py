@@ -150,3 +150,49 @@ def test_level2_unreadable_answer_is_an_error(monkeypatch):
     picks["nda-5"] = "1"
     fake_llm(monkeypatch, {"route": route_text(picks), "one:": "I think it is fine."})
     assert run_level2(SMALL_CONTRACT, ctx())["nda-5"] == Answer("error", [])
+
+
+# ---------------------------------------------------------------- level 3
+from ndaflow.levels import run_level3  # noqa: E402
+
+
+def _one_pick(ids: str) -> dict:
+    picks = {sid: "none" for sid in STATEMENT_IDS}
+    picks["nda-5"] = ids
+    return {"route": route_text(picks)}
+
+
+def test_level3_no_evidence_skips_the_label_call(monkeypatch):
+    calls = fake_llm(monkeypatch, {**_one_pick("1, 2"), "evidence:": "<evidence>none</evidence>"})
+    out = run_level3(SMALL_CONTRACT, ctx())
+    assert [c.label for c in calls] == ["route", "evidence:nda-5"]
+    assert out["nda-5"] == Answer("not_mentioned", [])
+
+
+def test_level3_evidence_outside_the_picked_spans_is_dropped(monkeypatch):
+    fake_llm(monkeypatch, {**_one_pick("1"), "evidence:": "<evidence>1, 2</evidence>", "label:": "<label>entailment</label>"})
+    assert run_level3(SMALL_CONTRACT, ctx())["nda-5"] == Answer("entailment", [1])
+
+
+def test_level3_label_step_sees_only_the_evidence_spans(monkeypatch):
+    calls = fake_llm(monkeypatch, {**_one_pick("1, 2"), "evidence:": "<evidence>2</evidence>", "label:": "<label>contradiction</label>"})
+    out = run_level3(SMALL_CONTRACT, ctx())
+    label_call = next(c for c in calls if c.label == "label:nda-5")
+    assert SMALL_CONTRACT.spans[2] in label_call.prompt and SMALL_CONTRACT.spans[1] not in label_call.prompt
+    assert out["nda-5"] == Answer("contradiction", [2])
+
+
+def test_level3_label_step_may_say_not_mentioned(monkeypatch):
+    fake_llm(monkeypatch, {**_one_pick("1"), "evidence:": "<evidence>1</evidence>", "label:": "<label>Not mentioned</label>"})
+    assert run_level3(SMALL_CONTRACT, ctx())["nda-5"] == Answer("not_mentioned", [])
+
+
+def test_level3_unreadable_label_is_an_error(monkeypatch):
+    fake_llm(monkeypatch, {**_one_pick("1"), "evidence:": "<evidence>1</evidence>", "label:": "yes"})
+    assert run_level3(SMALL_CONTRACT, ctx())["nda-5"] == Answer("error", [])
+
+
+def test_level3_missing_evidence_tag_is_an_error(monkeypatch):
+    calls = fake_llm(monkeypatch, {**_one_pick("1"), "evidence:": "Span 1 is relevant."})
+    assert run_level3(SMALL_CONTRACT, ctx())["nda-5"] == Answer("error", [])
+    assert "label:nda-5" not in [c.label for c in calls]

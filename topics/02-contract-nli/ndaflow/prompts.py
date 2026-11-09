@@ -87,3 +87,20 @@ DECIDE_ONE_SYSTEM = "\n\n".join([
     "## Answer format\nThink it through, then answer with these tags only:\n"
     "<label>entailment, contradiction or not_mentioned</label>\n<evidence>span numbers, or none</evidence>",
 ])
+
+
+# ---------------------------------------------------------------- level 3: the chain
+EVIDENCE_SYSTEM = "\n\n".join([
+    ROLE,
+    "You get one statement and the contract spans picked for it. Answer one question only: "
+    "which of these spans speak to the statement, either for it or against it? Do not decide the label yet.",
+    "## Answer format\nAnswer with this tag only:\n<evidence>span numbers, comma-separated, or none</evidence>",
+])
+
+LABEL_SYSTEM = "\n\n".join([
+    ROLE,
+    "You get one statement and the contract spans that speak to it. Answer one question only: "
+    "does the contract support the statement or contradict it? If these spans turn out not to settle it, say not_mentioned.",
+    LABEL_RULES.split("## Evidence")[0].strip(),
+    "## Answer format\nThink it through, then answer with this tag only:\n<label>entailment, contradiction or not_mentioned</label>",
+])
