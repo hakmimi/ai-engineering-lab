@@ -29,7 +29,7 @@ Details, commands and checklists per step: `reference.md` (read it at step 1).
 1. **Read the article.** Claims, shown results, its own caveats, what it does **not** measure. Find its code if any. → 🛑 1
 2. **Find data** with a third-party answer key. Check the licence. Pin the version. Count what exists. No fit → tell the owner; never write the key yourself.
 3. **Topic folder + design.** Number = next free one (check `topics/`, untracked folders in the main checkout, `articles.md`). Create **`topics/NN-<slug>/`** (slug = method + dataset, e.g. `06-table-retrieval-bird`) in the topic's worktree (step 4 commands), with `design/design.md` from `templates/design.md`. → 🛑 2
-4. **Worktree + plan.** `C:\Workshop\ai-engineering-lab-topicNN`, branch `topic-NN-<slug>`. Plan with superpowers:writing-plans; build with superpowers:executing-plans and TDD.
+4. **Plan.** In the worktree `C:\Workshop\ai-engineering-lab-topicNN` (branch `topic-NN-<slug>`, made at step 3). Plan with superpowers:writing-plans; build with superpowers:executing-plans and TDD.
 5. **Build** data → levels → runner → report. Use `shared/llm.py`, `shared/runs.py`, `shared/charts.py`.
 6. **Fresh review** of the whole branch (opus subagent) **before any money is spent**. Fix with RED→GREEN tests.
 7. **Spot check** from `templates/spot-check.md`: 10 + 10 main-set items. → 🛑 3
