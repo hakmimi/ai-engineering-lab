@@ -14,4 +14,3 @@ Status: `waiting` → `in progress` → `published`.
 ## Ideas for later
 
 - **Business-definition lookup for table finding** (from topic 06): search LiveSQLBench's per-database knowledge base with the question and add matched definitions before table search. LinkedIn's "domain knowledge" lever.
-- **Pinterest's table summaries** (from topic 06): [How we built Text-to-SQL at Pinterest](https://medium.com/pinterest-engineering/how-we-built-text-to-sql-at-pinterest-30bad30dabff). LLM-written summary per table, search on summaries. Waiting for the author's yes on cost.

@@ -143,7 +143,7 @@ and `key.json` git-ignored), `tablefind/` (package), `evals/`, `charts/`, `resul
 ## Ideas for later (not in this topic)
 
 - **Business-definition lookup** (the author's call, 2026-11-09: keep for later). LiveSQLBench ships a knowledge base per database (`*_kb.jsonl`, e.g. "System Unavailability = …"). Search it with the question and add the matched definitions and the columns they name before table search. It is LinkedIn's "domain knowledge" lever. Costs about $1 per set.
-- **Pinterest's table summaries** (handed over by the topic 05 session, 2026-11-09; waiting for the author's yes on cost). Pinterest ("How we built Text-to-SQL at Pinterest") uses the same search-then-LLM pattern, and has an LLM write a summary of each table ahead of time; search runs against the summaries. They report table-search hit rate going from 40% to up to 90%. Would be a level 5 (level 4 is taken): summary cards for all 971 tables, cached, then level 2's search and re-rank on them.
+- **Pinterest's table summaries**: no longer for later. The author approved it on 2026-11-09 and it ran as **level 5**: Pinterest's own summary prompt for all 971 tables (one-time, $0.19), then level 2's search and re-rank on the summary cards. Correction to the first note: Pinterest reports a 40% hit rate without documentation and says it rose as documentation got more **weight**, up to a weight of 90%. It gives no final hit rate.
 
 ## 10. Left to the builder
 
