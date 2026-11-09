@@ -23,8 +23,8 @@ def _key(model: str, text: str) -> str:
 
 
 class Embedder:
-    def __init__(self, cache_dir: Path, client=None, model: str = EMBED_MODEL):
-        self.model, self.client, self.cost_usd = model, client, 0.0
+    def __init__(self, cache_dir: Path, client=None, model: str = EMBED_MODEL, cache_only: bool = False):
+        self.model, self.client, self.cost_usd, self.cache_only = model, client, 0.0, cache_only
         self.path = cache_dir / f"{model}.jsonl"
         self.cache: dict[str, list[float]] = {}
         if self.path.exists():
@@ -42,6 +42,8 @@ class Embedder:
     def embed(self, texts: list[str]) -> list[list[float]]:
         keys = [_key(self.model, t) for t in texts]
         todo = list(dict.fromkeys((k, t) for k, t in zip(keys, texts) if k not in self.cache))
+        if todo and self.cache_only:
+            raise RuntimeError(f"{len(todo)} texts not in the cache; cache_only never calls the API")
         for i in range(0, len(todo), BATCH):
             chunk = todo[i:i + BATCH]
             resp = self._client().embeddings.create(model=self.model, input=[t[:MAX_CHARS] for _, t in chunk])

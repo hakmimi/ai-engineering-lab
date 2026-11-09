@@ -14,6 +14,7 @@ https://huggingface.co/datasets/Snowflake/SQL-Schema-Retrieval , commit `e60c65c
 - `main.json`, `test.json`: the question text only, with new ids (`m-001`, `t-001`). The 18 databases are split 9 / 9 with seed 2026;
   `build_log.json` records the split and maps each new id to its LiveSQLBench `instance_id`.
 - `links.json`: foreign-key links between tables, parsed from the same `CREATE TABLE` blocks (level 4).
+- `search_next3.json`: for each question, search ranks 21-23 on level 3's description cards (the level 4c control).
 - `summaries.json`: one LLM-written summary per table (`gpt-6-luna`, Pinterest's summary prompt), made from the columns and descriptions above (level 5).
 - **Not committed:** `key.json` (the gold table lists) and `raw/`. The BIRD team gates the gold SQL to keep it out of training data;
   I never fetch it. The gold table lists are public in Snowflake's release; `python -m tablefind.build_data` downloads them at the pinned commit

@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from shared.runs import save_run
@@ -81,13 +83,15 @@ def test_level4_and_control_come_from_level3_with_no_extra_cost(tmp_path, key_se
     r = _run(key, "3", top20=True)
     for q, a in r["repeats"][0]["answers"].items():
         if key[q] == {"alpha_large.projects", "alpha_large.sites"}:
-            a["picks"], a["top20"] = ["alpha_large.projects"], ["alpha_large.projects", "beta_large.plants"]
+            a["picks"], a["top20"] = ["alpha_large.projects"], ["alpha_large.projects", "alpha_large.turned_down"]
     save_run(tmp_path / "runs", s, "3", r)
+    q = next(q for q in key if len(key[q]) == 2)
+    # the control's 3 extra tables are search ranks 21-23, outside the 20 the LLM saw (data/search_next3.json)
+    (data.DATA / "search_next3.json").write_text(json.dumps({**{x: [] for x in key}, q: ["beta_large.plants"]}), encoding="utf-8")
     runs = report.level_runs(tmp_path / "runs", s)
     assert runs["4"]["derived_from"] == "3" and runs["4c"]["derived_from"] == "3"
     four = runs["4"]["repeats"][0]["answers"]
     control = runs["4c"]["repeats"][0]["answers"]
-    q = next(q for q in key if len(key[q]) == 2)
     assert four[q]["picks"] == ["alpha_large.projects", "alpha_large.sites"]
     assert control[q]["picks"] == ["alpha_large.projects", "beta_large.plants"]
     assert report.summary(runs["4"], key)["all_found"] == 1.0
@@ -103,3 +107,20 @@ def test_level5_in_ceiling_and_cost_charts(tmp_path, key_set):
     build = {p.name: p.read_text(encoding="utf-8") for p in report.build_charts(runs, out)}
     assert report.LEVEL_NAMES["5"].split(" · ")[1] in build["ceiling.svg"]
     assert report.LEVEL_NAMES["5"].split(" · ")[1] in build["cost-per-question.svg"]
+
+
+def test_level5_plus_joins_comes_from_level5_with_no_extra_cost(tmp_path, key_set):
+    s = next(x for x in ("main", "test") if any(len(g) == 2 for g in data.load_key(x).values()))
+    key = data.load_key(s)
+    r = _run(key, "5", top20=True)
+    for q, a in r["repeats"][0]["answers"].items():
+        if key[q] == {"alpha_large.projects", "alpha_large.sites"}:
+            a["picks"], a["top20"] = ["alpha_large.projects"], ["alpha_large.projects", "beta_large.plants"]
+    save_run(tmp_path / "runs", s, "5", r)
+    runs = report.level_runs(tmp_path / "runs", s)
+    assert runs["5j"]["derived_from"] == "5"
+    q = next(q for q in key if len(key[q]) == 2)
+    assert runs["5j"]["repeats"][0]["answers"][q]["picks"] == ["alpha_large.projects", "alpha_large.sites"]
+    assert report.summary(runs["5j"], key)["all_found"] == 1.0
+    assert report.summary(runs["5j"], key)["usd"] == report.summary(runs["5"], key)["usd"]
+    assert "| " + report.LEVEL_NAMES["5j"] + " | " in report.build_results(tmp_path / "runs")

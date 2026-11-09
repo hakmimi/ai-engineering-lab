@@ -1,13 +1,17 @@
 """Level 4: hand over the LLM's 7 picks plus 3 tables joined to them by a foreign key (10 in all).
 
-The control (4c) hands over the same 7 picks plus the next 3 from the search order, also 10, so any gain
-comes from the join links, not from handing over more tables. Both are computed from the saved level 3
-answers: no extra model calls.
+The control (4c) hands over the same 7 picks plus search ranks 21-23, also 10 and also from outside the 20 the
+LLM saw, so any gain at level 4 comes from the join links, not from handing over more tables. (An earlier control
+took the next 3 from inside the 20: tables the LLM had already turned down, which could never win.)
+Both are computed from saved answers: no extra model calls.
 """
 
 from __future__ import annotations
 
+from tablefind.embed import cosine_top_k
+
 JOIN_EXTRA = 3
+SHORTLIST = 20
 
 
 def add_joins(picks: list[str], top20: list[str], links: dict[str, set[str]], extra: int = JOIN_EXTRA) -> list[str]:
@@ -24,5 +28,12 @@ def add_joins(picks: list[str], top20: list[str], links: dict[str, set[str]], ex
     return list(picks) + order[:extra]
 
 
-def add_search(picks: list[str], top20: list[str], extra: int = JOIN_EXTRA) -> list[str]:
-    return list(picks) + [t for t in top20 if t not in set(picks)][:extra]
+def add_search(picks: list[str], more: list[str], extra: int = JOIN_EXTRA) -> list[str]:
+    """Picks, then the first `extra` tables of `more` that aren't already picked."""
+    return list(picks) + [t for t in more if t not in set(picks)][:extra]
+
+
+def next_after_shortlist(qvec: list[float], vecs: list[list[float]], ids: list[str], start: int = SHORTLIST,
+                         extra: int = JOIN_EXTRA, normalized: bool = False) -> list[str]:
+    """Search ranks start+1 .. start+extra (21-23): the closest tables the LLM was never shown."""
+    return cosine_top_k(qvec, vecs, ids, start + extra, normalized=normalized)[start:]

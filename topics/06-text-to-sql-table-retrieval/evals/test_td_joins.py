@@ -40,3 +40,19 @@ def test_add_joins_adds_at_most_extra_and_never_repeats():
 
 def test_add_search_takes_next_from_shortlist():
     assert add_search(["b", "d"], ["a", "b", "c", "d", "e", "f"], extra=3) == ["b", "d", "a", "c", "e"]
+
+
+def test_next_after_shortlist_takes_search_ranks_21_to_23():
+    from tablefind.joins import next_after_shortlist
+    ids = [f"d.t{i:02d}" for i in range(30)]
+    vecs = [[1.0, i / 100] for i in range(30)]  # closer to the question = smaller i
+    out = next_after_shortlist([1.0, 0.0], vecs, ids)
+    assert out == ["d.t20", "d.t21", "d.t22"]
+
+
+def test_cached_embedder_refuses_to_call_the_api(tmp_path):
+    import pytest
+    from tablefind.embed import Embedder
+    e = Embedder(tmp_path, cache_only=True)
+    with pytest.raises(RuntimeError, match="not in the cache"):
+        e.embed(["never seen"])

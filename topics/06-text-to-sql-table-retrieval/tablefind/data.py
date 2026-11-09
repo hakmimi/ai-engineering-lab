@@ -57,5 +57,10 @@ def load_summaries() -> dict[str, str]:
     return summaries
 
 
+def load_next3() -> dict[str, list[str]]:
+    """The 4c control: search ranks 21-23 for each question, on level 3's description cards (tablefind.next_search)."""
+    return _read("search_next3.json")
+
+
 def load_key(set_name: str) -> dict[str, set[str]]:
     return {qid: set(ts) for qid, ts in _read("key.json")[set_name].items()}
