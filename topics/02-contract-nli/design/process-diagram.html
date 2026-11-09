@@ -1,0 +1,118 @@
+<title>NDA Review Flow</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one reading column; three-step flow first, then one panel per claim type, then the test plan. */
+  :root {
+    --bg: #f6f7f9; --surface: #ffffff; --fg: #1b2230; --muted: #5a6475; --line: #dde1e8;
+    --route: #4f46e5; --parallel: #b45309; --chain: #0f766e; --code: #334155; --stop: #be123c;
+    --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442;
+    --route: #a5a1ff; --parallel: #f4b267; --chain: #5fd3c4; --code: #b8c4d6; --stop: #fb7f9b; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442;
+    --route: #a5a1ff; --parallel: #f4b267; --chain: #5fd3c4; --code: #b8c4d6; --stop: #fb7f9b; color-scheme: dark; }
+
+  body { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--sans); }
+  .wrap { max-width: 1000px; margin: 0 auto; padding-block: 40px 64px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: grid; gap: 40px; }
+  header { display: grid; gap: 8px; max-width: 68ch; }
+  .kicker { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: 2rem; line-height: 1.15; margin: 0; text-wrap: balance; }
+  h2 { font-size: 1.25rem; margin: 0 0 14px; text-wrap: balance; }
+  h3 { font-size: 1rem; margin: 0; }
+  p { margin: 0; }
+  .lede { color: var(--muted); }
+
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .step { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--c); border-radius: 10px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+  .step .n { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--c); }
+  .step p { font-size: 15px; color: var(--muted); }
+  @media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+
+  .flow { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 16px; margin-top: 14px; display: grid; justify-items: center; gap: 0; }
+  .box { border: 1.5px solid var(--c, var(--muted)); background: color-mix(in oklab, var(--c, var(--muted)) 9%, var(--surface)); border-radius: 8px; padding: 10px 14px; text-align: center; font-size: 15px; line-height: 1.4; max-width: 100%; }
+  .box b { display: block; font-weight: 600; }
+  .box small { display: block; color: var(--muted); font-size: 13px; }
+  .arrow { color: var(--muted); font-size: 18px; line-height: 1; padding: 6px 0; text-align: center; }
+  .arrow small { display: block; font: 12px var(--mono); }
+  .group { border: 1.5px dashed var(--c); border-radius: 10px; padding: 10px 12px 12px; display: grid; gap: 8px; justify-items: center; width: min(100%, 640px); }
+  .group > .tag { font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--c); }
+  .row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; }
+  .row .sep { color: var(--muted); }
+  .split { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; }
+
+  .lines { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+  .label { font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; font-size: 15px; }
+  .calc { font: 13px/1.7 var(--mono); background: var(--bg); border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
+  .calc b { font-weight: 500; color: var(--chain); }
+
+  .tbl { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  th { font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  td:first-child { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .note { font-size: 14px; color: var(--muted); margin-top: 10px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="kicker">Topic 2 · 02-contract-nli · Design</p>
+    <h1>NDA Review Flow</h1>
+    <p class="lede">One real NDA, 17 fixed statements. For each statement: does the contract say it, say the opposite, or not mention it, and which sentences prove it? Data: ContractNLI (CC BY 4.0).</p>
+  </header>
+
+  <section>
+    <h2>Three steps</h2>
+    <div class="steps">
+      <div class="step" style="--c:var(--route)"><span class="n">1 · Route</span><h3>Which sentences matter?</h3><p>One call reads the whole contract and picks, for each statement, the spans that could decide it. Later steps see only those.</p></div>
+      <div class="step" style="--c:var(--parallel)"><span class="n">2 · Parallel</span><h3>Check all 17 statements at once</h3><p>One call per statement, all at the same time, each with only its own picked spans.</p></div>
+      <div class="step" style="--c:var(--chain)"><span class="n">3 · Chain</span><h3>Proof first, then the answer</h3><p>Which picked spans are real evidence? Code checks the numbers. Then: true, false or not mentioned.</p></div>
+    </div>
+
+    <div class="flow" role="img" aria-label="An NDA and 17 statements go to a router that picks spans per statement. Statements with no spans are not mentioned. The rest are checked in parallel; each one first finds its evidence, code keeps only real span numbers, then a label call decides true or false. The result is a label and evidence for every statement.">
+      <div class="box"><b>One NDA</b><small>numbered spans · 17 fixed statements</small></div>
+      <div class="arrow">↓</div>
+      <div class="group" style="--c:var(--route)"><span class="tag">1 · Route</span>
+        <div class="box" style="--c:var(--route)"><b>Which spans matter for each statement?</b><small>reads the whole contract</small></div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="split"><div class="box" style="--c:var(--route)"><b>Any spans picked?</b></div><span class="arrow">no →</span><div class="box" style="--c:var(--code)"><b>Not mentioned</b><small>plain code, no call</small></div></div>
+      <div class="arrow">↓<small>yes</small></div>
+      <div class="group" style="--c:var(--parallel)"><span class="tag">2 · Parallel: one call per statement</span>
+        <div class="row"><span class="box" style="--c:var(--parallel)"><b>nda-5</b><small>sharing with employees</small></span><span class="box" style="--c:var(--parallel)"><b>nda-11</b><small>no reverse engineering</small></span><span class="sep">…</span><span class="box" style="--c:var(--parallel)"><b>nda-20</b><small>keeping copies</small></span></div>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="group" style="--c:var(--chain)"><span class="tag">3 · Chain, inside each statement</span>
+        <div class="row"><span class="box" style="--c:var(--chain)"><b>Which spans are evidence?</b></span><span class="sep">→</span><span class="box" style="--c:var(--code)"><b>Real span numbers?</b><small>plain code drops made-up ones</small></span><span class="sep">→</span><span class="box" style="--c:var(--chain)"><b>True or false?</b></span></div>
+        <small style="color:var(--muted);font-size:13px">no evidence left → not mentioned, no label call</small>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="box"><b>Result</b><small>17 × label (entailment · contradiction · not mentioned) + evidence spans</small></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What we compare</h2>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Level</th><th>How the contract is handled</th><th>Calls</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>One big prompt: the whole contract and all 17 statements, one answer</td><td>1</td></tr>
+          <tr><td>1</td><td>Add step 1: pick spans first, then one prompt that sees only them</td><td>2</td></tr>
+          <tr><td>2</td><td>Add step 2: one call per statement, all at the same time</td><td>up to 18</td></tr>
+          <tr><td>3</td><td>Add step 3: evidence first, code checks it, then the label</td><td>up to 35</td></tr>
+          <tr><td>0+</td><td>Level 0 again with a larger model</td><td>1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">30 NDAs to tune on (dev split) and 30 held out (test split), each run 3 times. Labels by lawyers, from the dataset. We score: label right, F1 for entailment and contradiction, evidence found, evidence precision, time, cost.</p>
+  </section>
+</div>
