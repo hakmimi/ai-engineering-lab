@@ -103,3 +103,20 @@ def test_level5_in_ceiling_and_cost_charts(tmp_path, key_set):
     build = {p.name: p.read_text(encoding="utf-8") for p in report.build_charts(runs, out)}
     assert report.LEVEL_NAMES["5"].split(" · ")[1] in build["ceiling.svg"]
     assert report.LEVEL_NAMES["5"].split(" · ")[1] in build["cost-per-question.svg"]
+
+
+def test_level5_plus_joins_comes_from_level5_with_no_extra_cost(tmp_path, key_set):
+    s = next(x for x in ("main", "test") if any(len(g) == 2 for g in data.load_key(x).values()))
+    key = data.load_key(s)
+    r = _run(key, "5", top20=True)
+    for q, a in r["repeats"][0]["answers"].items():
+        if key[q] == {"alpha_large.projects", "alpha_large.sites"}:
+            a["picks"], a["top20"] = ["alpha_large.projects"], ["alpha_large.projects", "beta_large.plants"]
+    save_run(tmp_path / "runs", s, "5", r)
+    runs = report.level_runs(tmp_path / "runs", s)
+    assert runs["5j"]["derived_from"] == "5"
+    q = next(q for q in key if len(key[q]) == 2)
+    assert runs["5j"]["repeats"][0]["answers"][q]["picks"] == ["alpha_large.projects", "alpha_large.sites"]
+    assert report.summary(runs["5j"], key)["all_found"] == 1.0
+    assert report.summary(runs["5j"], key)["usd"] == report.summary(runs["5"], key)["usd"]
+    assert "| " + report.LEVEL_NAMES["5j"] + " | " in report.build_results(tmp_path / "runs")

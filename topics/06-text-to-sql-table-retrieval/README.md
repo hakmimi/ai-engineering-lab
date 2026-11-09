@@ -43,9 +43,9 @@ I put all 971 tables in one pool, like one big warehouse. Every question searche
 
 The held-out questions turned out harder: they need 3.1 tables on average, against 2.3 in the main set. So I compare levels within a set, not one set against the other.
 
-### Seven ways to pick the tables
+### Eight ways to pick the tables
 
-Every level hands **7 tables** to the (imagined) SQL writer, except levels 4 and 4c, which hand over 10.
+Every level hands **7 tables** to the (imagined) SQL writer, except levels 4, 4c and 5j, which hand over 10.
 
 - **Level 0 · Keyword search.** Match the question's words against table and column names. Free.
 - **Level 1 · Embedding search.** Take the 7 closest tables by embedding.
@@ -54,10 +54,9 @@ Every level hands **7 tables** to the (imagined) SQL writer, except levels 4 and
 - **Level 4 · + joined tables.** Level 3's 7 picks plus 3 tables connected to them by a foreign key. This is my own add-on, in the spirit of LinkedIn's "common joins".
 - **Level 4c · the control for level 4.** Level 3's 7 picks plus the next 3 from search. Also 10 tables, so if level 4 wins, it's the joins, not just "more tables".
 - **Level 5 · Pinterest's way.** An LLM first writes a summary of each table from the same descriptions, using Pinterest's own prompt. Search and pick then use the summaries.
+- **Level 5j · the two best together.** Level 5's 7 picks plus 3 joined tables, the same way as level 4. I added this after the first results, because it was the obvious next question.
 
 ![The levels: keyword search, embedding search, search 20 then LLM picks 7, with descriptions](design/process-diagram.png)
-
-The picture shows the core levels, 0 to 3. Levels 4, 4c and 5 build on them.
 
 ## Keeping score
 
@@ -83,6 +82,8 @@ LinkedIn's way, search 20 and let the LLM pick 7, more than doubled that to **43
 
 Adding 3 tables joined to the picks by a foreign key (level 4) was the biggest jump: **66%**. The control, 3 more tables from the search list (4c), did nothing: 52%, the same as level 3. So it's the joins that help, not just handing over more tables.
 
+Putting the two best ideas together, Pinterest's summaries plus 3 joined tables (5j), gave the best score: **68%**.
+
 ### Then the held-out set
 
 The held-out set, with 9 databases I never tuned on, tells the same story, a little higher:
@@ -92,6 +93,9 @@ The held-out set, with 9 databases I never tuned on, tells the same story, a lit
 - \+ descriptions: **55%**
 - Pinterest summaries: **61%**
 - level 3 + 3 joined tables: **75%** (recall 90%)
+- Pinterest summaries + 3 joined tables: **78%** (recall 91%)
+
+Level 5j beats level 4 by only 3 points, about 5 questions, so I'd call those two a tie.
 
 So LinkedIn's claim holds on questions anyone can check. Each step helps, and the LLM step is worth a lot.
 
@@ -107,7 +111,7 @@ So the limit is **search**: in about 4 questions out of 10, at least one needed 
 
 ![Held-out: all found, by how many tables the question needs](charts/by-gold-size.svg)
 
-One-table questions are easy: 86% with plain search, 100% once the LLM picks. The trouble is questions that need **3 or more** tables, which is most of the held-out set (102 of 159). Plain search finds all of them only 4% of the time. LLM pick 30%, descriptions 38%, Pinterest summaries 48%. Joins take it to **65%**.
+One-table questions are easy: 86% with plain search, 100% once the LLM picks. The trouble is questions that need **3 or more** tables, which is most of the held-out set (102 of 159). Plain search finds all of them only 4% of the time. LLM pick 30%, descriptions 38%, Pinterest summaries 48%. Joins take it to **65%**, and summaries plus joins (5j) to **70%**.
 
 The main set shows the same shape, a bit lower: on 3+ table questions it goes 17% → 24% → 43% (levels 2, 3, 4).
 
@@ -117,7 +121,7 @@ The main set shows the same shape, a bit lower: on 3+ table questions it goes 17
 
 The LLM step costs well under a cent per question at `gpt-6-luna`'s list prices. Level 2: **$0.0007**. Level 3: **$0.0016**, because description cards are long. Pinterest's summary cards are short, so level 5 costs **$0.0008** and still beats level 3. The summaries themselves cost **$0.19 once**, for all 971 tables.
 
-The LLM call takes about 10 seconds per question. Levels 4 and 4c reuse level 3's answers, so they add no cost and no time.
+The LLM call takes about 10 seconds per question. Levels 4 and 4c reuse level 3's answers, and 5j reuses level 5's, so they add no cost and no time.
 
 The whole topic, smoke runs included, cost **$2.21**.
 
@@ -137,7 +141,7 @@ Every number came in higher than the guesses. The shape was right, but the guess
 
 - **The "search, then LLM picks" pattern is worth it.** It about doubles the questions that get every table, for less than a tenth of a cent each.
 - **Spend your effort on search, not the picker.** The LLM almost never drops a table it's shown. Every table search misses is a question you lose.
-- **Follow the foreign keys.** Adding 3 joined tables helped more than any other change (55% → 75% held-out), at no cost. Tables that are only there for a join don't look like the question, so search won't find them. The schema can.
+- **Follow the foreign keys.** Adding 3 joined tables helped more than any other change (55% → 75% held-out), at no cost. On top of Pinterest's summaries it reached 78%, the best of all. Tables that are only there for a join don't look like the question, so search won't find them. The schema can.
 - **Pinterest's summaries are a cheap upgrade.** Shorter cards than full descriptions, better search, half the price per question.
 - **Count "all found", not recall.** At level 3, recall on the held-out set was 80%, which sounds great. But only 55% of questions got every table, and a query with one table missing is wrong.
 
@@ -148,8 +152,8 @@ Every number came in higher than the guesses. The shape was right, but the guess
 - **No example queries.** LinkedIn and Pinterest both use past queries to help search. This benchmark has none, so Pinterest's prompt got "(none available)" there.
 - **The model is `gpt-6-luna`, the embeddings are `text-embedding-3-small`.** LinkedIn doesn't name their models. Other models might pick differently.
 - **The answer key comes from the gold SQL.** If a question could also be answered with other tables, I count that as a miss.
-- **Some questions can't be fully found with 7 tables.** One question in each set needs 8. Only levels 4 and 4c, with 10 tables, could get it all.
-- **I knew level 4 should help before I ran it.** Before building it, I checked how often the needed tables were linked by a foreign key, on both sets. That's why I built it, and it's also why I added the 4c control.
+- **Some questions can't be fully found with 7 tables.** One question in each set needs 8. Only levels 4, 4c and 5j, with 10 tables, could get it all.
+- **I knew level 4 should help before I ran it.** Before building it, I checked how often the needed tables were linked by a foreign key, on both sets. That's why I built it, and it's also why I added the 4c control. Level 5j came after I'd seen all the other results.
 - **No spot check.** The author decided to go ahead without checking 20 questions by hand.
 - **A few unreadable answers.** Up to about 1 per run of 159, the LLM's answer had no complete list. These count as misses. I didn't keep their raw text.
 - **159 questions is not a lot.** One question is about 0.6 points, and the one-table group on the held-out set has only 21 questions. Small gaps between levels may be noise.

@@ -22,31 +22,30 @@ CHARTS_DIR = TOPIC / "charts"
 LEVEL_NAMES = {"0": "0 · Keyword search", "1": "1 · Embedding search",
                "2": "2 · Search 20, LLM picks 7", "3": "3 · + descriptions",
                "4c": "4c · 3 + 3 from search", "4": "4 · 3 + 3 joined tables",
-               "5": "5 · Pinterest summaries"}  # short: the chart's label column is narrow
-RUN_LEVELS = ("0", "1", "2", "3", "5")  # 4 and 4c are computed from level 3's saved answers
+               "5": "5 · Pinterest summaries", "5j": "5j · 5 + 3 joined tables"}  # short: the chart's label column is narrow
+RUN_LEVELS = ("0", "1", "2", "3", "5")  # 4 and 4c are computed from level 3's saved answers, 5j from level 5's
 GOLD_SIZE_LEVELS = ("1", "2", "3", "4")
 GOLD_SIZE_LEGEND = {"1": "1 · Search", "2": "2 · LLM picks", "3": "3 · + descriptions", "4": "4 · + joins"}  # fits one row  # four colours at most; level 0 is near zero everywhere
 SET_NAMES = {"main": "Main set (tuning allowed)", "test": "Held-out set (never tuned on)"}
 
 
-def _derive(run: dict, extend) -> dict:
-    """A copy of a level 3 run with each ok answer's picks extended. Costs and timings stay level 3's."""
+def _derive(run: dict, extend, base: str = "3") -> dict:
+    """A copy of a level `base` run with each ok answer's picks extended. Costs and timings stay the base level's."""
     reps = []
     for r in run["repeats"]:
         answers = {q: ({**a, "picks": extend(a)} if a["status"] == "ok" else dict(a)) for q, a in r["answers"].items()}
         reps.append({**r, "answers": answers})
-    return {**run, "repeats": reps, "derived_from": "3"}
+    return {**run, "repeats": reps, "derived_from": base}
 
 
 def level_runs(runs_dir: Path, set_name: str) -> dict[str, dict | None]:
     runs = {lv: latest_run(runs_dir, set_name, lv) for lv in RUN_LEVELS}
-    three = runs["3"]
-    if three is None:
-        runs["4c"] = runs["4"] = None
-    else:
-        links = load_links()
-        runs["4c"] = _derive(three, lambda a: add_search(a["picks"], a["top20"] or []))
-        runs["4"] = _derive(three, lambda a: add_joins(a["picks"], a["top20"] or [], links))
+    links = load_links() if runs["3"] or runs["5"] else {}
+    joined = lambda a: add_joins(a["picks"], a["top20"] or [], links)  # noqa: E731
+    three, five = runs["3"], runs["5"]
+    runs["4c"] = _derive(three, lambda a: add_search(a["picks"], a["top20"] or [])) if three else None
+    runs["4"] = _derive(three, joined) if three else None
+    runs["5j"] = _derive(five, joined, base="5") if five else None
     return {lv: runs[lv] for lv in LEVEL_NAMES}  # the reading order: 4c and 4 build on 3, then 5
 
 
@@ -85,8 +84,9 @@ def build_results(runs_dir: Path) -> str:
              "average tables filled per answer (share of answers with any fill). "
              "**$ / question** = repeat 1 only (later repeats hit the provider's prompt cache), without the one-time embedding of the 971 tables. "
              "**s / question** = wall time with parallel workers; **LLM s** = the re-ranker call alone. "
-             "**Levels 4c and 4 hand over 10 tables, not 7**: level 3's picks plus 3 more, from the search order (4c, the control) "
-             "or joined to the picks by a foreign key (4). They reuse level 3's answers, so they cost nothing extra.", ""]
+             "**Levels 4c, 4 and 5j hand over 10 tables, not 7**: level 3's picks plus 3 more, from the search order (4c, the control) "
+             "or joined to the picks by a foreign key (4); 5j is level 5's picks plus 3 joined tables. They reuse level 3's "
+             "or level 5's answers, so they cost nothing extra.", ""]
     for set_name, title in SET_NAMES.items():
         key = load_key(set_name)
         runs = level_runs(runs_dir, set_name)
@@ -122,7 +122,8 @@ def build_results(runs_dir: Path) -> str:
         lines.append(f"**We got (held-out, all found):** embedding search {f['1']:.0%} → LLM re-rank {f['2']:.0%} → "
                      f"+ descriptions {f['3']:.0%}. With 3 more tables (10 in all): from search {f['4c']:.0%}, "
                      f"joined by foreign key {f['4']:.0%}."
-                     + (f" Pinterest-style summaries: {summary(test['5'], key)['all_found']:.0%}." if test["5"] else ""))
+                     + (f" Pinterest-style summaries: {summary(test['5'], key)['all_found']:.0%}, "
+                        f"plus 3 joined tables: {summary(test['5j'], key)['all_found']:.0%}." if test["5"] else ""))
     else:
         lines.append("**We got:** not run yet.")
     return "\n".join(lines) + "\n"
@@ -143,8 +144,8 @@ def build_charts(runs_dir: Path, out_dir: Path = CHARTS_DIR) -> list[Path]:
 
     panels = [(title, [LEVEL_NAMES[lv] for lv in sums[s]], [[v["all_found"], v["recall"]] for v in sums[s].values()])
               for s, title in SET_NAMES.items() if sums[s]]
-    save("all-found.svg", bar_chart("Did the 7 tables include everything needed?",
-                                    "Out of 971 tables. All found = every needed table is in the 7; recall = share of needed tables found",
+    save("all-found.svg", bar_chart("Did the tables handed over include everything needed?",
+                                    "Out of 971 tables; 7 handed over (10 for 4c, 4, 5j). All found = every needed table is there; recall = share found",
                                     panels, [("All found", "s1"), ("Recall", "s2")], 1.0, pct))
 
     panels = [(title, [LEVEL_NAMES[lv] for lv in ("2", "3", "5") if lv in sums[s]],

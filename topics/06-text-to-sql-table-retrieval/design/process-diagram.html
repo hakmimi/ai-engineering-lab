@@ -7,7 +7,7 @@
 <style>
   :root {
     --bg: #f6f7f9; --surface: #ffffff; --fg: #1b2230; --muted: #5a6475; --line: #dde1e8;
-    --l0: #898781; --l1: #2a78d6; --l2: #eb6834; --l3: #1baf7a; --key: #334155;
+    --l0: #898781; --l1: #2a78d6; --l2: #eb6834; --l3: #1baf7a; --l4: #8b5cf6; --l5: #d6338a; --key: #334155;
     --sans: "Segoe UI", system-ui, sans-serif; --mono: ui-monospace, Consolas, monospace;
   }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
@@ -41,8 +41,8 @@
 <div class="wrap">
   <header>
     <div class="kicker">Topic 06 · LinkedIn's text-to-SQL article</div>
-    <h1>Find the 7 tables a question needs, out of 971</h1>
-    <p class="lede">Four ways to pick tables, each on the same questions and the same pool. The answer key comes from the benchmark's own SQL, not from me.</p>
+    <h1>Find the tables a question needs, out of 971</h1>
+    <p class="lede">Eight ways to pick tables, each on the same questions and the same pool. The answer key comes from the benchmark's own SQL, not from me.</p>
   </header>
 
   <section class="inputs">
@@ -59,10 +59,14 @@
       <div class="flow"><span class="step">embedding search</span><span class="arrow">→</span><span class="step">top 20 cards</span><span class="arrow">→</span><span class="step model">LLM re-ranker (gpt-6-luna)</span><span class="arrow">→</span><span class="step">7 tables</span></div></div>
     <div class="lane" style="--c: var(--l3)"><div><div class="tag">Level 3</div><h2>+ column descriptions</h2></div>
       <div class="flow"><span class="step">cards with descriptions</span><span class="arrow">→</span><span class="step">top 20</span><span class="arrow">→</span><span class="step model">LLM re-ranker</span><span class="arrow">→</span><span class="step">7 tables</span></div></div>
+    <div class="lane" style="--c: var(--l4)"><div><div class="tag">Level 4 · and 4c, its control</div><h2>+ 3 joined tables</h2></div>
+      <div class="flow"><span class="step">level 3's 7 picks</span><span class="arrow">→</span><span class="step">+ 3 tables linked by a foreign key</span><span class="arrow">→</span><span class="step">10 tables</span><span class="arrow">·</span><span class="step">4c: + next 3 from search instead</span></div></div>
+    <div class="lane" style="--c: var(--l5)"><div><div class="tag">Level 5 · Pinterest's way, and 5j</div><h2>LLM table summaries</h2></div>
+      <div class="flow"><span class="step model">LLM writes a summary per table (once)</span><span class="arrow">→</span><span class="step">search summaries, top 20</span><span class="arrow">→</span><span class="step model">LLM re-ranker</span><span class="arrow">→</span><span class="step">7 tables</span><span class="arrow">·</span><span class="step">5j: + 3 joined tables</span></div></div>
   </section>
 
   <section class="score">
-    <div class="box"><b>All found</b><p>Every table the question needs is in the 7. If one is missing, the SQL can't be right.</p></div>
+    <div class="box"><b>All found</b><p>Every table the question needs is in the 7 (10 for levels 4, 4c, 5j). If one is missing, the SQL can't be right.</p></div>
     <div class="box"><b>Top-20 ceiling</b><p>Were they even in the 20 the LLM saw? The re-ranker can't find what search missed.</p></div>
     <div class="box"><b>Made-up tables</b><p>Names the LLM returned that it was never shown.</p></div>
   </section>
