@@ -21,10 +21,11 @@ RUNS_DIR = TOPIC / "runs"
 CHARTS_DIR = TOPIC / "charts"
 LEVEL_NAMES = {"0": "0 · Keyword search", "1": "1 · Embedding search",
                "2": "2 · Search 20, LLM picks 7", "3": "3 · + descriptions",
-               "4c": "4c · 3's picks + 3 more from search", "4": "4 · 3's picks + 3 joined tables",
-               "5": "5 · Pinterest: LLM table summaries"}
+               "4c": "4c · 3 + 3 from search", "4": "4 · 3 + 3 joined tables",
+               "5": "5 · Pinterest summaries"}  # short: the chart's label column is narrow
 RUN_LEVELS = ("0", "1", "2", "3", "5")  # 4 and 4c are computed from level 3's saved answers
-GOLD_SIZE_LEVELS = ("1", "2", "3", "4")  # four colours at most; level 0 is near zero everywhere
+GOLD_SIZE_LEVELS = ("1", "2", "3", "4")
+GOLD_SIZE_LEGEND = {"1": "1 · Search", "2": "2 · LLM picks", "3": "3 · + descriptions", "4": "4 · + joins"}  # fits one row  # four colours at most; level 0 is near zero everywhere
 SET_NAMES = {"main": "Main set (tuning allowed)", "test": "Held-out set (never tuned on)"}
 
 
@@ -46,7 +47,7 @@ def level_runs(runs_dir: Path, set_name: str) -> dict[str, dict | None]:
         links = load_links()
         runs["4c"] = _derive(three, lambda a: add_search(a["picks"], a["top20"] or []))
         runs["4"] = _derive(three, lambda a: add_joins(a["picks"], a["top20"] or [], links))
-    return runs
+    return {lv: runs[lv] for lv in LEVEL_NAMES}  # the reading order: 4c and 4 build on 3, then 5
 
 
 def summary(run: dict, key: dict[str, set[str]]) -> dict:
@@ -165,7 +166,7 @@ def build_charts(runs_dir: Path, out_dir: Path = CHARTS_DIR) -> list[Path]:
                 row.append(mean(r[b] for r in reps) if reps and all(b in r for r in reps) else None)
             cats.append(label)
             rows.append(row)
-        lv_series = [(LEVEL_NAMES[lv], c) for lv, c in zip(GOLD_SIZE_LEVELS, ("muted", "s1", "s2", "s3"))]
+        lv_series = [(GOLD_SIZE_LEGEND[lv], c) for lv, c in zip(GOLD_SIZE_LEVELS, ("muted", "s1", "s2", "s3"))]
         save("by-gold-size.svg", bar_chart("Held-out: harder when a question needs more tables",
                                            "All found, by how many tables the question needs",
                                            [("", cats, rows)], lv_series, 1.0, pct))
