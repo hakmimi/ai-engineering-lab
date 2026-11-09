@@ -74,3 +74,11 @@ def test_key_and_raw_are_gitignored():
     ignore = (REPO / ".gitignore").read_text(encoding="utf-8").split()
     assert "topics/06-text-to-sql-table-retrieval/data/raw/" in ignore
     assert "topics/06-text-to-sql-table-retrieval/data/key.json" in ignore
+
+
+def test_columns_named_like_keywords_are_kept_and_not_null_default_is_stripped():
+    text = ('CREATE TABLE t (\ncheckpoint_location text NULL,\nunique_visitor_cnt bigint NOT NULL DEFAULT 0,\n'
+            'checksum_sha256 text NOT NULL,\n    CHECK (unique_visitor_cnt >= 0),\n    UNIQUE (checksum_sha256),\n'
+            '    CONSTRAINT pk PRIMARY KEY (checkpoint_location)\n);')
+    assert parse_schema(text)["t"] == [("checkpoint_location", "text"), ("unique_visitor_cnt", "bigint"),
+                                       ("checksum_sha256", "text")]

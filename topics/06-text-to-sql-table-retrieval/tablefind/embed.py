@@ -59,8 +59,8 @@ def normalize(v: list[float]) -> list[float]:
     return [x / n for x in v]
 
 
-def cosine_top_k(q: list[float], vecs: list[list[float]], ids: list[str], k: int) -> list[str]:
-    """vecs may be pre-normalized; q is normalized here. Ties broken by id."""
+def cosine_top_k(q: list[float], vecs: list[list[float]], ids: list[str], k: int, normalized: bool = False) -> list[str]:
+    """q is normalized here; pass normalized=True when vecs already are (saves re-normalizing 971 vectors). Ties by id."""
     qn = normalize(q)
-    scores = [sum(map(mul, qn, normalize(v))) for v in vecs]
+    scores = [sum(map(mul, qn, v if normalized else normalize(v))) for v in vecs]
     return [i for _, i in sorted(zip(scores, ids), key=lambda p: (-p[0], p[1]))[:k]]

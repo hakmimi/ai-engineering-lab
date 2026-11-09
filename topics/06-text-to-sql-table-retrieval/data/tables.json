@@ -125,7 +125,7 @@
   "columns": [
    {
     "name": "qualregistry",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for quality control record. PK = QualityControl(QualRegistry)."
    },
    {
@@ -192,7 +192,7 @@
   "columns": [
    {
     "name": "airregistry",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for environmental record. PK = Environment(AirRegistry)."
    },
    {
@@ -1056,7 +1056,7 @@
   "columns": [
    {
     "name": "cloudregistry",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for point cloud record. PK = PointCloud(CloudRegistry)."
    },
    {
@@ -1110,7 +1110,7 @@
   "columns": [
    {
     "name": "traitregistry",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for feature analysis record. PK = Features(TraitRegistry)."
    },
    {
@@ -1142,7 +1142,7 @@
   "columns": [
    {
     "name": "logregistry",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for registration record. PK = Registration(LogRegistry)."
    },
    {
@@ -1527,7 +1527,7 @@
   "columns": [
    {
     "name": "facetregistry",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for mesh record. PK = Mesh(FacetRegistry)."
    },
    {
@@ -1554,7 +1554,7 @@
   "columns": [
    {
     "name": "cureregistry",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for conservation record. PK = Conservation(CureRegistry)."
    },
    {
@@ -2164,7 +2164,7 @@
   "columns": [
    {
     "name": "flowregistry",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for processing record. PK = Processing(FlowRegistry)."
    },
    {
@@ -2565,7 +2565,7 @@
   "columns": [
    {
     "name": "domainregistry",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for spatial measurement record. PK = Spatial(DomainRegistry)."
    },
    {
@@ -3983,6 +3983,16 @@
     "name": "shipment_ref",
     "type": "integer",
     "desc": "INTEGER. Reference to parent shipping log record. Example: 50."
+   },
+   {
+    "name": "checkpoint_timestamp",
+    "type": "timestamp without time zone",
+    "desc": "TIMESTAMP. Date and time of logistics checkpoint. Example: 2024-01-01 12:00:00."
+   },
+   {
+    "name": "checkpoint_location",
+    "type": "text",
+    "desc": "TEXT. Name of checkpoint location."
    },
    {
     "name": "transport_mode",
@@ -7843,6 +7853,11 @@
     "desc": "TEXT. Checksum value for the dataset. Example: checksum_1234."
    },
    {
+    "name": "checksum_alg",
+    "type": "text",
+    "desc": "TEXT. Algorithm used for the checksum. Example: SHA256."
+   },
+   {
     "name": "data_owner_email",
     "type": "text",
     "desc": "TEXT. Email of the dataset owner. Example: owner1@company.com."
@@ -11053,6 +11068,11 @@
     "name": "cross_borderSellRate",
     "type": "real",
     "desc": "REAL. Percent of orders where this item was cross-sold with a complementary product. **NULL means cross-sell events not observed or data unavailable.** Example: 11.9."
+   },
+   {
+    "name": "unique_visitor_cnt",
+    "type": "bigint",
+    "desc": "BIGINT. Unique visitors who viewed the listing in the analysis window. Example: 44,312."
    },
    {
     "name": "last_updated",
@@ -15407,6 +15427,16 @@
     "desc": "INTEGER. Number of search queries performed. Example: 2."
    },
    {
+    "name": "checkout_initiated",
+    "type": "boolean",
+    "desc": "BOOLEAN. Whether checkout process was started. Possible values: True, False."
+   },
+   {
+    "name": "checkout_completed",
+    "type": "boolean",
+    "desc": "BOOLEAN. Whether a purchase was completed. Possible values: True, False."
+   },
+   {
     "name": "bounce_indicator",
     "type": "boolean",
     "desc": "BOOLEAN. Whether session resulted in immediate bounce. Possible values: True, False."
@@ -15818,6 +15848,11 @@
     "name": "feature_parity_score",
     "type": "real",
     "desc": "REAL. Score measuring feature coverage vs competitors (0-100). Example: 72."
+   },
+   {
+    "name": "unique_features_count",
+    "type": "integer",
+    "desc": "INTEGER. Number of unique features not offered by competitors. Example: 8."
    },
    {
     "name": "user_experience_rating",
@@ -20541,7 +20576,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for disaster event core records. Example: 1."
    },
    {
@@ -20648,7 +20683,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for beneficiary household records. Example: 1."
    },
    {
@@ -20755,7 +20790,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for volunteer profile records. Example: 1."
    },
    {
@@ -20862,7 +20897,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for shelter facility records. Example: 1."
    },
    {
@@ -20969,7 +21004,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for distribution hub records. Example: 1."
    },
    {
@@ -21076,7 +21111,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for rescue operation records. Example: 1."
    },
    {
@@ -21183,7 +21218,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for training session records. Example: 1."
    },
    {
@@ -21290,7 +21325,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for infrastructure assessment records. Example: 1."
    },
    {
@@ -21397,7 +21432,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for disease outbreak records. Example: 1."
    },
    {
@@ -21504,7 +21539,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for operation logistics records. Example: 1."
    },
    {
@@ -21611,7 +21646,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for response team records. Example: 1."
    },
    {
@@ -21718,7 +21753,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for emergency communication records. Example: 1."
    },
    {
@@ -21825,7 +21860,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for shelter occupancy records. Example: 1."
    },
    {
@@ -21932,7 +21967,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for assistance distribution records. Example: 1."
    },
    {
@@ -22039,7 +22074,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for volunteer deployment records. Example: 1."
    },
    {
@@ -22146,7 +22181,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for training attendance records. Example: 1."
    },
    {
@@ -22253,7 +22288,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for infrastructure repair records. Example: 1."
    },
    {
@@ -22360,7 +22395,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for disease containment records. Example: 1."
    },
    {
@@ -22467,7 +22502,7 @@
   "columns": [
    {
     "name": "productnum",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each fund product in the database."
    },
    {
@@ -22654,7 +22689,7 @@
   "columns": [
    {
     "name": "famcode",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each fund family or asset management company in the database."
    },
    {
@@ -22671,7 +22706,7 @@
   "columns": [
    {
     "name": "perfid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each fund performance record."
    },
    {
@@ -22838,7 +22873,7 @@
   "columns": [
    {
     "name": "exchange_info_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate identifier for each extended-info row. PK. Auto-increments from 1."
    },
    {
@@ -22953,7 +22988,7 @@
    },
    {
     "name": "last_updated",
-    "type": "timestamp without time zone NULL",
+    "type": "timestamp without time zone",
     "desc": "TIMESTAMP. Server timestamp when this record was last modified; defaults to CURRENT_TIMESTAMP."
    },
    {
@@ -22970,7 +23005,7 @@
   "columns": [
    {
     "name": "security_analytics_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate identifier for each analytics row. PK. Auto-increments from 1. Example: 1."
    },
    {
@@ -23145,7 +23180,7 @@
    },
    {
     "name": "last_updated",
-    "type": "timestamp without time zone NULL",
+    "type": "timestamp without time zone",
     "desc": "TIMESTAMP. Record-update time (defaults to CURRENT_TIMESTAMP). Example: 2025-07-06."
    },
    {
@@ -23162,7 +23197,7 @@
   "columns": [
    {
     "name": "bond_market_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate identifier for each rating-level market snapshot. PK. Auto-increments from 1. Example: 1."
    },
    {
@@ -23317,7 +23352,7 @@
    },
    {
     "name": "last_updated",
-    "type": "timestamp without time zone NULL",
+    "type": "timestamp without time zone",
     "desc": "TIMESTAMP. System time when the record was last written; defaults to CURRENT_TIMESTAMP. Example: 2025-07-06."
    },
    {
@@ -23334,7 +23369,7 @@
   "columns": [
    {
     "name": "AssignmentID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for each assignment record. Example: 101."
    },
    {
@@ -23439,7 +23474,7 @@
    },
    {
     "name": "IsCurrentAssignment",
-    "type": "boolean NULL",
+    "type": "boolean",
     "desc": "BOOLEAN. Whether the assignment is active as of today. **NULL means assignment status is unknown.** Example: true."
    }
   ]
@@ -23451,7 +23486,7 @@
   "columns": [
    {
     "name": "linkid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each relationship between fund families and categories they offer."
    },
    {
@@ -23473,7 +23508,7 @@
   "columns": [
    {
     "name": "xchgnum",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each stock exchange or trading venue in the database."
    },
    {
@@ -23500,7 +23535,7 @@
   "columns": [
    {
     "name": "yearlyid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each annual return record for funds by year."
    },
    {
@@ -23532,7 +23567,7 @@
   "columns": [
    {
     "name": "catref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each fund category or investment classification in the database."
    },
    {
@@ -23549,7 +23584,7 @@
   "columns": [
    {
     "name": "connectref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each relationship between fund families and exchanges they list on."
    },
    {
@@ -23571,7 +23606,7 @@
   "columns": [
    {
     "name": "riskid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each risk metrics record for funds."
    },
    {
@@ -23708,7 +23743,7 @@
   "columns": [
    {
     "name": "allockey",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each sector allocation record for funds."
    },
    {
@@ -23735,7 +23770,7 @@
   "columns": [
    {
     "name": "secid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each economic sector or industry classification in the database."
    },
    {
@@ -23752,7 +23787,7 @@
   "columns": [
    {
     "name": "operation_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for fund operations record. PK. Possible values: 1, 2, 3, 4, 5, 6."
    },
    {
@@ -23909,7 +23944,7 @@
   "columns": [
    {
     "name": "business_metric_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate identifier for each metrics row. PK. Auto-increments from 1. Example: 1."
    },
    {
@@ -24049,7 +24084,7 @@
    },
    {
     "name": "last_updated",
-    "type": "timestamp without time zone NULL",
+    "type": "timestamp without time zone",
     "desc": "TIMESTAMP. System timestamp when the record was last modified (automatically set). Example: 2025-07-06."
    },
    {
@@ -24066,7 +24101,7 @@
   "columns": [
    {
     "name": "sector_intelligence_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate identifier for each sector-intelligence row. PK. Auto-increments from 1. Example: 1."
    },
    {
@@ -24236,7 +24271,7 @@
    },
    {
     "name": "last_updated",
-    "type": "timestamp without time zone NULL",
+    "type": "timestamp without time zone",
     "desc": "TIMESTAMP. System timestamp when the record was last modified; defaults to CURRENT_TIMESTAMP. Example: 2025-07-06."
    }
   ]
@@ -24248,7 +24283,7 @@
   "columns": [
    {
     "name": "ManagerID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for each portfolio manager. Example: 42."
    },
    {
@@ -24388,12 +24423,12 @@
    },
    {
     "name": "IsActive",
-    "type": "boolean NULL",
+    "type": "boolean",
     "desc": "BOOLEAN. Indicates whether the manager is currently active. Example: true."
    },
    {
     "name": "LastUpdated",
-    "type": "timestamp without time zone NULL",
+    "type": "timestamp without time zone",
     "desc": "TIMESTAMP. Last time the manager’s profile was updated. Example: 2025-07-06 10:35:21."
    }
   ]
@@ -24405,7 +24440,7 @@
   "columns": [
    {
     "name": "StrategyID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for each investment strategy. Example: 1."
    },
    {
@@ -24520,17 +24555,17 @@
    },
    {
     "name": "IsActive",
-    "type": "boolean NULL",
+    "type": "boolean",
     "desc": "BOOLEAN. Indicates whether the strategy is currently available for investment. Possible values: False, True."
    },
    {
     "name": "CreatedDate",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Date the strategy record was created. Example: 2021-03-15."
    },
    {
     "name": "LastUpdated",
-    "type": "timestamp without time zone NULL",
+    "type": "timestamp without time zone",
     "desc": "TIMESTAMP. Timestamp of the last record update. Example: 2025-06-30 18:12:45."
    },
    {
@@ -24547,7 +24582,7 @@
   "columns": [
    {
     "name": "bondallocid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each bond credit rating allocation record for funds."
    },
    {
@@ -24574,7 +24609,7 @@
   "columns": [
    {
     "name": "ratekey",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each credit rating level for bond classifications in the database."
    },
    {
@@ -24591,7 +24626,7 @@
   "columns": [
    {
     "name": "holdref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each individual security holding record within funds."
    },
    {
@@ -24623,7 +24658,7 @@
   "columns": [
    {
     "name": "securityref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each individual security or holding instrument in the database."
    },
    {
@@ -24640,7 +24675,7 @@
   "columns": [
    {
     "name": "ImplementationID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for each fund-strategy implementation record. Example: 1001."
    },
    {
@@ -24760,12 +24795,12 @@
    },
    {
     "name": "IsCurrentImplementation",
-    "type": "boolean NULL",
+    "type": "boolean",
     "desc": "BOOLEAN. Indicates whether the implementation is currently active. Possible values: False, True."
    },
    {
     "name": "LastUpdated",
-    "type": "timestamp without time zone NULL",
+    "type": "timestamp without time zone",
     "desc": "TIMESTAMP. Timestamp of the last modification to this record. Example: 2025-06-30 18:20:12."
    }
   ]
@@ -24777,7 +24812,7 @@
   "columns": [
    {
     "name": "AuthorityID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary-key assigned in loading order. Example: 17."
    },
    {
@@ -24922,12 +24957,12 @@
    },
    {
     "name": "IsActive",
-    "type": "boolean NULL",
+    "type": "boolean",
     "desc": "BOOLEAN. Indicates if the authority is currently active. Possible values: true, false."
    },
    {
     "name": "LastUpdated",
-    "type": "timestamp without time zone NULL",
+    "type": "timestamp without time zone",
     "desc": "TIMESTAMP. Date-time when the record was last refreshed. Example: 2025-07-06T14:27:01Z."
    }
   ]
@@ -24939,7 +24974,7 @@
   "columns": [
    {
     "name": "ComplianceID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary-key for this compliance record. Example: 842."
    },
    {
@@ -25099,12 +25134,12 @@
    },
    {
     "name": "IsCurrentRelationship",
-    "type": "boolean NULL",
+    "type": "boolean",
     "desc": "BOOLEAN. Indicates if the authority-fund relationship is currently active. Possible values: true, false."
    },
    {
     "name": "LastUpdated",
-    "type": "timestamp without time zone NULL",
+    "type": "timestamp without time zone",
     "desc": "TIMESTAMP. Date-time when the compliance record was last refreshed. Example: 2025-07-06T14:27:10Z."
    }
   ]
@@ -25116,7 +25151,7 @@
   "columns": [
    {
     "name": "nav_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for NAV history record. PK. Examples: 1, 2, 3."
    },
    {
@@ -25233,7 +25268,7 @@
   "columns": [
    {
     "name": "holding_change_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for holdings change record. PK. Examples: 1, 2, 3."
    },
    {
@@ -25400,7 +25435,7 @@
   "columns": [
    {
     "name": "flow_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for fund flow record. PK. Examples: 1, 2, 3."
    },
    {
@@ -25582,7 +25617,7 @@
   "columns": [
    {
     "name": "expense_history_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for expense evolution record. PK. Examples: 1, 2, 3."
    },
    {
@@ -25769,7 +25804,7 @@
   "columns": [
    {
     "name": "benchmark_history_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for benchmark performance record. PK. Possible values: 1, 2, 3, 4, 5."
    },
    {
@@ -25986,7 +26021,7 @@
   "columns": [
    {
     "name": "styleanalyticsid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for style factor analytics record. PK. Examples: 1, 2, 3."
    },
    {
@@ -26163,7 +26198,7 @@
   "columns": [
    {
     "name": "liquidityid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for liquidity risk analytics record. PK. Examples: 1, 2, 3."
    },
    {
@@ -26350,7 +26385,7 @@
   "columns": [
    {
     "name": "esganalyticsid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for ESG integration analytics record. PK. Possible values: 1, 2, 3."
    },
    {
@@ -26572,7 +26607,7 @@
   "columns": [
    {
     "name": "competitiveid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for competitive positioning analytics record. PK. Possible values: 1, 2, 3, 4, 5."
    },
    {
@@ -26639,6 +26674,11 @@
     "name": "keydifferentiators",
     "type": "text",
     "desc": "TEXT. Key differentiating factors description. Possible values: Clean energy focus; Thematic purity; Innovation exposure, Dividend optimization; Income focus; Volatility management, Green investing; Environmental focus; Climate solutions, Tech concentration; Innovation exposure; Growth focus, Ultra-low fees; First-mover advantage; Brand recognition."
+   },
+   {
+    "name": "uniquesellingproposition",
+    "type": "text",
+    "desc": "TEXT. Unique selling proposition description. Possible values: Comprehensive green investing with climate focus, Enhanced dividend strategy with downside protection, Largest S&P 500 ETF with unmatched liquidity, Premier tech ETF with concentrated exposure, Pure-play clean energy ETF with comprehensive coverage."
    },
    {
     "name": "competitivestrengths",
@@ -26809,7 +26849,7 @@
   "columns": [
    {
     "name": "riskattributionid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for risk attribution analytics record. PK. Possible values: 1, 2, 3, 4, 5, 6, 7, 8."
    },
    {
@@ -34838,6 +34878,11 @@
     "desc": "REAL. Total data transferred during the spike. Example: 50."
    },
    {
+    "name": "unique_source_ip_count",
+    "type": "integer",
+    "desc": "INTEGER. Number of distinct IPs involved. Example: 2000."
+   },
+   {
     "name": "bot_traffic_percentage",
     "type": "real",
     "desc": "REAL. Percentage of requests identified as bots. Example: 50.0."
@@ -41120,7 +41165,7 @@
   "columns": [
    {
     "name": "tx_key",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A BIGSERIAL primary key auto-incrementing identifier for treatment records."
    },
    {
@@ -41428,7 +41473,7 @@
   "columns": [
    {
     "name": "tx_out_key",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A BIGSERIAL primary key auto-incrementing identifier for treatment outcome records."
    },
    {
@@ -42000,7 +42045,7 @@
   "columns": [
    {
     "name": "log_key",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-incrementing unique identifier for system log entry. PK = SystemLogs.Log_Key. Possible values: 1001, 1002, 1003, 1004, 1005, 1006, 1007."
    },
    {
@@ -45639,7 +45684,7 @@
   "columns": [
    {
     "name": "Provenance_Record_Num",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "TEXT. No description provided. Example: 1."
    },
    {
@@ -45716,7 +45761,7 @@
   "columns": [
    {
     "name": "aq_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for each air quality reading. PK."
    },
    {
@@ -45923,7 +45968,7 @@
   "columns": [
    {
     "name": "maint_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for each conservation and maintenance record. PK."
    },
    {
@@ -46124,7 +46169,7 @@
   "columns": [
    {
     "name": "Asset_Registry_Tag",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "TEXT. No description provided. Example: 1."
    },
    {
@@ -46563,7 +46608,7 @@
   "columns": [
    {
     "name": "rad_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for each light and radiation reading. PK."
    },
    {
@@ -46600,7 +46645,7 @@
   "columns": [
    {
     "name": "surf_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for each surface and physical reading. PK."
    },
    {
@@ -46742,7 +46787,7 @@
   "columns": [
    {
     "name": "usage_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for each usage record. PK."
    },
    {
@@ -46891,7 +46936,7 @@
   "columns": [
    {
     "name": "cond_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for each condition assessment. PK."
    },
    {
@@ -47547,7 +47592,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for artifact profile records. Example: 1."
    },
    {
@@ -47654,7 +47699,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for environmental monitoring records. Example: 1."
    },
    {
@@ -47761,7 +47806,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for condition assessment records. Example: 1."
    },
    {
@@ -47868,7 +47913,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for exhibition scheduling records. Example: 1."
    },
    {
@@ -47975,7 +48020,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for loan transaction records. Example: 1."
    },
    {
@@ -48082,7 +48127,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for conservation treatment records. Example: 1."
    },
    {
@@ -48189,7 +48234,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for researcher access records. Example: 1."
    },
    {
@@ -48296,7 +48341,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for security incident records. Example: 1."
    },
    {
@@ -48403,7 +48448,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for material analysis records."
    },
    {
@@ -48510,7 +48555,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for transport monitoring records. Example: 1."
    },
    {
@@ -48617,7 +48662,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for light and radiation monitoring records."
    },
    {
@@ -48724,7 +48769,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for digital asset linkage records. Example: 1."
    },
    {
@@ -48831,7 +48876,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for publication records."
    },
    {
@@ -48938,7 +48983,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for air quality monitoring records."
    },
    {
@@ -49045,7 +49090,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for detailed risk assessment records."
    },
    {
@@ -49152,7 +49197,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for insurance policy records."
    },
    {
@@ -49259,7 +49304,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for corporate sponsorship records."
    },
    {
@@ -49366,7 +49411,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for emergency response records."
    },
    {
@@ -49473,7 +49518,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for artifact usage records."
    },
    {
@@ -49580,7 +49625,7 @@
   "columns": [
    {
     "name": "id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-increment primary key for conservation maintenance records."
    },
    {
@@ -54818,7 +54863,7 @@
   "columns": [
    {
     "name": "stellarref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each host star record in the database. Maps to 'rowid' in source data."
    },
    {
@@ -56460,7 +56505,7 @@
   "columns": [
    {
     "name": "instrumentref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each observational facility or survey program."
    },
    {
@@ -58119,7 +58164,7 @@
   "columns": [
    {
     "name": "qualityref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each data quality record."
    },
    {
@@ -58266,7 +58311,7 @@
   "columns": [
    {
     "name": "physref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each physical properties record."
    },
    {
@@ -58644,7 +58689,7 @@
   "columns": [
    {
     "name": "obsref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each planet-instrument observation record."
    },
    {
@@ -59313,7 +59358,7 @@
   "columns": [
    {
     "name": "orbitalref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each orbital characteristics record."
    },
    {
@@ -60399,7 +60444,7 @@
   "columns": [
    {
     "name": "TRANS_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the transmission record. PK."
    },
    {
@@ -60451,7 +60496,7 @@
   "columns": [
    {
     "name": "WATER_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the water and waste record. PK."
    },
    {
@@ -60515,7 +60560,7 @@
   "columns": [
    {
     "name": "specRecord",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for the specification row. PK."
    },
    {
@@ -60699,7 +60744,7 @@
   "columns": [
    {
     "name": "locSeq",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for the location record. PK."
    },
    {
@@ -61045,7 +61090,7 @@
   "columns": [
    {
     "name": "fuelChargeSeq",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for the event row. PK."
    },
    {
@@ -61229,7 +61274,7 @@
   "columns": [
    {
     "name": "CHASSIS_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the chassis and vehicle record. PK."
    },
    {
@@ -61303,7 +61348,7 @@
   "columns": [
    {
     "name": "SCI_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the scientific instrument record. PK."
    },
    {
@@ -61345,7 +61390,7 @@
   "columns": [
    {
     "name": "COMM_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the communication record. PK."
    },
    {
@@ -61454,7 +61499,7 @@
   "columns": [
    {
     "name": "WEATHER_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the weather and structure record. PK."
    },
    {
@@ -61551,7 +61596,7 @@
   "columns": [
    {
     "name": "OP_MAINT_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for operation and maintenance record. PK."
    },
    {
@@ -61633,7 +61678,7 @@
   "columns": [
    {
     "name": "CABIN_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the cabin environment record. PK."
    },
    {
@@ -61665,7 +61710,7 @@
   "columns": [
    {
     "name": "THERMAL_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the thermal, solar, wind, and grid record. PK."
    },
    {
@@ -61777,7 +61822,7 @@
   "columns": [
    {
     "name": "typeDetailNo",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for the row. PK."
    },
    {
@@ -61799,7 +61844,7 @@
   "columns": [
    {
     "name": "calibrationNote",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for the calibration record. PK."
    },
    {
@@ -61851,7 +61896,7 @@
   "columns": [
    {
     "name": "lifeTrack",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for the lifecycle row. PK."
    },
    {
@@ -62023,7 +62068,7 @@
   "columns": [
    {
     "name": "profileStamp",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the measurement profile. PK."
    },
    {
@@ -62195,7 +62240,7 @@
   "columns": [
    {
     "name": "PWR_BATT_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the power battery. PK."
    },
    {
@@ -62217,7 +62262,7 @@
   "columns": [
    {
     "name": "LIGHT_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the lighting and safety record. PK."
    },
    {
@@ -62314,7 +62359,7 @@
   "columns": [
    {
     "name": "ENGINE_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the engine and fluids record. PK."
    },
    {
@@ -62692,7 +62737,7 @@
   "columns": [
    {
     "name": "transDiagSeq",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for the diagnostic row. PK."
    },
    {
@@ -62854,7 +62899,7 @@
   "columns": [
    {
     "name": "safetyNote",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for the inspection record. PK."
    },
    {
@@ -63016,7 +63061,7 @@
   "columns": [
    {
     "name": "chRecord",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for the dynamics row. PK."
    },
    {
@@ -63183,7 +63228,7 @@
   "columns": [
    {
     "name": "commMeasureNo",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for the measurement row. PK."
    },
    {
@@ -63345,7 +63390,7 @@
   "columns": [
    {
     "name": "cycleStamp",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier sequence for the specific water treatment cycle. PK. Example: 2571."
    },
    {
@@ -63502,7 +63547,7 @@
   "columns": [
    {
     "name": "energyLogNo",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for the log row. PK."
    },
    {
@@ -65923,7 +65968,7 @@
   "columns": [
    {
     "name": "amenityref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each household amenities and utilities record. EX. 1,2,3"
    },
    {
@@ -65945,7 +65990,7 @@
   "columns": [
    {
     "name": "healthcare_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for healthcare facility record. PK. Possible values: 1, 2, 3."
    },
    {
@@ -66085,12 +66130,12 @@
    },
    {
     "name": "Created_At",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "UPDATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -66102,7 +66147,7 @@
   "columns": [
    {
     "name": "Transport_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for transportation network record. PK. Possible values: 1, 2, 3, 4, 5."
    },
    {
@@ -66242,12 +66287,12 @@
    },
    {
     "name": "CREATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "updated_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -66259,7 +66304,7 @@
   "columns": [
    {
     "name": "Mode_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for transportation mode record. PK. Possible values: 1, 2, 3, 4."
    },
    {
@@ -66399,12 +66444,12 @@
    },
    {
     "name": "CREATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "updated_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -66416,7 +66461,7 @@
   "columns": [
    {
     "name": "Waste_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for waste management record. PK. Possible values: 1, 2, 3, 4, 5, 6."
    },
    {
@@ -66526,12 +66571,12 @@
    },
    {
     "name": "CREATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "updated_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    },
    {
@@ -66548,7 +66593,7 @@
   "columns": [
    {
     "name": "Financial_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for financial services record. PK. Possible values: 1, 2, 3, 4, 5, 6, 7."
    },
    {
@@ -66653,12 +66698,12 @@
    },
    {
     "name": "created_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "UPDATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    },
    {
@@ -66675,7 +66720,7 @@
   "columns": [
    {
     "name": "Skill_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for skill record. PK. Possible values: 1, 2, 3, 4, 5."
    },
    {
@@ -66810,12 +66855,12 @@
    },
    {
     "name": "created_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "UPDATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -66827,7 +66872,7 @@
   "columns": [
    {
     "name": "infraref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each infrastructure configuration record in the database. EX. 1,2,3"
    },
    {
@@ -66854,7 +66899,7 @@
   "columns": [
    {
     "name": "Detail_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for infrastructure detail record. PK. Possible values: 1, 2, 3, 4, 5."
    },
    {
@@ -66991,7 +67036,7 @@
   "columns": [
    {
     "name": "DEMO_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for demographic record. PK. Possible values: 1, 2, 3, 4, 5, 6."
    },
    {
@@ -67138,7 +67183,7 @@
   "columns": [
    {
     "name": "serviceref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each social service type or package configuration available to households. Ex. 1,2,3"
    },
    {
@@ -67160,7 +67205,7 @@
   "columns": [
    {
     "name": "establishment_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for commercial establishment record. PK. Possible values: 1, 2, 3, 4."
    },
    {
@@ -67300,12 +67345,12 @@
    },
    {
     "name": "CREATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "updated_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -67317,7 +67362,7 @@
   "columns": [
    {
     "name": "Crime_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for crime statistics record. PK. Possible values: 1, 2, 3, 4."
    },
    {
@@ -67457,12 +67502,12 @@
    },
    {
     "name": "created_AT",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "Updated_At",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -67511,7 +67556,7 @@
   "columns": [
    {
     "name": "valuation_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for property valuation record. PK. Possible values: 1, 2, 3, 4, 5, 6, 7."
    },
    {
@@ -67621,12 +67666,12 @@
    },
    {
     "name": "CREATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "updated_AT",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    },
    {
@@ -67643,7 +67688,7 @@
   "columns": [
    {
     "name": "ENV_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for environmental monitoring record. PK. Possible values: 1, 2, 3."
    },
    {
@@ -67758,12 +67803,12 @@
    },
    {
     "name": "created_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "UPDATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    },
    {
@@ -67780,7 +67825,7 @@
   "columns": [
    {
     "name": "Utility_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for utility service record. PK. Possible values: 1, 2, 3."
    },
    {
@@ -67920,12 +67965,12 @@
    },
    {
     "name": "CREATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "updated_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -67937,7 +67982,7 @@
   "columns": [
    {
     "name": "Consumption_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for energy consumption record. PK. Possible values: 1, 2, 3, 4."
    },
    {
@@ -68042,12 +68087,12 @@
    },
    {
     "name": "created_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "UPDATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    },
    {
@@ -68064,7 +68109,7 @@
   "columns": [
    {
     "name": "Category_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for service category record. PK. Possible values: 1, 2, 3, 4."
    },
    {
@@ -68199,12 +68244,12 @@
    },
    {
     "name": "Created_At",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. **NULL means creation date not logged.**. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "UPDATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. **NULL means update history not tracked.**. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -68216,7 +68261,7 @@
   "columns": [
    {
     "name": "propref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each residential property record in the database. EX. 1,2,3"
    },
    {
@@ -68243,7 +68288,7 @@
   "columns": [
    {
     "name": "transref",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "A SERIAL primary key uniquely identifying each transportation asset record for households. EX. 1,2,3"
    },
    {
@@ -68265,7 +68310,7 @@
   "columns": [
    {
     "name": "Facility_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for education facility record. PK. Possible values: 1, 2, 3, 4."
    },
    {
@@ -68405,12 +68450,12 @@
    },
    {
     "name": "created_AT",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "Updated_At",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -68422,7 +68467,7 @@
   "columns": [
    {
     "name": "Engagement_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for community engagement record. PK. Possible values: 1, 2, 3, 4, 5, 6, 7, 8."
    },
    {
@@ -68572,12 +68617,12 @@
    },
    {
     "name": "created_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "UPDATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -68589,7 +68634,7 @@
   "columns": [
    {
     "name": "Assignment_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for household member skill assignment. PK. Possible values: 1, 2, 3, 4, 5, 6."
    },
    {
@@ -68724,12 +68769,12 @@
    },
    {
     "name": "created_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "UPDATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -68741,7 +68786,7 @@
   "columns": [
    {
     "name": "Enrollment_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for service enrollment record. PK. Possible values: 1, 2, 3, 4, 5, 6, 7."
    },
    {
@@ -68881,12 +68926,12 @@
    },
    {
     "name": "created_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "UPDATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -69000,7 +69045,7 @@
   "columns": [
    {
     "name": "Usage_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Primary key identifier for transportation usage record. PK. Possible values: 1, 2, 3, 4, 5, 6, 7."
    },
    {
@@ -69135,12 +69180,12 @@
    },
    {
     "name": "created_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record creation timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-07-15, 2025-08-01, 2025-08-05."
    },
    {
     "name": "UPDATED_at",
-    "type": "date NULL",
+    "type": "date",
     "desc": "DATE. Record last update timestamp. Possible values: 2024-01-15, 2024-01-16, 2024-01-17, 2024-01-18, 2024-01-19, 2024-01-20, 2024-01-21, 2025-08-10, 2025-08-15, 2025-08-20."
    }
   ]
@@ -75765,6 +75810,11 @@
     "desc": "TEXT. ID of the compliance officer."
    },
    {
+    "name": "check_timestamp",
+    "type": "timestamp without time zone",
+    "desc": "TIMESTAMP. When the check was performed. Example: 2024-01-01 12:00:00."
+   },
+   {
     "name": "policy_adherence_score",
     "type": "integer",
     "desc": "INTEGER. Score (0-100) on how well policy was followed. Example: 90."
@@ -75798,6 +75848,11 @@
     "name": "communication_tone_rating",
     "type": "text",
     "desc": "TEXT. Rating of the tone used with customer. Unique values: Professional, Empathetic, Robotic, Rude."
+   },
+   {
+    "name": "check_outcome_status",
+    "type": "text",
+    "desc": "TEXT. Final outcome of the compliance check. Unique values: Pass, Pass with Comments, Fail."
    },
    {
     "name": "training_gap_identified",
@@ -76325,7 +76380,7 @@
    },
    {
     "name": "is_active_flag",
-    "type": "boolean NULL",
+    "type": "boolean",
     "desc": "BOOLEAN. A flag indicating if the certification is still active and offered. Possible values: False, True."
    },
    {
@@ -76357,7 +76412,7 @@
   "columns": [
    {
     "name": "usage_record",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for a part usage record. PK. Example: 1."
    },
    {
@@ -76426,7 +76481,7 @@
   "columns": [
    {
     "name": "production_log_pk",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the production log entry. PK. Example: 1."
    },
    {
@@ -76468,7 +76523,7 @@
   "columns": [
    {
     "name": "prod_mat_link",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the product-material link record. PK. Example: 1."
    },
    {
@@ -76557,7 +76612,7 @@
   "columns": [
    {
     "name": "inspection_pk",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the quality inspection. PK. Example: 1."
    },
    {
@@ -76609,7 +76664,7 @@
   "columns": [
    {
     "name": "power_log_pk",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the power log entry. PK. Example: 1."
    },
    {
@@ -76787,7 +76842,7 @@
   "columns": [
    {
     "name": "tech_cert_record",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the record of a technician achieving a certification. PK. Example: 1."
    },
    {
@@ -77409,7 +77464,7 @@
   "columns": [
    {
     "name": "jperfid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the joint performance record. PK."
    },
    {
@@ -77563,7 +77618,7 @@
    },
    {
     "name": "quantity_on_order",
-    "type": "bigint NULL",
+    "type": "bigint",
     "desc": "BIGINT. The quantity of this part currently on order from a supplier. Example: 2."
    },
    {
@@ -77762,7 +77817,7 @@
   "columns": [
    {
     "name": "attachment_event_key",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the attachment event. PK. Example: 1."
    },
    {
@@ -77856,7 +77911,7 @@
    },
    {
     "name": "quantity_produced",
-    "type": "bigint NULL",
+    "type": "bigint",
     "desc": "BIGINT. The quantity of the product already produced for this order. Example: 1000."
    },
    {
@@ -77908,7 +77963,7 @@
   "columns": [
    {
     "name": "jcondid",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Unique identifier for the joint condition record. PK."
    },
    {
@@ -78177,7 +78232,7 @@
    },
    {
     "name": "IS_ACTIVE",
-    "type": "boolean NULL",
+    "type": "boolean",
     "desc": "BOOLEAN. A flag indicating if the technician's account is active. Possible values: False, True."
    },
    {
@@ -78192,12 +78247,12 @@
    },
    {
     "name": "login_attempts",
-    "type": "bigint NULL",
+    "type": "bigint",
     "desc": "BIGINT. The number of failed login attempts since the last successful login. Possible values: 0, 1, 2, 3, 4."
    },
    {
     "name": "IS_ACCOUNT_LOCKED",
-    "type": "boolean NULL",
+    "type": "boolean",
     "desc": "BOOLEAN. A flag indicating if the technician's account is locked. Possible values: False, True."
    },
    {
@@ -78224,7 +78279,7 @@
   "columns": [
    {
     "name": "run_pk",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for a single simulation run. PK. Example: 1."
    },
    {
@@ -78276,7 +78331,7 @@
   "columns": [
    {
     "name": "anomaly_pk",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the detected anomaly. PK. Example: 1."
    },
    {
@@ -78554,6 +78609,11 @@
     "name": "download_throughput_mbps",
     "type": "real",
     "desc": "REAL. Average download speed. Example: 100."
+   },
+   {
+    "name": "checksum_verification_status",
+    "type": "boolean",
+    "desc": "BOOLEAN. True if hash matched. Possible values: True, False."
    },
    {
     "name": "installation_duration_sec",
@@ -79563,6 +79623,11 @@
     "desc": "TEXT. Reference to the deployment event."
    },
    {
+    "name": "checksum_sha256",
+    "type": "text",
+    "desc": "TEXT. Cryptographic hash of the installed firmware binary."
+   },
+   {
     "name": "digital_signature_valid",
     "type": "boolean",
     "desc": "BOOLEAN. Verification status of the vendor signature. Possible values: True, False."
@@ -80193,6 +80258,11 @@
     "name": "collision_margin_mm",
     "type": "real",
     "desc": "REAL. Buffer distance for collision detection. Example: 0.04."
+   },
+   {
+    "name": "constraint_force_mixing",
+    "type": "real",
+    "desc": "REAL. CFM: Softness of constraints (0 = rigid). Example: 50.0."
    },
    {
     "name": "error_reduction_parameter",
@@ -84039,6 +84109,11 @@
     "desc": "TEXT. Link to email thread."
    },
    {
+    "name": "checksum_hash",
+    "type": "text",
+    "desc": "TEXT. SHA-256 hash for integrity."
+   },
+   {
     "name": "language_code",
     "type": "text",
     "desc": "TEXT. Language of doc."
@@ -84079,7 +84154,7 @@
   "columns": [
    {
     "name": "CircuitAlias_Key",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for circuit_aliases rows. PK."
    },
    {
@@ -84353,7 +84428,7 @@
   "columns": [
    {
     "name": "Constructor_Profile_no",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for constructor_profiles rows. PK."
    },
    {
@@ -84719,7 +84794,7 @@
   "columns": [
    {
     "name": "DRIVER_Profile_Code",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for driver_profiles rows. PK."
    },
    {
@@ -84893,7 +84968,7 @@
   "columns": [
    {
     "name": "STA_tag",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for sponsor_technology_agreements rows. PK."
    },
    {
@@ -85015,7 +85090,7 @@
   "columns": [
    {
     "name": "StaffIndex",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for staff_directory rows. PK."
    },
    {
@@ -85177,7 +85252,7 @@
   "columns": [
    {
     "name": "TRAINING_Identifier",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for training_programs rows. PK."
    },
    {
@@ -85334,7 +85409,7 @@
   "columns": [
    {
     "name": "Sponsor_Record",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for sponsor_entities rows. PK."
    },
    {
@@ -85491,7 +85566,7 @@
   "columns": [
    {
     "name": "CIRCUIT_DETAIL_CODE",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for circuit_details rows. PK."
    },
    {
@@ -85585,7 +85660,7 @@
   "columns": [
    {
     "name": "MediaAssetIndex",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for media_assets rows. PK."
    },
    {
@@ -85742,7 +85817,7 @@
   "columns": [
    {
     "name": "CircuitFacilityCode",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for circuit_facilities rows. PK."
    },
    {
@@ -85933,7 +86008,7 @@
   "columns": [
    {
     "name": "SMC_serial",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for sponsor_media_campaigns rows. PK."
    },
    {
@@ -86197,7 +86272,7 @@
   "columns": [
    {
     "name": "Regulation_Key",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for technical_regulations rows. PK."
    },
    {
@@ -86458,7 +86533,7 @@
   "columns": [
    {
     "name": "DRIVER_SOCIAL_Code",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for driver_social_media rows. PK."
    },
    {
@@ -86630,7 +86705,7 @@
   "columns": [
    {
     "name": "Bio_No",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for driver_biometric_metrics rows. PK."
    },
    {
@@ -86796,7 +86871,7 @@
   "columns": [
    {
     "name": "TECHNOLOGY_Index",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for innovation_technologies rows. PK."
    },
    {
@@ -86853,7 +86928,7 @@
   "columns": [
    {
     "name": "RTL_Code",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for regulation_technology_links rows. PK."
    },
    {
@@ -87000,7 +87075,7 @@
   "columns": [
    {
     "name": "ENROLLMENT_Record",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for staff_training_enrollments rows. PK."
    },
    {
@@ -87152,7 +87227,7 @@
   "columns": [
    {
     "name": "WeatherObs_Record",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for weather_observations rows. PK."
    },
    {
@@ -87724,7 +87799,7 @@
   "columns": [
    {
     "name": "Strategy_Index",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for strategy_scenarios rows. PK."
    },
    {
@@ -88243,7 +88318,7 @@
   "columns": [
    {
     "name": "INCIDENT_NUMBER",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Surrogate primary key for race_incidents rows. PK."
    },
    {
@@ -89789,7 +89864,7 @@
   "columns": [
    {
     "name": "social_reg",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for social community record. PK = SocialCommunity(Social_Reg)."
    },
    {
@@ -89836,7 +89911,7 @@
   "columns": [
    {
     "name": "pref_reg",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for preferences and settings record. PK = PreferencesAndSettings(Pref_Reg)."
    },
    {
@@ -89918,7 +89993,7 @@
   "columns": [
    {
     "name": "RoleID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the fan club role. PK."
    },
    {
@@ -89940,7 +90015,7 @@
   "columns": [
    {
     "name": "AnalysisID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the market analysis report. PK. Example: 3001."
    },
    {
@@ -90107,7 +90182,7 @@
   "columns": [
    {
     "name": "TrainingModuleID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the training module. PK. Example: 1."
    },
    {
@@ -90224,7 +90299,7 @@
   "columns": [
    {
     "name": "lore_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the lore entry. PK. Example: 1."
    },
    {
@@ -90346,7 +90421,7 @@
   "columns": [
    {
     "name": "GenreID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the music genre. PK. Example: 1."
    },
    {
@@ -90363,7 +90438,7 @@
   "columns": [
    {
     "name": "platform_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the platform. PK. Example: 1."
    },
    {
@@ -90385,7 +90460,7 @@
   "columns": [
    {
     "name": "events_reg",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for events and fan club record. PK = EventsAndClub(Events_Reg)."
    },
    {
@@ -90479,7 +90554,7 @@
   "columns": [
    {
     "name": "support_reg",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for support and feedback record. PK = SupportAndFeedback(Support_Reg)."
    },
    {
@@ -90516,7 +90591,7 @@
   "columns": [
    {
     "name": "member_reg",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for membership and spending record. PK = MembershipAndSpending(Member_Reg)."
    },
    {
@@ -90558,7 +90633,7 @@
   "columns": [
    {
     "name": "loyalty_reg",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for loyalty and achievements record. PK = LoyaltyAndAchievements(Loyalty_Reg)."
    },
    {
@@ -90590,7 +90665,7 @@
   "columns": [
    {
     "name": "mod_reg",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for moderation and compliance record. PK = ModerationAndCompliance(Mod_Reg)."
    },
    {
@@ -90724,7 +90799,7 @@
   "columns": [
    {
     "name": "ret_reg",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for retention and influence record. PK = RetentionAndInfluence(Ret_Reg)."
    },
    {
@@ -90761,7 +90836,7 @@
   "columns": [
    {
     "name": "DESIGNER_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the designer. PK. Example: 1."
    },
    {
@@ -90788,7 +90863,7 @@
   "columns": [
    {
     "name": "SPONSOR_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the sponsor. PK. Example: 1."
    },
    {
@@ -90825,7 +90900,7 @@
   "columns": [
    {
     "name": "technical_profile_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the fan's technical profile. PK. Example: 1."
    },
    {
@@ -90992,7 +91067,7 @@
   "columns": [
    {
     "name": "skill_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the skill. PK. Example: 1."
    },
    {
@@ -91014,7 +91089,7 @@
   "columns": [
    {
     "name": "engage_reg",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for engagement metrics record. PK = Engagement(Engage_Reg)."
    },
    {
@@ -91091,7 +91166,7 @@
   "columns": [
    {
     "name": "notes_reg",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for additional notes record. PK = AdditionalNotes(Notes_Reg)."
    },
    {
@@ -91113,7 +91188,7 @@
   "columns": [
    {
     "name": "commerce_reg",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGSERIAL. Auto-generated unique identifier for commerce and collection record. PK = CommerceAndCollection(Commerce_Reg)."
    },
    {
@@ -91165,7 +91240,7 @@
   "columns": [
    {
     "name": "idol_genre_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the idol-genre mapping. PK. Example: 1."
    },
    {
@@ -91232,7 +91307,7 @@
   "columns": [
    {
     "name": "ASSET_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the asset. PK. Example: 1."
    },
    {
@@ -91344,7 +91419,7 @@
   "columns": [
    {
     "name": "SimulationID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the simulation data point. PK. Example: 1."
    },
    {
@@ -91446,7 +91521,7 @@
   "columns": [
    {
     "name": "PERFORMANCE_METRIC_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the performance metric record. PK. Example: 1."
    },
    {
@@ -91533,7 +91608,7 @@
   "columns": [
    {
     "name": "session_log_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the streaming session log. PK. Example: 1."
    },
    {
@@ -91620,7 +91695,7 @@
   "columns": [
    {
     "name": "sponsorship_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the sponsorship. PK. Example: 1."
    },
    {
@@ -91702,7 +91777,7 @@
   "columns": [
    {
     "name": "idol_skill_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the idol-skill mapping. PK. Example: 1."
    },
    {
@@ -91784,7 +91859,7 @@
   "columns": [
    {
     "name": "idol_platform_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the idol-platform mapping. PK. Example: 1."
    },
    {
@@ -91871,7 +91946,7 @@
   "columns": [
    {
     "name": "fan_club_role_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the fan club role assignment. PK. Example: 1."
    },
    {
@@ -92028,7 +92103,7 @@
   "columns": [
    {
     "name": "event_sponsor_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the event sponsorship record. PK. Example: 1."
    },
    {
@@ -92190,7 +92265,7 @@
   "columns": [
    {
     "name": "fan_interest_tag_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the fan interest tag mapping. PK. Example: 1."
    },
    {
@@ -92347,7 +92422,7 @@
   "columns": [
    {
     "name": "TAG_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the interest tag. PK. Example: 1."
    },
    {
@@ -92364,7 +92439,7 @@
   "columns": [
    {
     "name": "SUBMISSION_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the fan content submission. PK. Example: 10001."
    },
    {
@@ -92526,7 +92601,7 @@
   "columns": [
    {
     "name": "PROJECT_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the fan collaboration project. PK. Example: 9001."
    },
    {
@@ -92688,7 +92763,7 @@
   "columns": [
    {
     "name": "EventLogisticsID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the event logistics record. PK. Example: 1."
    },
    {
@@ -92860,7 +92935,7 @@
   "columns": [
    {
     "name": "SentimentID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the sentiment analysis record. PK. Example: 1."
    },
    {
@@ -93022,7 +93097,7 @@
   "columns": [
    {
     "name": "MerchItemID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the merchandise item. PK. Example: 2001."
    },
    {
@@ -93194,7 +93269,7 @@
   "columns": [
    {
     "name": "COLLABORATION_ID",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the collaboration instance. PK. Example: 11001."
    },
    {
@@ -93356,7 +93431,7 @@
   "columns": [
    {
     "name": "merch_designer_id",
-    "type": "bigint NOT NULL",
+    "type": "bigint",
     "desc": "BIGINT. Unique identifier for the merchandise-designer mapping. PK. Example: 5001."
    },
    {

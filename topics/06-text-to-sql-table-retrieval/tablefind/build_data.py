@@ -25,8 +25,9 @@ BIRD_REPO, BIRD_SHA = "birdsql/livesqlbench-large-v1", "a418e108d5cbb4cf9b783a92
 SNOW_REPO, SNOW_SHA = "Snowflake/SQL-Schema-Retrieval", "e60c65cf9aeab052f0747902d31db1807099fa23"
 
 _CREATE = re.compile(r'CREATE TABLE\s+"?([^\s"(]+)"?\s*\((.*?)\n\);', re.S)
-_COLUMN = re.compile(r'^\s*("[^"]+"|\S+)\s+(.+?)(?:\s+NOT NULL|\s+NULL|\s+DEFAULT\b.*)?,?\s*$')
-_NOT_COLUMN = ("PRIMARY KEY", "FOREIGN KEY", "UNIQUE", "CONSTRAINT", "CHECK")
+_COLUMN = re.compile(r'^\s*("[^"]+"|\S+)\s+(.+?)(?:\s+(?:NOT\s+)?NULL\b.*|\s+DEFAULT\b.*)?,?\s*$')
+# Table constraints, not columns. Keyword + "(" for CHECK/UNIQUE so columns like checkpoint_location survive.
+_NOT_COLUMN = re.compile(r"^(?:PRIMARY\s+KEY|FOREIGN\s+KEY|CONSTRAINT\b|UNIQUE\s*\(|CHECK\s*\()", re.I)
 
 
 def parse_schema(text: str) -> dict[str, list[tuple[str, str]]]:
@@ -36,7 +37,7 @@ def parse_schema(text: str) -> dict[str, list[tuple[str, str]]]:
         cols = []
         for line in body.splitlines():
             s = line.strip()
-            if not s or s.upper().startswith(_NOT_COLUMN):
+            if not s or _NOT_COLUMN.match(s):
                 continue
             m = _COLUMN.match(s)
             if m:

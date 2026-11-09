@@ -14,6 +14,7 @@ import os
 import sys
 import threading
 import time
+from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -22,7 +23,7 @@ from shared.runs import DEFAULT_CEILING_USD, over_ceiling, save_run, spent_so_fa
 from tablefind.cards import card
 from tablefind.data import SETS, Question, load_key, load_questions, load_tables
 from tablefind.embed import EMBED_MODEL, EMBED_USD_PER_M, Embedder
-from tablefind.levels import SHORTLIST, Ctx, prepare, run_level
+from tablefind.levels import RERANK_MAX_TOKENS, SHORTLIST, Ctx, prepare, run_level
 from tablefind.rerank import SYSTEM
 from tablefind.score import score
 
@@ -31,7 +32,6 @@ RUNS_DIR = TOPIC / "runs"
 CACHE_DIR = TOPIC / "cache"
 TOPIC_CEILING_USD = DEFAULT_CEILING_USD
 LEVELS = ("0", "1", "2", "3")
-OUTPUT_TOKENS = 600  # answer plus reasoning, upper side
 
 
 def rerank_model() -> str:
@@ -43,19 +43,20 @@ def make_embedder() -> Embedder:
 
 
 def estimate_cost_usd(level: str, questions: list[Question], tables, model: str, repeats: int) -> float:
-    """Upper side: characters ÷ 4 as tokens, no cache discount, every embedding counted as a miss."""
+    """Upper side: characters ÷ 4 as tokens, output at the max_tokens cap (reasoning is billed), no cache discount,
+    both card sets embedded as misses."""
     if level == "0":
         return 0.0
     with_desc = level == "3"
     cards = [card(t, with_desc) for t in tables]
-    embed_chars = sum(len(c) for c in cards) + sum(len(q.text) for q in questions)
+    embed_chars = sum(len(card(t, d)) for t in tables for d in (False, True)) + sum(len(q.text) for q in questions)
     total = embed_chars / 4 * EMBED_USD_PER_M / 1_000_000
     if level in ("2", "3"):
         avg_card = sum(len(c) for c in cards) / len(cards)
         p = PRICES[model]
         for q in questions:
             tokens_in = (len(SYSTEM) + len(q.text) + SHORTLIST * avg_card) / 4
-            total += repeats * (tokens_in * p["input"] + OUTPUT_TOKENS * p["output"]) / 1_000_000
+            total += repeats * (tokens_in * p["input"] + RERANK_MAX_TOKENS * p["output"]) / 1_000_000
     return total
 
 
@@ -82,7 +83,7 @@ def _run_repeat(level: str, questions: list[Question], ctx: Ctx, budget_left: fl
         with lock:
             spent[0] += cost
         out[q.qid] = {"answer": ans, "seconds": time.perf_counter() - start, "cost_usd": cost,
-                      "calls": len(qctx.tracker.records)}
+                      "calls": len(qctx.tracker.records), "llm_seconds": sum(r.seconds for r in qctx.tracker.records)}
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
         list(pool.map(one, questions))
@@ -114,6 +115,10 @@ def main(argv: list[str] | None = None) -> int:
           f"Estimated cost ${estimate:.3f} (spent so far ${spent:.3f})")
     if a.dry_run:
         return 0
+    if estimate > a.budget:
+        print(f"The estimate is over --budget ${a.budget:.2f}: the run would stop part way and be thrown out. "
+              f"Raise --budget or use --limit. Not running.")
+        return 3
     if over_ceiling(spent, estimate, TOPIC_CEILING_USD):
         print(f"That would pass the ${TOPIC_CEILING_USD:.2f} topic ceiling. Not running.")
         return 2
@@ -133,6 +138,13 @@ def main(argv: list[str] | None = None) -> int:
 
     key = load_key(a.set)
     reps, partial = [], False
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+
+    def save(is_partial: bool) -> Path:
+        return save_run(a.runs_dir, a.set, a.level, {
+            "model": model, "embed_model": EMBED_MODEL if a.level != "0" else "none", "limit": a.limit,
+            "partial": is_partial, "n": len(questions), "cost_usd": total, "repeats": reps}, stamp=stamp)
+
     for i in range(repeats):
         if total >= a.budget:  # no money left for another repeat: never save an empty one
             partial = True
@@ -146,20 +158,20 @@ def main(argv: list[str] | None = None) -> int:
             "seconds": {q: r["seconds"] for q, r in res.items()},
             "cost_usd": {q: r["cost_usd"] for q, r in res.items()},
             "calls": {q: r["calls"] for q, r in res.items()},
+            "llm_seconds": {q: r["llm_seconds"] for q, r in res.items()},
             "errors": {q: r["answer"]["error"] for q, r in res.items() if r["answer"].get("error")},
         })
         s = score(answers, {q: key[q] for q in answers})
         ceiling = f", top-20 ceiling {s.ceiling:.0%}, made up {s.made_up:.0%}" if s.ceiling is not None else ""
         print(f"  repeat {i + 1}: all found {s.all_found:.0%}, recall {s.recall:.0%}{ceiling}, "
               f"errors {s.errors}, API failures {s.failed}")
+        save(True)  # after every repeat, so a crash never loses what was spent
         if stopped:
             partial = True
             print(f"  Budget of ${a.budget:.2f} reached: stopped. The run is marked partial.")
             break
 
-    path = save_run(a.runs_dir, a.set, a.level, {
-        "model": model, "embed_model": EMBED_MODEL if a.level != "0" else "none", "limit": a.limit,
-        "partial": partial, "n": len(questions), "cost_usd": total, "repeats": reps})
+    path = save(partial)
     print(f"Saved {path}. Spent ${total:.4f}")
     return 0
 

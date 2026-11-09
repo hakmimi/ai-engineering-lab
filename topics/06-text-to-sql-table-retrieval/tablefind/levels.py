@@ -15,6 +15,7 @@ from tablefind.rerank import K, SYSTEM, fill, parse_picks, rerank_prompt
 from tablefind.search import BM25, tokens, top_k
 
 SHORTLIST = 20
+RERANK_MAX_TOKENS = 2000  # OpenAI counts reasoning tokens in this limit
 
 
 @dataclass
@@ -35,6 +36,7 @@ def prepare(ctx: Ctx, embed: bool = True) -> None:
         "ids": ids,
         "cards": {False: dict(zip(ids, plain)), True: dict(zip(ids, rich))},
         "bm25": BM25([tokens(c) for c in plain]),
+        "dbs": {t.db for t in ctx.tables},
     }
     if embed:
         ctx.index["vecs"] = {False: [normalize(v) for v in ctx.embedder.embed(plain)],
@@ -51,13 +53,13 @@ def run_level(level: str, q: Question, ctx: Ctx) -> dict:
         return _answer(top_k(ix["bm25"].scores(tokens(q.text)), ix["ids"], K))
     qvec = ctx.embedder.embed([q.text])[0]
     if level == "1":
-        return _answer(cosine_top_k(qvec, ix["vecs"][False], ix["ids"], K))
+        return _answer(cosine_top_k(qvec, ix["vecs"][False], ix["ids"], K, normalized=True))
     with_desc = level == "3"
-    top20 = cosine_top_k(qvec, ix["vecs"][with_desc], ix["ids"], SHORTLIST)
+    top20 = cosine_top_k(qvec, ix["vecs"][with_desc], ix["ids"], SHORTLIST, normalized=True)
     cards = [ix["cards"][with_desc][i] for i in top20]
     text = llm_call(rerank_prompt(q.text, cards), cached_system=SYSTEM, label=f"l{level}:{q.qid}",
-                    model=ctx.model, tracker=ctx.tracker, max_tokens=2000)
-    p = parse_picks(text, top20)
+                    model=ctx.model, tracker=ctx.tracker, max_tokens=RERANK_MAX_TOKENS)
+    p = parse_picks(text, top20, dbs=ix["dbs"])
     if p.status != "ok":
         return _answer([], top20, p.made_up, 0, p.status)
     picks, filled = fill(p.ids, top20)

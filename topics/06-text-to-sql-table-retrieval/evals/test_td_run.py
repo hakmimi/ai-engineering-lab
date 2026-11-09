@@ -76,3 +76,38 @@ def test_level0_needs_no_key_and_costs_nothing(setup, monkeypatch):
     assert run.main(["--level", "0", "--set", s, "--yes", "--runs-dir", str(runs)]) == 0
     saved = json.loads(_files(runs)[0].read_text(encoding="utf-8"))
     assert saved["cost_usd"] == 0 and len(saved["repeats"]) == 1
+
+
+def test_estimate_over_budget_refuses_before_spending(setup, monkeypatch):
+    runs, s = setup
+    monkeypatch.setattr(run, "estimate_cost_usd", lambda *a, **k: 1.2)
+    assert run.main(["--level", "3", "--set", s, "--yes", "--budget", "1.0", "--runs-dir", str(runs)]) == 3
+    assert _files(runs) == []
+
+
+def test_estimate_prices_output_at_max_tokens():
+    from tablefind.data import Question
+    from tablefind.levels import RERANK_MAX_TOKENS
+    q = [Question("m-1", "x")]
+    t = [type("T", (), {"columns": (), "db": "a", "name": "b", "id": "a.b"})()]
+    est = run.estimate_cost_usd("2", q, t, "gpt-6-luna", 1)
+    assert est >= RERANK_MAX_TOKENS * 0.50 / 1_000_000
+
+
+def test_run_file_saved_after_each_repeat_and_llm_seconds_kept(setup, monkeypatch):
+    runs, s = setup
+    calls = {"n": 0}
+
+    def flaky(prompt, **kw):
+        calls["n"] += 1
+        kw["tracker"].add(CallRecord(kw["label"], kw["model"], 0.25, 1000, 10, 0, 0))
+        if calls["n"] > len(data.load_questions(s)):  # repeat 2 dies hard
+            raise KeyboardInterrupt
+        return "<tables>\nalpha_large.projects\n</tables>"
+
+    monkeypatch.setattr(levels, "llm_call", flaky)
+    with pytest.raises(KeyboardInterrupt):
+        run.main(["--level", "2", "--set", s, "--repeats", "3", "--workers", "1", "--yes", "--runs-dir", str(runs)])
+    saved = json.loads(_files(runs)[0].read_text(encoding="utf-8"))
+    assert saved["partial"] is True and len(saved["repeats"]) == 1 and saved["cost_usd"] > 0
+    assert set(saved["repeats"][0]["llm_seconds"].values()) == {0.25}

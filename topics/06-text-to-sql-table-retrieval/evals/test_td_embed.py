@@ -61,3 +61,8 @@ def test_batches_of_100(tmp_path):
 def test_cosine_top_k():
     vecs = [[1.0, 0.0], [0.0, 1.0], [0.7, 0.7]]
     assert cosine_top_k([1.0, 0.1], vecs, ["x", "y", "z"], 2) == ["x", "z"]
+
+
+def test_cosine_top_k_accepts_prenormalized_vectors():
+    vecs = [[1.0, 0.0], [0.0, 1.0], [0.7071, 0.7071]]
+    assert cosine_top_k([1.0, 0.1], vecs, ["x", "y", "z"], 2, normalized=True) == ["x", "z"]

@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 
-from shared.llm import extract_xml
 
 K = 7
 
@@ -34,29 +33,40 @@ def rerank_prompt(question: str, cards: list[str]) -> str:
     return f"## Question\n\n{question}\n\n## Candidate tables ({len(cards)})\n\n{body}\n\nPick the {K} tables."
 
 
-def _clean(line: str) -> str:
-    line = re.sub(r"^\s*(?:[-*•]|\d+[.)])\s*", "", line)
-    return line.replace('"', "").replace("`", "").replace("'", "").strip().lower()
+_BLOCK = re.compile(r"<tables>(.*?)</tables>", re.S)
 
 
-def parse_picks(text: str, shown: list[str], k: int = K) -> Picks:
-    if "<tables>" not in text:
+def _names(block: str) -> list[str]:
+    """One or more names per line; notes after a name (" -- why", " (main table)") are dropped."""
+    out = []
+    for line in block.splitlines():
+        line = re.sub(r"^\s*(?:[-*•]|\d+[.)])\s*", "", line)
+        for part in line.split(","):
+            part = part.replace('"', "").replace("`", "").replace("'", "").strip()
+            part = re.split(r"\s|\(|:", part, maxsplit=1)[0] if part else ""
+            if part:
+                out.append(part.lower())
+    return out
+
+
+def parse_picks(text: str, shown: list[str], k: int = K, dbs: set[str] | None = None) -> Picks:
+    """Read the last complete <tables> block. No complete block (missing or cut off) is an error.
+    dbs: every database name in the pool, so a real database that isn't among the shown tables is caught."""
+    blocks = _BLOCK.findall(text)
+    if not blocks:
         return Picks([], [], "error")
     shown_set = set(shown)
-    dbs = {s.split(".", 1)[0] for s in shown}
+    known = {s.split(".", 1)[0] for s in shown} | (dbs or set())
     by_table: dict[str, list[str]] = {}
     for s in shown:
         by_table.setdefault(s.split(".", 1)[1], []).append(s)
     ids, made_up = [], []
-    for raw in extract_xml(text, "tables").splitlines():
-        name = _clean(raw)
-        if not name:
-            continue
+    for name in _names(blocks[-1]):
         parts = name.split(".")
         full = ".".join(parts[-2:]) if len(parts) >= 2 else None
         if full in shown_set:
             hit = full
-        elif (len(parts) == 1 or parts[-2] not in dbs) and len(by_table.get(parts[-1], [])) == 1:  # bare or schema prefix
+        elif (len(parts) == 1 or parts[-2] not in known) and len(by_table.get(parts[-1], [])) == 1:  # bare or schema prefix
             hit = by_table[parts[-1]][0]
         else:
             if name not in made_up:

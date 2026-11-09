@@ -90,7 +90,7 @@ Table: cybermarket_pattern_large.alerts
 
 ```
 Table: polar_equipment_large.Communication
-- COMM_ID bigint NOT NULL — Unique identifier for the communication record. PK.
+- COMM_ID bigint — Unique identifier for the communication record. PK.
 - equipRef text — Reference to the equipment. FK to Equipment.EQUIP_CODE.
 - loc_link text — Reference to the location. FK to Location.STATION_name.
 - GPS_signal text — GPS signal status. **NULL means no GPS signal data recorded.**. Possible values: Medium, Strong, Weak.
@@ -113,7 +113,7 @@ Table: polar_equipment_large.Communication
 
 ```
 Table: polar_equipment_large.OperationMaintenance
-- OP_MAINT_ID bigint NOT NULL — Unique identifier for operation and maintenance record. PK.
+- OP_MAINT_ID bigint — Unique identifier for operation and maintenance record. PK.
 - equipRef text — Reference to the equipment. FK to Equipment.EQUIP_CODE.
 - OPER_hours real — Total operational hours of the equipment. Example: 17843.
 - maintCycleHrs real — Maintenance cycle hours. **NULL means no maintenance cycle defined.**. Example: 2047.0.
@@ -352,7 +352,7 @@ Table: sports_events_large.lap_times
 
 ```
 Table: archeology_scan_large.pointcloud
-- cloudregistry bigint NOT NULL — Auto-generated unique identifier for point cloud record. PK = PointCloud(CloudRegistry).
+- cloudregistry bigint — Auto-generated unique identifier for point cloud record. PK = PointCloud(CloudRegistry).
 - crewref text — Reference to operator who generated point cloud. FK to Personnel.
 - arcref text — Reference to associated archeologys project. FK to Projects.
 - cloud_metrics jsonb — Point cloud quality and density measurements including resolution, coverage, overlap, and noise analysis
@@ -503,7 +503,7 @@ Table: cross_border_large.RiskManagement
 
 ```
 Table: exchange_traded_funds_large.funds
-- productnum bigint NOT NULL — A SERIAL primary key uniquely identifying each fund product in the database.
+- productnum bigint — A SERIAL primary key uniquely identifying each fund product in the database.
 - tickersym character varying — Unique ticker symbol for the fund as traded on exchanges (e.g., 'SPY', 'VTI', 'QQQ'). Must be unique across all records.
 - quotemode character varying — Type of security quotation or fund structure classification. All records are ETFs in this dataset. Possible values: ETF.
 - geozone character varying — Geographic region or country focus of the fund's investments. All values represent United States with varying formats. Possible values: USA, US, United States, U.S., U.S.A., America, usa, us, UNITED_STATES.
@@ -543,7 +543,7 @@ Table: exchange_traded_funds_large.funds
 
 ```
 Table: exchange_traded_funds_large.performance
-- perfid bigint NOT NULL — A SERIAL primary key uniquely identifying each fund performance record.
+- perfid bigint — A SERIAL primary key uniquely identifying each fund performance record.
 - productref character varying — Foreign key referencing funds.TickerSym, ensuring 1:1 relationship for performance data per fund.
 - reportdate date — Date when the performance data was calculated or reported (YYYY-MM-DD). Contains  NULL when report date is not available.
 - high52w real — Highest trading price reached in the past 52 weeks. Example: 30.6, 62.6, 52.17. Contains NULL when insufficient trading history exists for 52-week calculation.
@@ -579,7 +579,7 @@ Table: exchange_traded_funds_large.performance
 
 ```
 Table: exchange_traded_funds_large.risk_metrics
-- riskid bigint NOT NULL — A SERIAL primary key uniquely identifying each risk metrics record for funds.
+- riskid bigint — A SERIAL primary key uniquely identifying each risk metrics record for funds.
 - investmentref character varying — Foreign key referencing funds.TickerSym, ensuring 1:1 relationship for risk analysis per fund.
 - alpha3y real — Jensen's alpha measuring fund's risk-adjusted excess return over 3 years relative to its benchmark. Example: 10.87, -2.35, 4.32. Contains NULL when alpha calculation data is incomplete.
 - beta3y real — Beta coefficient measuring fund's systematic risk relative to benchmark over 3 years. Example: -2.35, 0.43, 5.15. Contains NULL when beta calculation data is incomplete.
@@ -702,7 +702,7 @@ Table: fake_account_large.risk_and_moderation
 
 ```
 Table: polar_equipment_large.Communication
-- COMM_ID bigint NOT NULL — Unique identifier for the communication record. PK.
+- COMM_ID bigint — Unique identifier for the communication record. PK.
 - equipRef text — Reference to the equipment. FK to Equipment.EQUIP_CODE.
 - loc_link text — Reference to the location. FK to Location.STATION_name.
 - GPS_signal text — GPS signal status. **NULL means no GPS signal data recorded.**. Possible values: Medium, Strong, Weak.
@@ -719,14 +719,14 @@ Table: polar_equipment_large.Communication
 
 ```
 Table: polar_equipment_large.PowerBattery
-- PWR_BATT_ID bigint NOT NULL — Unique identifier for the power battery. PK.
+- PWR_BATT_ID bigint — Unique identifier for the power battery. PK.
 - equip_ref text — Reference to the equipment. FK to Equipment.EQUIP_CODE.
 - battery_telemetry jsonb — Captures the full real-time power and battery state of a unit (operating mode, SOC, health, charge parameters, consumption, efficiency) as a single JSONB blob.
 ```
 
 ```
 Table: polar_equipment_large.WeatherAndStructure
-- WEATHER_ID bigint NOT NULL — Unique identifier for the weather and structure record. PK.
+- WEATHER_ID bigint — Unique identifier for the weather and structure record. PK.
 - loc_link text — Reference to the location. FK to Location.STATION_name.
 - opmaint_link bigint — Reference to the operation and maintenance record. FK to OperationMaintenance.OP_MAINT_ID.
 - extTempC real — External temperature in Celsius. Example: -14.9.
