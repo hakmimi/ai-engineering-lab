@@ -89,7 +89,8 @@ If a provider fails (no credit, outage), switching model is allowed **only if di
 
 ## 10 · README (template: `templates/README.md`)
 
-Order: How this started → The claim → My experiment → How I measure it → The results (graphs) → Key takeaways → Limitations → Technical walkthrough (data, tools, step by step, evals, lessons from building it, folder box in `<details>`).
+Order (fixed): opening hook → the claim → the experiment → how it's scored → results (graphs; main, then held-out) → takeaways → limitations → technical walkthrough (data, tools, step by step, evals, lessons from building it, folder box in `<details>`).
+**Wording is never reused:** a fresh opening line and topic-specific headings in every post. Posts that all start "So, I came across…" under "How this started" read as machine-made (the author, 2026-11-09).
 Voice: first person, plain, a bit casual. No "delve", "crucial", "robust", "it's worth noting", no tricolons.
 
 ## 11 · Publish and finish

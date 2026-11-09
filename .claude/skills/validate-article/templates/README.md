@@ -1,17 +1,15 @@
 # NN · <The reader's question, as the post title>
 
-<!-- Voice: first person, simple words, short sentences. No AI polish ("delve", "crucial", "it's worth noting").
-     Numbers only from results.md. Graphs, not tables, in "The results". -->
+<!-- The ORDER below is fixed. Every heading and the opening line are placeholders: write NEW, topic-specific ones
+     for each post (e.g. "Two companies, one claim"). Never reuse "How this started", "So, I came across…",
+     "What X claims, and what it implies", or generic headings like "My experiment" / "The results" / "Key takeaways".
+     Voice: first person, simple words, short sentences. No AI polish ("delve", "crucial", "it's worth noting").
+     Numbers only from results.md. Graphs, not tables, in the results. -->
 
-## How this started
+<1 · Opening hook, no heading or a topic-specific one: a concrete moment or question from this topic, then the article link
+and what it shows. Fresh wording every post.>
 
-So, I came across this article from <publisher>: [<title>](<url>). <What it shows, in one or two sentences.>
-
-It made me wonder. <The real-world worry or curiosity.> <The question the article leaves open.>
-
-The article doesn't say. So I tried to find out.
-
-## What <publisher> claims, and what it implies
+## <2 · The claim, as a topic-specific heading>
 
 <The method in plain steps (a short numbered list is fine).>
 
@@ -19,25 +17,23 @@ The article doesn't say. So I tried to find out.
 
 <What it implies if true, for someone using it.>
 
-## My experiment
+## <3 · The experiment, topic-specific heading>
 
-So I decided to take it a step further.
-
-### The question
+### <The question>
 
 <One sentence, bold.>
 
-### The data
+### <The data>
 
 <Where it comes from, who made the answer key, why it fits. Main set vs held-out set in plain words.>
 
-### The process
+### <The levels>
 
 <The levels, one line each.>
 
 ![<diagram alt text>](design/process-diagram.png)
 
-## How I measure it
+## <4 · How it's scored, topic-specific heading>
 
 <Each KPI in plain words, one short paragraph or bullet each.>
 
@@ -45,7 +41,7 @@ So I decided to take it a step further.
 
 **What I expect:** <the author's guesses, written before the runs>
 
-## The results
+## <5 · Results, topic-specific heading: main set first, then held-out>
 
 <One line: the headline answer.>
 
@@ -59,19 +55,19 @@ So I decided to take it a step further.
 
 - <guess> → <what happened>
 
-## Key takeaways
+## <6 · Takeaways, topic-specific heading>
 
 - **<takeaway>.** <one or two sentences>
 
-## Limitations
+## <7 · Limitations, topic-specific heading>
 
 - **<limit>.** <one or two sentences>
 
 **Data credit.** <dataset, authors, licence>. See [`data/NOTICE.md`](data/NOTICE.md).
 
-## Technical walkthrough
+## <8 · Technical walkthrough, topic-specific heading>
 
-### The data
+### <The data>
 
 - **Source:** <...>
 - **The sets:** <...>

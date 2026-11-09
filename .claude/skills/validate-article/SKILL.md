@@ -35,7 +35,7 @@ Details, commands and checklists per step: `reference.md` (read it at step 1).
 7. **Spot check** from `templates/spot-check.md`: 10 + 10 main-set items. → 🛑 3
 8. **Runs:** `--dry-run` → 5-item smoke run → full runs. Budget per command $1, topic ceiling $5.
 9. **Report:** `results.md` + SVG charts, generated from run files only.
-10. **README** from `templates/README.md` (the 8-block blog structure), with "Lessons from building it".
+10. **README** from `templates/README.md`: the 8-block order, but a fresh hook and topic-specific headings every time, with "Lessons from building it".
 11. **Publish:** `python -m shared.publish_post`, build the blog, push. Merge `--no-ff` to lab main, push, remove the worktree, mark `articles.md`.
 
 ## Honesty rules

@@ -1,16 +1,10 @@
 # 06 · Can an AI find the right tables in a big database?
 
-## How this started
+Ask a data bot "which dig sites have the best scan quality?" and before it writes a single line of SQL, it has to answer a harder question: out of hundreds of tables, which ones hold the answer? Get that wrong and the SQL is wrong, however clean it looks.
 
-So, I came across this article from LinkedIn's engineering blog: [Practical text-to-SQL for data analytics](https://www.linkedin.com/blog/engineering/ai/practical-text-to-sql-for-data-analytics). It's about SQL Bot, the tool they built so people at LinkedIn can ask a data question in plain English and get a SQL query back.
+LinkedIn wrote about exactly this in [Practical text-to-SQL for data analytics](https://www.linkedin.com/blog/engineering/ai/practical-text-to-sql-for-data-analytics), the story of SQL Bot, their tool for asking data questions in plain English. Their warehouse has millions of tables, and they say finding the right ones is the hard part, harder than writing the query.
 
-The part that caught me wasn't the SQL. It was this: their warehouse has millions of tables, and the hard part is finding the right ones. If the bot picks the wrong tables, it doesn't matter how good the SQL is.
-
-Then I found [the same idea at Pinterest](https://medium.com/pinterest-engineering/how-we-built-text-to-sql-at-pinterest-30bad30dabff). Two big companies, the same pattern. So I wanted to know: does it actually work, and how well?
-
-Neither article really says. So I tried to find out.
-
-## What LinkedIn and Pinterest claim, and what it implies
+## Two companies, one claim
 
 LinkedIn's table finding works in three steps:
 
@@ -20,19 +14,19 @@ LinkedIn's table finding works in three steps:
 
 They also say two things make the search better: **descriptions** of tables and columns, and **example queries**. Their graph (Figure 6) shows table recall going up as each piece is added. But it has no numbers on it. Their test set is about 130 private questions, and they don't say which models they use.
 
-Pinterest does the same search-then-pick, with one twist: before anything else, an **LLM writes a short summary of every table**, and the search runs on those summaries. They say their table search hit rate was 40% before they added table documentation to the search. It got better as they gave the documentation more weight, but they don't give the final number.
+[Pinterest describes the same pattern](https://medium.com/pinterest-engineering/how-we-built-text-to-sql-at-pinterest-30bad30dabff), with one twist: before anything else, an **LLM writes a short summary of every table**, and the search runs on those summaries. They say their table search hit rate was 40% before they added table documentation to the search. It got better as they gave the documentation more weight, but they don't give the final number.
 
 What it implies: **you can point an LLM at a huge warehouse, and with a search step in front of it, it will find the tables your question needs.**
 
-## My experiment
+Neither company shows how often that's true on questions anyone else can check. That's what I wanted to see.
 
-So I decided to take it a step further.
+## 971 tables, 332 questions, one answer key
 
-### The question
+### What I'm asking
 
 **When a warehouse has hundreds of tables, does "search 20, let an LLM pick 7" find every table a question needs? And do descriptions or LLM summaries help?**
 
-### The data
+### Where the questions and the answers come from
 
 I needed three things: a big, messy schema, real questions, and an answer key I didn't write.
 
@@ -49,7 +43,7 @@ I put all 971 tables in one pool, like one big warehouse. Every question searche
 
 The held-out questions turned out harder: they need 3.1 tables on average, against 2.3 in the main set. So I compare levels within a set, not one set against the other.
 
-### The process
+### Seven ways to pick the tables
 
 Every level hands **7 tables** to the (imagined) SQL writer, except levels 4 and 4c, which hand over 10.
 
@@ -63,7 +57,7 @@ Every level hands **7 tables** to the (imagined) SQL writer, except levels 4 and
 
 ![The levels: keyword search, embedding search, search 20 then LLM picks 7, with descriptions](design/process-diagram.png)
 
-## How I measure it
+## Keeping score
 
 - **All found.** Out of all questions, how many got **every** table they need. This is the one that matters: if one table is missing, the SQL can't be right.
 - **Recall.** What share of the needed tables were found. Kinder than "all found", but it hides the missing piece.
