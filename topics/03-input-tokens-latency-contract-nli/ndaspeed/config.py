@@ -8,7 +8,14 @@ from shared.llm import default_model, load_env, require_api_key
 
 SEED = 2026
 MIN_OUTPUT_TOKENS = 16  # the smallest max_output_tokens the Responses API accepts
-REASONING = {"effort": "low"}  # lowest effort we use; confirmed in the smoke run
+# The lowest reasoning effort each model accepts (smoke run 2026-11-09: gpt-6-luna takes "none";
+# gpt-6.1-sol refuses "none" and "minimal"). Lowest effort = the first word measures reading, not thinking.
+LOWEST_EFFORT = {"gpt-6-luna": "none"}
+DEFAULT_EFFORT = "low"
+
+
+def reasoning(model_name: str) -> dict:
+    return {"effort": LOWEST_EFFORT.get(model_name, DEFAULT_EFFORT)}
 TOPIC_DIR = Path(__file__).resolve().parent.parent
 RUNS_DIR = TOPIC_DIR / "runs"
 RESULTS = TOPIC_DIR / "results.md"

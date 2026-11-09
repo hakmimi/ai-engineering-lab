@@ -51,3 +51,10 @@ def test_spent_in_runs_sums_run_files(tmp_path):
     (tmp_path / "notes.json").write_text(json.dumps({"spent_usd": 99}))
     assert spent_in_runs(tmp_path) == pytest.approx(1.75)
     assert spent_in_runs(tmp_path / "missing") == 0.0
+
+
+def test_spent_in_runs_counts_smoke_runs_in_subfolders(tmp_path):
+    (tmp_path / "smoke").mkdir()
+    (tmp_path / "smoke" / "test1-x.json").write_text(json.dumps({"spent_usd": 0.3}))
+    (tmp_path / "test0-a.json").write_text(json.dumps({"spent_usd": 0.1}))
+    assert spent_in_runs(tmp_path) == pytest.approx(0.4)

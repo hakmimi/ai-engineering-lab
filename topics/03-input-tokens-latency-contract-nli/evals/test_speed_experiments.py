@@ -116,3 +116,14 @@ def test_interrupt_marks_partial_run_and_reraises():
         ex.test0(client, "gpt-6-luna", random.Random(1), Budget(1.0), repeats=3)
     run = e.value.partial_run
     assert run["stopped"].startswith("error: KeyboardInterrupt") and len(run["records"]) == 2 and run["spent_usd"] > 0
+
+
+def test_each_model_uses_its_lowest_accepted_reasoning_effort():
+    client = FakeClient()
+    ex.test1(client, {"small": "gpt-6-luna", "large": "gpt-6.1-sol"}, random.Random(1), Budget(5.0),
+             rounds={"small": 1, "large": 1}, sizes=(50,))
+    efforts = {(r["model"], r["reasoning"]["effort"]) for r in client.requests}
+    assert efforts == {("gpt-6-luna", "none"), ("gpt-6.1-sol", "low")}
+    client = FakeClient()
+    ex.test4(client, "gpt-6-luna", random.Random(1), Budget(5.0), chats=1)
+    assert {r["reasoning"]["effort"] for r in client.requests} == {"none"}

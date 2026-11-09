@@ -38,4 +38,4 @@ class Budget:
 def spent_in_runs(runs_dir: Path) -> float:
     if not runs_dir.exists():
         return 0.0
-    return sum(json.loads(p.read_text(encoding="utf-8")).get("spent_usd", 0.0) for p in runs_dir.glob("test*.json"))
+    return sum(json.loads(p.read_text(encoding="utf-8")).get("spent_usd", 0.0) for p in runs_dir.rglob("test*.json"))  # smoke runs in subfolders count too

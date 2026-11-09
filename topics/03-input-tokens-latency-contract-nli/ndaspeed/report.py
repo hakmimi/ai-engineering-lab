@@ -11,7 +11,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from ndaspeed.config import RESULTS, RUNS_DIR, SEED
-from ndaspeed.cost import cost_of
+from ndaspeed.cost import cost_of, spent_in_runs
 from ndaspeed.stats import bootstrap_diff, median, p90, slope_per_100k, values
 from ndaspeed.timer import Timing
 
@@ -223,12 +223,10 @@ def build_results(runs_dir: Path = RUNS_DIR) -> str:
         out += SECTIONS[test](run) + ["", f"Run file: `{name}` (started {run['started']}"
                                       + (", stopped by the budget" if run.get("stopped") else "") + ")", ""]
     out += ["## Spend", "", "| Run file | $ |", "|---|---|"]
-    total = 0.0
     for p in sorted(runs_dir.glob("test*.json")) if runs_dir.exists() else []:
         spent = json.loads(p.read_text(encoding="utf-8")).get("spent_usd", 0.0)
-        total += spent
         out.append(f"| {p.name} | {spent:.4f} |")
-    out += ["", f"Total spent: ${total:.2f}", "", HOW_TO_RUN]
+    out += ["", f"Total spent: ${spent_in_runs(runs_dir):.2f} (smoke runs in `runs/smoke/` included)", "", HOW_TO_RUN]
     return "\n".join(out)
 
 

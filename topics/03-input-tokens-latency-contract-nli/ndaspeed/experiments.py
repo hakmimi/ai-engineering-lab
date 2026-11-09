@@ -16,7 +16,7 @@ import openai
 
 from ndaflow import data
 from ndaspeed.chat import ANSWER_TOKENS, Turn, request_estimate_usd, run_chat
-from ndaspeed.config import MIN_OUTPUT_TOKENS, REASONING, SEED
+from ndaspeed.config import MIN_OUTPUT_TOKENS, SEED, reasoning
 from ndaspeed.cost import Budget, BudgetExceeded, cost_of
 from ndaspeed.packs import (
     PING, all_contracts, instructions, long_questions, make_pack, question_text, read_answer, short_questions, stack_to,
@@ -72,7 +72,7 @@ def _add_failed(run: dict, failed: list[Timing], model: str, **keys) -> None:
 
 def _ping_request(model: str, instr: str | None = None) -> dict:
     return {"model": model, "instructions": instr or instructions(None), "input": PING,
-            "max_output_tokens": PING_TOKENS, "reasoning": REASONING, "store": False}
+            "max_output_tokens": PING_TOKENS, "reasoning": reasoning(model), "store": False}
 
 
 def _warmup(run, client, budget, model, sleep) -> None:
@@ -215,7 +215,7 @@ def test3(client, model: str, rng: random.Random, budget: Budget, reps: int = 10
                         "max_output_tokens": MIN_OUTPUT_TOKENS, "prompt_cache_key": cache_key}, rep)
                     sleep(2)
                 request = {"model": model, "instructions": instr, "max_output_tokens": ANSWER_TOKENS,
-                           "reasoning": REASONING, "store": False, "prompt_cache_key": cache_key,
+                           "reasoning": reasoning(model), "store": False, "prompt_cache_key": cache_key,
                            "input": [pack_msg, {"role": "user", "content": question_text(q)}]}
                 t, failed = measure(client, budget, request, sleep)
                 _add_failed(run, failed, model, rep=rep)

@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from typing import Callable
 
 from ndaflow.models import Answer
-from ndaspeed.config import REASONING
+from ndaspeed.config import reasoning
 from ndaspeed.cost import Budget, BudgetExceeded, cost_of
 from ndaspeed.packs import Pack, Question, est_tokens, instructions, question_text, read_answer
 from ndaspeed.timer import Timing, nonce, timed_stream
@@ -60,7 +60,7 @@ def run_chat(client, model: str, pack: Pack, questions: list[Question], variant:
     try:
         for i, q in enumerate(questions):
             q_msg = {"role": "user", "content": question_text(q)}
-            base = {"model": model, "max_output_tokens": ANSWER_TOKENS, "reasoning": REASONING,
+            base = {"model": model, "max_output_tokens": ANSWER_TOKENS, "reasoning": reasoning(model),
                     "instructions": instructions(nonce(rng) if variant == "cache_off" else chat_nonce)}
             full = {**base, "input": [pack_msg, *history, q_msg]}
             if variant == "cache_off":
