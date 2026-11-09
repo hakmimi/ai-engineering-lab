@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tables or Writing</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --surface: #ffffff; --fg: #1b2230; --muted: #5a6475; --line: #dde1e8;
+    --gen: #4f46e5; --agent: #b45309; --run: #0f766e; --stop: #15803d; --gold: #be123c;
+    --sans: "Segoe UI", system-ui, sans-serif; --mono: Consolas, ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442;
+    --gen: #a5a1ff; --agent: #f4b267; --run: #5fd3c4; --stop: #6ee7a0; --gold: #fb7f9b; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442;
+    --gen: #a5a1ff; --agent: #f4b267; --run: #5fd3c4; --stop: #6ee7a0; --gold: #fb7f9b; color-scheme: dark; }
+  body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--sans); margin: 0; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 16px 40px; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  .grid { display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 14px; align-items: center; margin-bottom: 28px; }
+  .col { display: flex; flex-direction: column; gap: 10px; }
+  .box { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--c); border-radius: 8px; padding: 12px 14px; }
+  .box b { display: block; color: var(--c); margin-bottom: 4px; }
+  .box span { font-size: 14px; color: var(--muted); }
+  .lane { display: grid; grid-template-columns: 34px 1fr; gap: 8px; align-items: center; }
+  .lane .tag { font: 700 18px var(--mono); color: var(--c); text-align: center; }
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 15px; }
+  th { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  td:first-child { font-family: var(--mono); white-space: nowrap; font-weight: 600; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Tables or writing: where text-to-SQL breaks</h1>
+  <p class="sub">The same question and the same writer prompt three times. Only the tables the writer is shown change.</p>
+
+  <div class="grid">
+    <div class="col">
+      <div class="box" style="--c: var(--muted)"><b>Question</b><span>question + hint, from BIRD Mini-Dev</span></div>
+    </div>
+    <div class="col">
+      <div class="lane" style="--c: var(--gen)"><div class="tag">A</div>
+        <div class="box" style="--c: var(--gen)"><b>Whole database</b><span>every table of the question's own database (3 to 13)</span></div></div>
+      <div class="lane" style="--c: var(--gold)"><div class="tag">B</div>
+        <div class="box" style="--c: var(--gold)"><b>Right tables only</b><span>the tables the gold SQL reads: Uber's "decoupled" flow</span></div></div>
+      <div class="lane" style="--c: var(--agent)"><div class="tag">C</div>
+        <div class="box" style="--c: var(--agent)"><b>Table agent → picked tables</b><span>one AI call reads all 75 table cards and names the tables: Uber's "vanilla" flow</span></div></div>
+    </div>
+    <div class="col">
+      <div class="box" style="--c: var(--gen)"><b>Writer (AI)</b><span>schema + 3 example rows per table → one SQLite query</span></div>
+      <div class="box" style="--c: var(--run)"><b>Run it (code)</b><span>read-only, on the question's database</span></div>
+      <div class="box" style="--c: var(--stop)"><b>Score (code)</b><span>same rows as the gold SQL?</span></div>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>Compare</th><th>What the gap tells you</th></tr></thead>
+    <tbody>
+      <tr><td>B − A</td><td>Do extra, unneeded tables confuse the writer?</td></tr>
+      <tr><td>B − C</td><td>How much the table agent's mistakes cost: the "finding tables" share of the error</td></tr>
+      <tr><td>C − A</td><td>Is a table agent over the whole warehouse worth adding at all?</td></tr>
+      <tr><td>Signals</td><td>Afterwards, Uber's cheap checks (runs, returns rows, LLM similarity to the golden SQL) are compared with the real score</td></tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

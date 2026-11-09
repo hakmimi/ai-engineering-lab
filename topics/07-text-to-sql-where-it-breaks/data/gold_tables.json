@@ -1,0 +1,491 @@
+{
+ "17": [
+  "satscores",
+  "schools"
+ ],
+ "24": [
+  "frpm",
+  "satscores"
+ ],
+ "25": [
+  "frpm",
+  "satscores"
+ ],
+ "28": [
+  "frpm",
+  "schools"
+ ],
+ "31": [
+  "frpm"
+ ],
+ "32": [
+  "frpm",
+  "schools"
+ ],
+ "39": [
+  "satscores",
+  "schools"
+ ],
+ "50": [
+  "satscores",
+  "schools"
+ ],
+ "72": [
+  "frpm",
+  "schools"
+ ],
+ "85": [
+  "frpm",
+  "schools"
+ ],
+ "537": [
+  "posts",
+  "users"
+ ],
+ "544": [
+  "posts",
+  "users"
+ ],
+ "568": [
+  "users",
+  "votes"
+ ],
+ "571": [
+  "posts",
+  "votes"
+ ],
+ "572": [
+  "posts"
+ ],
+ "592": [
+  "badges"
+ ],
+ "595": [
+  "postHistory",
+  "posts",
+  "users"
+ ],
+ "598": [
+  "badges"
+ ],
+ "604": [
+  "posts",
+  "users"
+ ],
+ "633": [
+  "postHistory",
+  "posts",
+  "users"
+ ],
+ "683": [
+  "posts",
+  "users"
+ ],
+ "716": [
+  "comments",
+  "users"
+ ],
+ "865": [
+  "drivers",
+  "results"
+ ],
+ "880": [
+  "drivers",
+  "results"
+ ],
+ "892": [
+  "driverStandings",
+  "drivers",
+  "races"
+ ],
+ "895": [
+  "drivers",
+  "lapTimes",
+  "races"
+ ],
+ "910": [
+  "circuits"
+ ],
+ "912": [
+  "circuits"
+ ],
+ "915": [
+  "drivers"
+ ],
+ "930": [
+  "drivers",
+  "races",
+  "results"
+ ],
+ "962": [
+  "drivers",
+  "races",
+  "results"
+ ],
+ "963": [
+  "drivers",
+  "lapTimes"
+ ],
+ "964": [
+  "drivers"
+ ],
+ "988": [
+  "drivers",
+  "pitStops"
+ ],
+ "1001": [
+  "circuits",
+  "drivers",
+  "qualifying",
+  "races"
+ ],
+ "1028": [
+  "League",
+  "Match",
+  "Team"
+ ],
+ "1030": [
+  "League",
+  "Match"
+ ],
+ "1031": [
+  "Player",
+  "Player_Attributes"
+ ],
+ "1039": [
+  "Player",
+  "Player_Attributes"
+ ],
+ "1048": [
+  "Player",
+  "Player_Attributes"
+ ],
+ "1080": [
+  "Player_Attributes"
+ ],
+ "1088": [
+  "Player",
+  "Player_Attributes"
+ ],
+ "1107": [
+  "Player",
+  "Player_Attributes"
+ ],
+ "1135": [
+  "Player_Attributes"
+ ],
+ "1148": [
+  "Player",
+  "Player_Attributes"
+ ],
+ "1149": [
+  "Patient"
+ ],
+ "1155": [
+  "Laboratory",
+  "Patient"
+ ],
+ "1164": [
+  "Examination",
+  "Patient"
+ ],
+ "1175": [
+  "Laboratory",
+  "Patient"
+ ],
+ "1192": [
+  "Laboratory",
+  "Patient"
+ ],
+ "1201": [
+  "Patient"
+ ],
+ "1251": [
+  "Examination",
+  "Laboratory",
+  "Patient"
+ ],
+ "1252": [
+  "Examination",
+  "Laboratory",
+  "Patient"
+ ],
+ "1257": [
+  "Laboratory",
+  "Patient"
+ ],
+ "1270": [
+  "Examination",
+  "Laboratory",
+  "Patient"
+ ],
+ "1484": [
+  "gasstations"
+ ],
+ "1500": [
+  "products",
+  "transactions_1k",
+  "yearmonth"
+ ],
+ "1515": [
+  "customers",
+  "transactions_1k"
+ ],
+ "1521": [
+  "gasstations",
+  "transactions_1k"
+ ],
+ "1526": [
+  "gasstations",
+  "transactions_1k",
+  "yearmonth"
+ ],
+ "95": [
+  "account",
+  "client",
+  "disp",
+  "district"
+ ],
+ "112": [
+  "client",
+  "district"
+ ],
+ "118": [
+  "loan"
+ ],
+ "159": [
+  "account",
+  "client",
+  "disp",
+  "trans"
+ ],
+ "192": [
+  "account",
+  "loan"
+ ],
+ "194": [
+  "card",
+  "client",
+  "disp"
+ ],
+ "195": [
+  "bond"
+ ],
+ "206": [
+  "atom",
+  "connected"
+ ],
+ "207": [
+  "atom",
+  "bond",
+  "connected"
+ ],
+ "208": [
+  "atom",
+  "molecule"
+ ],
+ "213": [
+  "bond",
+  "connected"
+ ],
+ "215": [
+  "atom",
+  "bond",
+  "connected"
+ ],
+ "230": [
+  "atom",
+  "molecule"
+ ],
+ "243": [
+  "atom",
+  "connected"
+ ],
+ "247": [
+  "atom",
+  "connected"
+ ],
+ "255": [
+  "bond",
+  "molecule"
+ ],
+ "268": [
+  "atom",
+  "connected"
+ ],
+ "273": [
+  "atom",
+  "molecule"
+ ],
+ "340": [
+  "cards"
+ ],
+ "341": [
+  "cards"
+ ],
+ "344": [
+  "cards",
+  "legalities"
+ ],
+ "345": [
+  "cards",
+  "legalities"
+ ],
+ "346": [
+  "cards",
+  "legalities"
+ ],
+ "368": [
+  "cards"
+ ],
+ "379": [
+  "cards"
+ ],
+ "391": [
+  "cards",
+  "foreign_data"
+ ],
+ "412": [
+  "cards",
+  "foreign_data"
+ ],
+ "459": [
+  "cards"
+ ],
+ "465": [
+  "cards",
+  "set_translations"
+ ],
+ "472": [
+  "set_translations",
+  "sets"
+ ],
+ "484": [
+  "cards",
+  "foreign_data",
+  "sets"
+ ],
+ "486": [
+  "cards",
+  "sets"
+ ],
+ "487": [
+  "cards",
+  "sets"
+ ],
+ "730": [
+  "hero_power",
+  "publisher",
+  "superhero",
+  "superpower"
+ ],
+ "732": [
+  "attribute",
+  "hero_attribute",
+  "publisher",
+  "superhero"
+ ],
+ "739": [
+  "hero_power",
+  "superhero",
+  "superpower"
+ ],
+ "745": [
+  "publisher"
+ ],
+ "758": [
+  "colour",
+  "race",
+  "superhero"
+ ],
+ "760": [
+  "publisher",
+  "superhero"
+ ],
+ "775": [
+  "colour",
+  "gender",
+  "superhero"
+ ],
+ "786": [
+  "attribute",
+  "hero_attribute"
+ ],
+ "791": [
+  "superhero"
+ ],
+ "792": [
+  "hero_power",
+  "superhero",
+  "superpower"
+ ],
+ "1312": [
+  "major",
+  "member"
+ ],
+ "1322": [
+  "attendance",
+  "event"
+ ],
+ "1331": [
+  "income",
+  "member"
+ ],
+ "1334": [
+  "member",
+  "zip_code"
+ ],
+ "1339": [
+  "expense",
+  "member"
+ ],
+ "1352": [
+  "major",
+  "member"
+ ],
+ "1380": [
+  "budget"
+ ],
+ "1381": [
+  "attendance",
+  "member"
+ ],
+ "1390": [
+  "budget",
+  "event",
+  "expense"
+ ],
+ "1392": [
+  "income"
+ ],
+ "1394": [
+  "major",
+  "member"
+ ],
+ "1401": [
+  "budget",
+  "event",
+  "expense"
+ ],
+ "1409": [
+  "expense"
+ ],
+ "1422": [
+  "budget",
+  "event"
+ ],
+ "1427": [
+  "budget",
+  "event"
+ ],
+ "1432": [
+  "income",
+  "member"
+ ],
+ "1464": [
+  "attendance",
+  "event",
+  "income",
+  "member"
+ ]
+}
