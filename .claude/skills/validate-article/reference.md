@@ -32,16 +32,19 @@ Owner preferences: simple words, short sentences, emoji blocks, one "Recommended
 - **Sets:** split **before** drawing, seed 2026, so held-out has new items/sources/styles. ~30 per label group per set is enough for a small version.
 - **KPIs:** one or two that answer the claim + errors kept apart + $ / seconds per item. 3 repeats for model levels.
 - **Budget:** estimate tokens (chars ÷ 4) × calls × list price. Show it. Ceiling $5 per topic.
-- **The owner's guesses:** ask for them at 🛑 2, write them in before any run.
+- **The owner's guesses:** ask for them at 🛑 2, write them in the design's "What I expect" line (one guess per KPI, a number where possible) before any run. The README's "What I expected vs. what happened" copies them.
+- **Model:** the article's model if we can call it; otherwise the cheapest current model of the same tier, written in the design and the README's Limitations.
 - 🛑 2 also asks: publish date (today or a scheduled day; posts are spread a few days apart) and "publish without asking again?".
 
 ## 4 · Worktree and plan
 
+Made at step 3, so the topic folder and design live on the topic branch from the start:
 ```
 git -C C:\Workshop\ai-engineering-lab worktree add -b topic-NN-<slug> ..\ai-engineering-lab-topicNN main
 ```
 
-- Never build in the main checkout: other sessions may be working there.
+- Never build in the main checkout: other sessions may be working there. The only things done in the main checkout are the final merge and push (step 11), after `git status` shows nothing of yours is in the way.
+- If the shared helpers (`shared/runs.py`, `shared/charts.py`, `shared/publish_post.py`) are not on main yet, cut the branch from the branch that has them.
 - Add the topic's folder to `pyproject.toml` `pythonpath` and `testpaths`. (On merge, this file conflicts: keep every topic.)
 - The worktree has no `.env`. For real runs, set `shared.llm.ENV_FILE = Path(r"C:\Workshop\ai-engineering-lab\.env")` in a small scratchpad launcher, or pass keys by env. Never print `.env`; never `source` it in bash.
 - Plan: `design/plan.md` via superpowers:writing-plans. Execute inline via superpowers:executing-plans.
@@ -69,14 +72,15 @@ Dispatch an opus subagent with the branch diff, design and plan. Ask it to look 
 
 ## 7 · Spot check (🛑 3)
 
-`spot-check.md`: 10 positives + 10 negatives from the main set, each shown exactly as the model sees it. The owner marks ✓/✗. A ✗ that shows a class of bad items (topic 4: "say-only" attacks) → remove that class from all sets, redraw, note it in the README. Never edit single labels.
+`spot-check.md`: 10 positives + 10 negatives from the main set (for many classes or a score: 20 items spread over the classes, or the 10 hardest + 10 easiest), each shown exactly as the model sees it. The owner marks ✓/✗. A ✗ that shows a class of bad items (topic 4: "say-only" attacks) → remove that class from all sets, redraw, note it in the README. Never edit single labels.
 
 ## 8 · Runs
 
 1. Level 0 (free) on all sets.
 2. `--dry-run` for each paid level → show the estimate.
-3. `--limit 5` smoke run → check one run file by eye.
+3. `--limit 5` smoke run (first 5 items, 1 repeat) → check one run file by eye.
 4. Full runs, 3 repeats. Stop at the budget; partial runs are marked and not reported.
+Every paid command (smoke runs too) counts toward the $5 ceiling: `spent_so_far` sums all run files.
 If a provider fails (no credit, outage), switching model is allowed **only if disclosed** in the README's tools table and Limitations.
 
 ## 9 · Report

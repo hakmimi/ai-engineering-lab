@@ -20,6 +20,7 @@ Each topic takes one article's claim, rebuilds the method on **real data with an
 | 🛑 3 | Before any paid run | Spot-check sheet: do the labels look right? |
 
 "Go ahead, I'm away" covers everything **between** stops, not the stops. If the owner is away, prepare the stop and wait.
+Publishing needs a yes too: asked once at 🛑 2. Without it, stop before step 11 and ask.
 
 ## Steps
 
@@ -27,7 +28,7 @@ Details, commands and checklists per step: `reference.md` (read it at step 1).
 
 1. **Read the article.** Claims, shown results, its own caveats, what it does **not** measure. Find its code if any. → 🛑 1
 2. **Find data** with a third-party answer key. Check the licence. Pin the version. Count what exists. No fit → tell the owner; never write the key yourself.
-3. **Design** from `templates/design.md`. Topic number = next free one (check `topics/`, untracked folders and `articles.md`). → 🛑 2
+3. **Topic folder + design.** Number = next free one (check `topics/`, untracked folders in the main checkout, `articles.md`). Create **`topics/NN-<slug>/`** (slug = method + dataset, e.g. `06-table-retrieval-bird`) in the topic's worktree (step 4 commands), with `design/design.md` from `templates/design.md`. → 🛑 2
 4. **Worktree + plan.** `C:\Workshop\ai-engineering-lab-topicNN`, branch `topic-NN-<slug>`. Plan with superpowers:writing-plans; build with superpowers:executing-plans and TDD.
 5. **Build** data → levels → runner → report. Use `shared/llm.py`, `shared/runs.py`, `shared/charts.py`.
 6. **Fresh review** of the whole branch (opus subagent) **before any money is spent**. Fix with RED→GREEN tests.
