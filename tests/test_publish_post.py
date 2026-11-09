@@ -116,3 +116,10 @@ def test_publish_fails_on_missing_image(tmp_path):
     with pytest.raises(FileNotFoundError, match="caught.svg"):
         publish(topic, blog, **{k: v for k, v in KW.items() if k != "topic_dir"})
     assert not (blog / "src" / "content" / "posts" / "07-x.md").exists()
+
+
+def test_source_logos_field_only_when_given():
+    post, _ = readme_to_post(README, **KW, sources=["linkedin", "pinterest"])
+    assert 'source: ["linkedin", "pinterest"]' in post.split("---")[1]
+    plain, _ = readme_to_post(README, **KW)
+    assert "source:" not in plain.split("---")[1]

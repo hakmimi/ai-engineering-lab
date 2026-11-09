@@ -21,3 +21,8 @@ def card(t: Table, with_desc: bool) -> str:
             line += f" — {_desc(c.desc)}"
         lines.append(line)
     return "\n".join(lines)
+
+
+def summary_card(t: Table, summary: str) -> str:
+    """Level 5 (Pinterest's way): the table's name and its LLM-written summary."""
+    return f"Table: {t.db}.{t.name}\nSummary: {summary}"

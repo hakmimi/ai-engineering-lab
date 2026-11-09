@@ -39,7 +39,8 @@ def _github(target: str, topic_dir: str, repo_url: str) -> str:
 
 
 def readme_to_post(readme: str, *, slug: str, title: str, description: str, pub: str, tags: list[str],
-                   topic_dir: str, repo_url: str = REPO_URL, code_blurb: str = "") -> tuple[str, list[str]]:
+                   topic_dir: str, repo_url: str = REPO_URL, code_blurb: str = "",
+                   sources: list[str] | None = None) -> tuple[str, list[str]]:
     """Return (post text, image paths relative to the topic folder, in order of first use)."""
     body = re.sub(r"\A\s*# [^\n]*\n+", "", readme)
     code_url = f"{repo_url}/tree/main/{topic_dir}"
@@ -76,6 +77,7 @@ def readme_to_post(readme: str, *, slug: str, title: str, description: str, pub:
         f"description: {json.dumps(description, ensure_ascii=False)}",
         f"pubDatetime: {pub}",
         f"tags: {json.dumps(tags, ensure_ascii=False)}",
+        *([f"source: {json.dumps(sources, ensure_ascii=False)}"] if sources else []),
         "draft: false",
         "---",
         "",
@@ -84,11 +86,11 @@ def readme_to_post(readme: str, *, slug: str, title: str, description: str, pub:
 
 
 def publish(topic: Path, blog: Path, *, slug: str, title: str, description: str, pub: str, tags: list[str],
-            code_blurb: str = "", force: bool = False, repo_url: str = REPO_URL) -> Path:
+            code_blurb: str = "", force: bool = False, repo_url: str = REPO_URL, sources: list[str] | None = None) -> Path:
     """Write <blog>/src/content/posts/<slug>.md and copy the images. Checks everything before writing."""
     post, images = readme_to_post((topic / "README.md").read_text(encoding="utf-8"), slug=slug, title=title,
                                   description=description, pub=pub, tags=tags, topic_dir=f"topics/{topic.name}",
-                                  repo_url=repo_url, code_blurb=code_blurb)
+                                  repo_url=repo_url, code_blurb=code_blurb, sources=sources)
     post_path = blog / "src" / "content" / "posts" / f"{slug}.md"
     if post_path.exists() and not force:
         raise FileExistsError(f"{post_path} exists; pass force=True (--force) to replace it")
@@ -114,10 +116,12 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--date", required=True, help="pubDatetime with offset, e.g. 2026-11-12T10:00:00+02:00")
     p.add_argument("--tags", required=True, help="comma separated")
     p.add_argument("--code-blurb", default="")
+    p.add_argument("--source", default="", help="logo keys from the blog's src/utils/sources.ts, comma separated (e.g. linkedin,pinterest)")
     p.add_argument("--force", action="store_true")
     a = p.parse_args(argv)
     path = publish(a.topic.resolve(), a.blog, slug=a.slug, title=a.title, description=a.description, pub=a.date,
-                   tags=[t.strip() for t in a.tags.split(",") if t.strip()], code_blurb=a.code_blurb, force=a.force)
+                   tags=[t.strip() for t in a.tags.split(",") if t.strip()], code_blurb=a.code_blurb, force=a.force,
+                   sources=[s.strip() for s in a.source.split(",") if s.strip()] or None)
     print(f"Wrote {path}")
     return 0
 
