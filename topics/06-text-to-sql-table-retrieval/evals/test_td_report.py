@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from shared.runs import save_run
@@ -81,13 +83,15 @@ def test_level4_and_control_come_from_level3_with_no_extra_cost(tmp_path, key_se
     r = _run(key, "3", top20=True)
     for q, a in r["repeats"][0]["answers"].items():
         if key[q] == {"alpha_large.projects", "alpha_large.sites"}:
-            a["picks"], a["top20"] = ["alpha_large.projects"], ["alpha_large.projects", "beta_large.plants"]
+            a["picks"], a["top20"] = ["alpha_large.projects"], ["alpha_large.projects", "alpha_large.turned_down"]
     save_run(tmp_path / "runs", s, "3", r)
+    q = next(q for q in key if len(key[q]) == 2)
+    # the control's 3 extra tables are search ranks 21-23, outside the 20 the LLM saw (data/search_next3.json)
+    (data.DATA / "search_next3.json").write_text(json.dumps({**{x: [] for x in key}, q: ["beta_large.plants"]}), encoding="utf-8")
     runs = report.level_runs(tmp_path / "runs", s)
     assert runs["4"]["derived_from"] == "3" and runs["4c"]["derived_from"] == "3"
     four = runs["4"]["repeats"][0]["answers"]
     control = runs["4c"]["repeats"][0]["answers"]
-    q = next(q for q in key if len(key[q]) == 2)
     assert four[q]["picks"] == ["alpha_large.projects", "alpha_large.sites"]
     assert control[q]["picks"] == ["alpha_large.projects", "beta_large.plants"]
     assert report.summary(runs["4"], key)["all_found"] == 1.0

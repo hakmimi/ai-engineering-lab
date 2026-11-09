@@ -12,7 +12,7 @@ from statistics import mean
 
 from shared.charts import bar_chart, money, pct
 from shared.runs import latest_run
-from tablefind.data import load_key, load_links
+from tablefind.data import load_key, load_links, load_next3
 from tablefind.joins import add_joins, add_search
 from tablefind.score import by_gold_size, score
 
@@ -33,7 +33,7 @@ def _derive(run: dict, extend, base: str = "3") -> dict:
     """A copy of a level `base` run with each ok answer's picks extended. Costs and timings stay the base level's."""
     reps = []
     for r in run["repeats"]:
-        answers = {q: ({**a, "picks": extend(a)} if a["status"] == "ok" else dict(a)) for q, a in r["answers"].items()}
+        answers = {q: ({**a, "picks": extend(q, a)} if a["status"] == "ok" else dict(a)) for q, a in r["answers"].items()}
         reps.append({**r, "answers": answers})
     return {**run, "repeats": reps, "derived_from": base}
 
@@ -41,9 +41,10 @@ def _derive(run: dict, extend, base: str = "3") -> dict:
 def level_runs(runs_dir: Path, set_name: str) -> dict[str, dict | None]:
     runs = {lv: latest_run(runs_dir, set_name, lv) for lv in RUN_LEVELS}
     links = load_links() if runs["3"] or runs["5"] else {}
-    joined = lambda a: add_joins(a["picks"], a["top20"] or [], links)  # noqa: E731
+    joined = lambda q, a: add_joins(a["picks"], a["top20"] or [], links)  # noqa: E731
     three, five = runs["3"], runs["5"]
-    runs["4c"] = _derive(three, lambda a: add_search(a["picks"], a["top20"] or [])) if three else None
+    next3 = load_next3() if three else {}
+    runs["4c"] = _derive(three, lambda q, a: add_search(a["picks"], next3[q])) if three else None
     runs["4"] = _derive(three, joined) if three else None
     runs["5j"] = _derive(five, joined, base="5") if five else None
     return {lv: runs[lv] for lv in LEVEL_NAMES}  # the reading order: 4c and 4 build on 3, then 5

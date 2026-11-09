@@ -68,7 +68,7 @@ Every level searches **one pool of all 971 tables** (the whole "warehouse", as a
 | **2 · The article's way** | Embedding top 20, then an LLM reads the 20 cards and picks 7. |
 | **3 · + descriptions** | Level 2, with each card also carrying the column descriptions (both for search and for the re-ranker). |
 | **4 · + joined tables** (added 2026-11-09, author's yes) | Level 3's 7 picks plus up to 3 tables linked to them by a foreign key in the schema (linked to the most picks first, then to the best-ranked pick, then by name). 10 tables handed over. |
-| **4c · control** | Level 3's 7 picks plus the next 3 tables from level 3's search order. Also 10, so a gain at level 4 comes from the links, not from handing over more tables. |
+| **4c · control** | Level 3's 7 picks plus search ranks 21-23 of level 3's search (outside the 20 the LLM saw). Also 10, so a gain at level 4 comes from the links, not from handing over more tables. Ruling (2026-11-09, after the second review): the first version took the next 3 from inside the 20, tables the LLM had turned down, which could not win; changed to ranks 21-23. |
 | **5 · Pinterest summaries** (added 2026-11-09, author's yes) | An LLM writes one summary per table with Pinterest's prompt; search and re-rank on the summary cards. |
 | **5j · 5 + joined tables** (added 2026-11-09 after all results, author's yes) | Level 5's 7 picks plus 3 joined tables, the same rule as level 4. Computed from level 5's saved answers, no extra cost. Chosen after seeing every other result, which the README says. |
 
