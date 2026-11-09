@@ -48,5 +48,14 @@ def load_links() -> dict[str, set[str]]:
     return {t: set(ls) for t, ls in _read("links.json").items()}
 
 
+def load_summaries() -> dict[str, str]:
+    """Level 5: the LLM-written summary of every table (data/summaries.json). Every table must have one."""
+    summaries = _read("summaries.json")
+    missing = [t["id"] for t in _read("tables.json") if t["id"] not in summaries]
+    if missing:
+        raise ValueError(f"no summary for {len(missing)} tables, e.g. {', '.join(missing[:3])}; run tablefind.summarize")
+    return summaries
+
+
 def load_key(set_name: str) -> dict[str, set[str]]:
     return {qid: set(ts) for qid, ts in _read("key.json")[set_name].items()}

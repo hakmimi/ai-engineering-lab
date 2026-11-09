@@ -8,7 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from shared.llm import Tracker, llm_call
-from tablefind.cards import card
+from tablefind.cards import card, summary_card
 from tablefind.data import Question, Table
 from tablefind.embed import cosine_top_k, normalize
 from tablefind.rerank import K, SYSTEM, fill, parse_picks, rerank_prompt
@@ -27,7 +27,10 @@ class Ctx:
     index: dict = field(default_factory=dict)
 
 
-def prepare(ctx: Ctx, embed: bool = True) -> None:
+CARD_KIND = {"2": False, "3": True, "5": "summary"}  # plain cards, description cards, Pinterest summary cards
+
+
+def prepare(ctx: Ctx, embed: bool = True, summaries: dict[str, str] | None = None) -> None:
     """Build the search indexes once: BM25 on plain cards, and (embed=True) embeddings of plain and description cards."""
     ids = [t.id for t in ctx.tables]
     plain = [card(t, with_desc=False) for t in ctx.tables]
@@ -38,9 +41,14 @@ def prepare(ctx: Ctx, embed: bool = True) -> None:
         "bm25": BM25([tokens(c) for c in plain]),
         "dbs": {t.db for t in ctx.tables},
     }
+    if summaries is not None:
+        ctx.index["cards"]["summary"] = {t.id: summary_card(t, summaries[t.id]) for t in ctx.tables}
     if embed:
         ctx.index["vecs"] = {False: [normalize(v) for v in ctx.embedder.embed(plain)],
                              True: [normalize(v) for v in ctx.embedder.embed(rich)]}
+        if summaries is not None:
+            ctx.index["vecs"]["summary"] = [normalize(v) for v in ctx.embedder.embed(
+                [ctx.index["cards"]["summary"][i] for i in ids])]
 
 
 def _answer(picks: list[str], top20=None, made_up=None, filled=0, status="ok") -> dict:
@@ -54,9 +62,9 @@ def run_level(level: str, q: Question, ctx: Ctx) -> dict:
     qvec = ctx.embedder.embed([q.text])[0]
     if level == "1":
         return _answer(cosine_top_k(qvec, ix["vecs"][False], ix["ids"], K, normalized=True))
-    with_desc = level == "3"
-    top20 = cosine_top_k(qvec, ix["vecs"][with_desc], ix["ids"], SHORTLIST, normalized=True)
-    cards = [ix["cards"][with_desc][i] for i in top20]
+    kind = CARD_KIND[level]
+    top20 = cosine_top_k(qvec, ix["vecs"][kind], ix["ids"], SHORTLIST, normalized=True)
+    cards = [ix["cards"][kind][i] for i in top20]
     text = llm_call(rerank_prompt(q.text, cards), cached_system=SYSTEM, label=f"l{level}:{q.qid}",
                     model=ctx.model, tracker=ctx.tracker, max_tokens=RERANK_MAX_TOKENS)
     p = parse_picks(text, top20, dbs=ix["dbs"])
