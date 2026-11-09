@@ -26,8 +26,8 @@ class Ctx:
     index: dict = field(default_factory=dict)
 
 
-def prepare(ctx: Ctx) -> None:
-    """Build the search indexes once: BM25 on plain cards, and embeddings of plain and description cards."""
+def prepare(ctx: Ctx, embed: bool = True) -> None:
+    """Build the search indexes once: BM25 on plain cards, and (embed=True) embeddings of plain and description cards."""
     ids = [t.id for t in ctx.tables]
     plain = [card(t, with_desc=False) for t in ctx.tables]
     rich = [card(t, with_desc=True) for t in ctx.tables]
@@ -35,9 +35,10 @@ def prepare(ctx: Ctx) -> None:
         "ids": ids,
         "cards": {False: dict(zip(ids, plain)), True: dict(zip(ids, rich))},
         "bm25": BM25([tokens(c) for c in plain]),
-        "vecs": {False: [normalize(v) for v in ctx.embedder.embed(plain)],
-                 True: [normalize(v) for v in ctx.embedder.embed(rich)]},
     }
+    if embed:
+        ctx.index["vecs"] = {False: [normalize(v) for v in ctx.embedder.embed(plain)],
+                             True: [normalize(v) for v in ctx.embedder.embed(rich)]}
 
 
 def _answer(picks: list[str], top20=None, made_up=None, filled=0, status="ok") -> dict:
