@@ -5,6 +5,7 @@ __pycache__/
 .pytest_cache/
 topics/*/runs/
 .superpowers/
+topics/05-evaluator-optimizer-text-to-sql/data/raw/
 topics/06-text-to-sql-table-retrieval/data/raw/
 topics/06-text-to-sql-table-retrieval/data/key.json
 topics/06-text-to-sql-table-retrieval/cache/

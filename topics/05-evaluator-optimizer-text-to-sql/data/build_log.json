@@ -1,0 +1,22 @@
+{
+ "seed": 2026,
+ "group_a_main": [
+  "california_schools",
+  "codebase_community",
+  "debit_card_specializing",
+  "european_football_2",
+  "formula_1",
+  "thrombosis_prediction"
+ ],
+ "group_b_test": [
+  "card_games",
+  "financial",
+  "student_club",
+  "superhero",
+  "toxicology"
+ ],
+ "skipped": {
+  "main": [],
+  "test": []
+ }
+}

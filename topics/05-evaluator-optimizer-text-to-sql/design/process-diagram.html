@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Write, Grade, Rewrite</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --surface: #ffffff; --fg: #1b2230; --muted: #5a6475; --line: #dde1e8;
+    --gen: #4f46e5; --grade: #b45309; --run: #0f766e; --stop: #15803d; --loop: #be123c;
+    --sans: "Segoe UI", system-ui, sans-serif; --mono: Consolas, ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442;
+    --gen: #a5a1ff; --grade: #f4b267; --run: #5fd3c4; --stop: #6ee7a0; --loop: #fb7f9b; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442;
+    --gen: #a5a1ff; --grade: #f4b267; --run: #5fd3c4; --stop: #6ee7a0; --loop: #fb7f9b; color-scheme: dark; }
+  body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--sans); margin: 0; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 16px 40px; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  .flow { display: flex; align-items: stretch; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+  .box { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--c); border-radius: 8px;
+         padding: 12px 14px; flex: 1 1 0; min-width: 120px; }
+  .box b { display: block; color: var(--c); margin-bottom: 4px; }
+  .box span { font-size: 14px; color: var(--muted); }
+  .arrow { align-self: center; color: var(--muted); font-size: 22px; }
+  .loop { color: var(--loop); font-size: 14px; margin: -16px 0 24px; }
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 15px; }
+  th { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  td:first-child { font-family: var(--mono); white-space: nowrap; font-weight: 600; }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 13px; border: 1px solid var(--c); color: var(--c); }
+  @media (max-width: 640px) { .arrow { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Write, grade, rewrite: text-to-SQL</h1>
+  <p class="sub">One question from BIRD Mini-Dev, from question to scored answer. At most 3 writes per question.</p>
+
+  <div class="flow">
+    <div class="box" style="--c: var(--muted)"><b>Question</b><span>question + hint + schema with 3 example rows per table</span></div>
+    <div class="arrow">→</div>
+    <div class="box" style="--c: var(--gen)"><b>Writer (AI)</b><span>writes one SQLite query</span></div>
+    <div class="arrow">→</div>
+    <div class="box" style="--c: var(--run)"><b>Run it (code)</b><span>read-only database, 10 s limit: rows or error</span></div>
+    <div class="arrow">→</div>
+    <div class="box" style="--c: var(--grade)"><b>Grader (AI)</b><span>PASS, NEEDS_IMPROVEMENT or FAIL, plus feedback</span></div>
+    <div class="arrow">→</div>
+    <div class="box" style="--c: var(--stop)"><b>Score (code)</b><span>same rows as the gold SQL? right / wrong</span></div>
+  </div>
+  <p class="loop">↺ Not PASS (or, at level 2, an error or no rows): the feedback goes back to the writer, with all earlier tries.</p>
+
+  <table>
+    <thead><tr><th>Level</th><th>Writer</th><th>Run it</th><th>Grader</th><th>Feedback the writer gets</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>once</td><td>–</td><td>–</td><td>none</td></tr>
+      <tr><td>1</td><td>up to 3×</td><td>–</td><td><span class="tag" style="--c: var(--grade)">reads the SQL only</span></td><td>the grader's opinion (the cookbook's loop)</td></tr>
+      <tr><td>2</td><td>up to 3×</td><td><span class="tag" style="--c: var(--run)">yes</span></td><td>–</td><td>the real error, or "returned no rows"</td></tr>
+      <tr><td>3</td><td>up to 3×</td><td><span class="tag" style="--c: var(--run)">yes</span></td><td><span class="tag" style="--c: var(--grade)">sees the rows</span></td><td>the grader's opinion, after seeing the error or first 10 rows</td></tr>
+      <tr><td>0+</td><td>once, bigger model</td><td>–</td><td>–</td><td>none</td></tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
