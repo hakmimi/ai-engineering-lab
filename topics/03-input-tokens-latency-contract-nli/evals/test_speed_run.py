@@ -55,3 +55,25 @@ def test_estimate_test1_large_model_is_about_2_1_usd():
     kwargs = runner.test_kwargs("1", {"large": "gpt-6.1-sol"}, repeats=None, limit=None)
     est = runner.estimate_usd("1", {"large": "gpt-6.1-sol"}, kwargs)
     assert 2.0 <= est <= 2.4  # 3 rounds x ~352K tokens x $2 per million (the warm-up is a tiny ping)
+
+
+def test_partial_run_is_saved_when_interrupted(runs_dir):
+    from speed_helpers import answer_events, raises
+    client = FakeClient([answer_events("r1", "OK"), raises(KeyboardInterrupt())])
+    with pytest.raises(KeyboardInterrupt):
+        runner.main(["--test", "0", "--repeats", "3", "--yes"], client=client)
+    run = json.loads(next(runs_dir.glob("test0-*.json")).read_text(encoding="utf-8"))
+    assert run["stopped"].startswith("error: KeyboardInterrupt") and run["spent_usd"] > 0
+
+
+def test_command_budget_is_capped_by_what_is_left_of_the_ceiling(runs_dir, monkeypatch):
+    (runs_dir / "test2-old.json").write_text(json.dumps({"spent_usd": 9.0}))
+    seen = {}
+
+    def fake_test0(client, model, rng, budget, **kw):
+        seen["limit"] = budget.limit_usd
+        return {"test": "0", "records": [], "spent_usd": 0.0, "stopped": None}
+
+    monkeypatch.setattr(runner.experiments, "test0", fake_test0)
+    assert runner.main(["--test", "0", "--yes", "--budget", "3"], client=FakeClient()) == 0
+    assert seen["limit"] == pytest.approx(1.0)

@@ -96,3 +96,37 @@ def test_latest_run_per_test_wins(tmp_path):
     _write(tmp_path, "test0-20261111-100000.json", _run("0", [{"variant": "floor", "model": "m", "rep": 0, "timing": _t(0.8)}]))
     s = _section(build_results(tmp_path), "0")
     assert "| 0.80 |" in s and "test0-20261111-100000.json" in s
+
+
+def test_no_text_is_counted_in_test0_and_test1(tmp_path):
+    _write(tmp_path, "test0-20261110-100000.json", _run("0", [
+        {"variant": "floor", "model": "m", "rep": 0, "timing": _t(0.5)},
+        {"variant": "floor", "model": "m", "rep": 1, "timing": _t(None)}]))
+    _write(tmp_path, "test1-20261110-100000.json", _run("1", [
+        {"variant": "cold", "model": "m", "size": 20, "round": 0, "timing": _t(None, input_tokens=20_000)}]))
+    text = build_results(tmp_path)
+    assert "No answer text: 1" in _section(text, "0")
+    assert "No answer text: 1" in _section(text, "1")
+
+
+def test_cold_requests_with_cached_tokens_are_left_out_of_stats(tmp_path):
+    _write(tmp_path, "test1-20261110-100000.json", _run("1", [
+        {"variant": "cold", "model": "m", "size": 20, "round": 0, "timing": _t(0.5, input_tokens=20_000)},
+        {"variant": "cold", "model": "m", "size": 20, "round": 1, "timing": _t(5.0, input_tokens=20_000, cached=1024)}]))
+    s = _section(build_results(tmp_path), "1")
+    row = next(l for l in s.splitlines() if l.startswith("| m | 20 |"))
+    assert "| 0.50 |" in row and "5.00" not in s
+    assert "left out of the stats" in s
+
+
+def test_thread_fallback_turns_left_out_of_thread_stats(tmp_path):
+    def rec(v, turn, first, fallback=False, nbytes=500):
+        return {"variant": v, "model": "m", "pack": "long", "chat": 0, "turn": turn, "doc_id": "1", "sid": "nda-1",
+                "label": "entailment", "evidence": [], "key_label": "entailment", "key_evidence": [],
+                "fallback": fallback, "timing": _t(first, request_bytes=nbytes)}
+    _write(tmp_path, "test4-20261110-100000.json", _run("4", [
+        rec("thread", 1, 0.3), rec("thread", 2, 2.0, fallback=True, nbytes=400_000),
+        rec("cache_on", 1, 0.6, nbytes=400_000)]))
+    s = _section(build_results(tmp_path), "4")
+    row = next(l for l in s.splitlines() if l.startswith("| thread"))
+    assert "| 500 | 0.30 | 1 |" in row

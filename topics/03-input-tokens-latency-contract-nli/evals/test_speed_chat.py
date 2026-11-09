@@ -75,3 +75,10 @@ def test_budget_exceeded_stops_before_the_call():
         _run("cache_off", client, Budget(0.0))
     assert client.requests == []
     assert e.value.turns == []
+
+
+def test_failed_turn_keeps_a_placeholder_answer_in_history():
+    client = FakeClient([raises(status_error(400))])
+    client, turns = _run("cache_on", client)
+    assert turns[0].answer.label == "error"
+    assert client.requests[1]["input"][2] == {"role": "assistant", "content": "(no answer)"}

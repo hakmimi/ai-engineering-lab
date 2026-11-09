@@ -87,10 +87,19 @@ def _evidence_found(recs: list[dict]) -> float | None:
     return found / total if total else None
 
 
+def _really_cold(recs: list[dict]) -> list[dict]:
+    """A request meant to be cold that still read from cache is not cold: it stays out of the stats."""
+    return [r for r in recs if r["timing"]["cached_tokens"] == 0]
+
+
 def _cold_check(recs: list[dict]) -> str:
     n = sum(1 for r in recs if r["timing"]["cached_tokens"] > 0)
     return f"Cold check: {n} request(s) with cached tokens > 0" + (" (good: none read from cache)" if n == 0 else
-                                                                    " — these were NOT cold; read their numbers with care")
+                                                                    " — not really cold, so left out of the stats")
+
+
+def _no_text(recs: list[dict]) -> str:
+    return f"No answer text: {sum(1 for r in recs if r['timing']['first_text_s'] is None)} request(s) (left out of first-word stats)"
 
 
 def _interval(a: list, b: list, label: str) -> str:
@@ -106,11 +115,13 @@ def _test0(run: dict) -> list[str]:
     return [f"We got: first word p50 {_f(median(_ft(m)))} s on {', '.join(run['models'].values())} (home connection).", "",
             "| First word p50 | p90 | min | Total p50 | n | errors |", "|---|---|---|---|---|---|",
             f"| {_f(median(_ft(m)))} | {_f(p90(_ft(m)))} | {_f(min(values(_ft(m)), default=None))} | "
-            f"{_f(median([r['timing']['total_s'] for r in m]))} | {len(m)} | {_errors(run['records'])} |"]
+            f"{_f(median([r['timing']['total_s'] for r in m]))} | {len(m)} | {_errors(run['records'])} |", "",
+            f"- {_no_text(m)}"]
 
 
 def _test1(run: dict) -> list[str]:
-    m = _measured(run, "cold")
+    all_cold = _measured(run, "cold")
+    m = _really_cold(all_cold)
     groups: dict[tuple[str, int], list[dict]] = defaultdict(list)
     for r in m:
         groups[(r["model"], r["size"])].append(r)
@@ -126,7 +137,8 @@ def _test1(run: dict) -> list[str]:
             slopes.append(f"Slope, {model}: {slope_per_100k([x for x, _ in pts], [y for _, y in pts]):+.2f} s per 100K input tokens")
     skipped = [f"Skipped: size {r['size']:,} — {r['skipped']}" for r in run["records"] if "skipped" in r]
     return ["We got: " + ("; ".join(slopes) if slopes else "no slope (too few sizes)") + ".", "", *lines, "",
-            *[f"- {s}" for s in slopes + skipped], f"- {_cold_check(m)}", f"- Errors: {_errors(run['records'])}"]
+            *[f"- {s}" for s in slopes + skipped], f"- {_cold_check(all_cold)}", f"- {_no_text(all_cold)}",
+            f"- Errors: {_errors(run['records'])}"]
 
 
 def _chat_rows(run: dict, variants: tuple[str, ...]) -> tuple[list[str], dict]:
@@ -134,6 +146,10 @@ def _chat_rows(run: dict, variants: tuple[str, ...]) -> tuple[list[str], dict]:
     for pack in ("short", "long"):
         for v in variants:
             recs = [r for r in _measured(run, v) if r.get("pack") == pack]
+            if v == "cache_off":
+                recs = _really_cold(recs)  # cache-busting turns must not read from cache
+            if v == "thread":
+                recs = [r for r in recs if not r.get("fallback")]  # a fallback turn is a full re-send
             if not recs:
                 continue
             later = [r for r in recs if r["turn"] >= 1]
@@ -155,14 +171,16 @@ def _test2(run: dict) -> list[str]:
              for p in ("short", "long")]
     got = [f"{p} pack turns 2–17 first word {_f(median(later.get((p, 'cache_off'), [])))} s off → "
            f"{_f(median(later.get((p, 'cache_on'), [])))} s on" for p in ("short", "long")]
+    off = [r for r in _measured(run, "cache_off")]
     return ["We got: " + "; ".join(got) + ".", "",
             "| Pack | Variant | First word, turn 1 | First word, turns 2–17 | Total p50 | Cached share | $ per chat "
             "| Label right | Evidence found | Errors |", "|---|---|---|---|---|---|---|---|---|---|", *rows, "",
-            *[f"- {n}" for n in notes if n]]
+            *[f"- {n}" for n in notes if n], f"- cache_off {_cold_check(off)}"]
 
 
 def _test3(run: dict) -> list[str]:
-    cold, warm = _measured(run, "cold"), _measured(run, "prewarm")
+    all_cold, warm = _measured(run, "cold"), _measured(run, "prewarm")
+    cold = _really_cold(all_cold)
     hits = sum(1 for r in warm if r["timing"]["cached_tokens"] > 0)
     rows = [f"| {name} | {_f(median(_ft(recs)))} | {_f(p90(_ft(recs)))} | {len(recs)} | {_pct(_label_right(recs))} |"
             for name, recs in (("cold", cold), ("prewarm", warm))]
@@ -170,19 +188,19 @@ def _test3(run: dict) -> list[str]:
     return [f"We got: first question's first word {_f(median(_ft(cold)))} s cold → {_f(median(_ft(warm)))} s pre-warmed.", "",
             "| Variant | First word p50 | p90 | n | Label right |", "|---|---|---|---|---|", *rows, "",
             f"- Warm-up hit rate: {hits}/{len(warm)} pre-warmed questions read the pack from cache",
-            f"- {_cold_check(cold)}", *([f"- {note}"] if note else []), f"- Errors: {_errors(run['records'])}"]
+            f"- {_cold_check(all_cold)}", *([f"- {note}"] if note else []), f"- Errors: {_errors(run['records'])}"]
 
 
 def _test4(run: dict) -> list[str]:
     rows = []
     for v in ("cache_on", "thread"):
         recs = _measured(run, v)
-        later = [r for r in recs if r["turn"] >= 1]
+        later = [r for r in recs if r["turn"] >= 1 and not r.get("fallback")]  # a fallback is a full re-send
         all_v = [r for r in run["records"] if r["variant"] == v]
         rows.append(f"| {v} | {median([r['timing']['request_bytes'] for r in later]) or 0:,.0f} | {_f(median(_ft(later)))} | "
                     f"{sum(1 for r in recs if r.get('fallback'))} | {_pct(_label_right(recs))} | {_errors(all_v)} |")
     on = _ft([r for r in _measured(run, "cache_on") if r["turn"] >= 1])
-    th = _ft([r for r in _measured(run, "thread") if r["turn"] >= 1])
+    th = _ft([r for r in _measured(run, "thread") if r["turn"] >= 1 and not r.get("fallback")])
     note = _interval(on, th, "turns 2–17, thread − re-send")
     return [f"We got: turns 2–17 first word {_f(median(on))} s re-sending everything → {_f(median(th))} s with previous_response_id.",
             "", "| Variant | Request bytes p50 (turns 2–17) | First word p50 (turns 2–17) | Fallbacks | Label right | Errors |",

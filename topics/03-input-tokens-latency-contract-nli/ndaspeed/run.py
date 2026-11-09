@@ -54,7 +54,7 @@ def estimate_usd(test: str, models: dict[str, str], kwargs: dict) -> float:
     small = models.get("small") or next(iter(models.values()))
     if test == "0":
         n = kwargs["repeats"] + 1
-        return usd(small, n * ping_in, n * MIN_OUTPUT_TOKENS)
+        return usd(small, n * ping_in, n * experiments.PING_TOKENS)
     if test == "1":
         everything, sizes = all_contracts(), []
         for size in experiments.SIZES:
@@ -62,11 +62,11 @@ def estimate_usd(test: str, models: dict[str, str], kwargs: dict) -> float:
                 sizes.append(make_pack("x", stack_to(everything, size)).est_tokens + ping_in)
             except ValueError:
                 pass
-        return sum(usd(m, ping_in + kwargs["rounds"][k] * sum(sizes), (1 + kwargs["rounds"][k] * len(sizes)) * MIN_OUTPUT_TOKENS)
+        return sum(usd(m, ping_in + kwargs["rounds"][k] * sum(sizes), (1 + kwargs["rounds"][k] * len(sizes)) * experiments.PING_TOKENS)
                    for k, m in models.items())
     main = data.load_contracts("main")
     long_tokens = make_pack("long", main).est_tokens
-    total = usd(small, ping_in, MIN_OUTPUT_TOKENS)  # warm-up
+    total = usd(small, ping_in, experiments.PING_TOKENS)  # warm-up
     if test == "2":
         short_tokens = int(statistics.mean(make_pack("s", [c]).est_tokens for c in main))
         for pack_tokens, chats in ((short_tokens, kwargs["short_n"]), (long_tokens, kwargs["long_chats"])):
@@ -88,6 +88,13 @@ def _run_test(test: str, client, models: dict[str, str], budget: Budget, kwargs:
         return experiments.test1(client, models, rng, budget, **kwargs)
     fn = {"0": experiments.test0, "2": experiments.test2, "3": experiments.test3, "4": experiments.test4}[test]
     return fn(client, models["small"], rng, budget, **kwargs)
+
+
+def _save(test: str, run: dict):
+    RUNS_DIR.mkdir(parents=True, exist_ok=True)
+    path = RUNS_DIR / f"test{test}-{datetime.now():%Y%m%d-%H%M%S}.json"
+    path.write_text(json.dumps(run, indent=1, ensure_ascii=False), encoding="utf-8")
+    return path
 
 
 def main(argv: list[str] | None = None, client=None) -> int:
@@ -118,10 +125,15 @@ def main(argv: list[str] | None = None, client=None) -> int:
         print(f"Refused: ${so_far:.2f} spent + ${est:.2f} estimate would pass the topic ceiling of ${TOPIC_CEILING_USD:.2f}.")
         return 2
 
-    run = _run_test(args.test, client or make_client(), models, Budget(args.budget), kwargs)
-    RUNS_DIR.mkdir(parents=True, exist_ok=True)
-    path = RUNS_DIR / f"test{args.test}-{datetime.now():%Y%m%d-%H%M%S}.json"
-    path.write_text(json.dumps(run, indent=1, ensure_ascii=False), encoding="utf-8")
+    budget = Budget(min(args.budget, TOPIC_CEILING_USD - so_far))  # the ceiling is a hard stop too
+    try:
+        run = _run_test(args.test, client or make_client(), models, budget, kwargs)
+    except BaseException as e:  # Ctrl+C or a crash: keep what was measured and spent
+        partial = getattr(e, "partial_run", None)
+        if partial is not None:
+            print(f"Stopped ({partial['stopped']}); saved {_save(args.test, partial).name}")
+        raise
+    path = _save(args.test, run)
     errors = sum(1 for r in run["records"] if r.get("timing", {}).get("error"))
     print(f"Saved {path.name}: {len(run['records'])} records, {errors} errors, spent ${run['spent_usd']:.4f}"
           + (" (stopped by the budget)" if run["stopped"] else ""))

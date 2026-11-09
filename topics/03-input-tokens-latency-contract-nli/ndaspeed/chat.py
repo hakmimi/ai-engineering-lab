@@ -21,6 +21,7 @@ from shared.llm import PRICES
 
 VARIANTS = ("cache_on", "cache_off", "thread")
 ANSWER_TOKENS = 2000
+NO_ANSWER = "(no answer)"  # kept in the history when a turn failed: an empty assistant message can be refused
 
 
 @dataclass
@@ -79,7 +80,7 @@ def run_chat(client, model: str, pack: Pack, questions: list[Question], variant:
 
             answer = Answer("error") if timing.error else read_answer(timing.text, pack.contract(q.code))
             turns.append(Turn(i, q, timing, answer, fallback))
-            history += [q_msg, {"role": "assistant", "content": timing.text}]
+            history += [q_msg, {"role": "assistant", "content": timing.text or NO_ANSWER}]
             prev_id = timing.response_id if not timing.error else None
     except BudgetExceeded as e:
         e.turns = turns

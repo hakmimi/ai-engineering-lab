@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import random
 import time
+from contextlib import contextmanager
 from dataclasses import asdict
 from datetime import datetime
 
@@ -24,6 +25,7 @@ from ndaspeed.timer import Timing, nonce, timed_stream
 
 SIZES = (20_000, 50_000, 100_000, 180_000)
 MAX_RETRIES = 3
+PING_TOKENS = 200  # room for low-effort reasoning plus "OK"; with 16, reasoning can use the cap and no text arrives
 
 
 # ---------------------------------------------------------------- calls
@@ -70,7 +72,7 @@ def _add_failed(run: dict, failed: list[Timing], model: str, **keys) -> None:
 
 def _ping_request(model: str, instr: str | None = None) -> dict:
     return {"model": model, "instructions": instr or instructions(None), "input": PING,
-            "max_output_tokens": MIN_OUTPUT_TOKENS, "reasoning": REASONING, "store": False}
+            "max_output_tokens": PING_TOKENS, "reasoning": REASONING, "store": False}
 
 
 def _warmup(run, client, budget, model, sleep) -> None:
@@ -105,6 +107,21 @@ def _chat(run, client, model, chat_pack, questions, variant, rng, budget, chat_i
     _add_failed(run, failed_all, model, **keys)
 
 
+@contextmanager
+def _guard(run: dict, budget: Budget):
+    """Budget stop ends the test normally; anything else (Ctrl+C included) marks the run, attaches it, and re-raises
+    so the runner can still save what was measured and spent."""
+    try:
+        yield
+    except BudgetExceeded:
+        run["stopped"] = "budget"
+    except BaseException as e:
+        run["stopped"] = f"error: {type(e).__name__}: {e}"
+        run["spent_usd"] = budget.spent_usd
+        e.partial_run = run
+        raise
+
+
 def _finish(run: dict, budget: Budget) -> dict:
     run["spent_usd"] = budget.spent_usd
     return run
@@ -118,14 +135,12 @@ def _alternate(i: int, a: str, b: str) -> tuple[str, str]:
 def test0(client, model: str, rng: random.Random, budget: Budget, repeats: int = 10, sleep=time.sleep) -> dict:
     """Network floor: a tiny prompt, the shortest reply."""
     run = _new_run("0", {"small": model})
-    try:
+    with _guard(run, budget):
         _warmup(run, client, budget, model, sleep)
         for i in range(repeats):
             t, failed = measure(client, budget, _ping_request(model), sleep)
             _add_failed(run, failed, model, rep=i)
             _rec(run, "floor", model, t, rep=i)
-    except BudgetExceeded:
-        run["stopped"] = "budget"
     return _finish(run, budget)
 
 
@@ -142,7 +157,7 @@ def test1(client, models: dict[str, str], rng: random.Random, budget: Budget,
         except ValueError as e:
             run["records"].append({"variant": "cold", "size": size, "skipped": str(e)})
     run["plan"]["pack_docs"] = {str(s): [c.doc_id for c in p.contracts] for s, p in packs.items()}
-    try:
+    with _guard(run, budget):
         for model in models.values():
             _warmup(run, client, budget, model, sleep)
         for r in range(max(rounds.get(k, 0) for k in models)):
@@ -155,8 +170,6 @@ def test1(client, models: dict[str, str], rng: random.Random, budget: Budget,
                 t, failed = measure(client, budget, request, sleep)
                 _add_failed(run, failed, model, size=size, round=r)
                 _rec(run, "cold", model, t, size=size, round=r)
-    except BudgetExceeded:
-        run["stopped"] = "budget"
     return _finish(run, budget)
 
 
@@ -170,7 +183,7 @@ def test2(client, model: str, rng: random.Random, budget: Budget, short_n: int =
     run = _new_run("2", {"small": model}, {
         "short_docs": [c.doc_id for c in short_docs],
         "long_questions": [[(q.code, q.doc_id, q.sid) for q in qs] for qs in long_qs]})
-    try:
+    with _guard(run, budget):
         _warmup(run, client, budget, model, sleep)
         for i, c in enumerate(short_docs):
             pack = make_pack(f"short-{c.doc_id}", [c])
@@ -181,8 +194,6 @@ def test2(client, model: str, rng: random.Random, budget: Budget, short_n: int =
             for v in _alternate(j, "cache_on", "cache_off"):
                 _chat(run, client, model, long_pack, qs, v, rng, budget, f"t2-long-{j}-{v}", sleep, key,
                       pack="long", chat=j)
-    except BudgetExceeded:
-        run["stopped"] = "budget"
     return _finish(run, budget)
 
 
@@ -193,7 +204,7 @@ def test3(client, model: str, rng: random.Random, budget: Budget, reps: int = 10
     pack_msg = {"role": "user", "content": pack.text}
     questions = [long_questions(pack, statements, 1, rng)[0] for _ in range(reps)]
     run = _new_run("3", {"small": model}, {"questions": [(q.code, q.doc_id, q.sid) for q in questions]})
-    try:
+    with _guard(run, budget):
         _warmup(run, client, budget, model, sleep)
         for rep, q in enumerate(questions):
             for v in _alternate(rep, "cold", "prewarm"):
@@ -201,7 +212,7 @@ def test3(client, model: str, rng: random.Random, budget: Budget, reps: int = 10
                 if v == "prewarm":
                     _prewarm(run, client, budget, model, {
                         **_ping_request(model, instr), "input": [pack_msg, {"role": "user", "content": PING}],
-                        "prompt_cache_key": cache_key}, rep)
+                        "max_output_tokens": MIN_OUTPUT_TOKENS, "prompt_cache_key": cache_key}, rep)
                     sleep(2)
                 request = {"model": model, "instructions": instr, "max_output_tokens": ANSWER_TOKENS,
                            "reasoning": REASONING, "store": False, "prompt_cache_key": cache_key,
@@ -212,8 +223,6 @@ def test3(client, model: str, rng: random.Random, budget: Budget, reps: int = 10
                 k = key[q.doc_id][q.sid]
                 _rec(run, v, model, t, rep=rep, doc_id=q.doc_id, sid=q.sid, label=a.label if a else "error",
                      evidence=a.evidence if a else [], key_label=k.label, key_evidence=k.evidence)
-    except BudgetExceeded:
-        run["stopped"] = "budget"
     return _finish(run, budget)
 
 
@@ -242,11 +251,9 @@ def test4(client, model: str, rng: random.Random, budget: Budget, chats: int = 3
     pack = make_pack("long", main)
     qs_all = [long_questions(pack, statements, 17, rng) for _ in range(chats)]
     run = _new_run("4", {"small": model}, {"questions": [[(q.code, q.doc_id, q.sid) for q in qs] for qs in qs_all]})
-    try:
+    with _guard(run, budget):
         _warmup(run, client, budget, model, sleep)
         for j, qs in enumerate(qs_all):
             for v in _alternate(j, "cache_on", "thread"):
                 _chat(run, client, model, pack, qs, v, rng, budget, f"t4-{j}-{v}", sleep, key, pack="long", chat=j)
-    except BudgetExceeded:
-        run["stopped"] = "budget"
     return _finish(run, budget)

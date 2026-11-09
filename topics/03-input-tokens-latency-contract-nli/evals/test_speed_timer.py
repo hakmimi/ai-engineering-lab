@@ -55,3 +55,31 @@ def test_nonce_is_repeatable_with_a_seed():
     import random
     a, b = nonce(random.Random(1)), nonce(random.Random(1))
     assert a == b and a.startswith("run-id: ") and len(a) == len("run-id: ") + 16
+
+
+def test_timer_incomplete_reads_usage_and_reason():
+    from types import SimpleNamespace
+    done = completed("r1", input_tokens=180_000, output=16, reasoning=16)
+    done.type = "response.incomplete"
+    done.response.incomplete_details = SimpleNamespace(reason="max_output_tokens")
+    client = FakeClient([[ev("response.created"), done]])
+    t = timed_stream(client, clock=fake_clock([0.0, 0.2, 0.9]), model="m", input="hi")
+    assert t.total_s == 0.9 and t.input_tokens == 180_000 and t.output_tokens == 16
+    assert t.incomplete == "max_output_tokens"
+    assert t.error is None and t.first_text_s is None
+
+
+def test_timer_failed_event_is_error():
+    from types import SimpleNamespace
+    failed = completed("r1", input_tokens=500)
+    failed.type = "response.failed"
+    failed.response.error = SimpleNamespace(code="server_error", message="boom")
+    t = timed_stream(FakeClient([[ev("response.created"), failed]]), clock=fake_clock([0.0, 0.1, 0.3]), model="m", input="x")
+    assert "server_error" in t.error and t.status is None
+    assert t.input_tokens == 500  # still billed
+
+
+def test_timer_error_event_is_error():
+    t = timed_stream(FakeClient([[ev("response.created"), ev("error", code="rate_limit", message="slow down")]]),
+                     clock=fake_clock([0.0, 0.1, 0.2]), model="m", input="x")
+    assert "rate_limit" in t.error

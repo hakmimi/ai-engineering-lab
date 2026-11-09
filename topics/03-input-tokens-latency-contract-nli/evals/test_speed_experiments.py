@@ -101,3 +101,18 @@ def test_budget_stop_returns_partial_run_marked_budget():
     run = ex.test2(FakeClient(), "gpt-6-luna", random.Random(1), Budget(0.0001), short_n=2, long_chats=1)
     assert run["stopped"] == "budget"
     assert run["spent_usd"] <= 0.0001
+
+
+def test_pings_leave_room_for_text_but_prewarm_stays_minimal():
+    client = FakeClient()
+    ex.test0(client, "gpt-6-luna", random.Random(1), Budget(1.0), repeats=1)
+    assert all(r["max_output_tokens"] == ex.PING_TOKENS for r in client.requests)
+    assert ex.PING_TOKENS > 16
+
+
+def test_interrupt_marks_partial_run_and_reraises():
+    client = FakeClient([answer_events("r1", "OK"), answer_events("r2", "OK"), raises(KeyboardInterrupt())])
+    with pytest.raises(KeyboardInterrupt) as e:
+        ex.test0(client, "gpt-6-luna", random.Random(1), Budget(1.0), repeats=3)
+    run = e.value.partial_run
+    assert run["stopped"].startswith("error: KeyboardInterrupt") and len(run["records"]) == 2 and run["spent_usd"] > 0

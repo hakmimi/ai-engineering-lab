@@ -25,6 +25,7 @@ class Timing:
     text: str = ""
     error: str | None = None
     status: int | None = None
+    incomplete: str | None = None  # why the response stopped early (e.g. max_output_tokens), if it did
 
 
 def nonce(rng: random.Random) -> str:
@@ -51,9 +52,18 @@ def timed_stream(client, *, clock=time.perf_counter, **request) -> Timing:
                 if t.first_text_s is None:
                     t.first_text_s = now
                 parts.append(event.delta)
-            elif event.type == "response.completed":
+            elif event.type in ("response.completed", "response.incomplete"):
                 t.total_s = now
                 _read_usage(t, event.response)
+                details = getattr(event.response, "incomplete_details", None)
+                if event.type == "response.incomplete":
+                    t.incomplete = getattr(details, "reason", None) or "unknown"
+            elif event.type == "response.failed":
+                _read_usage(t, event.response)  # still billed
+                err = getattr(event.response, "error", None)
+                t.error = f"response.failed: {getattr(err, 'code', '')}: {getattr(err, 'message', '')}"
+            elif event.type == "error":
+                t.error = f"error event: {getattr(event, 'code', '')}: {getattr(event, 'message', '')}"
     except openai.APIError as e:
         t.error = f"{type(e).__name__}: {e}"
         t.status = getattr(e, "status_code", None)
