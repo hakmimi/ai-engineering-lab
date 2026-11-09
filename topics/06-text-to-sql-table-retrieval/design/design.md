@@ -8,6 +8,8 @@ Data:
 - Questions, schemas, column descriptions: **LiveSQLBench-Large-v1** (BIRD team @ HKU + Google Cloud), https://huggingface.co/datasets/birdsql/livesqlbench-large-v1 , **CC BY 4.0**, pinned at `a418e108d5cbb4cf9b783a928eff5e924ad2460d`
 - Answer key (which tables each question needs): **SQL-Schema-Retrieval**, `livesqlbench_large_table` (Zeng et al., Snowflake, 2026, arXiv:2607.13311), https://huggingface.co/datasets/Snowflake/SQL-Schema-Retrieval , "follow each source's licence", pinned at `e60c65cf9aeab052f0747902d31db1807099fa23`
 
+**Approved** by the author 2026-11-09 (stop 2). Publish: **2026-11-16T10:00:00+02:00**, without asking again.
+
 ## 1. Intent
 
 LinkedIn built **SQL Bot**, which turns questions into SQL over a warehouse of millions of tables. They say the hard part
@@ -94,7 +96,7 @@ Levels 0 and 1 give the same answer every time: 1 run. Levels 2 and 3: **3 repea
 | $, seconds | Per question, list prices |
 
 **What the article suggests:** recall goes up with the re-ranker, and again with descriptions (Figure 6, no numbers).
-**What I expect** (the author's guesses, before any run): _to fill in at stop 2_.
+**What I expect** (the author's guesses, before any run): _not given at stop 2; asked again at stop 3, before any paid run_.
 
 `results.md` and `charts/*.svg` are generated from run files only.
 
