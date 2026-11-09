@@ -42,3 +42,53 @@ FAKE_RAW = {
         "nda-2": {"short_description": "Technical only", "hypothesis": "Confidential Information shall only include technical information."},
     },
 }
+
+
+# ---------------------------------------------------------------- levels
+from types import SimpleNamespace  # noqa: E402
+
+from ndaflow.data import load_statements  # noqa: E402
+from ndaflow.models import Contract  # noqa: E402
+from shared.llm import Tracker  # noqa: E402
+
+SMALL_CONTRACT = Contract(
+    "T1",
+    "t1.pdf",
+    [
+        "NON-DISCLOSURE AGREEMENT",
+        "The Recipient may share Confidential Information with its employees.",
+        "This Agreement is governed by the laws of Delaware.",
+        "",
+    ],
+)
+
+
+def fake_llm(monkeypatch, responses: dict[str, str]):
+    """Replace ndaflow.levels.llm_call. Answers by the longest label prefix that matches; records every call."""
+    calls = []
+
+    def _fake(prompt, *, label="", **kwargs):
+        calls.append(SimpleNamespace(label=label, prompt=prompt, kwargs=kwargs))
+        matches = [k for k in responses if label.startswith(k)]
+        if not matches:
+            raise AssertionError(f"unexpected llm call with label {label!r}")
+        answer = responses[max(matches, key=len)]
+        return answer(label, prompt) if callable(answer) else answer
+
+    monkeypatch.setattr("ndaflow.levels.llm_call", _fake)
+    return calls
+
+
+def ctx():
+    from ndaflow.levels import Ctx
+
+    return Ctx(load_statements(), "gpt-6-luna", Tracker())
+
+
+def tags(answers: dict[str, str]) -> str:
+    """Level-0 style answer text: {sid: "label|1, 2"} -> <sid><label>..</label><evidence>..</evidence></sid>."""
+    out = []
+    for sid, value in answers.items():
+        label, _, ev = value.partition("|")
+        out.append(f"<{sid}><label>{label}</label><evidence>{ev or 'none'}</evidence></{sid}>")
+    return "\n".join(out)
