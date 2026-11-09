@@ -95,10 +95,9 @@ def route(contract: Contract, ctx: Ctx) -> Routes:
     every = _filled(contract)
     out: Routes = {}
     for s in ctx.statements:
-        if not re.search(rf"<{s.sid}>.*?</{s.sid}>", text, re.DOTALL):
-            out[s.sid] = None
-        else:
-            out[s.sid] = parse_span_ids(extract_xml(text, s.sid), every)
+        # Close at the next </nda-N> of any number: the router sometimes echoes a span number there (<nda-7>11</nda-11>).
+        m = re.search(rf"<{s.sid}>(.*?)</nda-\d+>", text, re.DOTALL)
+        out[s.sid] = parse_span_ids(m.group(1), every) if m else None
     return out
 
 

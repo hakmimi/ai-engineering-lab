@@ -77,6 +77,17 @@ def test_route_reads_picks_and_drops_spans_the_contract_does_not_have(monkeypatc
     assert out["nda-1"] == []
 
 
+def test_route_reads_a_block_closed_with_the_wrong_number(monkeypatch):
+    # Seen in the main-set run: the router echoes a span number into the closing tag.
+    picks = {sid: "none" for sid in STATEMENT_IDS}
+    text = route_text(picks).replace("<nda-7>none</nda-7>", "<nda-7>1</nda-11>")
+    fake_llm(monkeypatch, {"route": text})
+    out = route(SMALL_CONTRACT, ctx())
+    assert out["nda-7"] == [1]
+    assert out["nda-11"] == []
+    assert None not in out.values()
+
+
 def test_level1_router_gap_is_an_error_not_a_silent_not_mentioned(monkeypatch):
     picks = {sid: "none" for sid in STATEMENT_IDS[:-1]}
     fake_llm(monkeypatch, {"route": route_text(picks)})
