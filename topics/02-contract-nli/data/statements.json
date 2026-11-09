@@ -1,0 +1,87 @@
+[
+ {
+  "sid": "nda-1",
+  "short": "Explicit identification",
+  "text": "All Confidential Information shall be expressly identified by the Disclosing Party."
+ },
+ {
+  "sid": "nda-2",
+  "short": "None-inclusion of non-technical information",
+  "text": "Confidential Information shall only include technical information."
+ },
+ {
+  "sid": "nda-3",
+  "short": "Inclusion of verbally conveyed information",
+  "text": "Confidential Information may include verbally conveyed information."
+ },
+ {
+  "sid": "nda-4",
+  "short": "Limited use",
+  "text": "Receiving Party shall not use any Confidential Information for any purpose other than the purposes stated in Agreement."
+ },
+ {
+  "sid": "nda-5",
+  "short": "Sharing with employees",
+  "text": "Receiving Party may share some Confidential Information with some of Receiving Party's employees."
+ },
+ {
+  "sid": "nda-7",
+  "short": "Sharing with third-parties",
+  "text": "Receiving Party may share some Confidential Information with some third-parties (including consultants, agents and professional advisors)."
+ },
+ {
+  "sid": "nda-8",
+  "short": "Notice on compelled disclosure",
+  "text": "Receiving Party shall notify Disclosing Party in case Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information."
+ },
+ {
+  "sid": "nda-10",
+  "short": "Confidentiality of Agreement",
+  "text": "Receiving Party shall not disclose the fact that Agreement was agreed or negotiated."
+ },
+ {
+  "sid": "nda-11",
+  "short": "No reverse engineering",
+  "text": "Receiving Party shall not reverse engineer any objects which embody Disclosing Party's Confidential Information."
+ },
+ {
+  "sid": "nda-12",
+  "short": "Permissible development of similar information",
+  "text": "Receiving Party may independently develop information similar to Confidential Information."
+ },
+ {
+  "sid": "nda-13",
+  "short": "Permissible acquirement of similar information",
+  "text": "Receiving Party may acquire information similar to Confidential Information from a third party."
+ },
+ {
+  "sid": "nda-15",
+  "short": "No licensing",
+  "text": "Agreement shall not grant Receiving Party any right to Confidential Information."
+ },
+ {
+  "sid": "nda-16",
+  "short": "Return of confidential information",
+  "text": "Receiving Party shall destroy or return some Confidential Information upon the termination of Agreement."
+ },
+ {
+  "sid": "nda-17",
+  "short": "Permissible copy",
+  "text": "Receiving Party may create a copy of some Confidential Information in some circumstances."
+ },
+ {
+  "sid": "nda-18",
+  "short": "No solicitation",
+  "text": "Receiving Party shall not solicit some of Disclosing Party's representatives."
+ },
+ {
+  "sid": "nda-19",
+  "short": "Survival of obligations",
+  "text": "Some obligations of Agreement may survive termination of Agreement."
+ },
+ {
+  "sid": "nda-20",
+  "short": "Permissible post-agreement possession",
+  "text": "Receiving Party may retain some Confidential Information even after the return or destruction of Confidential Information."
+ }
+]
