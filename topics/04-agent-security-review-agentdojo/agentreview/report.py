@@ -55,6 +55,32 @@ def _per_session(rep: dict, field: str) -> float:
     return sum(values) / len(rep["verdicts"]) if rep["verdicts"] else 0.0
 
 
+Reps = list[tuple[dict[str, Verdict], float, float]]  # per repeat: verdicts, $ per session, seconds per session
+
+
+def level_reps(runs_dir: Path, set_name: str) -> dict[str, Reps | None]:
+    """Per level name (and 2-cheap): the repeats of the latest full run, or None if it hasn't run."""
+    runs = {lv: _latest(runs_dir, set_name, lv) for lv in LEVEL_NAMES}
+    out: dict[str, Reps | None] = {}
+    for lv, name in LEVEL_NAMES.items():
+        run = runs[lv]
+        out[name] = None if run is None else [
+            (_verdicts(r), _per_session(r, "cost_usd"), _per_session(r, "seconds")) for r in run["repeats"]
+        ]
+    out["2-cheap"] = None
+    if runs["0"] and runs["2"]:
+        l0 = _verdicts(runs["0"]["repeats"][0])
+        reps = []
+        for r in runs["2"]["repeats"]:
+            l2 = _verdicts(r)
+            mixed = cheap(l0, l2)
+            sent = [sid for sid in l0 if mixed[sid] is l2.get(sid)]
+            reps.append((mixed, sum(r["cost_usd"].get(sid, 0) for sid in sent) / len(l0),
+                         sum(r["seconds"].get(sid, 0) for sid in sent) / len(l0)))
+        out["2-cheap"] = reps
+    return out
+
+
 def _table(runs_dir: Path, set_name: str) -> list[str]:
     key = load_key(set_name)
     lines = [
@@ -67,26 +93,11 @@ def _table(runs_dir: Path, set_name: str) -> list[str]:
         "|---|---|---|---|---|---|---|---|---|",
     ]
     runs = {lv: _latest(runs_dir, set_name, lv) for lv in LEVEL_NAMES}
-    for lv, name in LEVEL_NAMES.items():
-        run = runs[lv]
-        if run is None:
+    for name, reps in level_reps(runs_dir, set_name).items():
+        if reps is None:
             lines.append(f"| {name} | not run yet | | | | | | | |")
-            continue
-        reps = [(_verdicts(r), _per_session(r, "cost_usd"), _per_session(r, "seconds")) for r in run["repeats"]]
-        lines.append(_row(name, reps, key))
-    if runs["0"] and runs["2"]:
-        l0 = _verdicts(runs["0"]["repeats"][0])
-        reps = []
-        for r in runs["2"]["repeats"]:
-            l2 = _verdicts(r)
-            mixed = cheap(l0, l2)
-            sent = [sid for sid in l0 if mixed[sid] is l2.get(sid)]
-            cost = sum(r["cost_usd"].get(sid, 0) for sid in sent) / len(l0)
-            secs = sum(r["seconds"].get(sid, 0) for sid in sent) / len(l0)
-            reps.append((mixed, cost, secs))
-        lines.append(_row("2-cheap", reps, key))
-    else:
-        lines.append("| 2-cheap | not run yet (needs levels 0 and 2) | | | | | | | |")
+        else:
+            lines.append(_row(name, reps, key))
     if set_name == "test":
         lines += ["", *_by_style(runs, key, load_styles(set_name))]
     return lines + [""]
@@ -152,8 +163,12 @@ def build_results(runs_dir: Path = RUNS_DIR) -> str:
 
 
 def main() -> int:
+    from agentreview.charts import build_charts  # charts reuse this module's helpers
+
     RESULTS.write_text(build_results(), encoding="utf-8")
     print(f"Wrote {RESULTS}")
+    for path in build_charts(RUNS_DIR):
+        print(f"Wrote {path}")
     return 0
 
 
