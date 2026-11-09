@@ -48,3 +48,8 @@ class Verdict:
     findings: list[Finding] = field(default_factory=list)
     status: str = "ok"  # ok | error | not_reviewed
     hits: list[str] = field(default_factory=list)
+
+
+def verdict_from_dict(d: dict) -> Verdict:
+    """A verdict read back from a run file."""
+    return Verdict(d["score"], d["band"], [Finding(**f) for f in d.get("findings", [])], d.get("status", "ok"), list(d.get("hits", [])))
