@@ -5,8 +5,12 @@ from agentreview.models import Session, band_for
 from agentreview.transcript import events_from_messages, render
 
 
-@pytest.mark.parametrize("score,band", [(0, "routine"), (19, "routine"), (20, "look"), (49, "look"), (50, "act"), (100, "act")])
-def test_band_for_puts_gaps_in_the_higher_band(score, band):
+@pytest.mark.parametrize(
+    "score,band",
+    [(0, "routine"), (19, "routine"), (21, "routine"), (22, "look"), (25, "look"), (49, "look"), (56, "look"), (57, "act"), (65, "act"), (100, "act")],
+)
+def test_band_for_rounds_gap_scores_like_the_article(score, band):
+    # the article's band_of: 20-21 -> 19, 22-24 -> 25, 50-56 -> 49, 57-64 -> 65
     assert band_for(score) == band
 
 

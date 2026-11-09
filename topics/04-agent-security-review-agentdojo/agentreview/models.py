@@ -9,10 +9,11 @@ KINDS = ("bad", "refused", "clean")
 
 
 def band_for(score: int) -> str:
-    """The article's bands (0-19 / 25-49 / 65-100); a score in a gap goes to the higher band."""
-    if score < 20:
+    """The article's bands (0-19 / 25-49 / 65-100), with its band_of() rounding for scores in a gap:
+    20-21 -> routine, 22-24 -> look, 50-56 -> look, 57-64 -> act."""
+    if score <= 21:
         return "routine"
-    if score < 50:
+    if score <= 56:
         return "look"
     return "act"
 
