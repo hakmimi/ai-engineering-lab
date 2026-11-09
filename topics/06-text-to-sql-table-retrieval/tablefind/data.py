@@ -43,5 +43,10 @@ def load_questions(set_name: str) -> list[Question]:
     return [Question(q["qid"], q["text"]) for q in _read(f"{set_name}.json")]
 
 
+def load_links() -> dict[str, set[str]]:
+    """Foreign-key links between tables (level 4 only)."""
+    return {t: set(ls) for t, ls in _read("links.json").items()}
+
+
 def load_key(set_name: str) -> dict[str, set[str]]:
     return {qid: set(ts) for qid, ts in _read("key.json")[set_name].items()}

@@ -67,6 +67,11 @@ Every level searches **one pool of all 971 tables** (the whole "warehouse", as a
 | **1 · Embedding search** | Embed the question and each table card, top 7 by cosine. |
 | **2 · The article's way** | Embedding top 20, then an LLM reads the 20 cards and picks 7. |
 | **3 · + descriptions** | Level 2, with each card also carrying the column descriptions (both for search and for the re-ranker). |
+| **4 · + joined tables** (added 2026-11-09, author's yes) | Level 3's 7 picks plus up to 3 tables linked to them by a foreign key in the schema (linked to the most picks first, then to the best-ranked pick, then by name). 10 tables handed over. |
+| **4c · control** | Level 3's 7 picks plus the next 3 tables from level 3's search order. Also 10, so a gain at level 4 comes from the links, not from handing over more tables. |
+
+Levels 4 and 4c are computed from level 3's saved answers: **no extra model calls, no extra cost**. They follow LinkedIn's "common joins" from its knowledge graph; here the joins come from the schema's `FOREIGN KEY` lines (1,065 links, `data/links.json`).
+Ruling (before any level 3 result): one hop, 3 extra tables, the order above. Before choosing it I counted, on both sets, how often a question's gold tables are connected by foreign keys (main 78 of 107 multi-table questions, held-out 113 of 138). That is a property of the data, not a tuned setting; nothing was tried and compared.
 
 A **table card** is `database.table` plus its columns with types (from `*_schema.txt`). Level 3's card adds the
 description of each column. No sample rows.
@@ -80,7 +85,7 @@ description of each column. No sample rows.
 - Group B happens to be harder (3.1 gold tables per question vs 2.3; only 21 single-table questions vs 66). So **levels are
   compared within a set**, never main vs held-out.
 - **No leaks:** the model sees only the question text and the table cards. Question ids are opaque (`m-001`, `t-001`).
-- **Spot check:** before any paid run, the author checks 20 main-set questions against their gold tables in `spot-check.md`.
+- **Spot check:** `spot-check.md` lists 20 main-set questions with their gold tables. **The author chose to go ahead without checking it** (2026-11-09); the README says so.
 
 ## 6. What is measured (decided)
 
@@ -96,7 +101,7 @@ Levels 0 and 1 give the same answer every time: 1 run. Levels 2 and 3: **3 repea
 | $, seconds | Per question, list prices |
 
 **What the article suggests:** recall goes up with the re-ranker, and again with descriptions (Figure 6, no numbers).
-**What I expect** (the author's guesses, before any run): _not given at stop 2; asked again at stop 3, before any paid run_.
+**What I expect:** the author had no guess. **Claude's guesses**, written 2026-11-09 before any paid run, held-out set, all found: level 1 ≈ 15%, top-20 ceiling ≈ 40%, level 2 ≈ 30%, level 3 ≈ 40% (+10 points from descriptions). Main set higher (level 2 ≈ 45%). Bet: the top-20 ceiling is the bottleneck, because join-only tables don't look like the question. (Free level 0, already run: main 12%, held-out 1%.)
 
 `results.md` and `charts/*.svg` are generated from run files only.
 
@@ -134,6 +139,11 @@ Anti-goals (a failure even if it runs):
 
 `README.md` (blog structure), `design/` (this file, plan, process diagram), `data/` (sets, table cards, NOTICE; `raw/`
 and `key.json` git-ignored), `tablefind/` (package), `evals/`, `charts/`, `results.md`, `spot-check.md`.
+
+## Ideas for later (not in this topic)
+
+- **Business-definition lookup** (the author's call, 2026-11-09: keep for later). LiveSQLBench ships a knowledge base per database (`*_kb.jsonl`, e.g. "System Unavailability = …"). Search it with the question and add the matched definitions and the columns they name before table search. It is LinkedIn's "domain knowledge" lever. Costs about $1 per set.
+- **Pinterest's table summaries** (handed over by the topic 05 session, 2026-11-09; waiting for the author's yes on cost). Pinterest ("How we built Text-to-SQL at Pinterest") uses the same search-then-LLM pattern, and has an LLM write a summary of each table ahead of time; search runs against the summaries. They report table-search hit rate going from 40% to up to 90%. Would be a level 5 (level 4 is taken): summary cards for all 971 tables, cached, then level 2's search and re-rank on them.
 
 ## 10. Left to the builder
 

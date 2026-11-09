@@ -12,19 +12,40 @@ from statistics import mean
 
 from shared.charts import bar_chart, money, pct
 from shared.runs import latest_run
-from tablefind.data import load_key
+from tablefind.data import load_key, load_links
+from tablefind.joins import add_joins, add_search
 from tablefind.score import by_gold_size, score
 
 TOPIC = Path(__file__).resolve().parent.parent
 RUNS_DIR = TOPIC / "runs"
 CHARTS_DIR = TOPIC / "charts"
 LEVEL_NAMES = {"0": "0 · Keyword search", "1": "1 · Embedding search",
-               "2": "2 · Search 20, LLM picks 7", "3": "3 · + descriptions"}
+               "2": "2 · Search 20, LLM picks 7", "3": "3 · + descriptions",
+               "4c": "4c · 3's picks + 3 more from search", "4": "4 · 3's picks + 3 joined tables"}
+RUN_LEVELS = ("0", "1", "2", "3")  # 4 and 4c are computed from level 3's saved answers
+GOLD_SIZE_LEVELS = ("1", "2", "3", "4")  # four colours at most; level 0 is near zero everywhere
 SET_NAMES = {"main": "Main set (tuning allowed)", "test": "Held-out set (never tuned on)"}
 
 
+def _derive(run: dict, extend) -> dict:
+    """A copy of a level 3 run with each ok answer's picks extended. Costs and timings stay level 3's."""
+    reps = []
+    for r in run["repeats"]:
+        answers = {q: ({**a, "picks": extend(a)} if a["status"] == "ok" else dict(a)) for q, a in r["answers"].items()}
+        reps.append({**r, "answers": answers})
+    return {**run, "repeats": reps, "derived_from": "3"}
+
+
 def level_runs(runs_dir: Path, set_name: str) -> dict[str, dict | None]:
-    return {lv: latest_run(runs_dir, set_name, lv) for lv in LEVEL_NAMES}
+    runs = {lv: latest_run(runs_dir, set_name, lv) for lv in RUN_LEVELS}
+    three = runs["3"]
+    if three is None:
+        runs["4c"] = runs["4"] = None
+    else:
+        links = load_links()
+        runs["4c"] = _derive(three, lambda a: add_search(a["picks"], a["top20"] or []))
+        runs["4"] = _derive(three, lambda a: add_joins(a["picks"], a["top20"] or [], links))
+    return runs
 
 
 def summary(run: dict, key: dict[str, set[str]]) -> dict:
@@ -61,7 +82,9 @@ def build_results(runs_dir: Path) -> str:
              "**Filled from search** = when the LLM named fewer than 7 usable tables, the rest came from the search order: "
              "average tables filled per answer (share of answers with any fill). "
              "**$ / question** = repeat 1 only (later repeats hit the provider's prompt cache), without the one-time embedding of the 971 tables. "
-             "**s / question** = wall time with parallel workers; **LLM s** = the re-ranker call alone.", ""]
+             "**s / question** = wall time with parallel workers; **LLM s** = the re-ranker call alone. "
+             "**Levels 4c and 4 hand over 10 tables, not 7**: level 3's picks plus 3 more, from the search order (4c, the control) "
+             "or joined to the picks by a foreign key (4). They reuse level 3's answers, so they cost nothing extra.", ""]
     for set_name, title in SET_NAMES.items():
         key = load_key(set_name)
         runs = level_runs(runs_dir, set_name)
@@ -93,9 +116,10 @@ def build_results(runs_dir: Path) -> str:
     test = level_runs(runs_dir, "test")
     if all(test[lv] for lv in ("1", "2", "3")):
         key = load_key("test")
-        f = {lv: summary(test[lv], key)["all_found"] for lv in ("1", "2", "3")}
+        f = {lv: summary(test[lv], key)["all_found"] for lv in ("1", "2", "3", "4c", "4")}
         lines.append(f"**We got (held-out, all found):** embedding search {f['1']:.0%} → LLM re-rank {f['2']:.0%} → "
-                     f"+ descriptions {f['3']:.0%}.")
+                     f"+ descriptions {f['3']:.0%}. With 3 more tables (10 in all): from search {f['4c']:.0%}, "
+                     f"joined by foreign key {f['4']:.0%}.")
     else:
         lines.append("**We got:** not run yet.")
     return "\n".join(lines) + "\n"
@@ -134,12 +158,12 @@ def build_charts(runs_dir: Path, out_dir: Path = CHARTS_DIR) -> list[Path]:
         cats, rows = [], []
         for b, label in (("1", "1 table"), ("2", "2 tables"), ("3+", "3+ tables")):
             row = []
-            for lv in LEVEL_NAMES:
+            for lv in GOLD_SIZE_LEVELS:
                 reps = [by_gold_size(r["answers"], keys["test"]) for r in test[lv]["repeats"]] if test[lv] else None
                 row.append(mean(r[b] for r in reps) if reps and all(b in r for r in reps) else None)
             cats.append(label)
             rows.append(row)
-        lv_series = [(LEVEL_NAMES[lv], c) for lv, c in zip(LEVEL_NAMES, ("muted", "s1", "s2", "s3"))]
+        lv_series = [(LEVEL_NAMES[lv], c) for lv, c in zip(GOLD_SIZE_LEVELS, ("muted", "s1", "s2", "s3"))]
         save("by-gold-size.svg", bar_chart("Held-out: harder when a question needs more tables",
                                            "All found, by how many tables the question needs",
                                            [("", cats, rows)], lv_series, 1.0, pct))

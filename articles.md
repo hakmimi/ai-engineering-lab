@@ -9,4 +9,9 @@ Status: `waiting` → `in progress` → `published`.
 | 03 | [Latency optimization: input tokens](https://platform.claude.com/cookbook/latency-optimization-latency-optimization#input-token-management) | published | `topics/03-input-tokens-latency-contract-nli` | https://hakmimi.github.io/Blog/posts/03-input-tokens-latency/ |
 | 04 | [Agent security review with Managed Agents](https://platform.claude.com/cookbook/managed-agents-cma-agent-security-review) | published 2026-11-09 | `topics/04-agent-security-review-agentdojo` | https://hakmimi.github.io/Blog/posts/04-agent-security-review/ |
 | 05 | [Evaluator-optimizer](https://platform.claude.com/cookbook/patterns-agents-evaluator-optimizer) | in progress | `topics/05-evaluator-optimizer-text-to-sql` | |
-| 06 | [LinkedIn: Practical text-to-SQL for data analytics](https://www.linkedin.com/blog/engineering/ai/practical-text-to-sql-for-data-analytics) | in progress | | |
+| 06 | [LinkedIn: Practical text-to-SQL for data analytics](https://www.linkedin.com/blog/engineering/ai/practical-text-to-sql-for-data-analytics) | in progress | `topics/06-text-to-sql-table-retrieval` | |
+
+## Ideas for later
+
+- **Business-definition lookup for table finding** (from topic 06): search LiveSQLBench's per-database knowledge base with the question and add matched definitions before table search. LinkedIn's "domain knowledge" lever.
+- **Pinterest's table summaries** (from topic 06): [How we built Text-to-SQL at Pinterest](https://medium.com/pinterest-engineering/how-we-built-text-to-sql-at-pinterest-30bad30dabff). LLM-written summary per table, search on summaries. Waiting for the author's yes on cost.

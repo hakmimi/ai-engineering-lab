@@ -68,6 +68,34 @@ def _table_id(db: str, name: str) -> str:
     return f"{db}.{name.lower()}"
 
 
+_REFERENCES = re.compile(r'REFERENCES\s+"?([^\s"(]+)"?')
+
+
+def parse_links(text: str) -> dict[str, set[str]]:
+    """Table (lower) -> tables it shares a foreign key with, in either direction. Self-references are skipped."""
+    links: dict[str, set[str]] = defaultdict(set)
+    for name, body in _CREATE.findall(text):
+        a = name.lower()
+        for target in _REFERENCES.findall(body):
+            b = target.lower()
+            if a != b:
+                links[a].add(b)
+                links[b].add(a)
+    return dict(links)
+
+
+def write_links(raw: Path, out: Path) -> int:
+    """data/links.json: table id -> linked table ids (same database). Used only by level 4. Returns the link count."""
+    big = raw / "livesqlbench_large_v1"
+    links: dict[str, list[str]] = {}
+    for d in sorted(p for p in big.iterdir() if p.is_dir()):
+        for a, bs in parse_links((d / f"{d.name}_schema.txt").read_text(encoding="utf-8")).items():
+            links[_table_id(d.name, a)] = sorted(_table_id(d.name, b) for b in bs)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "links.json").write_text(json.dumps(links, indent=1, sort_keys=True), encoding="utf-8")
+    return sum(len(v) for v in links.values()) // 2
+
+
 def build(raw: Path, out: Path) -> dict:
     big = raw / "livesqlbench_large_v1"
     pool, tables = set(), []
@@ -123,7 +151,7 @@ def build(raw: Path, out: Path) -> dict:
     write("main.json", sets["main"])
     write("test.json", sets["test"])
     write("key.json", key)
-    counts = {"tables": len(tables), "main": len(sets["main"]), "test": len(sets["test"])}
+    counts = {"tables": len(tables), "main": len(sets["main"]), "test": len(sets["test"]), "links": write_links(raw, out)}
     write("build_log.json", {"seed": SEED, "group_a_main": group_a, "group_b_test": group_b, "counts": counts,
                              "pins": {BIRD_REPO: BIRD_SHA, SNOW_REPO: SNOW_SHA}, "sources": sources})
     return counts

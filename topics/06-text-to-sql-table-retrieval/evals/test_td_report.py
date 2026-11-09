@@ -73,3 +73,24 @@ def test_report_shows_filled_tables(tmp_path, key_set):
     assert out["filled_share"] == pytest.approx(1 / len(key))
     save_run(tmp_path / "runs", s, "2", r)
     assert "Filled from search" in report.build_results(tmp_path / "runs")
+
+
+def test_level4_and_control_come_from_level3_with_no_extra_cost(tmp_path, key_set):
+    s = next(x for x in ("main", "test") if any(len(g) == 2 for g in data.load_key(x).values()))
+    key = data.load_key(s)
+    r = _run(key, "3", top20=True)
+    for q, a in r["repeats"][0]["answers"].items():
+        if key[q] == {"alpha_large.projects", "alpha_large.sites"}:
+            a["picks"], a["top20"] = ["alpha_large.projects"], ["alpha_large.projects", "beta_large.plants"]
+    save_run(tmp_path / "runs", s, "3", r)
+    runs = report.level_runs(tmp_path / "runs", s)
+    assert runs["4"]["derived_from"] == "3" and runs["4c"]["derived_from"] == "3"
+    four = runs["4"]["repeats"][0]["answers"]
+    control = runs["4c"]["repeats"][0]["answers"]
+    q = next(q for q in key if len(key[q]) == 2)
+    assert four[q]["picks"] == ["alpha_large.projects", "alpha_large.sites"]
+    assert control[q]["picks"] == ["alpha_large.projects", "beta_large.plants"]
+    assert report.summary(runs["4"], key)["all_found"] == 1.0
+    assert report.summary(runs["4c"], key)["all_found"] < 1.0
+    assert report.summary(runs["4"], key)["usd"] == report.summary(runs["3"], key)["usd"]
+    assert "hand over 10 tables" in report.build_results(tmp_path / "runs")
