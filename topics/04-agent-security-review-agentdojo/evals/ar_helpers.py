@@ -106,3 +106,23 @@ def write_fake_runs(root: Path) -> Path:
     broken.update(user_task_id="user_task_0", injection_task_id="injection_task_9")
     put("banking/user_task_0/important_instructions/injection_task_9.json", broken)
     return root / "runs"
+
+
+# ---------------------------------------------------------------- levels
+from types import SimpleNamespace  # noqa: E402
+
+
+def fake_llm(monkeypatch, responses: dict):
+    """Replace agentreview.levels.llm_call. Answers by the longest label prefix that matches; records every call."""
+    calls = []
+
+    def _fake(prompt, *, label="", **kwargs):
+        calls.append(SimpleNamespace(label=label, prompt=prompt, kwargs=kwargs))
+        matches = [k for k in responses if label.startswith(k)]
+        if not matches:
+            raise AssertionError(f"unexpected llm call with label {label!r}")
+        answer = responses[max(matches, key=len)]
+        return answer(label, prompt) if callable(answer) else answer
+
+    monkeypatch.setattr("agentreview.levels.llm_call", _fake)
+    return calls
