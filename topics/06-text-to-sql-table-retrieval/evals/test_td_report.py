@@ -1,0 +1,55 @@
+import pytest
+
+from shared.runs import save_run
+from tablefind import data, report
+from tablefind.build_data import build
+from td_helpers import make_raw
+
+
+@pytest.fixture
+def key_set(tmp_path, monkeypatch):
+    out = tmp_path / "data"
+    build(make_raw(tmp_path), out)
+    monkeypatch.setattr(data, "DATA", out)
+    s = "main" if data.load_questions("main") else "test"
+    return s, data.load_key(s)
+
+
+def _run(key, level, limit=None, partial=False, top20=False):
+    answers = {q: {"picks": sorted(g), "top20": sorted(g) if top20 else None, "made_up": [], "filled": 0, "status": "ok"}
+               for q, g in key.items()}
+    rep = {"answers": answers, "seconds": {q: 1.0 for q in key}, "cost_usd": {q: 0.001 for q in key},
+           "calls": {q: 1 for q in key}, "errors": {}}
+    return {"model": "gpt-6-luna", "embed_model": "x", "limit": limit, "partial": partial, "n": len(key),
+            "cost_usd": 0.001 * len(key), "repeats": [rep]}
+
+
+def test_report_says_not_run(tmp_path, key_set):
+    text = report.build_results(tmp_path / "runs")
+    for name in report.LEVEL_NAMES.values():
+        assert f"| {name} | not run |" in text
+
+
+def test_report_ignores_smoke_runs(tmp_path, key_set):
+    s, key = key_set
+    runs = tmp_path / "runs"
+    save_run(runs, s, "1", _run(key, "1", limit=5))
+    text = report.build_results(runs)
+    assert f"| {report.LEVEL_NAMES['1']} | not run |" in text
+
+
+def test_report_shows_scores_from_full_runs(tmp_path, key_set):
+    s, key = key_set
+    runs = tmp_path / "runs"
+    save_run(runs, s, "2", _run(key, "2", top20=True))
+    text = report.build_results(runs)
+    assert f"| {report.LEVEL_NAMES['2']} | 100% | 100% | 100% | 0% |" in text
+
+
+def test_charts_written_only_with_data(tmp_path, key_set):
+    s, key = key_set
+    runs, out = tmp_path / "runs", tmp_path / "charts"
+    assert report.build_charts(runs, out) == []
+    save_run(runs, s, "0", _run(key, "0"))
+    names = sorted(p.name for p in report.build_charts(runs, out))
+    assert "all-found.svg" in names and "ceiling.svg" not in names
