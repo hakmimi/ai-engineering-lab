@@ -96,8 +96,9 @@ Voice: first person, plain, a bit casual. No "delve", "crucial", "robust", "it's
 
 ```
 python -m shared.publish_post topics/NN-<slug> --slug NN-<short> --title "..." --description "..." \
-    --date 2026-11-12T10:00:00+02:00 --tags a,b --code-blurb "It has ..."
+    --date 2026-11-12T10:00:00+02:00 --tags a,b --code-blurb "It has ..." --source anthropic
 ```
+- `--source`: the article companies' logo keys (from the blog's `src/utils/sources.ts`, e.g. `anthropic`, `linkedin`, `pinterest`); the logo shows next to the title. Add a key there first for a new company.
 - Code links point to `tree/main/...`, so **merge the lab first**: in the main checkout, `git merge --no-ff topic-NN-<slug>`, push.
 - Blog: build check in PowerShell `node_modules\.bin\astro.cmd build` (no pnpm on PATH), commit, push. GitHub Actions deploys; a future `pubDatetime` appears on its day (daily rebuild 08:15 UTC).
 - Remove the worktree (`git worktree remove`), delete the branch, set the row in `articles.md` to `published` with the date and post URL.
