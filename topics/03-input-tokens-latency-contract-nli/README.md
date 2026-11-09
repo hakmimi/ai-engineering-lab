@@ -50,7 +50,35 @@ Not run yet. This section is written from `results.md` after the full runs.
 
 ## What's in the folder
 
-<!-- filled in when the code exists -->
+```
+design/          design.md (what and why), plan.md (how it was built)
+ndaspeed/
+  config.py      models, paths, the topic's $10 ceiling
+  timer.py       one streamed call, timed event by event (first word, total, tokens, bytes)
+  packs.py       contract packs, questions, prompt text, answer reading
+  chat.py        one 17-turn chat, three ways: cache on, cache off, previous_response_id
+  experiments.py the five tests (0-4)
+  stats.py       median, p90, slope, bootstrap interval
+  cost.py        cost per call, budget stop
+  run.py         CLI: estimate, budget check, run, save the run file
+  report.py      writes results.md from the run files
+evals/           offline tests (a fake client, no network)
+runs/            raw run files (git-ignored)
+results.md       generated
+```
+
+The NDAs, statements and answer key are read from topic 2's `data/` folder; nothing is copied.
+
+## How to run
+
+From the repo root (PowerShell):
+
+```powershell
+$env:PYTHONPATH = ".;topics/01-prompt-vs-workflow-contract-nli;topics/03-input-tokens-latency-contract-nli"
+.venv\Scripts\python -m ndaspeed.run --test 1 --dry-run           # cost estimate only, nothing sent
+.venv\Scripts\python -m ndaspeed.run --test 1 --model both --yes  # a real run (tests 0-4, one at a time)
+.venv\Scripts\python -m ndaspeed.report                           # rewrites results.md
+```
 
 ## What I found
 
