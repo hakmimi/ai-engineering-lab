@@ -170,7 +170,7 @@ Total cost of the whole experiment: **about $3.55**.
 | Tool | What I used it for |
 |---|---|
 | **Python 3** | Everything |
-| **OpenAI Responses API**, streaming | The calls, timed event by event . Prices, model names and the API key come from the shared [`shared/llm.py`](../../shared/llm.py), but the calls go through my own timer, because it needs every stream event |
+| **OpenAI Responses API**, streaming | The calls, timed event by event. Prices, model names and the API key come from the shared [`shared/llm.py`](../../shared/llm.py), but the calls go through my own timer, because it needs every stream event |
 | **pytest** | Offline tests with a fake client, no network |
 | **Claude Code** | My pair programmer: design, plan, code and review |
 
