@@ -20,8 +20,8 @@ from pathlib import Path
 
 from shared.llm import PRICES, Tracker, cost_usd, load_env, require_api_key
 from shared.runs import DEFAULT_CEILING_USD, over_ceiling, save_run, spent_so_far
-from tablefind.cards import card
-from tablefind.data import SETS, Question, load_key, load_questions, load_tables
+from tablefind.cards import card, summary_card
+from tablefind.data import SETS, Question, load_key, load_questions, load_summaries, load_tables
 from tablefind.embed import EMBED_MODEL, EMBED_USD_PER_M, Embedder
 from tablefind.levels import RERANK_MAX_TOKENS, SHORTLIST, Ctx, prepare, run_level
 from tablefind.rerank import SYSTEM
@@ -31,7 +31,7 @@ TOPIC = Path(__file__).resolve().parent.parent
 RUNS_DIR = TOPIC / "runs"
 CACHE_DIR = TOPIC / "cache"
 TOPIC_CEILING_USD = DEFAULT_CEILING_USD
-LEVELS = ("0", "1", "2", "3")
+LEVELS = ("0", "1", "2", "3", "5")  # 4 and 4c are computed by the report from level 3
 
 
 def rerank_model() -> str:
@@ -42,16 +42,19 @@ def make_embedder() -> Embedder:
     return Embedder(CACHE_DIR)
 
 
-def estimate_cost_usd(level: str, questions: list[Question], tables, model: str, repeats: int) -> float:
+def estimate_cost_usd(level: str, questions: list[Question], tables, model: str, repeats: int,
+                      summaries: dict[str, str] | None = None) -> float:
     """Upper side: characters ÷ 4 as tokens, output at the max_tokens cap (reasoning is billed), no cache discount,
     both card sets embedded as misses."""
     if level == "0":
         return 0.0
-    with_desc = level == "3"
-    cards = [card(t, with_desc) for t in tables]
+    if level == "5" and summaries is not None:
+        cards = [summary_card(t, summaries[t.id]) for t in tables]
+    else:
+        cards = [card(t, level == "3") for t in tables]
     embed_chars = sum(len(card(t, d)) for t in tables for d in (False, True)) + sum(len(q.text) for q in questions)
     total = embed_chars / 4 * EMBED_USD_PER_M / 1_000_000
-    if level in ("2", "3"):
+    if level in ("2", "3", "5"):
         avg_card = sum(len(c) for c in cards) / len(cards)
         p = PRICES[model]
         for q in questions:
@@ -104,12 +107,13 @@ def main(argv: list[str] | None = None) -> int:
     a = ap.parse_args(argv)
 
     load_env()  # before rerank_model(): RERANK_MODEL may be set only in .env
-    model = rerank_model() if a.level in ("2", "3") else "none"
-    repeats = a.repeats if a.level in ("2", "3") else 1
+    model = rerank_model() if a.level in ("2", "3", "5") else "none"
+    repeats = a.repeats if a.level in ("2", "3", "5") else 1
+    summaries = load_summaries() if a.level == "5" else None
     questions = load_questions(a.set)[: a.limit] if a.limit else load_questions(a.set)
     tables = load_tables()
 
-    estimate = estimate_cost_usd(a.level, questions, tables, model if model != "none" else "gpt-6-luna", repeats)
+    estimate = estimate_cost_usd(a.level, questions, tables, model if model != "none" else "gpt-6-luna", repeats, summaries)
     spent = spent_so_far(a.runs_dir)
     print(f"Level {a.level} ({model}), {a.set} set: {len(questions)} questions × {repeats} repeats, pool {len(tables)} tables. "
           f"Estimated cost ${estimate:.3f} (spent so far ${spent:.3f})")
@@ -131,7 +135,7 @@ def main(argv: list[str] | None = None) -> int:
 
     embedder = make_embedder() if a.level != "0" else None
     ctx = Ctx(tables, embedder, model, Tracker())
-    prepare(ctx, embed=a.level != "0")
+    prepare(ctx, embed=a.level != "0", summaries=summaries)
     if embedder is not None:
         embedder.embed([q.text for q in questions])  # before the threads: they then only read the cache
     total = embedder.cost_usd if embedder is not None else 0.0

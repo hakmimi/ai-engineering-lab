@@ -43,3 +43,11 @@ def test_load_summaries_requires_every_table(tmp_path, monkeypatch):
 
 def test_level5_is_a_runner_choice():
     assert "5" in run.LEVELS
+
+
+def test_level5_estimate_includes_the_reranker():
+    tables = _tables()
+    qs = [Question("m-1", "x")]
+    s = _summaries(tables)
+    assert run.estimate_cost_usd("5", qs, tables, "gpt-6-luna", 1, s) > run.estimate_cost_usd("1", qs, tables, "gpt-6-luna", 1)
+    assert run.estimate_cost_usd("5", qs, tables, "gpt-6-luna", 1, s) >= 2000 * 0.50 / 1_000_000
