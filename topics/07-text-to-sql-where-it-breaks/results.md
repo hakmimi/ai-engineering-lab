@@ -71,4 +71,4 @@ LLM similarity: "good" means a score ≥ threshold 0.9, picked on the main set a
 | It returns rows | 88% | 100% |
 | LLM similarity to the golden SQL | 26% | 88% |
 
-Total spent on this topic (all run and judge files, smoke included): $0.33
+Total spent on this topic (all run and judge files, smoke included): $0.41

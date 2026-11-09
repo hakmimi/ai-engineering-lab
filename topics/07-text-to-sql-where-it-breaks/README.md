@@ -146,6 +146,7 @@ The LLM similarity score does much better. The threshold (0.9) was picked on the
 - **One model, low effort.** Writer, agent and judge are all `gpt-6-luna`, like the rest of this series. A stronger writer might shift the balance toward tables.
 - **60 questions per set.** One question is about 1.7 points. Gaps of 1–2 points are noise.
 - **No column pruning, no intent agent.** I left them out on purpose: the question is tables vs writing.
+- **Two held-out levels ran twice by mistake.** Levels B and C were run a second time on the held-out set by accident, minutes after the first runs. Only the first runs are reported. The extra runs are set aside in `runs/test/duplicates/` and never used, but their $0.08 counts in the total spent.
 
 **Data credit.** Questions, hints, correct queries and databases come from **BIRD Mini-Dev** (the BIRD-SQL team), CC BY-SA 4.0. The table lists in `data/gold_tables.json` are derived from it; see [`data/NOTICE.md`](data/NOTICE.md).
 
@@ -198,7 +199,7 @@ The writer, its prompt, the SQL runner (read-only, 10 s limit) and the row compa
 └── runs/            ← raw run files (git-ignored)
 ```
 
-From the repo root (bash), with `OPENAI_API_KEY` in `.env` and topic 05's `data/raw/` in place:
+From the repo root (Git Bash on Windows; on Mac or Linux, separate the paths with `:` instead of `;`), with `OPENAI_API_KEY` in `.env` and topic 05's `data/raw/` in place:
 
 ```bash
 export PYTHONPATH=".;topics/05-evaluator-optimizer-text-to-sql;topics/07-text-to-sql-where-it-breaks;topics/04-agent-security-review-agentdojo"
