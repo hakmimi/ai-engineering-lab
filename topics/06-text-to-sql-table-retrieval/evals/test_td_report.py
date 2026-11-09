@@ -94,3 +94,12 @@ def test_level4_and_control_come_from_level3_with_no_extra_cost(tmp_path, key_se
     assert report.summary(runs["4c"], key)["all_found"] < 1.0
     assert report.summary(runs["4"], key)["usd"] == report.summary(runs["3"], key)["usd"]
     assert "hand over 10 tables" in report.build_results(tmp_path / "runs")
+
+
+def test_level5_in_ceiling_and_cost_charts(tmp_path, key_set):
+    s, key = key_set
+    runs, out = tmp_path / "runs", tmp_path / "charts"
+    save_run(runs, "main", "5", _run(data.load_key("main"), "5", top20=True))
+    build = {p.name: p.read_text(encoding="utf-8") for p in report.build_charts(runs, out)}
+    assert report.LEVEL_NAMES["5"].split(" · ")[1] in build["ceiling.svg"]
+    assert report.LEVEL_NAMES["5"].split(" · ")[1] in build["cost-per-question.svg"]

@@ -21,8 +21,9 @@ RUNS_DIR = TOPIC / "runs"
 CHARTS_DIR = TOPIC / "charts"
 LEVEL_NAMES = {"0": "0 · Keyword search", "1": "1 · Embedding search",
                "2": "2 · Search 20, LLM picks 7", "3": "3 · + descriptions",
-               "4c": "4c · 3's picks + 3 more from search", "4": "4 · 3's picks + 3 joined tables"}
-RUN_LEVELS = ("0", "1", "2", "3")  # 4 and 4c are computed from level 3's saved answers
+               "4c": "4c · 3's picks + 3 more from search", "4": "4 · 3's picks + 3 joined tables",
+               "5": "5 · Pinterest: LLM table summaries"}
+RUN_LEVELS = ("0", "1", "2", "3", "5")  # 4 and 4c are computed from level 3's saved answers
 GOLD_SIZE_LEVELS = ("1", "2", "3", "4")  # four colours at most; level 0 is near zero everywhere
 SET_NAMES = {"main": "Main set (tuning allowed)", "test": "Held-out set (never tuned on)"}
 
@@ -119,7 +120,8 @@ def build_results(runs_dir: Path) -> str:
         f = {lv: summary(test[lv], key)["all_found"] for lv in ("1", "2", "3", "4c", "4")}
         lines.append(f"**We got (held-out, all found):** embedding search {f['1']:.0%} → LLM re-rank {f['2']:.0%} → "
                      f"+ descriptions {f['3']:.0%}. With 3 more tables (10 in all): from search {f['4c']:.0%}, "
-                     f"joined by foreign key {f['4']:.0%}.")
+                     f"joined by foreign key {f['4']:.0%}."
+                     + (f" Pinterest-style summaries: {summary(test['5'], key)['all_found']:.0%}." if test["5"] else ""))
     else:
         lines.append("**We got:** not run yet.")
     return "\n".join(lines) + "\n"
@@ -144,8 +146,8 @@ def build_charts(runs_dir: Path, out_dir: Path = CHARTS_DIR) -> list[Path]:
                                     "Out of 971 tables. All found = every needed table is in the 7; recall = share of needed tables found",
                                     panels, [("All found", "s1"), ("Recall", "s2")], 1.0, pct))
 
-    panels = [(title, [LEVEL_NAMES[lv] for lv in ("2", "3") if lv in sums[s]],
-               [[sums[s][lv]["ceiling"], sums[s][lv]["all_found"]] for lv in ("2", "3") if lv in sums[s]])
+    panels = [(title, [LEVEL_NAMES[lv] for lv in ("2", "3", "5") if lv in sums[s]],
+               [[sums[s][lv]["ceiling"], sums[s][lv]["all_found"]] for lv in ("2", "3", "5") if lv in sums[s]])
               for s, title in SET_NAMES.items()]
     panels = [p for p in panels if p[1]]
     if panels:
@@ -168,7 +170,7 @@ def build_charts(runs_dir: Path, out_dir: Path = CHARTS_DIR) -> list[Path]:
                                            "All found, by how many tables the question needs",
                                            [("", cats, rows)], lv_series, 1.0, pct))
 
-    paid = [(lv, v) for lv, v in sums["main"].items() if lv in ("2", "3")]
+    paid = [(lv, v) for lv, v in sums["main"].items() if lv in ("2", "3", "5")]
     if paid:
         top = max(v["usd"] for _, v in paid) * 1.3
         save("cost-per-question.svg", bar_chart("Cost per question", "Main set, list prices; levels 0–1 cost almost nothing",
