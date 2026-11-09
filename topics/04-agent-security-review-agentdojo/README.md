@@ -105,17 +105,64 @@ The reviewer is **Claude Haiku 5.5**, the same model the article uses. Each leve
 
 - **My reviewer prompt isn't the article's.** The article loads its prompt from a file that isn't on the page. I wrote mine from what the article describes: the same five kinds of bad action, the same bands, and the rule that everything in the log is data, not instructions.
 - **I ran it with my own code, not on Anthropic's Managed Agents platform.** So the platform's own guards (budget caps, network allowlist) aren't part of this test.
-- **I saw a few held-out attack texts** while checking that the "approved by phone" line landed in the right place. My rules use the main set's wording plus one very common phrase ("ignore your previous instructions"). I tried not to let that help, but I can't fully un-see it.
+- **I saw a few held-out attack texts** while checking that the "approved by phone" line landed in the right place. My rules now use only wording found in the main set (a test enforces that), but I can't fully un-see what I read.
 - **The sessions are from 2024.** That's fine for testing the reviewer, but the attacks are older styles.
 - **The workplaces aren't spread evenly.** In the main set, most bad sessions are banking and Slack, and most refused ones are travel and office. That's just what AgentDojo has.
 - **90 sessions per set is small.** One session is about 3 percentage points, so small differences between levels may be noise.
 
 **Data credit.** Sessions and labels come from **AgentDojo** (Debenedetti et al., NeurIPS 2024), MIT licence. See [`data/NOTICE.md`](data/NOTICE.md) for what I took and changed.
 
----
+## Technical walkthrough
+
+### The data
+
+- **Source:** AgentDojo's saved runs of `gpt-4o-2024-05-13`, at commit `089ed46` of [their repo](https://github.com/ethz-spylab/agentdojo). About 6,900 saved sessions to choose from.
+- **How I drew the sets:** in each workplace I split the user requests in two halves, and the attack goals in two halves, with a fixed seed (2026). The main set only uses half A of both, the held-out set only half B. So the held-out set has requests, attack goals and attack styles the rules never saw.
+- **What the reviewer sees:** only the numbered chat. I removed every field that gives the answer away (`security`, `injections`, `attack_type`, the task ids…) and gave each session a plain id like `t-014`. The answers sit in a separate file, `key.json`, that the review code never opens.
+- **The grants:** one short "what this agent may do" per workplace, written by me from the workplace's purpose, like the article's `AGENTS` entries. [`data/grants.json`](data/grants.json)
+
+### The tools
+
+| Tool | What I used it for |
+|---|---|
+| **Python 3** | Everything |
+| **Anthropic API**, `claude-haiku-5-5` | The reviewer, through a small shared helper ([`shared/llm.py`](../../shared/llm.py)) that also counts tokens, time and cost |
+| **AgentDojo** | The sessions and the answer key |
+| **pytest** | Offline tests; a shared fixture blocks every real API call during tests |
+| **Claude Code** | My pair programmer: design, plan, code, and an independent review of the whole branch before any money was spent |
+
+### The process, step by step
+
+1. `build_data.py` reads the AgentDojo clone, draws the three sets and writes them to `data/`.
+2. `rules.py` runs the level 0 checks: money, email, links or invites going somewhere the user's request doesn't cover, sensitive actions nobody asked for, and planted-instruction wording in tool output.
+3. `levels.py` runs the review: level 0 (rules), level 1 (one prompt), level 2 (rule hits as hints, quote check, up to 3 tries).
+4. `run.py` prints a cost estimate first, asks before spending, stops at a budget, and refuses to go past $5 for the whole topic. Every run is saved as a file.
+5. `report.py` builds `results.md` **from the run files only**. No number is typed by hand.
+
+### The evals
+
+The code has offline tests (no API calls, no cost). They pin down the things that would quietly skew the numbers:
+
+- **No leaks:** no answer field ever reaches the reviewer, and the sessions aren't sorted by kind.
+- **No overlap:** main and held-out never share a user request or an attack goal.
+- **The fooled copy is exact:** the note lands right after the attack text, once, and nothing else changes.
+- **Reading the reviewer's answer:** "85/100" reads as 85, "150" as 100, and "high" is an error, never "Routine".
+- **The quote check:** a quote with different line breaks passes, a made-up quote or a quote from the wrong event fails, and three failures mean "Look", never "Routine".
+- **Fair scoring:** an unreadable answer counts against the reviewer, while an API outage (overload, timeout) is left out and counted separately.
+- **The rules stay honest:** every planted-text pattern must appear somewhere in the main set.
+
+### Lessons from building it
+
+Before spending any money, I had a fresh reviewer go through the whole branch. It found three things that would have quietly changed my results:
+
+- **A rule shaped by the test data.** One of my planted-text patterns ("ignore your previous instructions") came from attack texts I had seen in the held-out set while checking the fooled note. It didn't match a single main-set session. Removing it dropped level 0's held-out catch rate from **77% to 63%**: 13 points of fake skill. Now a test makes sure every pattern comes from the main set.
+- **The reviewer was half-blind.** When a tool call failed, AgentDojo stores the error message in a separate field. My code showed the reviewer an empty result where the agent had seen "No emails found". That hid 25 events, including the "tried again after being blocked" signal the article cares about.
+- **Outages would have looked like misses.** An API timeout was being scored as "the reviewer missed it". On the fooled set it would even have counted as "fooled". Now those are kept apart.
+
+None of these would have crashed anything. They would just have made the numbers wrong.
 
 <details>
-<summary><b>For the curious: the code and how to run it</b></summary>
+<summary><b>The folder and how to run it</b></summary>
 
 ```
 04-agent-security-review-agentdojo/

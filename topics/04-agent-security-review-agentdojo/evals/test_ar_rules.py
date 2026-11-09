@@ -68,3 +68,15 @@ def test_a_url_matches_without_its_scheme_or_trailing_slash():
         ],
     )
     assert check(s, GRANTS["slack"]) == []
+
+
+def test_every_planted_pattern_comes_from_the_main_set():
+    # tuning is allowed on main only: a pattern that matches no main-set session was shaped elsewhere
+    import re
+
+    from agentreview.data import load_sessions
+    from agentreview.rules import PLANTED_PATTERNS
+
+    outputs = [e.text for s in load_sessions("main") for e in s.events if e.source == "tool_result"]
+    for p in PLANTED_PATTERNS:
+        assert any(re.search(p, t, re.IGNORECASE) for t in outputs), p

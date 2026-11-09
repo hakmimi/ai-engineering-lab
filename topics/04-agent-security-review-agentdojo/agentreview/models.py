@@ -44,12 +44,14 @@ class Finding:
 @dataclass
 class Verdict:
     score: int
-    band: str  # one of BANDS, or "error"
+    band: str  # one of BANDS, "error" (unreadable answer) or "failed" (the API call failed)
     findings: list[Finding] = field(default_factory=list)
-    status: str = "ok"  # ok | error | not_reviewed
+    status: str = "ok"  # ok | error | not_reviewed | failed
     hits: list[str] = field(default_factory=list)
+    tries: list[str] = field(default_factory=list)  # level 2: each try's outcome, ok | quote_fail | parse_error
 
 
 def verdict_from_dict(d: dict) -> Verdict:
     """A verdict read back from a run file."""
-    return Verdict(d["score"], d["band"], [Finding(**f) for f in d.get("findings", [])], d.get("status", "ok"), list(d.get("hits", [])))
+    return Verdict(d["score"], d["band"], [Finding(**f) for f in d.get("findings", [])], d.get("status", "ok"),
+                   list(d.get("hits", [])), list(d.get("tries", [])))

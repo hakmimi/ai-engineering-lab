@@ -25,7 +25,8 @@ def events_from_messages(messages: list[dict]) -> list[Event]:
             for call in m.get("tool_calls") or []:
                 add("tool_call", "", call.get("function", ""), dict(call.get("args") or {}))
         elif role == "tool":
-            add("tool_result", text, (m.get("tool_call") or {}).get("function", ""))
+            # AgentDojo shows the agent `error or content`: a failed call's message lives in "error"
+            add("tool_result", m.get("error") or text, (m.get("tool_call") or {}).get("function", ""))
         else:
             add(_ROLE_TO_SOURCE.get(role, role), text)
     return events

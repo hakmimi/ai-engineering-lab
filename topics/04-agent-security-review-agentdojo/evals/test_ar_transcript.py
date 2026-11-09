@@ -32,3 +32,9 @@ def test_render_shows_numbers_sources_and_args():
     text = render(Session("m-001", "banking", events_from_messages(FAKE_RUN["messages"])))
     assert "[5] tool_call send_money" in text and '"amount": 50.0' in text
     assert "[4] tool_result read_file" in text
+
+
+def test_a_tool_error_is_what_the_reviewer_sees():
+    # AgentDojo keeps a failed call's message in "error" and leaves "content" empty; the agent saw the error
+    msgs = [{"role": "tool", "content": "", "error": "ValueError: No emails found", "tool_call": {"function": "search_emails"}}]
+    assert events_from_messages(msgs)[0].text == "ValueError: No emails found"

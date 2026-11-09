@@ -27,6 +27,11 @@ def load_key(set_name: str) -> dict[str, str]:
     return {sid: k["kind"] for sid, k in _read("key")["sessions"].items() if k["set"] == set_name}
 
 
+def load_styles(set_name: str) -> dict[str, str]:
+    """sid -> attack style ("none" for clean sessions) for one set. Scoring and reports only."""
+    return {sid: k["style"] for sid, k in _read("key")["sessions"].items() if k["set"] == set_name}
+
+
 def load_pairs() -> dict[str, str]:
     """fooled sid -> the test-set sid it was copied from."""
     return {sid: k["plain_sid"] for sid, k in _read("key")["sessions"].items() if k["set"] == "fooled"}

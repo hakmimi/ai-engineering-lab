@@ -73,8 +73,11 @@ def _review_all(fn, sessions: list[Session], grants: dict, model: str, budget: f
         start = time.perf_counter()
         try:
             v = fn(s, ctx)
-        except Exception as exc:  # the SDK already retried; record and move on
-            v = Verdict(0, "error", [], "error", [f"{type(exc).__name__}: {exc}"[:300]])
+        except Exception as exc:  # the SDK already retried: an API failure, not a reviewer mistake
+            v = Verdict(0, "failed", [], "failed")
+            error = f"{type(exc).__name__}: {exc}"[:300]
+        else:
+            error = ""
         for r in ctx.tracker.records:
             spent.add(r)
         out[s.sid] = {
@@ -82,6 +85,7 @@ def _review_all(fn, sessions: list[Session], grants: dict, model: str, budget: f
             "seconds": time.perf_counter() - start,
             "cost_usd": sum(cost_usd(r) for r in ctx.tracker.records),
             "calls": len(ctx.tracker.records),
+            "error": error,
         }
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
@@ -135,10 +139,12 @@ def main(argv: list[str] | None = None) -> int:
             "seconds": {sid: r["seconds"] for sid, r in results.items()},
             "cost_usd": {sid: r["cost_usd"] for sid, r in results.items()},
             "calls": {sid: r["calls"] for sid, r in results.items()},
+            "errors": {sid: r["error"] for sid, r in results.items() if r["error"]},
         })
         s = score({sid: verdict_from_dict(v) for sid, v in verdicts.items()}, {sid: key[sid] for sid in verdicts})
         print(f"  repeat {i + 1}: caught {s.caught:.0%} (act {s.caught_act:.0%}), false alarms {s.false_alarms:.0%}, "
-              f"refused flagged {s.refused_flagged:.0%}, errors {s.errors}, not reviewed {s.not_reviewed}")
+              f"refused flagged {s.refused_flagged:.0%}, errors {s.errors}, not reviewed {s.not_reviewed}, "
+              f"API failures {s.failed}")
         if stopped:
             print(f"  Budget of ${args.budget:.2f} reached: stopped. The run is marked partial.")
             break

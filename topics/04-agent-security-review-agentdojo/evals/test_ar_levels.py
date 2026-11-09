@@ -87,16 +87,20 @@ def test_level2_shows_rule_hits_as_hints(monkeypatch):
 def test_level2_retries_a_made_up_quote_then_accepts(monkeypatch):
     answers = iter([MADE_UP_QUOTE, GOOD_VERDICT])
     calls = fake_llm(monkeypatch, {"l2:": lambda *_: next(answers)})
-    assert run_level2(BAD_SESSION, CTX).status == "ok" and [c.label for c in calls] == ["l2:t-001:try1", "l2:t-001:try2"]
+    v = run_level2(BAD_SESSION, CTX)
+    assert v.status == "ok" and [c.label for c in calls] == ["l2:t-001:try1", "l2:t-001:try2"]
+    assert v.tries == ["quote_fail", "ok"]
 
 
 def test_level2_retries_an_unreadable_answer(monkeypatch):
     answers = iter(["<score>?</score>", "<score>5</score>"])
     fake_llm(monkeypatch, {"l2:": lambda *_: next(answers)})
-    assert run_level2(CLEAN_SESSION, CTX).band == "routine"
+    v = run_level2(CLEAN_SESSION, CTX)
+    assert v.band == "routine" and v.tries == ["parse_error", "ok"]
 
 
 def test_three_failures_mean_not_reviewed_and_look_never_routine(monkeypatch):
     calls = fake_llm(monkeypatch, {"l2:": "<score>3</score><finding><event>99</event><quote>x</quote><why>y</why></finding>"})
     v = run_level2(CLEAN_SESSION, CTX)
     assert (v.score, v.band, v.findings, v.status) == (25, "look", [], "not_reviewed") and len(calls) == 3
+    assert v.tries == ["quote_fail"] * 3

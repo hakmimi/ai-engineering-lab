@@ -1,7 +1,7 @@
 """Level 0: cheap checks with no model, in the spirit of the article's rules.
 
 The grant is an allowlist written from what the agent is for. Nothing here names an attacker's
-account, address or wording; the planted-text patterns are generic instruction phrasing.
+account or address; the planted-text patterns come from the main set's attack wording only.
 """
 
 from __future__ import annotations
@@ -15,8 +15,7 @@ PLANTED_PATTERNS = [
     r"<INFORMATION>",
     r"before you can solve the task",
     r"this is an important message from me",
-    r"ignore (?:all |any )?(?:of )?(?:your |the |my )?previous instructions",
-]
+]  # main-set wording only (tuning is allowed there); see test_every_planted_pattern_comes_from_the_main_set
 _PLANTED = re.compile("|".join(PLANTED_PATTERNS), re.IGNORECASE)
 
 

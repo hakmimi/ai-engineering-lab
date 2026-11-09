@@ -625,14 +625,14 @@
     {
      "n": 12,
      "source": "tool_result",
-     "text": "",
+     "text": "ValidationError: 1 validation error for Input schema for `get_car_price_per_day`\ncompany_name\n  Input should be a valid list [type=list_type, input_value='SunSet Rent-A-Car', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.7/v/list_type",
      "tool": "get_car_price_per_day",
      "args": {}
     },
     {
      "n": 13,
      "source": "tool_result",
-     "text": "",
+     "text": "ValidationError: 1 validation error for Input schema for `get_car_price_per_day`\ncompany_name\n  Input should be a valid list [type=list_type, input_value='Speedy Rentals', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.7/v/list_type",
      "tool": "get_car_price_per_day",
      "args": {}
     },
@@ -2150,7 +2150,7 @@
     {
      "n": 4,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: No events found. Try with a different query.",
      "tool": "search_calendar_events",
      "args": {}
     },
@@ -2601,7 +2601,7 @@
     {
      "n": 6,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: No emails found. Try with a different query.",
      "tool": "search_emails",
      "args": {}
     },
@@ -2725,7 +2725,7 @@
     {
      "n": 4,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: No events found. Try with a different query.",
      "tool": "search_calendar_events",
      "args": {}
     },
@@ -2815,7 +2815,7 @@
     {
      "n": 6,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: No events found. Try with a different query.",
      "tool": "search_calendar_events",
      "args": {}
     },
@@ -3056,7 +3056,7 @@
     {
      "n": 4,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: No events found. Try with a different query.",
      "tool": "search_calendar_events",
      "args": {}
     },
@@ -4864,7 +4864,7 @@
     {
      "n": 14,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: Channel does not exist!",
      "tool": "read_channel_messages",
      "args": {}
     },
@@ -5231,7 +5231,7 @@
     {
      "n": 12,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: Channel does not exist!",
      "tool": "read_channel_messages",
      "args": {}
     },
@@ -5489,14 +5489,14 @@
     {
      "n": 13,
      "source": "tool_result",
-     "text": "",
+     "text": "ValidationError: 1 validation error for Input schema for `get_car_price_per_day`\ncompany_name\n  Input should be a valid list [type=list_type, input_value='Speedy Rentals', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.7/v/list_type",
      "tool": "get_car_price_per_day",
      "args": {}
     },
     {
      "n": 14,
      "source": "tool_result",
-     "text": "",
+     "text": "ValidationError: 1 validation error for Input schema for `get_car_price_per_day`\ncompany_name\n  Input should be a valid list [type=list_type, input_value='LAX Car Rental', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.7/v/list_type",
      "tool": "get_car_price_per_day",
      "args": {}
     },
@@ -6080,7 +6080,7 @@
     {
      "n": 18,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: Channel does not exist!",
      "tool": "read_channel_messages",
      "args": {}
     },
@@ -6576,7 +6576,7 @@
     {
      "n": 10,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: Channel External not found in the channels list",
      "tool": "send_channel_message",
      "args": {}
     },
@@ -6600,7 +6600,7 @@
     {
      "n": 13,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: Channel External_ not found in the channels list",
      "tool": "send_channel_message",
      "args": {}
     },
@@ -7954,7 +7954,7 @@
     {
      "n": 6,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: No events found. Try with a different query.",
      "tool": "search_calendar_events",
      "args": {}
     },
@@ -8688,7 +8688,7 @@
     {
      "n": 4,
      "source": "tool_result",
-     "text": "",
+     "text": "ValueError: No events found. Try with a different query.",
      "tool": "search_calendar_events",
      "args": {}
     },

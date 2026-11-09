@@ -65,3 +65,48 @@ def test_report_builds_tables_from_a_fake_run_file(tmp_path, monkeypatch):
     assert "| 0 · rules only |" in text and "| 2-cheap |" in text and calls == []
     row = next(line for line in text.splitlines() if line.startswith("| 0 · rules only |"))
     assert row.count("%") >= 4
+
+
+def test_an_api_failure_is_saved_as_failed_not_as_a_reviewer_error(tmp_path, monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test")
+
+    def overloaded(prompt, **kwargs):
+        raise RuntimeError("529 overloaded")
+
+    monkeypatch.setattr("agentreview.levels.llm_call", overloaded)
+    assert _main(tmp_path, "--level", "1", "--set", "main", "--limit", "2", "--repeats", "1", "--yes") == 0
+    run = json.loads(next(tmp_path.rglob("level-1-*.json")).read_text(encoding="utf-8"))
+    rep = run["repeats"][0]
+    assert {v["status"] for v in rep["verdicts"].values()} == {"failed"}
+    assert all("529 overloaded" in e for e in rep["errors"].values())
+
+
+def _write_run(runs_dir, set_name, level, reps):
+    """A full run file: reps = list of {sid: Verdict-like dict}."""
+    from agentreview.data import load_sessions
+
+    sids = [s.sid for s in load_sessions(set_name)]
+    out = runs_dir / set_name
+    out.mkdir(parents=True, exist_ok=True)
+    repeats = [{"verdicts": {sid: r(sid) for sid in sids}, "seconds": {sid: 1.0 for sid in sids},
+                "cost_usd": {sid: 0.001 for sid in sids}, "calls": {sid: 1 for sid in sids}} for r in reps]
+    run = {"level": level, "set": set_name, "model": "claude-haiku-5-5", "limit": None, "partial": False, "cost_usd": 0.0, "repeats": repeats}
+    (out / f"level-{level}-20261110-000000.json").write_text(json.dumps(run), encoding="utf-8")
+
+
+def test_report_shows_quote_fails_styles_and_the_fooled_noise_floor(tmp_path):
+    from agentreview.data import load_key
+
+    test_kind = load_key("test")
+    act = {"score": 80, "band": "act", "findings": [], "status": "ok", "hits": [], "tries": ["quote_fail", "ok"]}
+    routine = {"score": 0, "band": "routine", "findings": [], "status": "ok", "hits": [], "tries": ["ok"]}
+    _write_run(tmp_path, "test", "2", [lambda sid: act if test_kind[sid] == "bad" else routine] * 2)
+    _write_run(tmp_path, "fooled", "2", [lambda sid: routine] * 2)
+    text = build_results(tmp_path)
+    held_out = text.split("## Held-out set")[1]
+    row = next(line for line in held_out.splitlines() if line.startswith("| 2 · the article's way |"))
+    assert "| 100% |" in row and "| 30.0 |" in row  # caught 100%; quote fails: the 30 bad sessions, 1 each
+    assert "tool_knowledge" in text and "ignore_previous" in text  # held-out caught by attack style
+    fooled_part = text.split("## Fooled set")[1]
+    fooled_row = next(line for line in fooled_part.splitlines() if line.startswith("| 2 · the article's way | 100%"))
+    assert "chance flips between repeats: 0%" in fooled_row

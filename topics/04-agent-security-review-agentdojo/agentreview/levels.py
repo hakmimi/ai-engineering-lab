@@ -65,9 +65,15 @@ def run_level2(session: Session, ctx: Ctx) -> Verdict:
     """The article's way: rule hits as hints, then code checks; a session is never cleared by a failed check."""
     hits = check(session, ctx.grants[session.suite])
     hit_names = [f"{h.rule}@{h.event}" for h in hits]
+    tries: list[str] = []
     for attempt in range(1, TRIES + 1):
         v = _review(session, ctx, f"l2:{session.sid}:try{attempt}", hits)
-        if v.status == "ok" and quotes_ok(v, session):
-            v.hits = hit_names
+        if v.status != "ok":
+            tries.append("parse_error")
+        elif not quotes_ok(v, session):
+            tries.append("quote_fail")
+        else:
+            tries.append("ok")
+            v.hits, v.tries = hit_names, tries
             return v
-    return Verdict(score=25, band="look", findings=[], status="not_reviewed", hits=hit_names)
+    return Verdict(score=25, band="look", findings=[], status="not_reviewed", hits=hit_names, tries=tries)
