@@ -103,3 +103,50 @@ def test_level1_decide_sees_only_picked_spans(monkeypatch):
     assert "nda-5" in decide.prompt and "nda-1 " not in decide.prompt
     assert out["nda-5"] == Answer("entailment", [1])  # 2 was not picked for nda-5
     assert out["nda-1"] == Answer("not_mentioned", [])
+
+
+# ---------------------------------------------------------------- level 2
+import random  # noqa: E402
+import time  # noqa: E402
+
+from ndaflow.levels import run_level2  # noqa: E402
+
+
+def test_level2_makes_one_call_per_routed_statement(monkeypatch):
+    picks = {sid: "none" for sid in STATEMENT_IDS}
+    picks.update({"nda-5": "1", "nda-7": "2", "nda-8": "1, 2"})
+    calls = fake_llm(monkeypatch, {"route": route_text(picks), "one:": "<label>entailment</label><evidence>1, 2</evidence>"})
+    out = run_level2(SMALL_CONTRACT, ctx())
+    one = sorted((c for c in calls if c.label.startswith("one:")), key=lambda c: c.label)
+    assert [c.label for c in one] == ["one:nda-5", "one:nda-7", "one:nda-8"]
+    nda5 = next(c for c in one if c.label == "one:nda-5")
+    assert "nda-5" in nda5.prompt and "nda-7" not in nda5.prompt
+    assert SMALL_CONTRACT.spans[1] in nda5.prompt and SMALL_CONTRACT.spans[2] not in nda5.prompt
+    assert out["nda-5"] == Answer("entailment", [1])
+    assert out["nda-8"] == Answer("entailment", [1, 2])
+    assert out["nda-1"] == Answer("not_mentioned", [])
+
+
+def test_level2_keeps_statement_order(monkeypatch):
+    picks = {sid: "1" for sid in STATEMENT_IDS}
+    picks["nda-20"] = None  # router gap
+
+    def answer(label, prompt):
+        time.sleep(random.random() / 200)  # finish in any order
+        sid = label.split(":")[1]
+        return f"<label>{'contradiction' if sid in ('nda-3', 'nda-17') else 'entailment'}</label><evidence>1</evidence>"
+
+    text = route_text({sid: ids for sid, ids in picks.items() if ids})
+    fake_llm(monkeypatch, {"route": text, "one:": answer})
+    out = run_level2(SMALL_CONTRACT, ctx())
+    assert list(out) == STATEMENT_IDS
+    assert out["nda-3"].label == out["nda-17"].label == "contradiction"
+    assert out["nda-5"].label == "entailment"
+    assert out["nda-20"].label == "error"
+
+
+def test_level2_unreadable_answer_is_an_error(monkeypatch):
+    picks = {sid: "none" for sid in STATEMENT_IDS}
+    picks["nda-5"] = "1"
+    fake_llm(monkeypatch, {"route": route_text(picks), "one:": "I think it is fine."})
+    assert run_level2(SMALL_CONTRACT, ctx())["nda-5"] == Answer("error", [])

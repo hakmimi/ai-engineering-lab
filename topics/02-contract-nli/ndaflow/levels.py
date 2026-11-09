@@ -2,12 +2,15 @@
 
 Level 0: one big prompt (the whole contract, all 17 statements).
 Level 1: route first (pick the spans for each statement), then one prompt that sees only the picked spans.
+Level 2: + one call per statement, all at the same time, each with only its own picked spans.
 """
 
 from __future__ import annotations
 
 import re
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
+from typing import Callable, TypeVar
 
 from ndaflow import prompts
 from ndaflow.models import Answer, Answers, Contract, Statement
@@ -97,4 +100,30 @@ def run_level1(contract: Contract, ctx: Ctx) -> Answers:
         prompt = f"Contract {contract.doc_id}\n\n" + "\n\n".join(prompts.routed_section(contract, s, routes[s.sid]) for s in todo)
         text = _call(ctx, prompt, "decide", prompts.DECIDE_SYSTEM)
         out.update(parse_answers(text, [s.sid for s in todo], {s.sid: set(routes[s.sid]) for s in todo}))
+    return {s.sid: out[s.sid] for s in ctx.statements}
+
+
+# ---------------------------------------------------------------- level 2
+T = TypeVar("T")
+R = TypeVar("R")
+
+
+def parallel(fn: Callable[[T], R], items: list[T], n_workers: int = 8) -> list[R]:
+    """Run fn on every item at the same time; results come back in input order."""
+    if not items:
+        return []
+    with ThreadPoolExecutor(max_workers=n_workers) as pool:
+        return list(pool.map(fn, items))
+
+
+def run_level2(contract: Contract, ctx: Ctx) -> Answers:
+    routes = route(contract, ctx)
+    out = _early(routes)
+    todo = [s for s in ctx.statements if s.sid not in out]
+
+    def decide_one(s: Statement) -> Answer:
+        text = _call(ctx, prompts.routed_section(contract, s, routes[s.sid]), f"one:{s.sid}", prompts.DECIDE_ONE_SYSTEM)
+        return parse_answer(text, set(routes[s.sid]))
+
+    out.update(zip([s.sid for s in todo], parallel(decide_one, todo)))
     return {s.sid: out[s.sid] for s in ctx.statements}

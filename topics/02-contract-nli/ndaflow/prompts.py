@@ -77,3 +77,13 @@ DECIDE_SYSTEM = "\n\n".join([
     "Think it through, then for every statement given, write one block, using its id as the tag:\n"
     "<nda-N><label>entailment, contradiction or not_mentioned</label><evidence>span numbers, or none</evidence></nda-N>",
 ])
+
+
+# ---------------------------------------------------------------- level 2: one statement per call
+DECIDE_ONE_SYSTEM = "\n\n".join([
+    ROLE,
+    "You get one statement and the contract spans picked for it. Judge the statement by those spans only.",
+    LABEL_RULES,
+    "## Answer format\nThink it through, then answer with these tags only:\n"
+    "<label>entailment, contradiction or not_mentioned</label>\n<evidence>span numbers, or none</evidence>",
+])
