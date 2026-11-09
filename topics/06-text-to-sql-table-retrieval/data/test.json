@@ -1,0 +1,638 @@
+[
+ {
+  "qid": "t-001",
+  "text": "We need to pinpoint which operations must be flagged as critical. Let's find any operation responding to a 'Catastrophic' level disaster. For these, show me their ID, the area they are in, and that final disaster severity score, rounded to two decimals."
+ },
+ {
+  "qid": "t-002",
+  "text": "Give me a bird's-eye view of how our regions are performing. Can you produce a summary showing each region (in lowercase), their average coordination quality score (rounded to two decimals), and a simple count of how many disasters they've handled?"
+ },
+ {
+  "qid": "t-003",
+  "text": "Let's get a big picture metric on our efficiency. For all the missions we've officially wrapped up, how much did it cost us on average to help a single person? Just give me that final dollar amount, rounded to two decimal places."
+ },
+ {
+  "qid": "t-004",
+  "text": "I want to know how our vehicles are holding up in the absolute worst conditions. For all those disasters where we could barely get in—the ones marked with 'Minimal' transport access—what's our average vehicle breakdown rate? Just give me that single percentage, rounded to one decimal."
+ },
+ {
+  "qid": "t-005",
+  "text": "For planning purposes, I need to get a handle on our resource situation across all disasters. Could you pull a report for every event showing what it was and where it happened, and then calculate two key things for me? First, how many days will our current supplies last, considering food and water as separate constraints? Second, what is the current shelter shortfall? Please round any calculated numbers to two decimal places."
+ },
+ {
+  "qid": "t-006",
+  "text": "I need to flag any disaster that was a Mass Casualty Incident. Can you pull a list of them and show me the ID and location for each?"
+ },
+ {
+  "qid": "t-007",
+  "text": "How are our distribution hubs holding up? Let's create a report for each hub. I want a strain score that considers both how busy the hub is internally and how severe the disasters are that it's serving. If that final score is over a million, flag it as 'Overwhelmed', otherwise it's 'Normal'. Show me the hub ID, the final score rounded to two decimals, and its status."
+ },
+ {
+  "qid": "t-008",
+  "text": "I'm worried about operations running out of cash. Can you identify which are in a Funding Crisis? For that list, show me their ID, funding status, and exactly how many days they have left, to one decimal place."
+ },
+ {
+  "qid": "t-009",
+  "text": "I want to do a post-mortem on missions that didn't go well. Can you pull up the full coordination and evaluation details for any completed operations we've flagged as a Failing Operation?"
+ },
+ {
+  "qid": "t-010",
+  "text": "Let's find our top performers. Can you identify all missions that qualify as a Highly Effective Operation? Please list their ID, along with their RES and CQI scores. Sort the list to show the most effective ones at the top."
+ },
+ {
+  "qid": "t-011",
+  "text": "Let's find any areas on the brink of a major health crisis. Can you run the numbers and find all operations where the public health risk score is over 70? This score should be based on things like disease risk, sanitation, and medical staff ratios. For any you find, just list the operation's ID and that final risk score, rounded to two decimal places."
+ },
+ {
+  "qid": "t-012",
+  "text": "A simple list of stuck operations isn't enough; we need to know which ones are the biggest emergencies. Can you rank all operations in Logistical Gridlock by how critical they are using the Gridlock Severity Index? Then, show me a list of the worst ones at the top, with their location and that severity score, rounded to two decimals."
+ },
+ {
+  "qid": "t-013",
+  "text": "I'm trying to figure out which visas take the longest to get approved. Can you give me a breakdown of the average wait time for each type of visa? Just show me the ones that actually got certified, and list them from longest to shortest wait time."
+ },
+ {
+  "qid": "t-014",
+  "text": "I'm looking to compare how long visa applications take to process based on how complex they are. Could you sort the applications into application complexity levels and for each group, tell me how many applications there are along with the average processing time in days? Please round the averages to two decimals and list the groups starting with the ones that take the longest."
+ },
+ {
+  "qid": "t-015",
+  "text": "I'm trying to figure out when people are submitting their visa applications to see if they're doing it at the best time. Could you help me break down the applications based on different visa filing window? And I also need to know how many applications are in each category and what percentage of the total they make up and round it to two decimal places. Please sort the results from most to least applications."
+ },
+ {
+  "qid": "t-016",
+  "text": "Find the jobs where the offered pay is over 10% higher than the going market rate and there are at least 30 applications. Only include cases where both pay figures are available and in the same pay unit, like both per hour or both per year. For each job, list its title, number of applications, average percentage pay difference (rounded to two decimals), and mark it as “Skill Shortage Occupation”. Show only the top five with the biggest average pay differences, starting from the highest."
+ },
+ {
+  "qid": "t-017",
+  "text": "List the states that have at least 1.5× the national average of visa applications, and tell me how many such hotspot states there are in total."
+ },
+ {
+  "qid": "t-018",
+  "text": "Can you figure out which industries depend on visa? I'd like to see the NAICS code, the total number of applications, and the percentage of all applications rounded off to two decimal places. List the results starting with the industries that have the highest percentages."
+ },
+ {
+  "qid": "t-019",
+  "text": "Can you group attorneys based on the types of visa cases they usually work on? Only include attorneys who’ve worked on at least 5 cases. For each group, show the category name, how many attorneys are in it, their average specialization score rounded off to two decimals, and the average percentage of cases they handle in their main visa type rounded to two decimals. Sort the list so the categories with the most attorneys come first."
+ },
+ {
+  "qid": "t-020",
+  "text": "I'm trying to figure out which states have the best lawyers when it comes to handling visa cases. Could you help me check the rate of attorney success for different states? I'd like to see: which state they're practicing in, how many cases they've handled in total, how many cases were successful and their success rate as a percentage with 2 decimal points. Let's focus on states where attorneys have handled at least 3 cases, and just show me the top 3 states with the highest success rates."
+ },
+ {
+  "qid": "t-021",
+  "text": "I'm curious about the wage levels for H-1B jobs - could you help me break down the numbers? I'd like to know how many applications we have for each wage level, and what percentage of the total they make up with 2 decimal points. And rank them from most common to least common."
+ },
+ {
+  "qid": "t-022",
+  "text": "Could you help me find out which industries tend to pay more than others? I'd love to see the top 5 highest-paying industries and just show me their NAICS codes, how many job applications each industry has, and average industry wage difference. Make sure we're only looking at entries with valid NAICS codes and consistent wage units, and round the wage differences to 2 decimal places to keep it clean."
+ },
+ {
+  "qid": "t-023",
+  "text": "I'm wondering if having a lawyer really boosts your chances of getting a visa approved. Can you compare visa approval rates for applications filed with an attorney versus those filed without one? I want to see the total number of applications in each category, the number that were approved, and the approval rate percentage, rounded to two decimal places. Include all the attorney cases."
+ },
+ {
+  "qid": "t-024",
+  "text": "What's the percentage of H-1B applications that are successful?"
+ },
+ {
+  "qid": "t-025",
+  "text": "Which jobs are most in demand for visa applications? Could you show me the top 5 jobs that are most popular? I'd like to see the job title, how many applications there are for each, and some kind of occupational demand index for each job, rounded to two decimal places. Also, let's just stick to jobs that have valid SOC codes."
+ },
+ {
+  "qid": "t-026",
+  "text": "I'm trying to see if bigger companies have an easier time getting visas approved. Can you break down companies based on different employer sizes? Then, for each size, tell me the average application success rate for getting those visas approved. I want to see how many companies are in each size group, and what their average approval rate is, from the highest approval rate to the lowest."
+ },
+ {
+  "qid": "t-027",
+  "text": "I'm curious to know which soc code categories are most frequently associated with successful H-1B visa applications. Can you list the top 5 job soc titles that appear most often in certified H-1B visa cases? I want to see which jobs are most commonly approved for H-1B visas."
+ },
+ {
+  "qid": "t-028",
+  "text": "The goal is to calculate the average wage differential ratio for top-level positions that are compensated on an annual basis. When a pay range is provided, the midpoint between the lower and upper amounts should be used. If only a single value is available, that value will be used as the offered amount. This ensures consistency in how compensation is interpreted across all relevant records."
+ },
+ {
+  "qid": "t-029",
+  "text": "Within the custom computer programming services industry where NAICS code equals to 541511, how many annually paid positions qualify as significantly high wage positions? I'm looking for a count of positions where the wage differential ratio exceeds 20%."
+ },
+ {
+  "qid": "t-030",
+  "text": "I need to identify attorneys with high level performance who specialize in E-3 Australian visas. Can you provide a count of attorneys who meet the criteria of a high performer and for whom E-3 Australian visa cases constitute more than 50% of their total caseload?"
+ },
+ {
+  "qid": "t-031",
+  "text": "I want to see how competitive the salaries are for software quality assurance analysts and testers jobs that pay yearly. Group these jobs into the wage competitiveness levels, and for each level, show the total number of positions, where positions means the total worker count from the dataset's head count information, not the number of rows. Sort so the most common category is at the top."
+ },
+ {
+  "qid": "t-032",
+  "text": "I'm worried about our items that are most at risk. Can you pull a list of artifacts that are both considered high-value (let's say historical significance over 8 and cultural score over 20) and are also officially listed with a 'High' or 'Medium' risk level? For each one, show its ID, title, its actual risk level, and both of those scores."
+ },
+ {
+  "qid": "t-033",
+  "text": "Let's figure out our next rotation plan. For all items currently in a resting state, I need to see their ID, name, material, and how many months it's been on display. Then, calculate its maximum safe display time. Using our standard method, compute its final rotation priority score. To make things clear, add a final column that flags it for 'Immediate Rotation' if needed, otherwise just label it as 'Monitor'."
+ },
+ {
+  "qid": "t-034",
+  "text": "I'm trying to figure out our data storage plan. Can you analyze the environmental readings for 2023, 2024, and 2025? First, for each year, find the average temperature. Then, for each of those years, count how many days the temperature was off by a specific amount—a deviation that's more than zero but no more than 4 degrees from that year's average. Give me a table with the year, its average temperature, and the total count of these anomaly days."
+ },
+ {
+  "qid": "t-035",
+  "text": "I'm trying to find our most valuable artifacts (let's define that as a cultural score over 80) that might be at risk due to a weird environment. Can you find any of them that are in a showcase where the average temperature is more than 1 degree different from the average temperature of all other showcases in that same hall? For any you find, list the artifact's ID, its title, material, its showcase's temperature, what the hall's average temp is, and the exact deviation."
+ },
+ {
+  "qid": "t-036",
+  "text": "Figure out the conservation priority score for every artifact, showing their ID, name, and score, ordered from highest to lowest priority."
+ },
+ {
+  "qid": "t-037",
+  "text": "Find all really valuable artifacts, group them by their historical period, and show the period, how many valuable artifacts there are, and their average cultural score, ordered from highest to lowest count."
+ },
+ {
+  "qid": "t-038",
+  "text": "I want to find artifacts that we've put in the wrong place. Can you make a list of any artifact that has a 'Medium' sensitivity to something (like light, temp, or humidity) and is in a showcase that we've classified as having a 'Medium' level of that same thing? Show me the artifact's name, material, the showcase it's in, which specific sensitivity is the problem, what the sensitivity level is, and what the showcase's environment profile is."
+ },
+ {
+  "qid": "t-039",
+  "text": "Group artifacts by how vulnerable their organic material is and their environmental risk score. Show me what they're made of, their vulnerability status, their average environmental risk, and a count for each group, ordered by the highest average risk."
+ },
+ {
+  "qid": "t-040",
+  "text": "I'm looking for ticking time bombs in our collection. Can you find all the artifacts that are currently listed as 'Good' or 'Excellent', but are at a high risk of light damage? Let's say 'high risk' means they have 'High' light sensitivity and they've already soaked up more than 70,000 lux-hours of light. For each one you find, show me its name, dynasty, its exact light sensitivity, the current lux level, and its total light exposure. Please list the ones with the most total exposure first."
+ },
+ {
+  "qid": "t-041",
+  "text": "What's the single highest risk score for any artifact, considering both its conservation priority and environmental sensitivity?"
+ },
+ {
+  "qid": "t-042",
+  "text": "How well do our showcases generally suit the artifacts from the Ming dynasty? I'm looking for a single number that tells me the average compatibility."
+ },
+ {
+  "qid": "t-043",
+  "text": "I'm concerned about environmental damage. Can we find the artifacts most at risk by calculating a score based on their average sensitivity to the environment? Only show me the ones where the score is over 4. For those, I need the artifact's ID, name, its exact score, and a list of all specific sensitivities rated 'High'. Please sort the list to show the highest-risk items first."
+ },
+ {
+  "qid": "t-044",
+  "text": "Can you give me a total count of display cases that are at risk of failing? I'm talking about any case with a very unstable environment or at least three major maintenance problems."
+ },
+ {
+  "qid": "t-045",
+  "text": "To help us plan conservation, I need to focus on artifacts from the 'Ming' and 'Qing' dynasties. Please calculate a priority score for each one, and then assign a priority level. I'd like a report showing the artifact's ID, title, dynasty, the calculated score, and the final priority level. Please sort it to show the highest scores at the top."
+ },
+ {
+  "qid": "t-046",
+  "text": "I need a report on how well we're funding artifact conservation across different dynasties. For each artifact, show its dynasty, its priority score, the specific budget we've assigned, and whether that funding is 'Sufficient' or 'Insufficient'."
+ },
+ {
+  "qid": "t-047",
+  "text": "Can you whip up a fast list for me? I want to see if any artifacts are deteriorating too quickly. For each one, give me the ID, name, current temp and humidity, a count of its high sensitivities, and a 'Yes' or 'No' on whether it's in this danger zone. Don't skip any artifacts, even if data's missing. Sort it all by artifact ID."
+ },
+ {
+  "qid": "t-048",
+  "text": "Can you whip up a fast rundown for me? I need all the showcase IDs that have unstable environmental conditions. Get every unique ID and line them up in alphabetical order."
+ },
+ {
+  "qid": "t-049",
+  "text": "Can you sniff out all the showcase IDs that could be heading toward a problem? We'll say a showcase is a problem if its environmental stability score drops below 5, OR if it has at least three major maintenance issues like a poor seal, overdue status, or a filter/silica needing replacement. Show me just the showcase IDs for these problem cases, lined up alphabetically."
+ },
+ {
+  "qid": "t-050",
+  "text": "Can you pull together a rundown of artifacts with 'Medium' or 'High' humidity sensitivity? I need the registry number, name, material type, and that sensitivity level for each. Plus, check if they're 'Over Exposure' or 'Within Limits' using a more cautious humidity threshold, and line them up by registry number."
+ },
+ {
+  "qid": "t-051",
+  "text": "We need a priority list based on comprehensive risk. First, calculate a total environmental threat score for all artifacts. I'm only interested in those officially at the second-highest risk level. From that group, find the top 10 with the highest threat scores. Give me their registration IDs and their scores, sorted from highest to lowest."
+ },
+ {
+  "qid": "t-052",
+  "text": "Let's dig into the files of patients who are getting positive crossmatch results.\nI need a list of these folks.\nFor each one, show me their ID, their PRA score, and whether they have those donor-specific antibodies.\nThen, based on our official rules for Antibody-Mediated Rejection (AMR) Risk Stratification, tell me if they're considered 'High Risk'.\nOh, and I also want to see the date of the last time we tried to find a match for them.\nSort the whole thing so the most sensitized patients are at the top."
+ },
+ {
+  "qid": "t-053",
+  "text": "I need to see who's been stuck on our waiting list the longest. Can you pull a special report for me?\nFor each organ, find the 2% of patients who have been waiting longer than everyone else.\nFor this group, I want to see everything that might be making them hard to match: their patient ID, the organ they need, how many days they've been waiting, their PRA score, and a tally of their other health problems. Please group the list by organ and put the longest-waiting patients at the top of each group."
+ },
+ {
+  "qid": "t-054",
+  "text": "I need to find out which of our hospitals are doing the heaviest lifting. I'm talking about the ones that take on the toughest cases, both in terms of travel and patient health.\nCan you create a ranking? For each hospital, come up with a 'Logistical Challenge Score' based on average distance and organ-on-ice time, and a 'Medical Complexity Score' based on average surgical risk and how many other illnesses the patients have.\nThen, average those two scores together to get a final 'Workhorse Score'. I just want to see the top 10 hospitals based on that final score, rounded to four decimals."
+ },
+ {
+  "qid": "t-055",
+  "text": "I want to know if our fancy Decision Support System is actually helping us pick better matches. Can you check if its score lines up with the EGS score?\nPlease take all our completed transplants and divide them into 5 groups based on their DSS score. For each of these 5 buckets, tell me how many transplants are in it and what their average Expected Graft Survival Score is, rounded to four decimals. I want to see if the average EGS score goes up as the DSS score bucket goes up."
+ },
+ {
+  "qid": "t-056",
+  "text": "I'm curious if some hospitals are more willing to take a chance on a less-than-perfect genetic match.\nFor every transplant center that has performed at least two transplants, can you calculate their average HLA Mismatch Score?\nAlso, for each of those centers, figure out the standard deviation so we can see if their mismatch numbers are all over the place or pretty consistent.\nThen, just show me the top 10 from that group with the highest average mismatch scores.\nI'll need to see their total number of transplants, that average mismatch score rounded to four decimals, and the standard deviation, also rounded to four decimals."
+ },
+ {
+  "qid": "t-057",
+  "text": "I need to see the trade-offs we're making with our less-than-perfect donor organs.\nCan you pull a list of all matches that fall under our Marginal Donor Acceptance Criteria? That means either the age gap is huge—more than 25 years—or their kidney score is poor, say under 40.\nFor each of those matches, show me the donor and patient IDs, tell me exactly why we're calling the donor 'marginal', and then calculate the patient's standard Patient Urgency Score so I can see just how desperate they are. Round the score to four decimals. Sort it so the most urgent patients are at the top."
+ },
+ {
+  "qid": "t-058",
+  "text": "I want to figure out which transport method is the most efficient at getting organs delivered quickly relative to the distance they have to travel.\nCan you come up with a 'Logistical Efficiency Ratio' for every completed transplant? Just divide the total time the organ was on ice by the distance it traveled.\nThen, for each transport type—ground, air, etc.—I want to see the average, best, and worst efficiency ratio, all rounded to four decimals. Ignore any really short trips, say under 10km. Sort the list by the average efficiency."
+ },
+ {
+  "qid": "t-059",
+  "text": "I want to see how our patients are doing based on how hard they were to match immunologically.\nCan you sort all the patients who've received a transplant into four groups based on their PRA score? Let's do 'Low' for 0-10, 'Moderate' for 11-79, 'High' for 80-95, and 'Very High' for 96 and up.\nFor each of these four groups, I want to see the total number of patients, the average HLA mismatch they ended up with rounded to two decimals, how long they had to wait on average to the nearest day, and what their average EGS score was, rounded to four decimals."
+ },
+ {
+  "qid": "t-060",
+  "text": "I'm curious about where our single HLA mismatches are happening. Are they usually on the A, the B, or the DR?\nCan you look at all our completed transplants that had exactly one mismatch? For that group, I want you to figure out which specific HLA type was the one that didn't match.\nThen, just give me a count: how many were mismatched at 'A', how many at 'B', and how many at 'DR'."
+ },
+ {
+  "qid": "t-061",
+  "text": "I need the pancreas waiting list, sorted exactly how the official Allocation Policy says we should for all the pending matches. Show me the patient's ID, what region they're in, their exact urgency status, the HLA mismatch number, and their final rank in their local area."
+ },
+ {
+  "qid": "t-062",
+  "text": "I want to create a map of where we're struggling the most to find organs.\nCan you calculate a 'demand versus supply ratio' for each region and for each blood type, including the +/-?\nTo get 'demand', just count the number of patients waiting in a region for a certain blood type. For 'supply', count all the donors we've ever had from that region with that blood type.\nShow me a table with the region, the blood type, the number of patients, the number of donors, and the final ratio rounded to four decimals. Put the biggest problem spots at the top."
+ },
+ {
+  "qid": "t-063",
+  "text": "I need to know if we're getting less bang for our buck on the really urgent transplants.\nCan you run a cost-effectiveness analysis for me? For every completed transplant, figure out the CER. Let's just assume the quality-adjusted life year gain is 8 years times whatever their quality-of-life score is.\nThen, I want you to group the results by the patient's medical urgency status. Show me the average CER, rounded to two decimal places, for the Status 1A patients, the Status 1B patients, and so on. Keep them in order of urgency."
+ },
+ {
+  "qid": "t-064",
+  "text": "I'm worried some of our hospitals might be having a rough patch. I want to look for streaks of failed matches.\nCan you go through the data for each transplant center and find every time they had two or more failed matches in a row, based on when the match was created?\nI want a list that shows the hospital ID, the ID of the match that continued the streak, and the time it happened. Just show me the second failure in any given streak."
+ },
+ {
+  "qid": "t-065",
+  "text": "I want to find the lung transplants that were either insanely expensive for the benefit, or a massive bargain.\nCould you calculate the Cost-Effectiveness Ratio for all the lung transplants we've finished? For the QALY part of the formula, just use the patient's quality-of-life score and multiply it by 5 years.\nThen, rank all of them and split the list into 20 groups. I want to see all the details—match, donor, and recipient IDs, and the final cost-effectiveness number rounded to two decimals—for only the absolute worst group and the absolute best group."
+ },
+ {
+  "qid": "t-066",
+  "text": "Let's see how often we find a perfect match within and between different ethnic groups.\nFirst, you need to identify every single Optimal Donor-Recipient Match we have.\nOnce you have that list of perfect pairs, I want a table that shows the donor's ethnicity down the side and the recipient's ethnicity across the top, with the cells showing the count of how many times each combination happened."
+ },
+ {
+  "qid": "t-067",
+  "text": "Let's check our CMV exposure risk. I want a list of all current and completed transplants where a CMV-positive donor gave an organ to a CMV-negative patient.\nFor each of these risky cases, show me the match ID and the transplant center. I also want to see the patient's Infection Risk score from their chart and, right next to it, the average infection risk—rounded to four decimals—for all the non-mismatched transplants done at that same hospital. I want to see if the scores reflect the risk. Please order the results by the hospital's ID."
+ },
+ {
+  "qid": "t-068",
+  "text": "I need a list of our absolute sickest patients—the ones on ECMO or a VAD.\nFor each of these patients, show me their ID and what kind of life support they're on.\nThen, calculate their full Patient Urgency Score. The crucial part is, I want to see their score next to the average score for all the other, more stable patients who are waiting for the same organ, with both scores rounded to four decimals. Let's see how big the gap is. Group the list by organ, and show the sickest patients first within each group."
+ },
+ {
+  "qid": "t-069",
+  "text": "I'm wondering if how we ship organs really makes a difference. Can you run some numbers for me?\nLet's look at all our finished transplants.\nGroup them by how the organ was transported—you know, ground, helicopter, commercial air, all that.\nFor each of those transport types, I want to see the average Total Ischemia Time rounded to two decimals, and the average Expected Graft Survival Score rounded to four decimals.\nSort the results so I can see which transport methods are linked with the best outcomes."
+ },
+ {
+  "qid": "t-070",
+  "text": "I want to know what the most common health problems our patients have and if those problems make surgery riskier.\nCan you go through all the patient files, break apart their list of health conditions, and find the top 5 most common ones?\nThen, for each of those top 5, figure out the average Surgical Risk Score for all patients who have that specific condition. I want to see the condition, how many people have it, and what the average risk score is, rounded to four decimals."
+ },
+ {
+  "qid": "t-071",
+  "text": "I'm curious about the gravity on bigger, rocky worlds. For all the confirmed super-earths found by watching their star's light dip (no matter how the method is written), what's their average surface gravity? Just give me the number, rounded to two decimal spots."
+ },
+ {
+  "qid": "t-072",
+  "text": "On average, how far away are the stars that have those big, puffy gas planets? I only want to include stars where we have a solid distance number, not just a 'less than' value, and where the brightness measurement isn't messed up by other stars nearby. Show the result in light-years with two decimal points."
+ },
+ {
+  "qid": "t-073",
+  "text": "Find me the planetary systems that are really tightly packed, but only if their closest-in planet is also super fast. For these systems, I want to see the star's name and the average orbital period ratio calculated using the geometric mean, with three decimal points. Sort the list by that average ratio, from highest to lowest."
+ },
+ {
+  "qid": "t-074",
+  "text": "How many different stars have planets that were discovered by the ttv method, where they look for wobbles in a planet's transit schedule? Make sure you find 'ttv' regardless of its case."
+ },
+ {
+  "qid": "t-075",
+  "text": "Find the planet with the biggest mass-to-size ratio, only looking at planets where we have a measured mass and a measured, non-zero radius. Then tell me its escape velocity in kilometers per second. Just give me a whole number."
+ },
+ {
+  "qid": "t-076",
+  "text": "Can you count up how many stars were observed with each type of light filter? Make sure to lump all the different ways of writing 'v-band' together, and do the same for 'kepler-band', ignoring capitalization. Just ignore the 'k-band' ones for now. Then show me the cleaned-up filter name and how many stars for each, with the most-used filter at the top."
+ },
+ {
+  "qid": "t-077",
+  "text": "If you look at stars that only have rocky planets and no gas giants, what is their average brightness compared to our sun? Only include planets where we know their density or mass, and only stars where we know their radius and temperature. I need the number with 4 decimal places."
+ },
+ {
+  "qid": "t-078",
+  "text": "How many planets did kepler find where the star's temperature reading is wonky because of other nearby stars?"
+ },
+ {
+  "qid": "t-079",
+  "text": "Can you give me the coordinates for the star '55 cnc' on an hr diagram, matching the name regardless of its case? I need its temperature and its luminosity relative to the sun, with the luminosity value having 3 decimal points."
+ },
+ {
+  "qid": "t-080",
+  "text": "I want to find the hottest planet that isn't a 'hot jupiter'. Only look at planets where we know the star's temperature and radius and the planet's orbital distance so you can do the calculation. Can you tell me its name, its star, and its temperature in kelvin? Please round the temperature to a whole number. You'll need to convert star radius from solar radii to meters using 6.957E8 and orbital distance from AU to meters using 1.496E11."
+ },
+ {
+  "qid": "t-081",
+  "text": "For how many planets do we have a size measurement, but we know it's just a 'less-than-or-equal-to' kind of number because it's marked as an upper limit?"
+ },
+ {
+  "qid": "t-082",
+  "text": "I'm looking for Jupiter-like planets that are both scorching hot and spinning backwards, but only those where we know the star's mass and the planet's orbital distance. Can you list them out for me? I want to see their names, how long their year is, their orbital tilt, and how fast they're zipping around their star in kilometers per second. Put the fastest ones at the top."
+ },
+ {
+  "qid": "t-083",
+  "text": "For the star that looks brightest in our night sky, what's its standard gravitational parameter, μ? Give me the answer in scientific notation, with three digits of precision. You'll need to use G = 6.67430E-11 and convert the star's mass from solar masses to kg using the factor 1.98847E30."
+ },
+ {
+  "qid": "t-084",
+  "text": "Let's fact-check Kepler's law on star systems with multiple planets. For each of these systems, take the planet that's farthest out (based on a known semi-major axis) and use its orbit to calculate its star's mass, but only if its orbital period is also known and positive. Show me the star's name, its official mass, and the mass we just calculated. Then, sort them to show the ones where our calculation was closest to the real value first."
+ },
+ {
+  "qid": "t-085",
+  "text": "Of all the stars that have a measured mass and a positive radius, which one is the most tightly packed? Give me its name. You'll need to convert solar mass to kg using 1.98847E30 and solar radius to meters using 6.957E8 to do the calculation."
+ },
+ {
+  "qid": "t-086",
+  "text": "Show me a list of planets that have highly eccentric orbits and are flagged for having a minimum mass measurement (look for 'msini', regardless of case). For each one that has a known mass and is orbiting a star with a known, positive mass, I'd like to see the planet's name, its star's name, its eccentricity value, and the planet-to-star mass ratio. To calculate the ratio, use 1.898E27 kg as the mass of Jupiter and 1.98847E30 kg as the mass of the Sun. Please show the ratio with 5 decimal places and sort the list from the smallest ratio to the largest."
+ },
+ {
+  "qid": "t-087",
+  "text": "For all the big gassy planets found by Kepler's second-chance mission (case-insensitive match for 'k2'), what's their average surface temperature, basically? Only include cases where we know the star's temperature, the star's radius, and the planet's orbital distance, and all are positive numbers. Give me that in kelvin, rounded to a whole number. Note that you'll need to use 6.957E8 to convert solar radius to meters and 1.496E11 to convert AU to meters."
+ },
+ {
+  "qid": "t-088",
+  "text": "When planets found by the star wobble method (no matter how it's capitalized) pass in front of their star, what's the biggest dimming effect we could see? Only consider planets that have a known radius and orbit a star with a known, positive radius. Tell me that maximum dip in brightness as a percentage with four decimal places, and also name the planet and star responsible. You'll need to use the conversion that 1 solar radius is 109.2 Earth radii."
+ },
+ {
+  "qid": "t-089",
+  "text": "Find me the rocky super-earth that has the strongest gravity pull of them all, considering only planets with known mass, radius, and density. Once you've pinpointed that planet, tell me what its mass is as a fraction of its star's mass, assuming the star's mass is also known and positive. I need that final number in scientific format, with 7-digit precision."
+ },
+ {
+  "qid": "t-090",
+  "text": "I want to find the most 'plush' region. To do this, first figure out a 'comfort score' for each house by dividing its number of bathrooms by its number of residents—but only for houses where we know the bathroom count. Then, find the average comfort score for each region. Once you've identified the single region with the best average score, go back and add up the car counts for every household in that specific region and tell me the grand total."
+ },
+ {
+  "qid": "t-091",
+  "text": "I'm looking for the hotspot of 'high-tech, high-mobility' families. These are people with lots of newish vehicles (more than 2, newest from 2005+) who also live in modern homes (house, apt, condo) with available TV service. Find all these families, then tell me which single region has the most of them."
+ },
+ {
+  "qid": "t-092",
+  "text": "Let's find our top 10 families by their financial health score, which considers their income, spending habits, and homeownership status. After you get that list, tell me what percentage of them has a private garage."
+ },
+ {
+  "qid": "t-093",
+  "text": "Find all the families that don't get social aid or domestic help and own more than one vehicle. From those, figure out which type of home has the highest average 'prosperity score'. Then, tell me the total number of vehicles owned by families in that home type."
+ },
+ {
+  "qid": "t-094",
+  "text": "I want to find the region with the highest concentration of families on social support. For each region, figure out what percentage of its total families receive aid. Then, just show me the name of the region with the top percentage and the percentage itself, rounded to two decimal places."
+ },
+ {
+  "qid": "t-095",
+  "text": "Let's find the biggest spender among our 'comfortable' families. A family is 'comfortable' if they have a high living score and enough bathrooms for their size. First, make a list of all these families. Then, from that list, find the one with the highest spending number and tell me their household ID."
+ },
+ {
+  "qid": "t-096",
+  "text": "I need to find the region with the biggest 'at-risk' population. A household is 'at-risk' if they get social aid AND they're very overcrowded (more than 4 people per bedroom). For every region, calculate what percentage of their families are 'at-risk'. Then, just tell me the name of the region with the highest percentage."
+ },
+ {
+  "qid": "t-097",
+  "text": "What's the income bracket for household number 3?"
+ },
+ {
+  "qid": "t-098",
+  "text": "How many wealthy families who own their own homes live in the Taguatinga area?"
+ },
+ {
+  "qid": "t-099",
+  "text": "Which modern-style homes (like brickwork houses or apartments) in the 'Guará' area also have TV service? List their household numbers in order."
+ },
+ {
+  "qid": "t-100",
+  "text": "Which household in an urban area owns the most cars?"
+ },
+ {
+  "qid": "t-101",
+  "text": "Let's find the biggest welfare fraud hotspot. A family is a red flag if they get aid but have a lot of new vehicles (more than 2, newest from 2010+). I want to know which region has the highest concentration of these red-flag families as a percentage of their total population. Just give me the name of that region."
+ },
+ {
+  "qid": "t-102",
+  "text": "How many families in each region get government help? List the regions from the one with the most helped families to the one with the least."
+ },
+ {
+  "qid": "t-103",
+  "text": "We're looking for welfare fraud. Flag any family that gets aid and also has a lot of newish vehicles. Specifically, a 'high-mobility' family has more than two vehicles in total, and their newest one is from 2010 or later. Give me a unique list of the flagged household IDs."
+ },
+ {
+  "qid": "t-104",
+  "text": "Let's find all the 'roomy' apartments. A place is 'roomy' if it has more than 20 square meters per person. To figure out the total square meters, assume every bathroom is 10 sq meters and every bedroom (use the `Room_Count` field) is 15 sq meters—if a count is missing, just treat it as zero. After you get the total area, divide it by the number of people in that house, making sure to handle cases with no residents. Finally, just tell me how many apartments in total are 'roomy'."
+ },
+ {
+  "qid": "t-105",
+  "text": "I need to find our longest-standing 'large, wealthy' family. A family qualifies if they own their home, are in the top two income brackets, and have more than 4 people. From that list, find the one with the lowest household ID (our oldest record) and tell me their region and zone."
+ },
+ {
+  "qid": "t-106",
+  "text": "In the Taguatinga area, find all the 'overcrowded' homes (more than 3 people per bedroom). Once you have that list, figure out the average number of vehicles (cars, bikes, motorcycles all counted) that this specific group owns. Give me the final number, rounded."
+ },
+ {
+  "qid": "t-107",
+  "text": "Let's compare crowded city homes to crowded country homes. How many more crowded city homes are there than crowded country homes? Give me the difference."
+ },
+ {
+  "qid": "t-108",
+  "text": "Let's score each house's infrastructure. First, find the average score for each region. Then, tell me which region has the best average score and which has the worst, in a single line like 'BestRegion | WorstRegion'."
+ },
+ {
+  "qid": "t-109",
+  "text": "Let's score each house's infrastructure. First, find the average score for each region. Then, tell me which region has the best average score and which has the worst, in a single line like 'BestRegion | WorstRegion'."
+ },
+ {
+  "qid": "t-110",
+  "text": "I need to find the 5th most crowded house. First, figure out the 'people per bedroom' number for all crowded houses (more than 2 people/bedroom). Then, convert that number to a 'strain index' by multiplying it by 15. Finally, tell me the ID of the house that ranks 5th on this new strain index list."
+ },
+ {
+  "qid": "t-111",
+  "text": "Let's get a list of all robots that need urgent maintenance and are running too hot, showing their ID, model, urgency score, and hottest joint temp with worst cases first."
+ },
+ {
+  "qid": "t-112",
+  "text": "I'm trying to see if our heavy-duty jobs are really taking a toll on the robots. Can you compare the failure rates for two groups? First, all the robots doing high-wear stuff like welding and grinding. Second, everyone else. For each group, just tell me what percentage of them are considered a high reliability risk."
+ },
+ {
+  "qid": "t-113",
+  "text": "I need a list of our underperforming robots. Can you find all the bots that are running slower than 180 cycles an hour, and then give me just the top 5 slowest from that list? Show me their ID, maker, model, and their actual cycles per hour score, rounded to two decimals. List the absolute slowest one at the top."
+ },
+ {
+  "qid": "t-114",
+  "text": "I'm working on our fleet health dashboard and need a key baseline number. What's the average vibration level if you look at all joints on all our robots? Just give me that one number, rounded to two decimal spots, please."
+ },
+ {
+  "qid": "t-115",
+  "text": "Find robots doing precision work that aren't accurate enough, showing their ID, job, error amount, and if they need calibration."
+ },
+ {
+  "qid": "t-116",
+  "text": "Show me robots working too hard right now, listing their model, how much payload capacity they're using, and their cycle speed. Make sure the most overloaded ones are at the top of the list."
+ },
+ {
+  "qid": "t-117",
+  "text": "I need to plan next week's emergency maintenance schedule. Find all robots that are likely to fail sometime next week and which the system also considers a high risk to break. Show their ID, how likely they'll break, and how many days they have left."
+ },
+ {
+  "qid": "t-118",
+  "text": "Let's see which manufacturers are struggling the most with their robots' health. For manufacturers with at least two robots getting worse, show me how many are affected and what their average decline rate is. Please show the manufacturer names in lowercase."
+ },
+ {
+  "qid": "t-119",
+  "text": "Let's find robots whose controllers are overworked compared to their peers by flagging any with 'Anomalous Controller Stress'. I need to see the robot's ID, its model (in lowercase), its stress score, and what the average for its model was."
+ },
+ {
+  "qid": "t-120",
+  "text": "Let's find robots that might be breaking down because their controllers are overworked. Show me any robot where its controller stress is over 20% more than average for its model, and its mechanical wear score is getting into the medium or high range. I need to see the robot's ID, who made it, the model (in lowercase), and both the stress and wear scores. Please group them by the maker and list the most stressed ones first."
+ },
+ {
+  "qid": "t-121",
+  "text": "How likely is the 'solar plant west davidport' (matching the name regardless of case) to be down when we need it? Give me its system unavailability score, just the number, to four decimal points."
+ },
+ {
+  "qid": "t-122",
+  "text": "After accounting for all the internal power drains, what's the actual juice each plant is sending to the grid right now? Only using snapshots where we know both the power loss and current output, and their combined total isn't zero, give me a list of plant names and their latest effective power output, rounded to two decimal places, with the most powerful plant at the top."
+ },
+ {
+  "qid": "t-123",
+  "text": "For the plants that are aging terribly—meaning their performance drops by more than 0.5% a year—how long does it typically take to fix them? I need the average mean-time-to-repair for these 'accelerated aging assets'. The age calculation needs to be safe for new plants. Give me the answer in hours, rounded to two decimal places."
+ },
+ {
+  "qid": "t-124",
+  "text": "How many times have our panels gotten so dirty that they're losing more than three-twentieths of their potential energy? Just give me the total count."
+ },
+ {
+  "qid": "t-125",
+  "text": "Which of our plants are a recurring headache for warranty claims, with more than just two filings? I need a list of sites whose status is 'claimed' (regardless of case). Show their names and how many claims they've had, from most to least."
+ },
+ {
+  "qid": "t-126",
+  "text": "Among our plants in the toughest, highest-risk locations, what's the worst we've seen dirt and grime impact performance? I need the highest soiling loss index from any site that's in that top risk category. Give me the percentage."
+ },
+ {
+  "qid": "t-127",
+  "text": "Let's get a financial forecast for our worst panels, the ones that degrade so fast they'll lose over 14% of their power in 20 years. What's the total projected revenue loss over their remaining 15-year lifespan? Base the calculation on a standard 400,000 mwh annual output and a sale price of $50 per mwh."
+ },
+ {
+  "qid": "t-128",
+  "text": "How much are the different types of panels losing their voltage punch over time? I need you to group by the panel technology, making sure to ignore case, and then figure out the average voltage degradation factor for each. But hey, only use data where we actually have a valid 'before' and 'after' voltage to compare, and make sure the starting voltage isn't zero. List the panel types and their average voltage loss, with the worst ones first."
+ },
+ {
+  "qid": "t-129",
+  "text": "For the machines that are down more than one day in a 20-day period, what's the average price tag on a single repair? To calculate the mean repair cost, you'll need to figure out how long each machine has been running. Only use data where the mtbf and service time are positive."
+ },
+ {
+  "qid": "t-130",
+  "text": "How many of our plants have a major electrical issue right now? I'm talking about situations where the grounding is shot or the bypass diodes are not running in their normal state. Just give me a count of the unique plants with these problems, and don't worry about the case of the status text."
+ },
+ {
+  "qid": "t-131",
+  "text": "After accounting for all the power being lost inside the system, what was the actual usable power output for snapshot 'pv945724'? Give me the final number in watts."
+ },
+ {
+  "qid": "t-132",
+  "text": "I need to know the financial hit from plants with recurring warranty issues—the ones whose warranty status is 'claimed' and have had three or more claims logged against them. Can you figure out the total lifetime revenue loss for them, but only count ones where we know their go-live date and degradation? Just assume they all have 15 years left, produce 500,000 kwh a year, and we sell the power at 12 cents. Give me the grand total."
+ },
+ {
+  "qid": "t-133",
+  "text": "For the panels specifically made by longi (regardless of case), how much has their current output dropped on average? To get a good average, please only use records where you have a valid, positive starting current to compare against. Calculate the mean current degradation factor across all of them."
+ },
+ {
+  "qid": "t-134",
+  "text": "If we could magically cool the panels for snapshot pv945724 down to 25 degrees celsius, what would its power output be? Give me the temperature-corrected performance in watts, with two decimal points."
+ },
+ {
+  "qid": "t-135",
+  "text": "For the maintenance event pv937101, did the repair cost more than the revenue we lost during the downtime? To figure that out, you'll have to clean up the revenue loss text by stripping out any '$' or ',' characters. Tell me the maintenance cost to revenue impact ratio, just the number, rounded to two decimals."
+ },
+ {
+  "qid": "t-136",
+  "text": "How many of our plants are real lemons, both losing more than a quarter of their potential power and being offline for more than one day out of every twenty? Make sure you only use records that have all the numbers needed for the math. Just give me the total count."
+ },
+ {
+  "qid": "t-137",
+  "text": "Using the latest data for each plant, find the one that costs the most to run for its size, and tell me how much power it loses internally. I need the system power loss ratio for whichever plant has the biggest operational expenditure index. Give me the number to 4 decimal places, and only consider plants and snapshots with all the necessary and valid data to make the calculation crash-proof."
+ },
+ {
+  "qid": "t-138",
+  "text": "When our panel busbars are as corroded as they can get, how much does the quality drop? Calculate the average fill factor degradation for all panels in the worst category for corrosion (regardless of case), but only use data where we have both a before and after fill factor. Give me the result to 3 decimal places."
+ },
+ {
+  "qid": "t-139",
+  "text": "When a plant with hjt panels breaks, what's the average cost to fix it? Calculate the mean repair cost for those plants (matching 'hjt' regardless of case), assuming they've been running for two years straight and have a valid, positive mtbf record. Give me the final number, rounded to a whole dollar."
+ },
+ {
+  "qid": "t-140",
+  "text": "When our electrical systems fail, how much money do we lose? Add up all the revenue loss from every incident with an 'electrical integrity failure', making sure to strip the dollar signs and commas from the text to get the total."
+ },
+ {
+  "qid": "t-141",
+  "text": "We're looking for our most spontaneous big spenders. Could you pull a list of our top 10 fans who have had at least one session with an extremely high spending rate? Let's rank them by that single best spending-per-minute session. I need to see their nickname, ID, that peak spending number, and their final rank on the list, with the highest listed first."
+ },
+ {
+  "qid": "t-142",
+  "text": "I want to see if our key influencers have a 'ripple effect' on chat conversations. Can you analyze chats where at least one of these influencers is present and measure the overall tone of the messages from everyone else? Specifically, for any chat with an influencer, look at all messages from non-influencers with the same idol in the same session, and give me the total counts of 'Positive', 'Negative', and 'Neutral' messages."
+ },
+ {
+  "qid": "t-143",
+  "text": "I need a deep-dive profile of the fans we think we might lose. For every fan flagged with a high churn risk, can you show me where they stand compared to everyone else? I want to see their percentile rank for a few key behaviors: how sticky their platform usage is, their average spending per minute, and their average content consumption rate. Please list the fan's nickname along with these three percentile ranks, and sort them to show the ones with the worst platform stickiness at the top."
+ },
+ {
+  "qid": "t-144",
+  "text": "I'm concerned our most socially-connected users might be disengaging. For all the fans who have a large social network and belong to multiple groups, can you find their longest period of inactivity? I'm only interested in seeing people who have been gone for more than two weeks. Please show me a list of their nicknames and the number of days in their longest absence, sorted from the longest time away to the shortest."
+ },
+ {
+  "qid": "t-145",
+  "text": "I want to do a quadrant analysis to better understand our fan base. Could you categorize every fan based on their financial value to us and their support needs? Specifically, split everyone into a top half and bottom half based on their monthly financial value, and do the same for their support ticket volume. This should give us four groups, like 'High-Value, Low-Support' or 'Low-Value, High-Support'. Please show me the names for these four segments and the number of fans in each, with the largest group listed first."
+ },
+ {
+  "qid": "t-146",
+  "text": "I need a leaderboard of the biggest spenders for each of our idols. Can you go through every idol and, for each one, identify their top three financial supporters? The ranking should be based only on the total value of gifts a fan has given to that specific idol. The output should show the idol's name, the fan's nickname, how much they've given to that idol, and their rank for that idol."
+ },
+ {
+  "qid": "t-147",
+  "text": "I want to understand the journey our users take to become paying members. Can you calculate the average time it takes for a fan to upgrade to a premium account after their first interaction with us? And alongside that, could you also figure out, on average, how many interactions they have with the platform before they decide to subscribe? The final result should just be those two numbers."
+ },
+ {
+  "qid": "t-148",
+  "text": "I'm worried about the activity patterns of fans who might be about to leave. Can you look at everyone who is flagged as a high churn risk and calculate the average time between their interactions? From that group, I want a list of the top 15 who have the longest average gaps, showing their nickname and that average number of days they wait between activities."
+ },
+ {
+  "qid": "t-149",
+  "text": "I need to find our most consistently negative users to understand their issues. Can you generate a list of fans whose chat messages are flagged as 'Negative' more than 70% of the time? Please only include fans who have had at least one interaction with a recorded tone. For each fan on the list, show their nickname, their total number of interactions, their count of negative interactions, and the exact percentage. Sort the list to show the most negative person at the top."
+ },
+ {
+  "qid": "t-150",
+  "text": "I need a really detailed, multi-dimensional report on our gift spending. Can you please show me the total gift spending broken down by every possible combination of these three things: the idol's genre, the fan's preferred language for content, and whether or not the fan has opted in to marketing? I need all the subtotals included, for example, by genre alone, by language alone, by genre and language together, all the way up to a grand total for everything."
+ },
+ {
+  "qid": "t-151",
+  "text": "We need to find our next big content creators before they blow up. Can you help me find users who have a knack for making content that could go viral, but haven't quite hit that top-tier influencer status yet? I'm looking for people with a high viral potential score but a community influence that's still in the medium range. For anyone who fits that description, could you show me their nickname, their exact viral score, and their community influence score? Let's list the ones with the highest viral potential at the very top."
+ },
+ {
+  "qid": "t-152",
+  "text": "I'm curious about the quiet observers on our platform, the ones who consume a lot of content but rarely participate in chats. Could you analyze this group to see what type of content they prefer? I need a list of content categories and how many of these specific fans prefer each, with the most popular categories at the top."
+ },
+ {
+  "qid": "t-153",
+  "text": "I'm wondering if being a dedicated achiever translates to having a good reputation in the community. Can you give me a breakdown of our 'Loyal Achievers'—the ones who consistently earn achievements and loyalty points—by their community reputation level? I'd like to see a table showing each reputation level and the number of these dedicated fans within it, sorted to show which level has the most."
+ },
+ {
+  "qid": "t-154",
+  "text": "I want to identify our most influential users on the platform. Can you generate a list of the top 20 people who have a large follower-to-following ratio and a high overall influence score? For each person on this list, I need to see their nickname, their calculated influence score, and their follower ratio. Also, please add their rank and sort them with number one at the top."
+ },
+ {
+  "qid": "t-155",
+  "text": "I'm trying to figure out if the fans who contact support a lot are also the ones we think might leave soon. Could you make a table that shows this breakdown for our entire user base? I want to see a count of fans for each combination: those who are 'at-risk' and contact support a lot, those who are 'at-risk' but don't, and the same for the 'not at-risk' folks."
+ },
+ {
+  "qid": "t-156",
+  "text": "I need a list of our absolute best fans, the kind of people who are both big spenders and show up to all our events. For each person in that elite group, can you show me their nickname, how much they've spent in total, their score for event attendance, and what loyalty tier they're in right now? Please sort the list so the biggest spenders are at the top."
+ },
+ {
+  "qid": "t-157",
+  "text": "I have a theory that our happiest users are more likely to buy our merchandise. Could we check that? I'd like to see a comparison of the average merchandise spending habits between our biggest advocates—the ones who rate us really highly—and our strongest critics, the ones who give us low scores. Essentially, let's see what percentage of their total spending goes towards merch for each of those two groups."
+ },
+ {
+  "qid": "t-158",
+  "text": "I want to know which idol genres our most dedicated collectors are into. Could you first identify everyone who owns a large number of items and has a high completion rate for their collections? Then, for that specific group, tell me how many of them interact with idols from each genre. The final list should just show the genre and the number of these collectors, with the most popular genre at the top."
+ },
+ {
+  "qid": "t-159",
+  "text": "I need to understand how quickly our best fans start spending money. Can you run an analysis on our 'Idol Superfans'—the ones who are both top spenders and event enthusiasts? I want to see their average cumulative spending at key points after they sign up: specifically at the 7-day, 30-day, and 90-day marks. The output should just show these three milestones and the average total spend for each."
+ }
+]
