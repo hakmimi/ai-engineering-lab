@@ -5,3 +5,5 @@ __pycache__/
 .pytest_cache/
 topics/*/runs/
 .superpowers/
+topics/06-text-to-sql-table-retrieval/data/raw/
+topics/06-text-to-sql-table-retrieval/data/key.json
