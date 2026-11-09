@@ -1,3 +1,3 @@
 [tool.pytest.ini_options]
-pythonpath = [".", "topics/01-prompt-vs-workflow-claimsflow", "topics/02-prompt-vs-workflow-contract-nli", "topics/03-input-tokens-latency-contract-nli", "topics/04-agent-security-review-agentdojo", "topics/05-evaluator-optimizer-text-to-sql"]
-testpaths = ["tests", "topics/01-prompt-vs-workflow-claimsflow/evals", "topics/02-prompt-vs-workflow-contract-nli/evals", "topics/03-input-tokens-latency-contract-nli/evals", "topics/04-agent-security-review-agentdojo/evals", "topics/05-evaluator-optimizer-text-to-sql/evals"]
+pythonpath = [".", "topics/01-prompt-vs-workflow-claimsflow", "topics/02-prompt-vs-workflow-contract-nli", "topics/03-input-tokens-latency-contract-nli", "topics/04-agent-security-review-agentdojo", "topics/05-evaluator-optimizer-text-to-sql", "topics/06-text-to-sql-table-retrieval"]
+testpaths = ["tests", "topics/01-prompt-vs-workflow-claimsflow/evals", "topics/02-prompt-vs-workflow-contract-nli/evals", "topics/03-input-tokens-latency-contract-nli/evals", "topics/04-agent-security-review-agentdojo/evals", "topics/05-evaluator-optimizer-text-to-sql/evals", "topics/06-text-to-sql-table-retrieval/evals"]

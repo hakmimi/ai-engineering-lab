@@ -1,0 +1,694 @@
+[
+ {
+  "qid": "m-001",
+  "text": "I'd like to see which of our dig sites have the best scan quality ratings. Could you show me each site's ID and name along with their average quality score, sorted best to worst?"
+ },
+ {
+  "qid": "m-002",
+  "text": "Hey, can you help me figure out how efficient our archaeological scanning gear is? I need to know the equipments' IDs, their efficiency of computing resource utilization (rounded to two decimal places), the average processing time in hours, their efficiency rankings, and their workflow efficiency status. Also, please include CPU usage (named 'cpu_usage'), GPU usage (named 'gpu_usage'), and processing hours (named 'processing_hours') as JSON in the resource details. Make sure to include all equipments, even if the data's incomplete, and sort everything by PRU value from lowest to highest. Thanks!"
+ },
+ {
+  "qid": "m-003",
+  "text": "Which sites need urgent conservation work? Please show me each location's ID, name, structural condition, preservation status, and whether they're in a high-risk category."
+ },
+ {
+  "qid": "m-004",
+  "text": "Where are the best places to do scanning based on weather conditions? Show me each site's ID and name with their average environmental condition score indicating suitability for scanning operations."
+ },
+ {
+  "qid": "m-005",
+  "text": "How reliable are our scan alignments? For each alignment record, could you show me the registration accuracy relative to scan resolution and the registration confidence category. I need to see its registration ID, project ID, accuracy measurements, error values, calculated ratio, and the confidence category."
+ },
+ {
+  "qid": "m-006",
+  "text": "Which archaeologicalsites have the best digital preservation? Rank our locations showing their ID, designation, and a comprehensive metric for evaluating digital preservation quality, with the best first."
+ },
+ {
+  "qid": "m-007",
+  "text": "How good are our 3D models based on the criteria for high-fidelity standard? Please generate a comprehensive report that shows each site's ID, name, total mesh count, high-fidelity mesh count and proportion (as a percentage), average ratio of mesh complexity, average resolution parameters (in mm), average geometric accuracy measurements and Mesh Quality category. Present the data with the highest-fidelity results first."
+ },
+ {
+  "qid": "m-008",
+  "text": "What are the scanning conditions like at each site? Show me each location's code and name, along with weather averages (temperature, humidity, and illumination levels), environment  suitability score, and corresponding quartile ranking and environmental condition category based on the score."
+ },
+ {
+  "qid": "m-009",
+  "text": "I'd like to analyze how efficiently each scan processing workflow performs and spot any bottlenecks. For every software and stage combination, show me the software, processing stage, average hours needed for processing, average CPU and GPU usage percentages, average data size in GB, the ratio of the processing efficiency, and whether it's running efficiently or hitting bottlenecks ('Bottleneck Detected' if it is qualified as processing bottleneck, 'Efficient' if it is not). Also include how many workflows we're looking at for each combination. Sort the results by bottleneck status first, followed by the ratio value from lowest to highest."
+ },
+ {
+  "qid": "m-010",
+  "text": "Which sites are best for finding artifacts? Show me each location's ID along with the average ratio between total points and cloud density, and the average efficiency of feature identification. I need all sites included, even if some data might be missing. Sort the results by average feature identification efficiency in descending order."
+ },
+ {
+  "qid": "m-011",
+  "text": "Let's check out the top 5 riskiest data flows. For each one, show me the flow ID, how risky it is, and how sensitive the data is. Sort them by the most sensitive data first, and make sure to round everything to two decimal places."
+ },
+ {
+  "qid": "m-012",
+  "text": "Let’s find cross-border data flows that are under high audit compliance pressure. Focus on those with slow remediation timelines and remediation deadlines approaching within the next 5 days (assuming today is 2025-04-01). For each of these flows, I need the flow ID, the audit compliance pressure (rounded to two decimal places), and how many days the remediation is overdue. Sort these by the most overdue flows first, followed by audit compliance pressure from highest to lowest. Limit the results to the top 10 flows."
+ },
+ {
+  "qid": "m-013",
+  "text": "Let’s figure out which data flows are really feeling the heat from audits and compliance costs. First, how heavy is the audit load? For each flow, take the number of critical findings, divide by total findings plus one, and multiply that by the total number of data subject requests. Then, how costly is it to stay compliant? Divide the compliance cost by the penalties plus one. Now show me the flows where both numbers are high—specifically, audit load over 10 and cost pressure over 0.8. For each of those, give me the flow ID, the audit load, and the cost pressure, both rounded nicely. Just make sure to link everything properly across the tables using the flow ID."
+ },
+ {
+  "qid": "m-014",
+  "text": "I want to find data flows that seem both risky and unreliable. I'm looking at how dangerous they are based on how well protections are working, and how often the data transfers succeed without problems. Just show me the ID, how much risk is involved, and whether they usually work well."
+ },
+ {
+  "qid": "m-015",
+  "text": "Let’s create a list that keeps track of data flows with compliance issues when data crosses borders. For each flow that has this compliance gap, we need to include details like the record ID, the flow tag, the countries involved (origin and destination), the compliance status with relevant data protection laws, the status of compliance with local regulations, and the vendor trace ID."
+ },
+ {
+  "qid": "m-016",
+  "text": "Let’s check out the data flows that might be considered high-risk because they involve sensitive data. For each of these, I need the flow ID, the sensitivity score, and the destination country. The sensitivity score is calculated by multiplying the data size by a factor: if the data is highly sensitive, it gets a 3x factor, otherwise it gets a 1x factor. Show me the flows where the sensitivity score is above 100 and sort them with the highest sensitivity first."
+ },
+ {
+  "qid": "m-017",
+  "text": "I want to get a general idea of how trustworthy our vendors are. Can you give me a single number that reflects their overall reliability based on things like how secure they seem and whether they’re still actively working with us?"
+ },
+ {
+  "qid": "m-018",
+  "text": "Let’s figure out which data profile has the highest sensitivity score. For each profile, we’ll calculate a score by multiplying how much data it has (in GB) with a factor based on how sensitive it is—3 for High sensitivity, 2 for Medium, and 1 for Low. I just need the highest score from all the profiles."
+ },
+ {
+  "qid": "m-019",
+  "text": "Let’s see which audits are under the most pressure from user data requests. For each one, add up the number of access, deletion, rectification, and portability requests—use zero if any values are missing—then multiply that total by the average response time. I just want to know which audit ends up with the highest result."
+ },
+ {
+  "qid": "m-020",
+  "text": "Let’s check out which vendors are carrying the biggest compliance burden. First, we’ll measure how bad their audit issues are by dividing critical findings by total findings plus one. Then we turn their security rating into a score—4 for ‘A’, 3 for ‘B’, 2 for ‘C’, and 1 for anything else. To get the compliance burden, we multiply the audit severity by (5 minus the security score). Show me the vendors with a burden over 1.5, and list their ID, compliance burden, and security score—sorted from highest to lowest. Include vendors even if they don’t have audit data."
+ },
+ {
+  "qid": "m-021",
+  "text": "Let's look at countries where the data is super sensitive but the encryption's a bit lacking. For each country, I need the number of profiles, the average sensitivity score, average security strength, how well data is encrypted, and how long it’s being kept. Only show me the countries where the sensitivity score is above 100, and the encryption coverage is below 2. Make sure to sort them by encryption first (lowest to highest) and then by sensitivity (highest to lowest), and give me the top 20. You’ll need to work out the sensitivity from data volume, the security score from encryption and access settings, and the coverage ratio by combining both."
+ },
+ {
+  "qid": "m-022",
+  "text": "Let’s see how vendors are distributed across different risk tiers. For each tier, tell me the tier name, how many vendors fall into it, and what percentage of the total that is (rounded to two decimals). Sort them so the tier with the most vendors comes first."
+ },
+ {
+  "qid": "m-023",
+  "text": "Let’s find data flows that look risky and involve a lot of sensitive data. For each one, can you tell me when it happened, who sent it, where it went, and which protocol it used? I only want the ones where the risk exposure score is above 0.7 and the data sensitivity index is over 100. Show me the top 50, sorted from highest risk to lowest, and use the sensitivity score as a tiebreaker. You’ll need to pull info from different places using the flow ID, even if some values are missing."
+ },
+ {
+  "qid": "m-024",
+  "text": "Let’s find the top 10 overloaded data flows. For each, show me the flow ID, how much of the available bandwidth is being used compared to the total possible, and how efficient the transfer was based on the success rate and error count. We’ll sort them by bandwidth usage, from highest to lowest, and round the numbers to two decimal places."
+ },
+ {
+  "qid": "m-025",
+  "text": "Let’s find the 5 data profiles most at risk for sensitive data exposure. For each one, tell me the profile ID, how sensitive the data is, and how strong the security protections are. Round the sensitivity score to two decimals and sort highest-to-lowest sensitivity. Use the scale High=3, Medium=2, Low=1; treat any other label (including 'Critical') as Low."
+ },
+ {
+  "qid": "m-026",
+  "text": "Let’s find the top 10 compliance records where there are issues with data moving between countries—like mismatched or missing origin and destination—and either GDPR or local law compliance is marked as failed. For each, I want the compliance ID, GDPR and local law status, and the data transfer route. Sort them by ID from smallest to biggest."
+ },
+ {
+  "qid": "m-027",
+  "text": "Let’s find the top 3 months with the highest average severity for audit findings, but only include audits where the severity score was over 0.5. For each month, I need the month (in 'year-month' format), the average severity (rounded to two decimal places), and how severe it was compared to other months. We’ll sort everything from the earliest to the latest month."
+ },
+ {
+  "qid": "m-028",
+  "text": "Find audits where the pressure from data subject requests is greater than 50. For each of them, I need the audit ID, the pressure score (rounded to two decimal places), and a breakdown of the request types, such as how many requests for access, deletion, rectification, and portability were made. Sort the results by the pressure score from highest to lowest, and show up to 100 records."
+ },
+ {
+  "qid": "m-029",
+  "text": "Let's look at data flows that cross borders and calculate their associated risk based on their volume. For each flow, I need to see the flow ID, its risk factor (rounded to two decimal places), the total risk (rounded to two decimal places), and how each flow ranks based on its total risk. Give me the flows where the total risk exceeds 1000, and sort them from highest to lowest. Please limit the results to the top 5 flows."
+ },
+ {
+  "qid": "m-030",
+  "text": "Let’s find the data profiles that have failed their integrity checks. For each profile, I need the profile ID, the count of integrity failures, and a list of failure types (like 'Integrity Check' or 'Checksum Verification') in a single string, separated by commas. Sort the profiles by the failure count, starting with the highest, and show me just the top 10."
+ },
+ {
+  "qid": "m-031",
+  "text": "Give me all platforms sorted by its risk score, most dangerous on top and show 4 digits."
+ },
+ {
+  "qid": "m-032",
+  "text": "I want to know the average keyword-hitting values for all customer and internal chats to identify high-risk patterns. Round to 3 decimal places."
+ },
+ {
+  "qid": "m-033",
+  "text": "I need the total number of transactions that were both marked as fraud and involved cross-border payments."
+ },
+ {
+  "qid": "m-034",
+  "text": "Calculate how many hours we typically take to close Tier-3 escalations. Show the average value, rounded to hundredths."
+ },
+ {
+  "qid": "m-035",
+  "text": "How many platforms show as 'active' right now?"
+ },
+ {
+  "qid": "m-036",
+  "text": "How many shoppers are using advanced authentication?"
+ },
+ {
+  "qid": "m-037",
+  "text": "What's the overall revenue from digital goods? Round the result to 2 decimal places."
+ },
+ {
+  "qid": "m-038",
+  "text": "What's the average distance traveled for shipments with complex routes? Round the result to 2 decimal places."
+ },
+ {
+  "qid": "m-039",
+  "text": "How many critical alerts do we have?"
+ },
+ {
+  "qid": "m-040",
+  "text": "What's the ratio of sales went through escrow? Round to 2 decimal places."
+ },
+ {
+  "qid": "m-041",
+  "text": "How many message threads contain irregular phrasing, sudden language switches, or machine translated text that indicate possible deception?"
+ },
+ {
+  "qid": "m-042",
+  "text": "Split shoppers into three risk-per-dollar groups; for each group, show how many shoppers there are, what fraction of their orders go across countries, and how often their sessions look highly/medium/low hidden."
+ },
+ {
+  "qid": "m-043",
+  "text": "How many buyers have unpredictable spending trends?"
+ },
+ {
+  "qid": "m-044",
+  "text": "Give me a list of sellers with their transaction flow scores, plus details about how complicated their shipping networks are."
+ },
+ {
+  "qid": "m-045",
+  "text": "Give me how fast each session processed threats, and the levels of login verification for buyers."
+ },
+ {
+  "qid": "m-046",
+  "text": "I want to know the keyword-hitting values for all customer and internal chats to identify high-risk patterns. Round to 3 decimal places and show in descending order"
+ },
+ {
+  "qid": "m-047",
+  "text": "Show me all protected platforms, whether they're up or down, how many serious escalation cases they have, and how bad their current alerts are."
+ },
+ {
+  "qid": "m-048",
+  "text": "Tell me how many live listings we have in each category, along with which ones have weird descriptions and how many sketchy buyers are interacting with them."
+ },
+ {
+  "qid": "m-049",
+  "text": "Break down transactions by how complicated their shipping routes were, then show me the counts with the trickiest routes at the top."
+ },
+ {
+  "qid": "m-050",
+  "text": " Tell me how the average security score stacks up across sessions with different privacy levels, rounded to 2 decimal places, from totally open to fully masked connections."
+ },
+ {
+  "qid": "m-051",
+  "text": "Could you get me a ranked list of all income funds that are premier? For each one, I need the ticker symbol, its short name, its premier rank, and the calculated secure income efficiency score. Please sort the list by the efficiency score, from highest to lowest."
+ },
+ {
+  "qid": "m-052",
+  "text": "I have a hunch that funds that tell us more about their stock valuations actually perform better. Can we test this? Let's split all the funds into two groups: those that share their valuation numbers and those that don't. For each of those two groups, tell me how many funds are in it and what the typical 1-year return was. I'm curious to see if there's a difference."
+ },
+ {
+  "qid": "m-053",
+  "text": "Can you find those rare funds that basically produce positive alpha but are passive? I'd like to see the top 10 of these, ranked by the alpha for 5-years in descending order. For each one, show me the ticker symbol, the company that runs it, and their 5-year alpha score. Also, at the end, just tell me the total number of these funds you found."
+ },
+ {
+  "qid": "m-054",
+  "text": "I want to see which fund managers are actually worth their high fees. Can you figure out a score that shows if a manager's skill outweighs their cost? Show me the top 10 funds with the best scores, listing their ticker symbol and the score itself, sorted from highest to lowest. Also, can you tell me what percentage of all funds are actually providing a positive value for their cost?"
+ },
+ {
+  "qid": "m-055",
+  "text": "How many funds out there are both generating excess returns successfully and its managers confidently put a lot of money into their best ideas? Just give me the total number."
+ },
+ {
+  "qid": "m-056",
+  "text": "I want to know the average Information Ratio after adjusting for how consistent it is. I just need that one final number."
+ },
+ {
+  "qid": "m-057",
+  "text": "What's the best score any fund has gotten for generating steady income efficiently? Just give me the highest number and I only need the top score across the board."
+ },
+ {
+  "qid": "m-058",
+  "text": "How many funds are truly standing out from the crowd with their active strategies? Just give me the total number ‚Äî one single value."
+ },
+ {
+  "qid": "m-059",
+  "text": "How many funds are really going against the grain and is a potential value investment? Just give me the final count ‚Äî one number is all I need."
+ },
+ {
+  "qid": "m-060",
+  "text": "Which exchange moves the most money overall? Let's first figure out the average daily trading volume for each fund. Then, total those numbers for every exchange. Just tell me the one exchange where the most trading happens ‚Äî the biggest player in terms of total value traded."
+ },
+ {
+  "qid": "m-061",
+  "text": "Hey, can you pull up the performance history for the 'AADR' fund? I want to see how it did against its category each year. For every year, also show me what the outperformance was in the year before, and what the year-over-year outperformance change was. Just list it all out by year for me."
+ },
+ {
+  "qid": "m-062",
+  "text": "How much money is being wasted on fees by funds that are basically just hugging the index? For every one of those closet indexers, add up the fees that aren‚Äôt really earning their keep. In the end, just give me one total number ‚Äî the grand total of all those wasted fees, rounded to 2 decimal places."
+ },
+ {
+  "qid": "m-063",
+  "text": "I'm worried about interest rates going up and want to find bond funds that are safer than their peers. Can you identify funds that are much less sensitive to rate changes‚Äîat least 1.5 years less‚Äîthan what's typical for their category? For each of these funds, please list its ticker symbol, name, and category. Also, show me its specific sensitivity value, the average for its category, and its advantage to which their duration is shorter than the average duration of its category. Sort the results by the advantage , from highest to lowest."
+ },
+ {
+  "qid": "m-064",
+  "text": "I'm looking for resilient funds that do well no matter what the market is doing. Can you find funds that tend to beat their peers when the market is up, but also protect against losses better than their peers when the market is down? For each fund, show me its ticker symbol, its average outperformance in good years, and its average outperformance in bad years. Also, calculate the fund's difference in average outperformance for both scenarios. Only show me funds with at least three good and three bad years of data. Sort the list by the biggest difference first."
+ },
+ {
+  "qid": "m-065",
+  "text": "I'm worried about some of our funds being too big and hard to trade. For each fund, please tell me what is its liquidity pressure? For the top 100 funds, I want to see a list showing the fund's ticker symbol, its size, ratio of turnover, and its calculated days to trade turnover. Show me the riskiest ones at the top of the list."
+ },
+ {
+  "qid": "m-066",
+  "text": "Hey, can you help me check funds that changed its investment style? I'm looking for funds with long histories and want to compare their 3-year vs 10-year Beta and R-squared values. For each one, give me the ticker, how much the Beta and R-squared changed, and include a quick summary of their classifications too. Then just show the top 100 funds with the biggest Beta drift, sorted from highest to lowest based on the absolute value of that drift."
+ },
+ {
+  "qid": "m-067",
+  "text": "I want to find the top-performing fund in each category. But only look at categories that have at least 10 funds in them, and for each category, find the fund that has the highest score for peer-group comparison. For each one, show me the category name, the ticker of the best fund, its short label, and its final score. Sort everything by the highest scores first, and just give me the top 100 results."
+ },
+ {
+  "qid": "m-068",
+  "text": "I'd like to run a regression to see how portfolio turnover relates to manager skill. For each product class that has more than 25 funds, calculate the slope between alpha and turnover, and also show how good the fit is. I want to see the product class name, how many funds are in it, the slope value, and the R-squared for the regression. Sort the results by the slope from highest to lowest, and just show the top 100."
+ },
+ {
+  "qid": "m-069",
+  "text": "Can you find funds that is a potential value investment? For the top 100 that qualify, show me their ticker, short label, and where their price stands right now. Sort them from the lowest to the highest price position."
+ },
+ {
+  "qid": "m-070",
+  "text": "Which accounts are growing their networks the fastest? Give me that blended growth score rounded to three decimal places and sort from fastest to slowest."
+ },
+ {
+  "qid": "m-071",
+  "text": "Estimate the average authenticity level for content on each platform, rounded to three decimal places and sorted in a descending order."
+ },
+ {
+  "qid": "m-072",
+  "text": "Show the top 10 accounts that have most content manipulation patterns. Evaluate their scores, rounded to 3 decimal places, and sort in descending order."
+ },
+ {
+  "qid": "m-073",
+  "text": "Find all accounts pumping out loads of near-duplicate posts, list their posts-per-day, sorted from most to least."
+ },
+ {
+  "qid": "m-074",
+  "text": "For each account, build one overall risk score by combining an automation-likeness signal, a coordination signal, and the group size; round to three decimals, list those above 0.8, and sort high to low."
+ },
+ {
+  "qid": "m-075",
+  "text": "What's the overall average trust score of everyone's connections, rounded to three decimals?"
+ },
+ {
+  "qid": "m-076",
+  "text": "Generate a report of every cluster whose role is “SocialGroup”. For each cluster, show its identifier, the number of unique member accounts, the cluster's maximum coordination score. Quantify each account's position and influence in interaction network if the data are available, otherwise NULL, and indetify whether it is sophisticated influence campaigns"
+ },
+ {
+  "qid": "m-077",
+  "text": "Estimate each account's authentication-related risk, rounded to 3 decimal places. List accounts with a score above 0.7, sorted from highest to lowest."
+ },
+ {
+  "qid": "m-078",
+  "text": "For each account, show the most recent system estimate of automation likelihood using the latest detection event."
+ },
+ {
+  "qid": "m-079",
+  "text": "For each account, measure how much its hourly activity over a day diverges from its usual behavior, round to 3 decimals and sort descending. Show those above 0.7."
+ },
+ {
+  "qid": "m-080",
+  "text": "List all accounts that exert strong influence while posting at a high daily rate, acting as key amplifiers in coordinated networks. List their influence score and daily post frequency, sorted by influence score in a descending order."
+ },
+ {
+  "qid": "m-081",
+  "text": "Show me the top 10 accounts by their logins-per-day score. For each account, take the biggest lifecycle login total you've ever seen for it, divide by its age in days (skip age missing or ≤ 0), round the score to 3 decimals, and show just the account ID plus that score."
+ },
+ {
+  "qid": "m-082",
+  "text": "Measure account-reputation stability, round to 3 decimals, and show whoever has the highest score."
+ },
+ {
+  "qid": "m-083",
+  "text": "Retrieve accounts with elevated engagement levels based on the number of sessions or total posting frequency. Show their account ID and the daily post number."
+ },
+ {
+  "qid": "m-084",
+  "text": "Group results by platform type and show the average of the 0-1 score indicating how real the interactions feel, keep three decimals, and list them from high to low."
+ },
+ {
+  "qid": "m-085",
+  "text": "How many accounts are currently inactive and also classified as automated?"
+ },
+ {
+  "qid": "m-086",
+  "text": "By platform kind, average a score built as: how manipulated the content looks, times how urgently it should be reviewed, times how central it is in the network."
+ },
+ {
+  "qid": "m-087",
+  "text": "List each account together with their attempts to evade detection. Calculate that sneakiness score, rounded to 3 decimal places, and rank them from most to least sneaky."
+ },
+ {
+  "qid": "m-088",
+  "text": "Bucket every user into four sneakiness tiers based on how much they rely on tricks like VPNs, and list each account with the tier number."
+ },
+ {
+  "qid": "m-089",
+  "text": "How many users land in each risk level based on the number of an account's attempts to evade detection?"
+ },
+ {
+  "qid": "m-090",
+  "text": "List the top twenty accounts by the highest overall exposure metric based on multiple signals. Only include users whose required inputs are all present; sort high to low; show the user ID and the metric rounded to three decimals."
+ },
+ {
+  "qid": "m-091",
+  "text": "Show every user that needs immediate attention: they must have the top severity label and an ongoing detection. Rank them by their overall exposure metric (rounded to 3 decimals) from high to low, and include the severity label, only show those larger than 0.7."
+ },
+ {
+  "qid": "m-092",
+  "text": "For each account, combines multiple bot-detection metrics into a single score, rounded to three decimal places, and display the highest value."
+ },
+ {
+  "qid": "m-093",
+  "text": "Identify all accounts exhibiting systematic VPN usage and report the total count of distinct countries from which they have authenticated."
+ },
+ {
+  "qid": "m-094",
+  "text": "Let's find our most vulnerable patients: those who are high-risk, in facilities under severe stress, and who are also not engaging well with their therapy. I need a list with their patient ID, assessment ID, the date of their latest assessment, their average rounded engagement score, and the stress level of their facility. Please sort by the most recent assessment and just show the top 50."
+ },
+ {
+  "qid": "m-095",
+  "text": "Find facilities that seem to have an environment that are systemically stressed. For each one, list the facility ID and the differential in resource demand. Just show the top 100 most stressed facilities."
+ },
+ {
+  "qid": "m-096",
+  "text": "Hey, can you pull together a report that shows how care might vary between different ethnic groups? For each patient, I want to see their ethnicity, how severe their symptoms are, and how well they're sticking with their treatment. Also, please include a summary row that combines all ethnicities, so we have a baseline to compare against. And make sure the results are sorted by ethnicity alphabetically. Thanks!"
+ },
+ {
+  "qid": "m-097",
+  "text": "Sarah, our lead case manager, is worried about a pattern she's calling 'the David profile.' These are patients who are constantly in crisis—we're talking about patients that has a low support profile and in high crisis. She wants to find every other patient who looks just like that right now. Can you pull a list for her? She needs to see their ID and age, plus the exact crisis and support scores that got them on the list. For her team to take action, please also show the date they were last in the hospital and their next appointment, but make that appointment date easy to read. And please, put the people with the most crises at the very top so she knows who to call first."
+ },
+ {
+  "qid": "m-098",
+  "text": "Our director, Dr. Evans, is trying to get more funding for community partnerships, and his whole argument hinges on one idea: that facilities with better resources have patients who are more likely to stick to their treatment plans. He needs a solid number to prove this point. Can you run a statistical analysis to see how strong that connection really is? Basically, do a correlation analysis of the resource's adequacy. Just give me the final correlation score, nice and clean, as a single number."
+ },
+ {
+  "qid": "m-099",
+  "text": "Our Director, Dr. Sharma, needs help. We have a lot more patients coming in who are in a really bad place—severely depressed or anxious and also at high risk for suicide. She wants to build a list of our 'go-to' experts for these tough cases. Can you figure out, for each diagnosis like 'Depression', 'Anxiety', etc, which of our clinicians has the most hands-on experience with this exact type of high-risk patient? I need a table that shows the diagnosis, the clinician, how many of these patients they have, and then ranks them, so we can see who is number 1, 2, 3 for each category. Please organize the whole thing by diagnosis, then by the rank."
+ },
+ {
+  "qid": "m-100",
+  "text": "I'm looking at Patient P871358's file and I'm a bit concerned. He's been diagnosed with Bipolar for about 10 years and has already been in the hospital 3 times. I need to know if we should escalate his care. So, first, can you run that calculation of the patient's risk for annualized hospitalization and tell me if he gets flagged for a immediate coordination of intensive care? If he does, I need to find him a new clinician right away. The new clinician would need to be at the same facility he last visited, be one of our 'High' confidence therapists, and not have their credentials up for review in the next six months or so let's say any time after June 2024. If he's flagged, show me their IDs and where they work. If his risk score is fine, just let me know by reporting as 'Patient does not meet criteria for Intensive Care Coordination'."
+ },
+ {
+  "qid": "m-101",
+  "text": "I'm doing a review on patient P883117 and need to check a couple of things for her file. First, she's supposed to be getting at least 5 hours of therapy a month in her program. Can you check her latest therapy exp intensity and tell me if she's meeting that target? Second, her insurance gives her $1,200 a year for treatment. Based on her personal cost-effectiveness rate of 0.0509, what's her total expected quality of life gain for the whole year? And finally, is that number over our 'good value' threshold of 50 points? Just give me a quick summary for all the assessment for this patient, including the patient's id, and the answers to those three questions."
+ },
+ {
+  "qid": "m-102",
+  "text": "I need to run a full audit on patient P425079. His insurance gives him $6,000 a year for treatment, but we charge in pounds—£100 an hour. Assuming an exchange rate of 1.25 dollars to the pound, how many hours of therapy can he actually get for his money? Also, his high-acuity plan says he needs 30 hours of therapy a month, but his chart says he's only getting 29.86. Can you confirm if he's meeting that target? Lastly, given his personal cost-effectiveness rate of 0.1197, what's his total potential quality of life gain if he uses his whole $6,000 budget? And is that number over our 'good value' benchmark of 650?"
+ },
+ {
+  "qid": "m-103",
+  "text": "I'm working on a study and need to find a very specific group of patients. I'm looking for people with a Bipolar diagnosis. Once you have that list, I need to check one more thing about their current treatment. Our standard for this group is 15 hours of therapy a month. Can you just show me a table of these patients with their ID, diagnosis duration, and hospitalization count, and then add a true/false column that tells me if they're meeting that 15-hour therapy target?"
+ },
+ {
+  "qid": "m-104",
+  "text": "I'm trying to decide where to focus our new goal-setting program. I have a hunch that our PTSD patients are struggling more to make progress than our anxiety patients. Can you check this for me? I want to see a comparison: on average, how many recovery goals would a PTSD patient achieve in a full year versus an anxiety patient? I just need those two numbers side-by-side to see if my hunch is right."
+ },
+ {
+  "qid": "m-105",
+  "text": "Can you help me check how closely a facility's resources relate to how well patients stick to their treatment? I'd like to see the overall resource adequacy score across all facilities and the correlation between each facility's resource score and their treatment adherence rate. Just skip the places where there's no rate for the treatment adherence."
+ },
+ {
+  "qid": "m-106",
+  "text": "I'm Dr. Hanson, a pharmacist. I need to run a safety check on our Anxiety patients at the F533 facility, but only those who've been diagnosed for more than a year. I'm worried about medication side effects. Can you calculate an side effect score for a 12-month period for each of them with just 2 medications? I need a list of these patients showing their ID, the original density number, this new score, and a true/false if their score is over our new safety limit of 0.1. Please put the patients with the highest scores at the top."
+ },
+ {
+  "qid": "m-107",
+  "text": "Show me facilities where patients seem highly engaged in therapy, but their recovery progress is still lagging basically, places with a possible engagement-outcome disconnect. For each of those facilities, I want to see the Facility ID, their average therapy engagement score, and their index of recovery trajectory, both rounded to two decimal places. Sort the list by Facility ID and keep it to the first 100 results."
+ },
+ {
+  "qid": "m-108",
+  "text": "Can you show me the top clinicians working in well-supported facilities based on the stability metric of the patients? I want to see each clinician's ID, which facility they work at, their Patient Stability Metric score, and how they rank within their facility (higher PSM means better rank). Just include those in resource-backed facilities, sort by facility and rank, and show only the top 100 results."
+ },
+ {
+  "qid": "m-109",
+  "text": "Can you show me the patients who seem to have fragile stability? I want to see their ID, how often they miss appointments on average, and what their latest effectiveness score of social support."
+ },
+ {
+  "qid": "m-110",
+  "text": "Show me the top 100 primary diagnoses where patients have the highest number of crisis interventions. For each diagnosis, include the name of the diagnosis, how many patients had that diagnosis, and the average crisis intervention frequency, rounded to two decimal places. Sort the list by CIF from highest to lowest."
+ },
+ {
+  "qid": "m-111",
+  "text": "Show me the top 100 facilities, grouped into performance quadrants. For each one, list its ID, how well patients stick to their treatments (rate of treatment adherence), how stable the patients are, both rounded to two decimals, and which performance quadrant it falls into. Sort the results by quadrant and then by facility ID."
+ },
+ {
+  "qid": "m-112",
+  "text": "I want to see how different kinds of therapy changes—like switching therapy type, therapist, or session frequency—affect how engaged patients are. For each type of change, show how often it happens, what the average engagement score was before and after the change, and how much the score changed overall. Sort the results so that the most common changes appear at the top."
+ },
+ {
+  "qid": "m-113",
+  "text": "Show me the top 100 facilities where suicide risk is very high—over 20%. For each one, list the facility ID, their PFIS score, FRAI score, and the difference in resource demand, sorted from the highest RDD to the lowest. I want to find places where the need for resources is most urgent."
+ },
+ {
+  "qid": "m-114",
+  "text": "Let's compare how efficient our equipment is versus how safe it is. Can you show me a list with the equipment type, its code, its efficiency score, and its safety score? Then, for each equipment type, rank them by efficiency and by safety. I also want to see how big the gap is between those two ranks. Sort everything by type, and then by the best efficiency score."
+ },
+ {
+  "qid": "m-115",
+  "text": "Let's assess how our vehicles are performing. Can you calculate the coefficient for the vehicle's performance for every chassis we have? I just need a simple report with the chassis ID and its calculated performance score. Make sure to check all of them, even if some have missing engine data."
+ },
+ {
+  "qid": "m-116",
+  "text": "I need a quick number: how many of our shelters are actually ready if a big storm hits? Even if we're missing some sensor data for a shelter, it should still be part of the initial check. Just give me the final tally."
+ },
+ {
+  "qid": "m-117",
+  "text": "What's our best-case scenario for getting good science data from the Arctic? Looking only at our equipment up north, find the highest chance of success for a mission from any single instrument. Just give me that single, top-line probability score rounded to two decimal places."
+ },
+ {
+  "qid": "m-118",
+  "text": "Let's find our safest and most efficient truck. Just calculate their safety performance overall, and I want to see the single highest score out of the entire fleet. Just give me that top number, rounded."
+ },
+ {
+  "qid": "m-119",
+  "text": "I want to see our best and worst stability of equipment during long-term operation. For each category of equipment, can you show me a list of the top 5 most stable machines and the 5 least stable ones? Show me the equipment's ID, its category, and its stability score, and group the results by category, with the best ones on top."
+ },
+ {
+  "qid": "m-120",
+  "text": "Let's see how much the antenna's condition matters for our comms. Can you group everything by the antenna status—like normal, warning, or error—and tell me the average communication stability for each? Also, show me how many links are in each group. Make sure to only use records where we have all the necessary data, and list the results with the most stable antenna status on top."
+ },
+ {
+  "qid": "m-121",
+  "text": "I want to rank our most efficient vehicles. For each truck, calculate its overall transportation efficiency number. Please show me a list of the top 100 vehicles, with the vehicle's ID, the coefficient for vehicle performance, the index for energy sustainability, and the overall transportation efficiency number, ordered from most efficient to least."
+ },
+ {
+  "qid": "m-122",
+  "text": "What's the overall reliability score for all the gear we have running right now? I need the average comprehensive score, but only for the active equipment. Make sure you factor in the efficiency, readiness, and communication scores. Just give me that one final number, rounded."
+ },
+ {
+  "qid": "m-123",
+  "text": "How does the cold affect our batteries? I want to see a breakdown of battery health based on how cold it is outside. Group the gear into a few temperature buckets like 'Extreme Cold,' 'Standard Cold,' and 'Mild Cold,' and for each bucket, show how many pieces of equipment are in it and what their average battery health is."
+ },
+ {
+  "qid": "m-124",
+  "text": "I want a list of our most unreliable comms hubs. Figure out which stations have consistently bad link resilience. For each of those problem stations, show me the station's name, its average reliability and stability scores rounded by 2 decimals, and a list of all the equipment there so we know what to check. Only use complete data for this, and show me the worst stations at the top of the list."
+ },
+ {
+  "qid": "m-125",
+  "text": "I need to know which of our gear is ready for a bad storm. Can you check everything and give me a list of all equipment that's up to our 'extreme weather readiness' standard? For each item, I want to see its code and type, whether the heater, insulation, and emergency lights are good to go, its structural safety score, and the final 'Ready' or 'Not Ready' label."
+ },
+ {
+  "qid": "m-126",
+  "text": "I need to see the water situation at all of our stations. Can you give me a list showing each station's name, its water quality score, and the water tank level? Also, add a simple category based on our standard classification system for water quality. Make sure every station shows up, even the ones we don't have water readings for, and list them alphabetically."
+ },
+ {
+  "qid": "m-127",
+  "text": "Time for a safety check on our life support gear. Can you create a report for me? I need to see the equipment's code and type, its current life support status, and its calculated reliability score. Based on that score, tell me if it's 'High', 'Moderate', or 'Low' reliability. Also, toss in a little JSON summary showing the status of the oxygen, medical, and safety systems with fields names: 'oxygen_status', 'medical_status', 'safety_system_status'. Let's just focus on the 'Safety' type equipment and sort it by the best reliability score."
+ },
+ {
+  "qid": "m-128",
+  "text": "How green are our stations? I want a report showing each station's type and name, how many pieces of gear are there, and how much they rely on renewable energy. Please show the percentage of renewable use, the total renewable power in watts, and a simple classification according to the classification system of energy sustainability. Only look at stations with solar or wind data, and please sort them to show the greenest stations first."
+ },
+ {
+  "qid": "m-129",
+  "text": "Let's get a handle on our water situation at each station. For each station, can you tell me its name and location type? I need to see the average water quality score, the average water management score, and a count of how many systems are in 'conservation needed' mode. Also, give me a simple classification for both the water quality and the overall management status. Sort the list with the best-managed stations at the top."
+ },
+ {
+  "qid": "m-130",
+  "text": "I need to check how ready our equipment is. Can you go through all the maintenance records and calculate the score for its operational readiness for each one? Just show me a list with the record ID, its operating hours, maintenance cycle hours, its current status, and the final readiness score."
+ },
+ {
+  "qid": "m-131",
+  "text": "Let's figure out how sustainable our power gear is. Can you calculate the index of energy sustainability for every power device? I need a list showing the device's code, its energy efficiency percentage, what its power source is, and the final index score you calculated."
+ },
+ {
+  "qid": "m-132",
+  "text": "How stable are our comms systems? I need a report that calculates the stability index for each communication unit. Can you show me the unit's ID, antenna status, signal strength, and network lag? Then, using that, calculate both the simple reliability index and the more complex stability index. Please round the numbers to make them easier to read."
+ },
+ {
+  "qid": "m-133",
+  "text": "I need a list of our safest and best-performing equipment. Can you find all the gear with a top-tier performance index of overall safety-say, anything over 0.75? For each item on the list, show me its equipment code, its calculated efficiency rating, and the final safety/performance score."
+ },
+ {
+  "qid": "m-134",
+  "text": "Show me how much the whole process, from transport to final disposition, cost us for every return. Round the result to 2 decimal places, biggest cost first."
+ },
+ {
+  "qid": "m-135",
+  "text": "Show me the average cost of printing and attaching new labels for each product category, rounded to two decimals and sorted from highest to lowest."
+ },
+ {
+  "qid": "m-136",
+  "text": "Show overall disposal spend per method, most expensive first."
+ },
+ {
+  "qid": "m-137",
+  "text": "Which 5 returns cost most to fix? Show me from priciest to least pricey."
+ },
+ {
+  "qid": "m-138",
+  "text": "How much do we typically recover through each return method? Give me the average amounts rounded to pennies."
+ },
+ {
+  "qid": "m-139",
+  "text": "Of all returns, tell me the % flagged with 'high' fraud risk (rounded to hundredths) - show only the percentage."
+ },
+ {
+  "qid": "m-140",
+  "text": "Give me the kilograms of carbon dioxide released in different disposal processing activities. Round numeric outputs to 2 decimal places and show from highest to lowest."
+ },
+ {
+  "qid": "m-141",
+  "text": "Show me how many returns we have for each warranty status and return channel combination, sorted by the count from highest to lowest."
+ },
+ {
+  "qid": "m-142",
+  "text": "Show me how much money we actually get back (after costs) for each type of refund, along with both the recovered amounts and what we spent processing them."
+ },
+ {
+  "qid": "m-143",
+  "text": "How dirty and pricey is it to scrap items in different states? how me the average values, rounded to two decimals."
+ },
+ {
+  "qid": "m-144",
+  "text": "Show me how many non-compliant items we have divided by disposal method, along with their average carbon footprint (rounded to 2 decimal places). Sort by the highest count of non-compliant items first."
+ },
+ {
+  "qid": "m-145",
+  "text": "Tell me the overall gain or loss from all returns: take what we got back after processing and subtract the combined out-of-pocket amount (transport, getting it sellable again, label fixes, end-of-life handling, fix-up quote). Include the net figure and both parts, rounded to two decimals."
+ },
+ {
+  "qid": "m-146",
+  "text": "When fraud risk is high and it comes back by courier, how off-normal is the shipping cost? Please round the answer to two decimals."
+ },
+ {
+  "qid": "m-147",
+  "text": "Show me the average value recovered per day since sale for the entire portfolio, along with the recovery value and number of days used in the calculation, rounded to 2 decimal places from highest to lowest."
+ },
+ {
+  "qid": "m-148",
+  "text": "I want to know the average lost of a return, consider the environmental impact factors. Round to two decimal places."
+ },
+ {
+  "qid": "m-149",
+  "text": "Show me each processing site with their average and individual processing times , rounded to one decimal place, and list the slowest sites first."
+ },
+ {
+  "qid": "m-150",
+  "text": "I want to know the proportion of returns having warranty claims, and round the answer to one decimal point."
+ },
+ {
+  "qid": "m-151",
+  "text": "For each return, show a severity score equal to the number of signals times the level weight (use 1 for low, 2 for medium, 3 for high). Include both the signal count and the weight, and list the highest scores first."
+ },
+ {
+  "qid": "m-152",
+  "text": "Provide the grand total of all regulatory penalties we've accumulated to date (show only the final number)."
+ },
+ {
+  "qid": "m-153",
+  "text": "Show the latest 100 items with a relative transport cost versus what’s typical for the same way of coming back. Include the way it came back, round to two decimals, and list newest first."
+ },
+ {
+  "qid": "m-154",
+  "text": "Please show me the average age of all sprint session winners at the time they won. The result should be a single age in years."
+ },
+ {
+  "qid": "m-155",
+  "text": "For each qualifying session, calculate the average percentage of qualifying specialists and tell me the average of those percentages across all sessions, rounded to two decimal places."
+ },
+ {
+  "qid": "m-156",
+  "text": "Using historical data, estimate the average probability that a driver achieves hat trick achievements, given that they start from pole position. Use the simplified probability assumptions for calculation, which estimate the chance to win and the chance to set the fastest lap if they're on pole, and the result should be rounded to four decimal places."
+ },
+ {
+  "qid": "m-157",
+  "text": "Can you calculate how well the top 8 finishers perform on average in sprint sessions? Round the result to two decimal places."
+ },
+ {
+  "qid": "m-158",
+  "text": "Which constructor has the best track record for finishing races? Calculate the reliability rate among all constructors who have participated in at least 5 races, which shows the races finished out of races started, and return the highest reliability percentage, rounded to two decimal places."
+ },
+ {
+  "qid": "m-159",
+  "text": "Find drivers with at least 10 laps recorded, and identify the highest stability of a driver's lap times during a race. Give me the top score rounded to two decimals."
+ },
+ {
+  "qid": "m-160",
+  "text": "What's the absolute fastest lap time ever recorded in our database, measured in seconds? Make sure to ignore any zero or negative times."
+ },
+ {
+  "qid": "m-161",
+  "text": "To do the performance analysis, please help me calculate the average duration of our pit stops (in seconds), excluding any records where the duration is not a positive value. I want a single output, rounded to three decimal places."
+ },
+ {
+  "qid": "m-162",
+  "text": "I need to know if we have any circuits with specific environmental characteristics regarded as 'high-altitude'. Can you just give me a simple 'Yes' or 'No' answer?"
+ },
+ {
+  "qid": "m-163",
+  "text": "Please analyze every session that constitute a championship race weekend and count the occurrences of unavailable date or time information. What's the session name with the highest total count of indeterminate entries?"
+ },
+ {
+  "qid": "m-164",
+  "text": "Calculates the time difference between each driver's qualifying lap and the pole sitter's lap, and then categorize drivers into three groups based on their qualifying performance. Return driver IDs, average deficits (rounded to 3 decimal places), and their qualifying cluster."
+ },
+ {
+  "qid": "m-165",
+  "text": "Our team is studying how thin air affects car performance at racing venues. Can you pull up a list of all tracks that are located high enough above sea level to create high-altitude circuit? I need to see the track names and their exact elevations, with the highest altitude venues listed first."
+ },
+ {
+  "qid": "m-166",
+  "text": "Can you calculate the average stops per car for each event, and just show me the total count of races classified as a 'Single-Stop Race' based on the pit strategy classification criteria?"
+ },
+ {
+  "qid": "m-167",
+  "text": "To analyze team performance, can you calculate the rate of constructor reliability for each team? I need to see the team names, their total races started, total races finished, the reliability rate as a percentage, and give them a reliability rank. Only include constructors with significant participation so we get meaningful data, and sort them from most reliable to least reliable."
+ },
+ {
+  "qid": "m-168",
+  "text": "I'm curious about the dominant wins in sprint races, which are characterized by large margins. Just give me the total number of these landslide wins."
+ },
+ {
+  "qid": "m-169",
+  "text": "I want to see how McLaren's overall team performance develops over seasons - like watching their report card get updated after each race. Just show me the year, race ID, constructor name, and the cumulative constructor's performance score after each race event, so I can track how their performance score changes as the season progresses."
+ },
+ {
+  "qid": "m-170",
+  "text": "I'm curious about how Hamilton's value as a driver changes as he gets older and more experienced. Please give me the race IDs and his performance values."
+ },
+ {
+  "qid": "m-171",
+  "text": "Can you rank the drivers based on the stability of their average lap time? Please show me each driver's surname and first_name in a JSON format, their average consistency score, and the number of Races Analyzed. Just focus on drivers who have competed in more than five races, and list the most consistent ones at the top."
+ },
+ {
+  "qid": "m-172",
+  "text": "I'm interested in the achievements of veterans. Could you pull up a list of the race year, official race event name, driver's full name, their podium position, and their age at the time of the race. Please show accomplishments by oldest drivers first, and for same-age drivers, show most recent results first."
+ },
+ {
+  "qid": "m-173",
+  "text": "I need to generate a list that ranks the drivers' overall performance in a Sprint session. The output should include the event name, the driver's ID, and their performance index score. Please make sure the best performances are right at the top."
+ }
+]

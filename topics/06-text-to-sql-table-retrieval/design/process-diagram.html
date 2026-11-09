@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Table Finding Levels</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --surface: #ffffff; --fg: #1b2230; --muted: #5a6475; --line: #dde1e8;
+    --l0: #898781; --l1: #2a78d6; --l2: #eb6834; --l3: #1baf7a; --key: #334155;
+    --sans: "Segoe UI", system-ui, sans-serif; --mono: ui-monospace, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442; --key: #b8c4d6; color-scheme: dark; } }
+  :root[data-theme="dark"] { --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442; --key: #b8c4d6; color-scheme: dark; }
+  body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--sans); margin: 0; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 36px 16px 48px; display: grid; gap: 28px; }
+  .kicker { font: 600 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: 1.9rem; line-height: 1.15; margin: 6px 0 4px; }
+  .lede { color: var(--muted); margin: 0; max-width: 70ch; }
+  .inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .box { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .box b { display: block; margin-bottom: 4px; }
+  .box p { margin: 0; color: var(--muted); font-size: 14px; }
+  .mono { font-family: var(--mono); font-size: 13px; }
+  .levels { display: grid; gap: 12px; }
+  .lane { display: grid; grid-template-columns: 210px 1fr; gap: 14px; align-items: center; background: var(--surface);
+          border: 1px solid var(--line); border-left: 5px solid var(--c); border-radius: 10px; padding: 14px 16px; }
+  .lane h2 { font-size: 1rem; margin: 0; }
+  .lane .tag { font: 600 12px/1 var(--mono); color: var(--c); text-transform: uppercase; letter-spacing: .06em; }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 14px; }
+  .step { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; background: var(--bg); }
+  .step.model { border-color: var(--c); }
+  .arrow { color: var(--muted); }
+  .score { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .score .box { border-top: 4px solid var(--key); }
+  @media (max-width: 640px) { .inputs, .score { grid-template-columns: 1fr; } .lane { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Topic 06 · LinkedIn's text-to-SQL article</div>
+    <h1>Find the 7 tables a question needs, out of 971</h1>
+    <p class="lede">Four ways to pick tables, each on the same questions and the same pool. The answer key comes from the benchmark's own SQL, not from me.</p>
+  </header>
+
+  <section class="inputs">
+    <div class="box"><b>The question</b><p>"Which dig sites have the best scan quality ratings? Show each site's ID, name and average quality score."</p></div>
+    <div class="box"><b>The pool: 971 tables</b><p>18 company-style databases (LiveSQLBench-Large), ~54 tables and ~1,000 columns each, cryptic names like <span class="mono">vesseltag</span>.</p></div>
+  </section>
+
+  <section class="levels">
+    <div class="lane" style="--c: var(--l0)"><div><div class="tag">Level 0</div><h2>Keyword search</h2></div>
+      <div class="flow"><span class="step">question words</span><span class="arrow">→</span><span class="step">BM25 over table + column names</span><span class="arrow">→</span><span class="step">top 7</span></div></div>
+    <div class="lane" style="--c: var(--l1)"><div><div class="tag">Level 1</div><h2>Embedding search</h2></div>
+      <div class="flow"><span class="step">embed question</span><span class="arrow">→</span><span class="step">closest table cards</span><span class="arrow">→</span><span class="step">top 7</span></div></div>
+    <div class="lane" style="--c: var(--l2)"><div><div class="tag">Level 2 · the article's way</div><h2>Search 20, LLM picks 7</h2></div>
+      <div class="flow"><span class="step">embedding search</span><span class="arrow">→</span><span class="step">top 20 cards</span><span class="arrow">→</span><span class="step model">LLM re-ranker (gpt-6-luna)</span><span class="arrow">→</span><span class="step">7 tables</span></div></div>
+    <div class="lane" style="--c: var(--l3)"><div><div class="tag">Level 3</div><h2>+ column descriptions</h2></div>
+      <div class="flow"><span class="step">cards with descriptions</span><span class="arrow">→</span><span class="step">top 20</span><span class="arrow">→</span><span class="step model">LLM re-ranker</span><span class="arrow">→</span><span class="step">7 tables</span></div></div>
+  </section>
+
+  <section class="score">
+    <div class="box"><b>All found</b><p>Every table the question needs is in the 7. If one is missing, the SQL can't be right.</p></div>
+    <div class="box"><b>Top-20 ceiling</b><p>Were they even in the 20 the LLM saw? The re-ranker can't find what search missed.</p></div>
+    <div class="box"><b>Made-up tables</b><p>Names the LLM returned that it was never shown.</p></div>
+  </section>
+</div>
+</body>
+</html>

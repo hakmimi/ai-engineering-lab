@@ -1,0 +1,3968 @@
+{
+ "archeology_scan_large.artifactconditionassessments": [
+  "archeology_scan_large.artifacts"
+ ],
+ "archeology_scan_large.artifactphotography": [
+  "archeology_scan_large.artifacts",
+  "archeology_scan_large.photoprocessingqueue"
+ ],
+ "archeology_scan_large.artifacts": [
+  "archeology_scan_large.artifactconditionassessments",
+  "archeology_scan_large.artifactphotography",
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.sample_analysis",
+  "archeology_scan_large.sites"
+ ],
+ "archeology_scan_large.calibrationverificationtests": [
+  "archeology_scan_large.scancalibration"
+ ],
+ "archeology_scan_large.conservation": [
+  "archeology_scan_large.conservationtreatments",
+  "archeology_scan_large.projects",
+  "archeology_scan_large.sites"
+ ],
+ "archeology_scan_large.conservationtreatments": [
+  "archeology_scan_large.conservation",
+  "archeology_scan_large.treatmentchemicalapplications"
+ ],
+ "archeology_scan_large.data_access_logs": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects"
+ ],
+ "archeology_scan_large.environment": [
+  "archeology_scan_large.equipment",
+  "archeology_scan_large.sites"
+ ],
+ "archeology_scan_large.environmentalertevents": [
+  "archeology_scan_large.siteenvironmentmonitoring"
+ ],
+ "archeology_scan_large.equipment": [
+  "archeology_scan_large.environment",
+  "archeology_scan_large.equipmentmaintenance",
+  "archeology_scan_large.features",
+  "archeology_scan_large.geological_surveys",
+  "archeology_scan_large.mesh",
+  "archeology_scan_large.processing"
+ ],
+ "archeology_scan_large.equipmentmaintenance": [
+  "archeology_scan_large.equipment",
+  "archeology_scan_large.maintenancepartsusage"
+ ],
+ "archeology_scan_large.excavationfindings": [
+  "archeology_scan_large.excavationsessions"
+ ],
+ "archeology_scan_large.excavationsessions": [
+  "archeology_scan_large.excavationfindings",
+  "archeology_scan_large.sites"
+ ],
+ "archeology_scan_large.expensereceipts": [
+  "archeology_scan_large.projectexpenses"
+ ],
+ "archeology_scan_large.features": [
+  "archeology_scan_large.equipment",
+  "archeology_scan_large.sites"
+ ],
+ "archeology_scan_large.fieldnoteattachments": [
+  "archeology_scan_large.fieldnotes"
+ ],
+ "archeology_scan_large.fieldnotes": [
+  "archeology_scan_large.fieldnoteattachments",
+  "archeology_scan_large.personnel"
+ ],
+ "archeology_scan_large.geological_surveys": [
+  "archeology_scan_large.equipment",
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.sites"
+ ],
+ "archeology_scan_large.labsampleprocessing": [
+  "archeology_scan_large.sample_analysis",
+  "archeology_scan_large.samplecontaminationlog"
+ ],
+ "archeology_scan_large.maintenancepartsusage": [
+  "archeology_scan_large.equipmentmaintenance"
+ ],
+ "archeology_scan_large.mesh": [
+  "archeology_scan_large.equipment",
+  "archeology_scan_large.sites"
+ ],
+ "archeology_scan_large.permits": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects"
+ ],
+ "archeology_scan_large.personnel": [
+  "archeology_scan_large.artifacts",
+  "archeology_scan_large.data_access_logs",
+  "archeology_scan_large.fieldnotes",
+  "archeology_scan_large.geological_surveys",
+  "archeology_scan_large.permits",
+  "archeology_scan_large.personnel_certifications",
+  "archeology_scan_large.personnel_skills",
+  "archeology_scan_large.pointcloud",
+  "archeology_scan_large.project_budgets",
+  "archeology_scan_large.project_milestones",
+  "archeology_scan_large.project_stakeholders",
+  "archeology_scan_large.qualitycontrol",
+  "archeology_scan_large.registration",
+  "archeology_scan_large.sample_analysis",
+  "archeology_scan_large.scans",
+  "archeology_scan_large.shipping_log",
+  "archeology_scan_large.software_licenses",
+  "archeology_scan_large.spatial"
+ ],
+ "archeology_scan_large.personnel_certifications": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.skills"
+ ],
+ "archeology_scan_large.personnel_skills": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.skills"
+ ],
+ "archeology_scan_large.photoprocessingqueue": [
+  "archeology_scan_large.artifactphotography"
+ ],
+ "archeology_scan_large.pointcloud": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects"
+ ],
+ "archeology_scan_large.processing": [
+  "archeology_scan_large.equipment",
+  "archeology_scan_large.sites"
+ ],
+ "archeology_scan_large.project_budgets": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects"
+ ],
+ "archeology_scan_large.project_institution_partnership": [
+  "archeology_scan_large.projects",
+  "archeology_scan_large.research_institutions"
+ ],
+ "archeology_scan_large.project_milestones": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects"
+ ],
+ "archeology_scan_large.project_stakeholders": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects",
+  "archeology_scan_large.sites"
+ ],
+ "archeology_scan_large.projectexpenses": [
+  "archeology_scan_large.expensereceipts",
+  "archeology_scan_large.projects"
+ ],
+ "archeology_scan_large.projects": [
+  "archeology_scan_large.conservation",
+  "archeology_scan_large.data_access_logs",
+  "archeology_scan_large.permits",
+  "archeology_scan_large.pointcloud",
+  "archeology_scan_large.project_budgets",
+  "archeology_scan_large.project_institution_partnership",
+  "archeology_scan_large.project_milestones",
+  "archeology_scan_large.project_stakeholders",
+  "archeology_scan_large.projectexpenses",
+  "archeology_scan_large.qualitycontrol",
+  "archeology_scan_large.registration",
+  "archeology_scan_large.scans",
+  "archeology_scan_large.shipping_log",
+  "archeology_scan_large.software_licenses",
+  "archeology_scan_large.spatial"
+ ],
+ "archeology_scan_large.qualitycontrol": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects"
+ ],
+ "archeology_scan_large.registration": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects"
+ ],
+ "archeology_scan_large.research_institutions": [
+  "archeology_scan_large.project_institution_partnership"
+ ],
+ "archeology_scan_large.sample_analysis": [
+  "archeology_scan_large.artifacts",
+  "archeology_scan_large.labsampleprocessing",
+  "archeology_scan_large.personnel"
+ ],
+ "archeology_scan_large.samplecontaminationlog": [
+  "archeology_scan_large.labsampleprocessing"
+ ],
+ "archeology_scan_large.scancalibration": [
+  "archeology_scan_large.calibrationverificationtests",
+  "archeology_scan_large.scans"
+ ],
+ "archeology_scan_large.scans": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects",
+  "archeology_scan_large.scancalibration",
+  "archeology_scan_large.sites"
+ ],
+ "archeology_scan_large.shipping_log": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects",
+  "archeology_scan_large.transportlogistics"
+ ],
+ "archeology_scan_large.siteenvironmentmonitoring": [
+  "archeology_scan_large.environmentalertevents",
+  "archeology_scan_large.sites"
+ ],
+ "archeology_scan_large.sites": [
+  "archeology_scan_large.artifacts",
+  "archeology_scan_large.conservation",
+  "archeology_scan_large.environment",
+  "archeology_scan_large.excavationsessions",
+  "archeology_scan_large.features",
+  "archeology_scan_large.geological_surveys",
+  "archeology_scan_large.mesh",
+  "archeology_scan_large.processing",
+  "archeology_scan_large.project_stakeholders",
+  "archeology_scan_large.scans",
+  "archeology_scan_large.siteenvironmentmonitoring"
+ ],
+ "archeology_scan_large.skills": [
+  "archeology_scan_large.personnel_certifications",
+  "archeology_scan_large.personnel_skills"
+ ],
+ "archeology_scan_large.software_licenses": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects"
+ ],
+ "archeology_scan_large.spatial": [
+  "archeology_scan_large.personnel",
+  "archeology_scan_large.projects"
+ ],
+ "archeology_scan_large.transportconditionreadings": [
+  "archeology_scan_large.transportlogistics"
+ ],
+ "archeology_scan_large.transportlogistics": [
+  "archeology_scan_large.shipping_log",
+  "archeology_scan_large.transportconditionreadings"
+ ],
+ "archeology_scan_large.treatmentchemicalapplications": [
+  "archeology_scan_large.conservationtreatments"
+ ],
+ "cross_border_large.api_control_map": [
+  "cross_border_large.api_endpoint",
+  "cross_border_large.control_library"
+ ],
+ "cross_border_large.api_endpoint": [
+  "cross_border_large.api_control_map",
+  "cross_border_large.securityprofile"
+ ],
+ "cross_border_large.auditandcompliance": [
+  "cross_border_large.compliance",
+  "cross_border_large.dataprofile",
+  "cross_border_large.vendormanagement"
+ ],
+ "cross_border_large.compliance": [
+  "cross_border_large.auditandcompliance",
+  "cross_border_large.compliance_detail",
+  "cross_border_large.datasubjectrequest",
+  "cross_border_large.dpiarecord",
+  "cross_border_large.incidentregister",
+  "cross_border_large.riskmanagement",
+  "cross_border_large.vendormanagement"
+ ],
+ "cross_border_large.compliance_detail": [
+  "cross_border_large.compliance"
+ ],
+ "cross_border_large.consentrecord": [
+  "cross_border_large.dataset_catalog",
+  "cross_border_large.datasubjectrequest"
+ ],
+ "cross_border_large.control_library": [
+  "cross_border_large.api_control_map",
+  "cross_border_large.control_scenario_map",
+  "cross_border_large.incident_control_map"
+ ],
+ "cross_border_large.control_scenario_map": [
+  "cross_border_large.control_library",
+  "cross_border_large.risk_scenario"
+ ],
+ "cross_border_large.dataflow": [
+  "cross_border_large.dataflow_detail",
+  "cross_border_large.dataprofile",
+  "cross_border_large.riskmanagement",
+  "cross_border_large.securityprofile"
+ ],
+ "cross_border_large.dataflow_detail": [
+  "cross_border_large.dataflow"
+ ],
+ "cross_border_large.dataprofile": [
+  "cross_border_large.auditandcompliance",
+  "cross_border_large.dataflow",
+  "cross_border_large.dataprofile_lineage",
+  "cross_border_large.riskmanagement",
+  "cross_border_large.securityprofile"
+ ],
+ "cross_border_large.dataprofile_lineage": [
+  "cross_border_large.dataprofile"
+ ],
+ "cross_border_large.dataset_catalog": [
+  "cross_border_large.consentrecord",
+  "cross_border_large.dataset_legal_map",
+  "cross_border_large.disposalrecord",
+  "cross_border_large.dpia_dataset_map",
+  "cross_border_large.retention_dataset_map"
+ ],
+ "cross_border_large.dataset_legal_map": [
+  "cross_border_large.dataset_catalog",
+  "cross_border_large.legal_article"
+ ],
+ "cross_border_large.datasubjectrequest": [
+  "cross_border_large.compliance",
+  "cross_border_large.consentrecord",
+  "cross_border_large.erasurerequest",
+  "cross_border_large.geo_jurisdiction",
+  "cross_border_large.portabilityrequest",
+  "cross_border_large.rights_compliance_map"
+ ],
+ "cross_border_large.disposalrecord": [
+  "cross_border_large.dataset_catalog",
+  "cross_border_large.retentionschedule"
+ ],
+ "cross_border_large.dpia_dataset_map": [
+  "cross_border_large.dataset_catalog",
+  "cross_border_large.dpiarecord"
+ ],
+ "cross_border_large.dpiaassessmentcriteria": [
+  "cross_border_large.dpiarecord"
+ ],
+ "cross_border_large.dpiarecommendation": [
+  "cross_border_large.dpiarecord"
+ ],
+ "cross_border_large.dpiarecord": [
+  "cross_border_large.compliance",
+  "cross_border_large.dpia_dataset_map",
+  "cross_border_large.dpiaassessmentcriteria",
+  "cross_border_large.dpiarecommendation",
+  "cross_border_large.dpiastakeholderconsultation"
+ ],
+ "cross_border_large.dpiastakeholderconsultation": [
+  "cross_border_large.dpiarecord"
+ ],
+ "cross_border_large.duediligenceassessment": [
+  "cross_border_large.subprocessorregistry"
+ ],
+ "cross_border_large.employeecertification": [
+  "cross_border_large.privacytrainingprogram",
+  "cross_border_large.trainingcompletionlog"
+ ],
+ "cross_border_large.erasurerequest": [
+  "cross_border_large.datasubjectrequest"
+ ],
+ "cross_border_large.forensicinvestigation": [
+  "cross_border_large.incidentregister"
+ ],
+ "cross_border_large.geo_jurisdiction": [
+  "cross_border_large.datasubjectrequest",
+  "cross_border_large.incidentnotification",
+  "cross_border_large.jurisdiction_mechanism_map",
+  "cross_border_large.retentionschedule",
+  "cross_border_large.subprocessorregistry"
+ ],
+ "cross_border_large.governancedecision": [
+  "cross_border_large.policyversion",
+  "cross_border_large.risk_scenario"
+ ],
+ "cross_border_large.incident_control_map": [
+  "cross_border_large.control_library",
+  "cross_border_large.incidentregister"
+ ],
+ "cross_border_large.incidentnotification": [
+  "cross_border_large.geo_jurisdiction",
+  "cross_border_large.incidentregister"
+ ],
+ "cross_border_large.incidentregister": [
+  "cross_border_large.compliance",
+  "cross_border_large.forensicinvestigation",
+  "cross_border_large.incident_control_map",
+  "cross_border_large.incidentnotification",
+  "cross_border_large.incidentresponseplan",
+  "cross_border_large.remediationaction",
+  "cross_border_large.riskmanagement"
+ ],
+ "cross_border_large.incidentresponseplan": [
+  "cross_border_large.incidentregister"
+ ],
+ "cross_border_large.jurisdiction_mechanism_map": [
+  "cross_border_large.geo_jurisdiction",
+  "cross_border_large.transfer_mechanism"
+ ],
+ "cross_border_large.legal_article": [
+  "cross_border_large.dataset_legal_map",
+  "cross_border_large.rights_compliance_map"
+ ],
+ "cross_border_large.policyacknowledgment": [
+  "cross_border_large.policyversion"
+ ],
+ "cross_border_large.policyversion": [
+  "cross_border_large.governancedecision",
+  "cross_border_large.policyacknowledgment"
+ ],
+ "cross_border_large.portabilityrequest": [
+  "cross_border_large.datasubjectrequest"
+ ],
+ "cross_border_large.privacytrainingprogram": [
+  "cross_border_large.employeecertification",
+  "cross_border_large.trainingcompletionlog",
+  "cross_border_large.trainingmaterial"
+ ],
+ "cross_border_large.remediationaction": [
+  "cross_border_large.incidentregister"
+ ],
+ "cross_border_large.retention_dataset_map": [
+  "cross_border_large.dataset_catalog",
+  "cross_border_large.retentionschedule"
+ ],
+ "cross_border_large.retentionschedule": [
+  "cross_border_large.disposalrecord",
+  "cross_border_large.geo_jurisdiction",
+  "cross_border_large.retention_dataset_map"
+ ],
+ "cross_border_large.rights_compliance_map": [
+  "cross_border_large.datasubjectrequest",
+  "cross_border_large.legal_article"
+ ],
+ "cross_border_large.risk_scenario": [
+  "cross_border_large.control_scenario_map",
+  "cross_border_large.governancedecision"
+ ],
+ "cross_border_large.riskmanagement": [
+  "cross_border_large.compliance",
+  "cross_border_large.dataflow",
+  "cross_border_large.dataprofile",
+  "cross_border_large.incidentregister",
+  "cross_border_large.riskmanagement_detail",
+  "cross_border_large.securityprofile",
+  "cross_border_large.vendormanagement"
+ ],
+ "cross_border_large.riskmanagement_detail": [
+  "cross_border_large.riskmanagement"
+ ],
+ "cross_border_large.securityprofile": [
+  "cross_border_large.api_endpoint",
+  "cross_border_large.dataflow",
+  "cross_border_large.dataprofile",
+  "cross_border_large.riskmanagement",
+  "cross_border_large.securityprofile_cipherdetail",
+  "cross_border_large.vendormanagement"
+ ],
+ "cross_border_large.securityprofile_cipherdetail": [
+  "cross_border_large.securityprofile"
+ ],
+ "cross_border_large.slamonitoring": [
+  "cross_border_large.subprocessorregistry"
+ ],
+ "cross_border_large.subprocessor_vendor_map": [
+  "cross_border_large.subprocessorregistry",
+  "cross_border_large.vendormanagement"
+ ],
+ "cross_border_large.subprocessorregistry": [
+  "cross_border_large.duediligenceassessment",
+  "cross_border_large.geo_jurisdiction",
+  "cross_border_large.slamonitoring",
+  "cross_border_large.subprocessor_vendor_map",
+  "cross_border_large.vendormanagement"
+ ],
+ "cross_border_large.trainingcompletionlog": [
+  "cross_border_large.employeecertification",
+  "cross_border_large.privacytrainingprogram"
+ ],
+ "cross_border_large.trainingmaterial": [
+  "cross_border_large.privacytrainingprogram"
+ ],
+ "cross_border_large.transfer_mechanism": [
+  "cross_border_large.jurisdiction_mechanism_map"
+ ],
+ "cross_border_large.vendor_contract_detail": [
+  "cross_border_large.vendormanagement"
+ ],
+ "cross_border_large.vendormanagement": [
+  "cross_border_large.auditandcompliance",
+  "cross_border_large.compliance",
+  "cross_border_large.riskmanagement",
+  "cross_border_large.securityprofile",
+  "cross_border_large.subprocessor_vendor_map",
+  "cross_border_large.subprocessorregistry",
+  "cross_border_large.vendor_contract_detail"
+ ],
+ "cybermarket_pattern_large.alert_case_actions": [
+  "cybermarket_pattern_large.alerts"
+ ],
+ "cybermarket_pattern_large.alertescalationhistory": [
+  "cybermarket_pattern_large.alertresponseworkflow",
+  "cybermarket_pattern_large.alerts"
+ ],
+ "cybermarket_pattern_large.alertresponseworkflow": [
+  "cybermarket_pattern_large.alertescalationhistory"
+ ],
+ "cybermarket_pattern_large.alerts": [
+  "cybermarket_pattern_large.alert_case_actions",
+  "cybermarket_pattern_large.alertescalationhistory",
+  "cybermarket_pattern_large.transactions"
+ ],
+ "cybermarket_pattern_large.buyer_device_fingerprints": [
+  "cybermarket_pattern_large.buyers"
+ ],
+ "cybermarket_pattern_large.buyer_risk_history": [
+  "cybermarket_pattern_large.buyers"
+ ],
+ "cybermarket_pattern_large.buyerloyaltyprogram": [
+  "cybermarket_pattern_large.buyersessionanalytics"
+ ],
+ "cybermarket_pattern_large.buyerpurchasepatterns": [
+  "cybermarket_pattern_large.buyersessionanalytics"
+ ],
+ "cybermarket_pattern_large.buyers": [
+  "cybermarket_pattern_large.buyer_device_fingerprints",
+  "cybermarket_pattern_large.buyer_risk_history",
+  "cybermarket_pattern_large.buyersessionanalytics",
+  "cybermarket_pattern_large.transactions"
+ ],
+ "cybermarket_pattern_large.buyersessionanalytics": [
+  "cybermarket_pattern_large.buyerloyaltyprogram",
+  "cybermarket_pattern_large.buyerpurchasepatterns",
+  "cybermarket_pattern_large.buyers"
+ ],
+ "cybermarket_pattern_large.communications": [
+  "cybermarket_pattern_large.transactions"
+ ],
+ "cybermarket_pattern_large.connection_attack_surface": [
+  "cybermarket_pattern_large.connection_security"
+ ],
+ "cybermarket_pattern_large.connection_security": [
+  "cybermarket_pattern_large.connection_attack_surface",
+  "cybermarket_pattern_large.transactions"
+ ],
+ "cybermarket_pattern_large.disputearbitrationdetails": [
+  "cybermarket_pattern_large.transactiondisputedetails"
+ ],
+ "cybermarket_pattern_large.insurance_claim_evidence": [
+  "cybermarket_pattern_large.vendor_insurance_claims"
+ ],
+ "cybermarket_pattern_large.market_regulatory_audits": [
+  "cybermarket_pattern_large.markets"
+ ],
+ "cybermarket_pattern_large.market_traffic_analytics": [
+  "cybermarket_pattern_large.markets"
+ ],
+ "cybermarket_pattern_large.marketcompetitoranalysis": [
+  "cybermarket_pattern_large.markets",
+  "cybermarket_pattern_large.markettrendanalysis"
+ ],
+ "cybermarket_pattern_large.markets": [
+  "cybermarket_pattern_large.market_regulatory_audits",
+  "cybermarket_pattern_large.market_traffic_analytics",
+  "cybermarket_pattern_large.marketcompetitoranalysis",
+  "cybermarket_pattern_large.platform_availability_snapshots",
+  "cybermarket_pattern_large.platform_policy_documents",
+  "cybermarket_pattern_large.platformincidentreports",
+  "cybermarket_pattern_large.transactions",
+  "cybermarket_pattern_large.vendor_markets"
+ ],
+ "cybermarket_pattern_large.markettrendanalysis": [
+  "cybermarket_pattern_large.marketcompetitoranalysis"
+ ],
+ "cybermarket_pattern_large.paymentfraudindicators": [
+  "cybermarket_pattern_large.paymentprocessingevents"
+ ],
+ "cybermarket_pattern_large.paymentprocessingevents": [
+  "cybermarket_pattern_large.paymentfraudindicators",
+  "cybermarket_pattern_large.transactions"
+ ],
+ "cybermarket_pattern_large.platform_availability_snapshots": [
+  "cybermarket_pattern_large.markets"
+ ],
+ "cybermarket_pattern_large.platform_policy_documents": [
+  "cybermarket_pattern_large.markets"
+ ],
+ "cybermarket_pattern_large.platformincidentreports": [
+  "cybermarket_pattern_large.markets",
+  "cybermarket_pattern_large.platformservicehealth"
+ ],
+ "cybermarket_pattern_large.platformservicehealth": [
+  "cybermarket_pattern_large.platformincidentreports"
+ ],
+ "cybermarket_pattern_large.product_attribute_metrics": [
+  "cybermarket_pattern_large.products"
+ ],
+ "cybermarket_pattern_large.product_review_feedback": [
+  "cybermarket_pattern_large.product_review_tag_map",
+  "cybermarket_pattern_large.products"
+ ],
+ "cybermarket_pattern_large.product_review_tag_map": [
+  "cybermarket_pattern_large.product_review_feedback",
+  "cybermarket_pattern_large.tag_library"
+ ],
+ "cybermarket_pattern_large.products": [
+  "cybermarket_pattern_large.product_attribute_metrics",
+  "cybermarket_pattern_large.product_review_feedback",
+  "cybermarket_pattern_large.transaction_products",
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.risk_analytics": [
+  "cybermarket_pattern_large.risk_ml_feature_vectors",
+  "cybermarket_pattern_large.riskmodelpredictions",
+  "cybermarket_pattern_large.transactions"
+ ],
+ "cybermarket_pattern_large.risk_ml_feature_vectors": [
+  "cybermarket_pattern_large.risk_analytics"
+ ],
+ "cybermarket_pattern_large.riskmodelcalibration": [
+  "cybermarket_pattern_large.riskmodelpredictions"
+ ],
+ "cybermarket_pattern_large.riskmodelpredictions": [
+  "cybermarket_pattern_large.risk_analytics",
+  "cybermarket_pattern_large.riskmodelcalibration"
+ ],
+ "cybermarket_pattern_large.tag_library": [
+  "cybermarket_pattern_large.product_review_tag_map"
+ ],
+ "cybermarket_pattern_large.transaction_products": [
+  "cybermarket_pattern_large.products",
+  "cybermarket_pattern_large.transactions"
+ ],
+ "cybermarket_pattern_large.transaction_settlement_info": [
+  "cybermarket_pattern_large.transactions"
+ ],
+ "cybermarket_pattern_large.transactiondisputedetails": [
+  "cybermarket_pattern_large.disputearbitrationdetails",
+  "cybermarket_pattern_large.transactions"
+ ],
+ "cybermarket_pattern_large.transactions": [
+  "cybermarket_pattern_large.alerts",
+  "cybermarket_pattern_large.buyers",
+  "cybermarket_pattern_large.communications",
+  "cybermarket_pattern_large.connection_security",
+  "cybermarket_pattern_large.markets",
+  "cybermarket_pattern_large.paymentprocessingevents",
+  "cybermarket_pattern_large.risk_analytics",
+  "cybermarket_pattern_large.transaction_products",
+  "cybermarket_pattern_large.transaction_settlement_info",
+  "cybermarket_pattern_large.transactiondisputedetails",
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.vendor_countries": [
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.vendor_financial_history": [
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.vendor_insurance_claims": [
+  "cybermarket_pattern_large.insurance_claim_evidence",
+  "cybermarket_pattern_large.vendor_insurance_policies",
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.vendor_insurance_policies": [
+  "cybermarket_pattern_large.vendor_insurance_claims",
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.vendor_markets": [
+  "cybermarket_pattern_large.markets",
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.vendor_payment_methods": [
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.vendor_profile_details": [
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.vendor_regulatory_licenses": [
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.vendor_social_media": [
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.vendorcomplianceaudits": [
+  "cybermarket_pattern_large.vendorcompliancedocuments",
+  "cybermarket_pattern_large.vendors"
+ ],
+ "cybermarket_pattern_large.vendorcompliancedocuments": [
+  "cybermarket_pattern_large.vendorcomplianceaudits"
+ ],
+ "cybermarket_pattern_large.vendorinventorysnapshot": [
+  "cybermarket_pattern_large.vendorperformancemetrics"
+ ],
+ "cybermarket_pattern_large.vendorperformancemetrics": [
+  "cybermarket_pattern_large.vendorinventorysnapshot",
+  "cybermarket_pattern_large.vendors",
+  "cybermarket_pattern_large.vendorshipmenttracking"
+ ],
+ "cybermarket_pattern_large.vendors": [
+  "cybermarket_pattern_large.products",
+  "cybermarket_pattern_large.transactions",
+  "cybermarket_pattern_large.vendor_countries",
+  "cybermarket_pattern_large.vendor_financial_history",
+  "cybermarket_pattern_large.vendor_insurance_claims",
+  "cybermarket_pattern_large.vendor_insurance_policies",
+  "cybermarket_pattern_large.vendor_markets",
+  "cybermarket_pattern_large.vendor_payment_methods",
+  "cybermarket_pattern_large.vendor_profile_details",
+  "cybermarket_pattern_large.vendor_regulatory_licenses",
+  "cybermarket_pattern_large.vendor_social_media",
+  "cybermarket_pattern_large.vendorcomplianceaudits",
+  "cybermarket_pattern_large.vendorperformancemetrics"
+ ],
+ "cybermarket_pattern_large.vendorshipmenttracking": [
+  "cybermarket_pattern_large.vendorperformancemetrics"
+ ],
+ "disaster_relief_large.beneficiariesandassessments": [
+  "disaster_relief_large.beneficiaryhouseholds",
+  "disaster_relief_large.disasterevents",
+  "disaster_relief_large.operations"
+ ],
+ "disaster_relief_large.beneficiaryassistancerecord": [
+  "disaster_relief_large.beneficiarycore",
+  "disaster_relief_large.disastereventcore"
+ ],
+ "disaster_relief_large.beneficiarycore": [
+  "disaster_relief_large.beneficiaryassistancerecord",
+  "disaster_relief_large.disastereventcore",
+  "disaster_relief_large.shelteroccupancyrecord"
+ ],
+ "disaster_relief_large.beneficiaryhouseholds": [
+  "disaster_relief_large.beneficiariesandassessments",
+  "disaster_relief_large.household_member_map",
+  "disaster_relief_large.memberprofiles"
+ ],
+ "disaster_relief_large.communicationlogs": [
+  "disaster_relief_large.disasterevents"
+ ],
+ "disaster_relief_large.communityinfrastructureassessments": [
+  "disaster_relief_large.disasterevents"
+ ],
+ "disaster_relief_large.coordinationandevaluation": [
+  "disaster_relief_large.disasterevents",
+  "disaster_relief_large.operations",
+  "disaster_relief_large.stakeholderengagement"
+ ],
+ "disaster_relief_large.dataanalyticsreports": [
+  "disaster_relief_large.operations"
+ ],
+ "disaster_relief_large.disastereventcore": [
+  "disaster_relief_large.beneficiaryassistancerecord",
+  "disaster_relief_large.beneficiarycore",
+  "disaster_relief_large.disasterresponseteam",
+  "disaster_relief_large.diseasecontainmentmeasure",
+  "disaster_relief_large.diseaseoutbreakcore",
+  "disaster_relief_large.distributionhubcore",
+  "disaster_relief_large.emergencycommunicationlog",
+  "disaster_relief_large.infrastructureassessmentcore",
+  "disaster_relief_large.infrastructurerepairlog",
+  "disaster_relief_large.operationcore",
+  "disaster_relief_large.sheltercore",
+  "disaster_relief_large.trainingsessioncore",
+  "disaster_relief_large.volunteercore",
+  "disaster_relief_large.volunteerdeployment"
+ ],
+ "disaster_relief_large.disasterevents": [
+  "disaster_relief_large.beneficiariesandassessments",
+  "disaster_relief_large.communicationlogs",
+  "disaster_relief_large.communityinfrastructureassessments",
+  "disaster_relief_large.coordinationandevaluation",
+  "disaster_relief_large.earlywarningsystems",
+  "disaster_relief_large.environmentandhealth",
+  "disaster_relief_large.financials",
+  "disaster_relief_large.humanresources",
+  "disaster_relief_large.mediacoverage",
+  "disaster_relief_large.shelterfacilities",
+  "disaster_relief_large.supplies",
+  "disaster_relief_large.transportation"
+ ],
+ "disaster_relief_large.disasterresponseteam": [
+  "disaster_relief_large.disastereventcore"
+ ],
+ "disaster_relief_large.diseasecontainmentmeasure": [
+  "disaster_relief_large.disastereventcore",
+  "disaster_relief_large.diseaseoutbreakcore"
+ ],
+ "disaster_relief_large.diseaseoutbreakcore": [
+  "disaster_relief_large.disastereventcore",
+  "disaster_relief_large.diseasecontainmentmeasure"
+ ],
+ "disaster_relief_large.diseaseoutbreakmonitoring": [
+  "disaster_relief_large.environmentandhealth"
+ ],
+ "disaster_relief_large.distributionhubcore": [
+  "disaster_relief_large.disastereventcore",
+  "disaster_relief_large.operationlogistics"
+ ],
+ "disaster_relief_large.distributionhubs": [
+  "disaster_relief_large.logisticscontracts",
+  "disaster_relief_large.operation_hub_map",
+  "disaster_relief_large.supplies",
+  "disaster_relief_large.supplyallocation",
+  "disaster_relief_large.transportation"
+ ],
+ "disaster_relief_large.earlywarningsystems": [
+  "disaster_relief_large.disasterevents"
+ ],
+ "disaster_relief_large.emergencycommunicationlog": [
+  "disaster_relief_large.disastereventcore"
+ ],
+ "disaster_relief_large.environmentandhealth": [
+  "disaster_relief_large.disasterevents",
+  "disaster_relief_large.diseaseoutbreakmonitoring"
+ ],
+ "disaster_relief_large.financials": [
+  "disaster_relief_large.disasterevents",
+  "disaster_relief_large.operations"
+ ],
+ "disaster_relief_large.household_member_map": [
+  "disaster_relief_large.beneficiaryhouseholds",
+  "disaster_relief_large.memberprofiles"
+ ],
+ "disaster_relief_large.humanresources": [
+  "disaster_relief_large.disasterevents",
+  "disaster_relief_large.operations",
+  "disaster_relief_large.volunteerprofiles"
+ ],
+ "disaster_relief_large.infrastructureassessmentcore": [
+  "disaster_relief_large.disastereventcore",
+  "disaster_relief_large.infrastructurerepairlog"
+ ],
+ "disaster_relief_large.infrastructurerepairlog": [
+  "disaster_relief_large.disastereventcore",
+  "disaster_relief_large.infrastructureassessmentcore"
+ ],
+ "disaster_relief_large.logisticscontracts": [
+  "disaster_relief_large.distributionhubs"
+ ],
+ "disaster_relief_large.mediacoverage": [
+  "disaster_relief_large.disasterevents"
+ ],
+ "disaster_relief_large.memberprofiles": [
+  "disaster_relief_large.beneficiaryhouseholds",
+  "disaster_relief_large.household_member_map"
+ ],
+ "disaster_relief_large.operation_hub_map": [
+  "disaster_relief_large.distributionhubs",
+  "disaster_relief_large.operations"
+ ],
+ "disaster_relief_large.operationcore": [
+  "disaster_relief_large.disastereventcore",
+  "disaster_relief_large.operationlogistics"
+ ],
+ "disaster_relief_large.operationlogistics": [
+  "disaster_relief_large.distributionhubcore",
+  "disaster_relief_large.operationcore"
+ ],
+ "disaster_relief_large.operationriskassessments": [
+  "disaster_relief_large.operations"
+ ],
+ "disaster_relief_large.operations": [
+  "disaster_relief_large.beneficiariesandassessments",
+  "disaster_relief_large.coordinationandevaluation",
+  "disaster_relief_large.dataanalyticsreports",
+  "disaster_relief_large.financials",
+  "disaster_relief_large.humanresources",
+  "disaster_relief_large.operation_hub_map",
+  "disaster_relief_large.operationriskassessments"
+ ],
+ "disaster_relief_large.sheltercore": [
+  "disaster_relief_large.disastereventcore",
+  "disaster_relief_large.shelteroccupancyrecord"
+ ],
+ "disaster_relief_large.shelterfacilities": [
+  "disaster_relief_large.disasterevents"
+ ],
+ "disaster_relief_large.shelteroccupancyrecord": [
+  "disaster_relief_large.beneficiarycore",
+  "disaster_relief_large.sheltercore"
+ ],
+ "disaster_relief_large.skill_session_map": [
+  "disaster_relief_large.skillcatalogue",
+  "disaster_relief_large.trainingsessions"
+ ],
+ "disaster_relief_large.skillcatalogue": [
+  "disaster_relief_large.skill_session_map",
+  "disaster_relief_large.volunteer_skill_map"
+ ],
+ "disaster_relief_large.stakeholderengagement": [
+  "disaster_relief_large.coordinationandevaluation"
+ ],
+ "disaster_relief_large.supplies": [
+  "disaster_relief_large.disasterevents",
+  "disaster_relief_large.distributionhubs",
+  "disaster_relief_large.transportation"
+ ],
+ "disaster_relief_large.supplyallocation": [
+  "disaster_relief_large.distributionhubs",
+  "disaster_relief_large.supplyitemcatalogue"
+ ],
+ "disaster_relief_large.supplyitemcatalogue": [
+  "disaster_relief_large.supplyallocation"
+ ],
+ "disaster_relief_large.trainingattendance": [
+  "disaster_relief_large.trainingsessioncore",
+  "disaster_relief_large.volunteercore"
+ ],
+ "disaster_relief_large.trainingsessioncore": [
+  "disaster_relief_large.disastereventcore",
+  "disaster_relief_large.trainingattendance"
+ ],
+ "disaster_relief_large.trainingsessions": [
+  "disaster_relief_large.skill_session_map",
+  "disaster_relief_large.volunteerprofiles"
+ ],
+ "disaster_relief_large.transportation": [
+  "disaster_relief_large.disasterevents",
+  "disaster_relief_large.distributionhubs",
+  "disaster_relief_large.supplies",
+  "disaster_relief_large.vehiclemaintenancelogs"
+ ],
+ "disaster_relief_large.vehiclemaintenancelogs": [
+  "disaster_relief_large.transportation"
+ ],
+ "disaster_relief_large.volunteer_skill_map": [
+  "disaster_relief_large.skillcatalogue",
+  "disaster_relief_large.volunteerprofiles"
+ ],
+ "disaster_relief_large.volunteercore": [
+  "disaster_relief_large.disastereventcore",
+  "disaster_relief_large.trainingattendance",
+  "disaster_relief_large.volunteerdeployment"
+ ],
+ "disaster_relief_large.volunteerdeployment": [
+  "disaster_relief_large.disastereventcore",
+  "disaster_relief_large.volunteercore"
+ ],
+ "disaster_relief_large.volunteerprofiles": [
+  "disaster_relief_large.humanresources",
+  "disaster_relief_large.trainingsessions",
+  "disaster_relief_large.volunteer_skill_map"
+ ],
+ "exchange_traded_funds_large.alternativedataquality": [
+  "exchange_traded_funds_large.alternativedatasignals"
+ ],
+ "exchange_traded_funds_large.alternativedatasignals": [
+  "exchange_traded_funds_large.alternativedataquality",
+  "exchange_traded_funds_large.securities"
+ ],
+ "exchange_traded_funds_large.analystestimaterevisions": [
+  "exchange_traded_funds_large.analystresearchconsensus"
+ ],
+ "exchange_traded_funds_large.analystresearchconsensus": [
+  "exchange_traded_funds_large.analystestimaterevisions",
+  "exchange_traded_funds_large.securities"
+ ],
+ "exchange_traded_funds_large.annual_returns": [
+  "exchange_traded_funds_large.funds"
+ ],
+ "exchange_traded_funds_large.bond_allocations": [
+  "exchange_traded_funds_large.bond_ratings",
+  "exchange_traded_funds_large.funds"
+ ],
+ "exchange_traded_funds_large.bond_rating_market_data": [
+  "exchange_traded_funds_large.bond_ratings"
+ ],
+ "exchange_traded_funds_large.bond_ratings": [
+  "exchange_traded_funds_large.bond_allocations",
+  "exchange_traded_funds_large.bond_rating_market_data"
+ ],
+ "exchange_traded_funds_large.categories": [
+  "exchange_traded_funds_large.family_categories",
+  "exchange_traded_funds_large.funds"
+ ],
+ "exchange_traded_funds_large.corporateactionevents": [
+  "exchange_traded_funds_large.corporateactionimpactanalysis",
+  "exchange_traded_funds_large.securities"
+ ],
+ "exchange_traded_funds_large.corporateactionimpactanalysis": [
+  "exchange_traded_funds_large.corporateactionevents"
+ ],
+ "exchange_traded_funds_large.distributionplatformmetrics": [
+  "exchange_traded_funds_large.fundwholesaledistribution"
+ ],
+ "exchange_traded_funds_large.exchange_extended_info": [
+  "exchange_traded_funds_large.exchanges"
+ ],
+ "exchange_traded_funds_large.exchanges": [
+  "exchange_traded_funds_large.exchange_extended_info",
+  "exchange_traded_funds_large.family_exchanges",
+  "exchange_traded_funds_large.funds",
+  "exchange_traded_funds_large.tradeexecutionaudit"
+ ],
+ "exchange_traded_funds_large.executionqualitymetrics": [
+  "exchange_traded_funds_large.tradeexecutionaudit"
+ ],
+ "exchange_traded_funds_large.families": [
+  "exchange_traded_funds_large.family_business_metrics",
+  "exchange_traded_funds_large.family_categories",
+  "exchange_traded_funds_large.family_exchanges",
+  "exchange_traded_funds_large.funds"
+ ],
+ "exchange_traded_funds_large.family_business_metrics": [
+  "exchange_traded_funds_large.families"
+ ],
+ "exchange_traded_funds_large.family_categories": [
+  "exchange_traded_funds_large.categories",
+  "exchange_traded_funds_large.families"
+ ],
+ "exchange_traded_funds_large.family_exchanges": [
+  "exchange_traded_funds_large.exchanges",
+  "exchange_traded_funds_large.families"
+ ],
+ "exchange_traded_funds_large.fund_manager_assignments": [
+  "exchange_traded_funds_large.funds",
+  "exchange_traded_funds_large.portfolio_managers"
+ ],
+ "exchange_traded_funds_large.fund_regulatory_compliance": [
+  "exchange_traded_funds_large.funds",
+  "exchange_traded_funds_large.regulatory_authorities"
+ ],
+ "exchange_traded_funds_large.fund_strategy_implementations": [
+  "exchange_traded_funds_large.funds",
+  "exchange_traded_funds_large.investment_strategies"
+ ],
+ "exchange_traded_funds_large.funds": [
+  "exchange_traded_funds_large.annual_returns",
+  "exchange_traded_funds_large.bond_allocations",
+  "exchange_traded_funds_large.categories",
+  "exchange_traded_funds_large.exchanges",
+  "exchange_traded_funds_large.families",
+  "exchange_traded_funds_large.fund_manager_assignments",
+  "exchange_traded_funds_large.fund_regulatory_compliance",
+  "exchange_traded_funds_large.fund_strategy_implementations",
+  "exchange_traded_funds_large.fundtaxefficiencymetrics",
+  "exchange_traded_funds_large.fundwholesaledistribution",
+  "exchange_traded_funds_large.holdings",
+  "exchange_traded_funds_large.operationalriskevents",
+  "exchange_traded_funds_large.performance",
+  "exchange_traded_funds_large.portfoliostresstestresults",
+  "exchange_traded_funds_large.risk_metrics",
+  "exchange_traded_funds_large.sector_allocations"
+ ],
+ "exchange_traded_funds_large.fundtaxefficiencymetrics": [
+  "exchange_traded_funds_large.funds",
+  "exchange_traded_funds_large.taxlotmanagement"
+ ],
+ "exchange_traded_funds_large.fundwholesaledistribution": [
+  "exchange_traded_funds_large.distributionplatformmetrics",
+  "exchange_traded_funds_large.funds"
+ ],
+ "exchange_traded_funds_large.holdings": [
+  "exchange_traded_funds_large.funds",
+  "exchange_traded_funds_large.securities"
+ ],
+ "exchange_traded_funds_large.investment_strategies": [
+  "exchange_traded_funds_large.fund_strategy_implementations"
+ ],
+ "exchange_traded_funds_large.marketsentimentscores": [
+  "exchange_traded_funds_large.securities",
+  "exchange_traded_funds_large.sentimenttradingsignals"
+ ],
+ "exchange_traded_funds_large.operationalriskevents": [
+  "exchange_traded_funds_large.funds",
+  "exchange_traded_funds_large.riskeventremediation"
+ ],
+ "exchange_traded_funds_large.performance": [
+  "exchange_traded_funds_large.funds"
+ ],
+ "exchange_traded_funds_large.portfolio_managers": [
+  "exchange_traded_funds_large.fund_manager_assignments"
+ ],
+ "exchange_traded_funds_large.portfoliostresstestresults": [
+  "exchange_traded_funds_large.funds",
+  "exchange_traded_funds_large.stressscenarioparameters"
+ ],
+ "exchange_traded_funds_large.regulatory_authorities": [
+  "exchange_traded_funds_large.fund_regulatory_compliance"
+ ],
+ "exchange_traded_funds_large.risk_metrics": [
+  "exchange_traded_funds_large.funds"
+ ],
+ "exchange_traded_funds_large.riskeventremediation": [
+  "exchange_traded_funds_large.operationalriskevents"
+ ],
+ "exchange_traded_funds_large.sector_allocations": [
+  "exchange_traded_funds_large.funds",
+  "exchange_traded_funds_large.sectors"
+ ],
+ "exchange_traded_funds_large.sector_market_intelligence": [
+  "exchange_traded_funds_large.sectors"
+ ],
+ "exchange_traded_funds_large.sectors": [
+  "exchange_traded_funds_large.sector_allocations",
+  "exchange_traded_funds_large.sector_market_intelligence"
+ ],
+ "exchange_traded_funds_large.securities": [
+  "exchange_traded_funds_large.alternativedatasignals",
+  "exchange_traded_funds_large.analystresearchconsensus",
+  "exchange_traded_funds_large.corporateactionevents",
+  "exchange_traded_funds_large.holdings",
+  "exchange_traded_funds_large.marketsentimentscores",
+  "exchange_traded_funds_large.security_detailed_analytics",
+  "exchange_traded_funds_large.shareholdervotingoutcomes"
+ ],
+ "exchange_traded_funds_large.security_detailed_analytics": [
+  "exchange_traded_funds_large.securities"
+ ],
+ "exchange_traded_funds_large.sentimenttradingsignals": [
+  "exchange_traded_funds_large.marketsentimentscores"
+ ],
+ "exchange_traded_funds_large.shareholdervotingoutcomes": [
+  "exchange_traded_funds_large.securities",
+  "exchange_traded_funds_large.votingpolicyalignment"
+ ],
+ "exchange_traded_funds_large.stressscenarioparameters": [
+  "exchange_traded_funds_large.portfoliostresstestresults"
+ ],
+ "exchange_traded_funds_large.taxlotmanagement": [
+  "exchange_traded_funds_large.fundtaxefficiencymetrics"
+ ],
+ "exchange_traded_funds_large.tradeexecutionaudit": [
+  "exchange_traded_funds_large.exchanges",
+  "exchange_traded_funds_large.executionqualitymetrics"
+ ],
+ "exchange_traded_funds_large.votingpolicyalignment": [
+  "exchange_traded_funds_large.shareholdervotingoutcomes"
+ ],
+ "fake_account_large.account_audit_logs": [
+  "fake_account_large.accounts",
+  "fake_account_large.moderation_case_files"
+ ],
+ "fake_account_large.account_clusters": [
+  "fake_account_large.accounts",
+  "fake_account_large.cluster_analysis"
+ ],
+ "fake_account_large.account_integrations": [
+  "fake_account_large.accounts",
+  "fake_account_large.partner_integrations"
+ ],
+ "fake_account_large.account_subscriptions": [
+  "fake_account_large.accounts",
+  "fake_account_large.subscription_packages"
+ ],
+ "fake_account_large.account_tags": [
+  "fake_account_large.accounts",
+  "fake_account_large.tags"
+ ],
+ "fake_account_large.accounts": [
+  "fake_account_large.account_audit_logs",
+  "fake_account_large.account_clusters",
+  "fake_account_large.account_integrations",
+  "fake_account_large.account_subscriptions",
+  "fake_account_large.account_tags",
+  "fake_account_large.ad_campaign_performance",
+  "fake_account_large.behavioral_scores",
+  "fake_account_large.commerce_transactions",
+  "fake_account_large.content_activity",
+  "fake_account_large.feedback_items",
+  "fake_account_large.influencer_brand_deals",
+  "fake_account_large.interaction_metrics",
+  "fake_account_large.media_asset_details",
+  "fake_account_large.monitoring",
+  "fake_account_large.network_metrics",
+  "fake_account_large.platforms",
+  "fake_account_large.profiles",
+  "fake_account_large.risk_and_moderation",
+  "fake_account_large.security_sessions"
+ ],
+ "fake_account_large.ad_bid_auctions": [
+  "fake_account_large.ad_campaigns",
+  "fake_account_large.ad_conversion_attribution"
+ ],
+ "fake_account_large.ad_campaign_performance": [
+  "fake_account_large.accounts",
+  "fake_account_large.ad_campaigns"
+ ],
+ "fake_account_large.ad_campaigns": [
+  "fake_account_large.ad_bid_auctions",
+  "fake_account_large.ad_campaign_performance"
+ ],
+ "fake_account_large.ad_conversion_attribution": [
+  "fake_account_large.ad_bid_auctions"
+ ],
+ "fake_account_large.ai_inference_traces": [
+  "fake_account_large.model_feedback_loops",
+  "fake_account_large.risk_event_history"
+ ],
+ "fake_account_large.api_quota_adjustments": [
+  "fake_account_large.api_usage_metering"
+ ],
+ "fake_account_large.api_usage_metering": [
+  "fake_account_large.api_quota_adjustments",
+  "fake_account_large.partner_integrations"
+ ],
+ "fake_account_large.behavioral_scores": [
+  "fake_account_large.accounts"
+ ],
+ "fake_account_large.cdn_edge_metrics": [
+  "fake_account_large.cdn_traffic_spikes",
+  "fake_account_large.media_asset_details"
+ ],
+ "fake_account_large.cdn_traffic_spikes": [
+  "fake_account_large.cdn_edge_metrics"
+ ],
+ "fake_account_large.cluster_analysis": [
+  "fake_account_large.account_clusters",
+  "fake_account_large.cluster_temporal_metrics"
+ ],
+ "fake_account_large.cluster_temporal_metrics": [
+  "fake_account_large.cluster_analysis"
+ ],
+ "fake_account_large.commerce_transactions": [
+  "fake_account_large.accounts",
+  "fake_account_large.transaction_dispute_evidence"
+ ],
+ "fake_account_large.content_activity": [
+  "fake_account_large.accounts",
+  "fake_account_large.content_language_distribution",
+  "fake_account_large.content_topics",
+  "fake_account_large.sentiment_analysis_stats"
+ ],
+ "fake_account_large.content_language_distribution": [
+  "fake_account_large.content_activity"
+ ],
+ "fake_account_large.content_topics": [
+  "fake_account_large.content_activity",
+  "fake_account_large.topics"
+ ],
+ "fake_account_large.customer_support_tickets": [
+  "fake_account_large.feedback_items",
+  "fake_account_large.ticket_message_metrics"
+ ],
+ "fake_account_large.device_fingerprint_details": [
+  "fake_account_large.security_sessions"
+ ],
+ "fake_account_large.feedback_items": [
+  "fake_account_large.accounts",
+  "fake_account_large.customer_support_tickets",
+  "fake_account_large.feedback_responses"
+ ],
+ "fake_account_large.feedback_responses": [
+  "fake_account_large.feedback_items"
+ ],
+ "fake_account_large.gamification_level_rewards": [
+  "fake_account_large.user_gamification_stats"
+ ],
+ "fake_account_large.influencer_brand_deals": [
+  "fake_account_large.accounts",
+  "fake_account_large.influencer_post_compliance"
+ ],
+ "fake_account_large.influencer_post_compliance": [
+  "fake_account_large.influencer_brand_deals"
+ ],
+ "fake_account_large.interaction_metrics": [
+  "fake_account_large.accounts",
+  "fake_account_large.interaction_topic_metrics"
+ ],
+ "fake_account_large.interaction_topic_metrics": [
+  "fake_account_large.interaction_metrics"
+ ],
+ "fake_account_large.media_asset_details": [
+  "fake_account_large.accounts",
+  "fake_account_large.cdn_edge_metrics",
+  "fake_account_large.stream_quality_logs"
+ ],
+ "fake_account_large.model_feedback_loops": [
+  "fake_account_large.ai_inference_traces"
+ ],
+ "fake_account_large.moderation_appeals_process": [
+  "fake_account_large.moderation_case_files"
+ ],
+ "fake_account_large.moderation_case_files": [
+  "fake_account_large.account_audit_logs",
+  "fake_account_large.moderation_appeals_process"
+ ],
+ "fake_account_large.monitoring": [
+  "fake_account_large.accounts"
+ ],
+ "fake_account_large.network_metrics": [
+  "fake_account_large.accounts"
+ ],
+ "fake_account_large.partner_integrations": [
+  "fake_account_large.account_integrations",
+  "fake_account_large.api_usage_metering"
+ ],
+ "fake_account_large.platforms": [
+  "fake_account_large.accounts"
+ ],
+ "fake_account_large.profile_demographics": [
+  "fake_account_large.profiles"
+ ],
+ "fake_account_large.profiles": [
+  "fake_account_large.accounts",
+  "fake_account_large.profile_demographics",
+  "fake_account_large.user_gamification_stats"
+ ],
+ "fake_account_large.risk_and_moderation": [
+  "fake_account_large.accounts",
+  "fake_account_large.risk_event_history"
+ ],
+ "fake_account_large.risk_event_history": [
+  "fake_account_large.ai_inference_traces",
+  "fake_account_large.risk_and_moderation"
+ ],
+ "fake_account_large.security_sessions": [
+  "fake_account_large.accounts",
+  "fake_account_large.device_fingerprint_details"
+ ],
+ "fake_account_large.sentiment_analysis_stats": [
+  "fake_account_large.content_activity"
+ ],
+ "fake_account_large.stream_buffer_events": [
+  "fake_account_large.stream_quality_logs"
+ ],
+ "fake_account_large.stream_quality_logs": [
+  "fake_account_large.media_asset_details",
+  "fake_account_large.stream_buffer_events"
+ ],
+ "fake_account_large.subscription_packages": [
+  "fake_account_large.account_subscriptions"
+ ],
+ "fake_account_large.tags": [
+  "fake_account_large.account_tags"
+ ],
+ "fake_account_large.ticket_message_metrics": [
+  "fake_account_large.customer_support_tickets"
+ ],
+ "fake_account_large.topics": [
+  "fake_account_large.content_topics"
+ ],
+ "fake_account_large.transaction_dispute_evidence": [
+  "fake_account_large.commerce_transactions"
+ ],
+ "fake_account_large.user_gamification_stats": [
+  "fake_account_large.gamification_level_rewards",
+  "fake_account_large.profiles"
+ ],
+ "labor_certification_applications_large.attorney": [
+  "labor_certification_applications_large.attorney_case_specialization",
+  "labor_certification_applications_large.attorneyperformancemetric",
+  "labor_certification_applications_large.case_attorney"
+ ],
+ "labor_certification_applications_large.attorney_case_specialization": [
+  "labor_certification_applications_large.attorney"
+ ],
+ "labor_certification_applications_large.attorneyperformancemetric": [
+  "labor_certification_applications_large.attorney",
+  "labor_certification_applications_large.attorneytrainingrecord"
+ ],
+ "labor_certification_applications_large.attorneytrainingrecord": [
+  "labor_certification_applications_large.attorneyperformancemetric"
+ ],
+ "labor_certification_applications_large.benefitclaimdetail": [
+  "labor_certification_applications_large.workerhealthbenefit"
+ ],
+ "labor_certification_applications_large.case_attorney": [
+  "labor_certification_applications_large.attorney",
+  "labor_certification_applications_large.cases"
+ ],
+ "labor_certification_applications_large.case_processing_timeline": [
+  "labor_certification_applications_large.cases"
+ ],
+ "labor_certification_applications_large.case_rfe_details": [
+  "labor_certification_applications_large.cases"
+ ],
+ "labor_certification_applications_large.case_worksite": [
+  "labor_certification_applications_large.cases",
+  "labor_certification_applications_large.prevailing_wage",
+  "labor_certification_applications_large.worksite"
+ ],
+ "labor_certification_applications_large.casecorrespondencelog": [
+  "labor_certification_applications_large.cases",
+  "labor_certification_applications_large.correspondenceresponsetracking"
+ ],
+ "labor_certification_applications_large.casedecisionaudit": [
+  "labor_certification_applications_large.cases",
+  "labor_certification_applications_large.decisionauditappeal"
+ ],
+ "labor_certification_applications_large.casefraudindicator": [
+  "labor_certification_applications_large.cases",
+  "labor_certification_applications_large.fraudinvestigationaction"
+ ],
+ "labor_certification_applications_large.cases": [
+  "labor_certification_applications_large.case_attorney",
+  "labor_certification_applications_large.case_processing_timeline",
+  "labor_certification_applications_large.case_rfe_details",
+  "labor_certification_applications_large.case_worksite",
+  "labor_certification_applications_large.casecorrespondencelog",
+  "labor_certification_applications_large.casedecisionaudit",
+  "labor_certification_applications_large.casefraudindicator",
+  "labor_certification_applications_large.employer",
+  "labor_certification_applications_large.preparer",
+  "labor_certification_applications_large.recruitment_campaign_case_link",
+  "labor_certification_applications_large.visa_extension_request",
+  "labor_certification_applications_large.worksiteinspection"
+ ],
+ "labor_certification_applications_large.certificationverificationlog": [
+  "labor_certification_applications_large.workerskillcertification"
+ ],
+ "labor_certification_applications_large.compliancescorehistory": [
+  "labor_certification_applications_large.employercompliancescore"
+ ],
+ "labor_certification_applications_large.correspondenceresponsetracking": [
+  "labor_certification_applications_large.casecorrespondencelog"
+ ],
+ "labor_certification_applications_large.decisionauditappeal": [
+  "labor_certification_applications_large.casedecisionaudit"
+ ],
+ "labor_certification_applications_large.emp_compliance_audit": [
+  "labor_certification_applications_large.employer"
+ ],
+ "labor_certification_applications_large.emp_diversity_metrics": [
+  "labor_certification_applications_large.employer"
+ ],
+ "labor_certification_applications_large.emp_financials_details": [
+  "labor_certification_applications_large.employer"
+ ],
+ "labor_certification_applications_large.employer": [
+  "labor_certification_applications_large.cases",
+  "labor_certification_applications_large.emp_compliance_audit",
+  "labor_certification_applications_large.emp_diversity_metrics",
+  "labor_certification_applications_large.emp_financials_details",
+  "labor_certification_applications_large.employer_benefit_package",
+  "labor_certification_applications_large.employer_poc",
+  "labor_certification_applications_large.recruitment_campaign",
+  "labor_certification_applications_large.training_program",
+  "labor_certification_applications_large.worker_position_history"
+ ],
+ "labor_certification_applications_large.employer_benefit_package": [
+  "labor_certification_applications_large.employer"
+ ],
+ "labor_certification_applications_large.employer_poc": [
+  "labor_certification_applications_large.employer",
+  "labor_certification_applications_large.employercompliancescore"
+ ],
+ "labor_certification_applications_large.employercompliancescore": [
+  "labor_certification_applications_large.compliancescorehistory",
+  "labor_certification_applications_large.employer_poc"
+ ],
+ "labor_certification_applications_large.employerlaborcondition": [
+  "labor_certification_applications_large.laborconditionamendment",
+  "labor_certification_applications_large.prevailing_wage"
+ ],
+ "labor_certification_applications_large.fraudinvestigationaction": [
+  "labor_certification_applications_large.casefraudindicator"
+ ],
+ "labor_certification_applications_large.inspectionremediationtask": [
+  "labor_certification_applications_large.worksiteinspection"
+ ],
+ "labor_certification_applications_large.laborconditionamendment": [
+  "labor_certification_applications_large.employerlaborcondition"
+ ],
+ "labor_certification_applications_large.preparer": [
+  "labor_certification_applications_large.cases"
+ ],
+ "labor_certification_applications_large.prevailing_wage": [
+  "labor_certification_applications_large.case_worksite",
+  "labor_certification_applications_large.employerlaborcondition",
+  "labor_certification_applications_large.wage_history"
+ ],
+ "labor_certification_applications_large.recruitment_campaign": [
+  "labor_certification_applications_large.employer",
+  "labor_certification_applications_large.recruitment_campaign_case_link",
+  "labor_certification_applications_large.recruitment_campaign_worksite_link",
+  "labor_certification_applications_large.recruitmentsourceanalytic"
+ ],
+ "labor_certification_applications_large.recruitment_campaign_case_link": [
+  "labor_certification_applications_large.cases",
+  "labor_certification_applications_large.recruitment_campaign"
+ ],
+ "labor_certification_applications_large.recruitment_campaign_worksite_link": [
+  "labor_certification_applications_large.recruitment_campaign",
+  "labor_certification_applications_large.worksite"
+ ],
+ "labor_certification_applications_large.recruitmentsourceanalytic": [
+  "labor_certification_applications_large.recruitment_campaign",
+  "labor_certification_applications_large.sourcechannelperformance"
+ ],
+ "labor_certification_applications_large.sourcechannelperformance": [
+  "labor_certification_applications_large.recruitmentsourceanalytic"
+ ],
+ "labor_certification_applications_large.training_program": [
+  "labor_certification_applications_large.employer"
+ ],
+ "labor_certification_applications_large.visa_extension_request": [
+  "labor_certification_applications_large.cases",
+  "labor_certification_applications_large.visaextensionoutcome"
+ ],
+ "labor_certification_applications_large.visaextensionoutcome": [
+  "labor_certification_applications_large.visa_extension_request"
+ ],
+ "labor_certification_applications_large.wage_history": [
+  "labor_certification_applications_large.prevailing_wage"
+ ],
+ "labor_certification_applications_large.worker_dependent": [
+  "labor_certification_applications_large.worker_profile"
+ ],
+ "labor_certification_applications_large.worker_education": [
+  "labor_certification_applications_large.worker_profile"
+ ],
+ "labor_certification_applications_large.worker_position_history": [
+  "labor_certification_applications_large.employer",
+  "labor_certification_applications_large.worker_profile"
+ ],
+ "labor_certification_applications_large.worker_profile": [
+  "labor_certification_applications_large.worker_dependent",
+  "labor_certification_applications_large.worker_education",
+  "labor_certification_applications_large.worker_position_history",
+  "labor_certification_applications_large.workerhealthbenefit",
+  "labor_certification_applications_large.workerskillcertification"
+ ],
+ "labor_certification_applications_large.workerhealthbenefit": [
+  "labor_certification_applications_large.benefitclaimdetail",
+  "labor_certification_applications_large.worker_profile"
+ ],
+ "labor_certification_applications_large.workerskillcertification": [
+  "labor_certification_applications_large.certificationverificationlog",
+  "labor_certification_applications_large.worker_profile"
+ ],
+ "labor_certification_applications_large.worksite": [
+  "labor_certification_applications_large.case_worksite",
+  "labor_certification_applications_large.recruitment_campaign_worksite_link",
+  "labor_certification_applications_large.worksite_environmental_metrics"
+ ],
+ "labor_certification_applications_large.worksite_environmental_metrics": [
+  "labor_certification_applications_large.worksite"
+ ],
+ "labor_certification_applications_large.worksiteinspection": [
+  "labor_certification_applications_large.cases",
+  "labor_certification_applications_large.inspectionremediationtask"
+ ],
+ "mental_healths_large.ambulancemaintenancelogs": [
+  "mental_healths_large.ambulancetransport"
+ ],
+ "mental_healths_large.ambulancetransport": [
+  "mental_healths_large.ambulancemaintenancelogs",
+  "mental_healths_large.emergencyevents"
+ ],
+ "mental_healths_large.appointments": [
+  "mental_healths_large.clinicians",
+  "mental_healths_large.patients",
+  "mental_healths_large.telehealthsessions"
+ ],
+ "mental_healths_large.assessmentbasics": [
+  "mental_healths_large.assessmentsocialanddiagnosis",
+  "mental_healths_large.assessmentsymptomsandrisk",
+  "mental_healths_large.encounters",
+  "mental_healths_large.patients"
+ ],
+ "mental_healths_large.assessmentsocialanddiagnosis": [
+  "mental_healths_large.assessmentbasics"
+ ],
+ "mental_healths_large.assessmentsymptomsandrisk": [
+  "mental_healths_large.assessmentbasics"
+ ],
+ "mental_healths_large.billingrecords": [
+  "mental_healths_large.insuranceclaimsprocessing",
+  "mental_healths_large.patients"
+ ],
+ "mental_healths_large.caregivers": [
+  "mental_healths_large.patientcaregivers"
+ ],
+ "mental_healths_large.careplans": [
+  "mental_healths_large.clinicians",
+  "mental_healths_large.patients"
+ ],
+ "mental_healths_large.claimsappealrecords": [
+  "mental_healths_large.insuranceclaimsprocessing"
+ ],
+ "mental_healths_large.clinicalpathwayadherence": [
+  "mental_healths_large.encounters"
+ ],
+ "mental_healths_large.clinicaltrials": [
+  "mental_healths_large.patientclinicaltrials"
+ ],
+ "mental_healths_large.clinicians": [
+  "mental_healths_large.appointments",
+  "mental_healths_large.careplans",
+  "mental_healths_large.clinicianteams",
+  "mental_healths_large.facilities",
+  "mental_healths_large.patients"
+ ],
+ "mental_healths_large.clinicianteams": [
+  "mental_healths_large.clinicians",
+  "mental_healths_large.medicalteams"
+ ],
+ "mental_healths_large.devicealerthistory": [
+  "mental_healths_large.devicetelemetry"
+ ],
+ "mental_healths_large.devicetelemetry": [
+  "mental_healths_large.devicealerthistory",
+  "mental_healths_large.medicaldevices"
+ ],
+ "mental_healths_large.dietarylogs": [
+  "mental_healths_large.nutritionconsultations",
+  "mental_healths_large.patients"
+ ],
+ "mental_healths_large.emergencyevents": [
+  "mental_healths_large.ambulancetransport",
+  "mental_healths_large.patients"
+ ],
+ "mental_healths_large.encounters": [
+  "mental_healths_large.assessmentbasics",
+  "mental_healths_large.clinicalpathwayadherence",
+  "mental_healths_large.patientfeedbacksurveys",
+  "mental_healths_large.patients",
+  "mental_healths_large.surgicalprocedures",
+  "mental_healths_large.treatmentbasics"
+ ],
+ "mental_healths_large.facilities": [
+  "mental_healths_large.clinicians",
+  "mental_healths_large.facilityoccupancylog",
+  "mental_healths_large.facilitysuppliers"
+ ],
+ "mental_healths_large.facilityoccupancylog": [
+  "mental_healths_large.facilities",
+  "mental_healths_large.facilitystaffinglogs"
+ ],
+ "mental_healths_large.facilitystaffinglogs": [
+  "mental_healths_large.facilityoccupancylog"
+ ],
+ "mental_healths_large.facilitysuppliers": [
+  "mental_healths_large.facilities",
+  "mental_healths_large.suppliers"
+ ],
+ "mental_healths_large.feedbackactionitems": [
+  "mental_healths_large.patientfeedbacksurveys"
+ ],
+ "mental_healths_large.genomicsequencing": [
+  "mental_healths_large.genomicvariantanalysis",
+  "mental_healths_large.labresults"
+ ],
+ "mental_healths_large.genomicvariantanalysis": [
+  "mental_healths_large.genomicsequencing"
+ ],
+ "mental_healths_large.imagingstudies": [
+  "mental_healths_large.patients"
+ ],
+ "mental_healths_large.insuranceclaimsprocessing": [
+  "mental_healths_large.billingrecords",
+  "mental_healths_large.claimsappealrecords"
+ ],
+ "mental_healths_large.labresults": [
+  "mental_healths_large.genomicsequencing",
+  "mental_healths_large.patients"
+ ],
+ "mental_healths_large.medicaldevices": [
+  "mental_healths_large.devicetelemetry"
+ ],
+ "mental_healths_large.medicalrecords": [
+  "mental_healths_large.patients"
+ ],
+ "mental_healths_large.medicalteams": [
+  "mental_healths_large.clinicianteams"
+ ],
+ "mental_healths_large.medications": [
+  "mental_healths_large.patientmedications"
+ ],
+ "mental_healths_large.nutritionconsultations": [
+  "mental_healths_large.dietarylogs"
+ ],
+ "mental_healths_large.patientcaregivers": [
+  "mental_healths_large.caregivers",
+  "mental_healths_large.patients"
+ ],
+ "mental_healths_large.patientclinicaltrials": [
+  "mental_healths_large.clinicaltrials",
+  "mental_healths_large.patients"
+ ],
+ "mental_healths_large.patientfeedbacksurveys": [
+  "mental_healths_large.encounters",
+  "mental_healths_large.feedbackactionitems"
+ ],
+ "mental_healths_large.patientmedications": [
+  "mental_healths_large.medications",
+  "mental_healths_large.patients",
+  "mental_healths_large.prescriptionfulfillment"
+ ],
+ "mental_healths_large.patients": [
+  "mental_healths_large.appointments",
+  "mental_healths_large.assessmentbasics",
+  "mental_healths_large.billingrecords",
+  "mental_healths_large.careplans",
+  "mental_healths_large.clinicians",
+  "mental_healths_large.dietarylogs",
+  "mental_healths_large.emergencyevents",
+  "mental_healths_large.encounters",
+  "mental_healths_large.imagingstudies",
+  "mental_healths_large.labresults",
+  "mental_healths_large.medicalrecords",
+  "mental_healths_large.patientcaregivers",
+  "mental_healths_large.patientclinicaltrials",
+  "mental_healths_large.patientmedications"
+ ],
+ "mental_healths_large.pharmacyinventorytracking": [
+  "mental_healths_large.prescriptionfulfillment"
+ ],
+ "mental_healths_large.postsurgicalrecovery": [
+  "mental_healths_large.surgicalprocedures"
+ ],
+ "mental_healths_large.prescriptionfulfillment": [
+  "mental_healths_large.patientmedications",
+  "mental_healths_large.pharmacyinventorytracking"
+ ],
+ "mental_healths_large.suppliers": [
+  "mental_healths_large.facilitysuppliers"
+ ],
+ "mental_healths_large.surgicalprocedures": [
+  "mental_healths_large.encounters",
+  "mental_healths_large.postsurgicalrecovery"
+ ],
+ "mental_healths_large.telehealthqualitymetrics": [
+  "mental_healths_large.telehealthsessions"
+ ],
+ "mental_healths_large.telehealthsessions": [
+  "mental_healths_large.appointments",
+  "mental_healths_large.telehealthqualitymetrics"
+ ],
+ "mental_healths_large.treatmentbasics": [
+  "mental_healths_large.encounters",
+  "mental_healths_large.treatmentoutcomes"
+ ],
+ "mental_healths_large.treatmentoutcomes": [
+  "mental_healths_large.treatmentbasics"
+ ],
+ "museum_artifact_large.airqualitymonitor": [
+  "museum_artifact_large.airqualityreadings",
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.airqualityreadings": [
+  "museum_artifact_large.airqualitymonitor",
+  "museum_artifact_large.environmentalreadingscore"
+ ],
+ "museum_artifact_large.artifactcondition": [
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.artifactloan": [
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.artifactratings": [
+  "museum_artifact_large.artifactscore"
+ ],
+ "museum_artifact_large.artifactscore": [
+  "museum_artifact_large.artifactratings",
+  "museum_artifact_large.conditionassessments",
+  "museum_artifact_large.riskassessments",
+  "museum_artifact_large.sensitivitydata"
+ ],
+ "museum_artifact_large.artifactusagelog": [
+  "museum_artifact_large.staff",
+  "museum_artifact_large.usagerecords"
+ ],
+ "museum_artifact_large.conditionassessments": [
+  "museum_artifact_large.artifactscore",
+  "museum_artifact_large.lightandradiationreadings",
+  "museum_artifact_large.riskassessmentdetail",
+  "museum_artifact_large.showcases"
+ ],
+ "museum_artifact_large.conservationandmaintenance": [
+  "museum_artifact_large.conservationmaintenancelog",
+  "museum_artifact_large.environmentalreadingscore",
+  "museum_artifact_large.surfaceandphysicalreadings"
+ ],
+ "museum_artifact_large.conservationmaintenancelog": [
+  "museum_artifact_large.conservationandmaintenance",
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.conservationtreatment": [
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.digitalassetlink": [
+  "museum_artifact_large.digitalassets"
+ ],
+ "museum_artifact_large.digitalassets": [
+  "museum_artifact_large.digitalassetlink"
+ ],
+ "museum_artifact_large.emergencyresponselog": [
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.environmentalreadingscore": [
+  "museum_artifact_large.airqualityreadings",
+  "museum_artifact_large.conservationandmaintenance",
+  "museum_artifact_large.lightandradiationreadings",
+  "museum_artifact_large.showcases",
+  "museum_artifact_large.surfaceandphysicalreadings",
+  "museum_artifact_large.usagerecords"
+ ],
+ "museum_artifact_large.exhibitionhalls": [
+  "museum_artifact_large.riskassessments",
+  "museum_artifact_large.showcases"
+ ],
+ "museum_artifact_large.insurancepolicydetail": [
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.lightandradiationreadings": [
+  "museum_artifact_large.conditionassessments",
+  "museum_artifact_large.environmentalreadingscore",
+  "museum_artifact_large.lightradiationlog"
+ ],
+ "museum_artifact_large.lightradiationlog": [
+  "museum_artifact_large.lightandradiationreadings",
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.materialanalysislog": [
+  "museum_artifact_large.staff",
+  "museum_artifact_large.surfaceandphysicalreadings"
+ ],
+ "museum_artifact_large.researcheraccess": [
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.riskassessmentdetail": [
+  "museum_artifact_large.conditionassessments",
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.riskassessments": [
+  "museum_artifact_large.artifactscore",
+  "museum_artifact_large.exhibitionhalls"
+ ],
+ "museum_artifact_large.securityincident": [
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.sensitivitydata": [
+  "museum_artifact_large.artifactscore"
+ ],
+ "museum_artifact_large.showcaseenvironment": [
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.showcases": [
+  "museum_artifact_large.conditionassessments",
+  "museum_artifact_large.environmentalreadingscore",
+  "museum_artifact_large.exhibitionhalls"
+ ],
+ "museum_artifact_large.staff": [
+  "museum_artifact_large.airqualitymonitor",
+  "museum_artifact_large.artifactcondition",
+  "museum_artifact_large.artifactloan",
+  "museum_artifact_large.artifactusagelog",
+  "museum_artifact_large.conservationmaintenancelog",
+  "museum_artifact_large.conservationtreatment",
+  "museum_artifact_large.emergencyresponselog",
+  "museum_artifact_large.insurancepolicydetail",
+  "museum_artifact_large.lightradiationlog",
+  "museum_artifact_large.materialanalysislog",
+  "museum_artifact_large.researcheraccess",
+  "museum_artifact_large.riskassessmentdetail",
+  "museum_artifact_large.securityincident",
+  "museum_artifact_large.showcaseenvironment",
+  "museum_artifact_large.transportationmonitor"
+ ],
+ "museum_artifact_large.surfaceandphysicalreadings": [
+  "museum_artifact_large.conservationandmaintenance",
+  "museum_artifact_large.environmentalreadingscore",
+  "museum_artifact_large.materialanalysislog"
+ ],
+ "museum_artifact_large.transportationmonitor": [
+  "museum_artifact_large.staff"
+ ],
+ "museum_artifact_large.usagerecords": [
+  "museum_artifact_large.artifactusagelog",
+  "museum_artifact_large.environmentalreadingscore"
+ ],
+ "organ_transplant_large.administrative_and_review": [
+  "organ_transplant_large.demographics",
+  "organ_transplant_large.ethicscommitteereviews",
+  "organ_transplant_large.recipients_demographics",
+  "organ_transplant_large.transplant_matching"
+ ],
+ "organ_transplant_large.allocation_details": [
+  "organ_transplant_large.demographics",
+  "organ_transplant_large.recipients_demographics",
+  "organ_transplant_large.transplant_matching"
+ ],
+ "organ_transplant_large.biobankenvironmentlogs": [
+  "organ_transplant_large.organ_banks"
+ ],
+ "organ_transplant_large.clinical": [
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.clinicaltrialparticipation": [
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.compatibility_metrics": [
+  "organ_transplant_large.demographics",
+  "organ_transplant_large.recipients_demographics",
+  "organ_transplant_large.transplant_matching"
+ ],
+ "organ_transplant_large.complianceauditlog": [
+  "organ_transplant_large.hospitals"
+ ],
+ "organ_transplant_large.consent_forms": [
+  "organ_transplant_large.demographics",
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.data_source_and_quality": [
+  "organ_transplant_large.demographics",
+  "organ_transplant_large.recipients_demographics",
+  "organ_transplant_large.transplant_matching"
+ ],
+ "organ_transplant_large.demographics": [
+  "organ_transplant_large.administrative_and_review",
+  "organ_transplant_large.allocation_details",
+  "organ_transplant_large.compatibility_metrics",
+  "organ_transplant_large.consent_forms",
+  "organ_transplant_large.data_source_and_quality",
+  "organ_transplant_large.donorfamilyservices",
+  "organ_transplant_large.function_and_recovery",
+  "organ_transplant_large.genetic_markers",
+  "organ_transplant_large.hla_info",
+  "organ_transplant_large.logistics",
+  "organ_transplant_large.medical_history",
+  "organ_transplant_large.risk_evaluation",
+  "organ_transplant_large.tissue_samples",
+  "organ_transplant_large.transplant_matching"
+ ],
+ "organ_transplant_large.donorfamilyservices": [
+  "organ_transplant_large.demographics"
+ ],
+ "organ_transplant_large.emergency_contacts": [
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.equipment": [
+  "organ_transplant_large.hospitals",
+  "organ_transplant_large.imaging_studies"
+ ],
+ "organ_transplant_large.ethicscommitteereviews": [
+  "organ_transplant_large.administrative_and_review"
+ ],
+ "organ_transplant_large.facilitymaintenancelog": [
+  "organ_transplant_large.hospitals"
+ ],
+ "organ_transplant_large.function_and_recovery": [
+  "organ_transplant_large.demographics"
+ ],
+ "organ_transplant_large.genetic_markers": [
+  "organ_transplant_large.demographics",
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.genomicsequencingrun": [
+  "organ_transplant_large.tissue_samples"
+ ],
+ "organ_transplant_large.hla_info": [
+  "organ_transplant_large.demographics"
+ ],
+ "organ_transplant_large.hospitals": [
+  "organ_transplant_large.complianceauditlog",
+  "organ_transplant_large.equipment",
+  "organ_transplant_large.facilitymaintenancelog",
+  "organ_transplant_large.interhospitaltransfer",
+  "organ_transplant_large.medical_teams",
+  "organ_transplant_large.organ_banks",
+  "organ_transplant_large.surgeon_hospital_affiliations",
+  "organ_transplant_large.transportation"
+ ],
+ "organ_transplant_large.imaging_studies": [
+  "organ_transplant_large.equipment",
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.insurance_plans": [
+  "organ_transplant_large.insuranceclaimdetails"
+ ],
+ "organ_transplant_large.insuranceclaimdetails": [
+  "organ_transplant_large.insurance_plans"
+ ],
+ "organ_transplant_large.interhospitaltransfer": [
+  "organ_transplant_large.hospitals"
+ ],
+ "organ_transplant_large.logistics": [
+  "organ_transplant_large.demographics",
+  "organ_transplant_large.recipients_demographics",
+  "organ_transplant_large.transplant_matching"
+ ],
+ "organ_transplant_large.logisticstelemetry": [
+  "organ_transplant_large.transportation"
+ ],
+ "organ_transplant_large.medical_history": [
+  "organ_transplant_large.demographics"
+ ],
+ "organ_transplant_large.medical_teams": [
+  "organ_transplant_large.hospitals",
+  "organ_transplant_large.simulationtrainingsession",
+  "organ_transplant_large.team_training_participation"
+ ],
+ "organ_transplant_large.medications": [
+  "organ_transplant_large.pharmacyinventorybatch",
+  "organ_transplant_large.recipient_medication_history"
+ ],
+ "organ_transplant_large.organ_banks": [
+  "organ_transplant_large.biobankenvironmentlogs",
+  "organ_transplant_large.hospitals"
+ ],
+ "organ_transplant_large.patienteducationmodule": [
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.patientnutritionlog": [
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.patientwearabletelemetry": [
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.pharmacyinventorybatch": [
+  "organ_transplant_large.medications"
+ ],
+ "organ_transplant_large.postopicumonitoring": [
+  "organ_transplant_large.transplant_matching"
+ ],
+ "organ_transplant_large.psychosocialassessment": [
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.recipient_medication_history": [
+  "organ_transplant_large.medications",
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.recipient_support_group_membership": [
+  "organ_transplant_large.recipients_demographics",
+  "organ_transplant_large.support_groups"
+ ],
+ "organ_transplant_large.recipients_demographics": [
+  "organ_transplant_large.administrative_and_review",
+  "organ_transplant_large.allocation_details",
+  "organ_transplant_large.clinical",
+  "organ_transplant_large.clinicaltrialparticipation",
+  "organ_transplant_large.compatibility_metrics",
+  "organ_transplant_large.consent_forms",
+  "organ_transplant_large.data_source_and_quality",
+  "organ_transplant_large.emergency_contacts",
+  "organ_transplant_large.genetic_markers",
+  "organ_transplant_large.imaging_studies",
+  "organ_transplant_large.logistics",
+  "organ_transplant_large.patienteducationmodule",
+  "organ_transplant_large.patientnutritionlog",
+  "organ_transplant_large.patientwearabletelemetry",
+  "organ_transplant_large.psychosocialassessment",
+  "organ_transplant_large.recipient_medication_history",
+  "organ_transplant_large.recipient_support_group_membership",
+  "organ_transplant_large.recipients_immunology",
+  "organ_transplant_large.risk_evaluation",
+  "organ_transplant_large.telehealthsessionlog",
+  "organ_transplant_large.transplant_matching"
+ ],
+ "organ_transplant_large.recipients_immunology": [
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.rehabdailyprogress": [
+  "organ_transplant_large.rehabilitation_programs"
+ ],
+ "organ_transplant_large.rehabilitation_programs": [
+  "organ_transplant_large.rehabdailyprogress"
+ ],
+ "organ_transplant_large.risk_evaluation": [
+  "organ_transplant_large.demographics",
+  "organ_transplant_large.recipients_demographics",
+  "organ_transplant_large.transplant_matching"
+ ],
+ "organ_transplant_large.simulationtrainingsession": [
+  "organ_transplant_large.medical_teams"
+ ],
+ "organ_transplant_large.support_groups": [
+  "organ_transplant_large.recipient_support_group_membership"
+ ],
+ "organ_transplant_large.surgeon_hospital_affiliations": [
+  "organ_transplant_large.hospitals",
+  "organ_transplant_large.surgeons"
+ ],
+ "organ_transplant_large.surgeonfatigueanalysis": [
+  "organ_transplant_large.surgeons"
+ ],
+ "organ_transplant_large.surgeons": [
+  "organ_transplant_large.surgeon_hospital_affiliations",
+  "organ_transplant_large.surgeonfatigueanalysis"
+ ],
+ "organ_transplant_large.team_training_participation": [
+  "organ_transplant_large.medical_teams",
+  "organ_transplant_large.training_programs"
+ ],
+ "organ_transplant_large.telehealthsessionlog": [
+  "organ_transplant_large.recipients_demographics"
+ ],
+ "organ_transplant_large.tissue_samples": [
+  "organ_transplant_large.demographics",
+  "organ_transplant_large.genomicsequencingrun"
+ ],
+ "organ_transplant_large.training_programs": [
+  "organ_transplant_large.team_training_participation"
+ ],
+ "organ_transplant_large.transplant_matching": [
+  "organ_transplant_large.administrative_and_review",
+  "organ_transplant_large.allocation_details",
+  "organ_transplant_large.compatibility_metrics",
+  "organ_transplant_large.data_source_and_quality",
+  "organ_transplant_large.demographics",
+  "organ_transplant_large.logistics",
+  "organ_transplant_large.postopicumonitoring",
+  "organ_transplant_large.recipients_demographics",
+  "organ_transplant_large.risk_evaluation"
+ ],
+ "organ_transplant_large.transportation": [
+  "organ_transplant_large.hospitals",
+  "organ_transplant_large.logisticstelemetry"
+ ],
+ "planets_data_large.astronomical_catalogs": [
+  "planets_data_large.dataset_publication_map",
+  "planets_data_large.neighborhood_catalog_map",
+  "planets_data_large.star_catalog_entries"
+ ],
+ "planets_data_large.atmospheric_escape_rates": [
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.binary_star_systems": [
+  "planets_data_large.stars",
+  "planets_data_large.stellarmultiplicityrecord"
+ ],
+ "planets_data_large.calibrationrecord": [
+  "planets_data_large.datareductionpipeline",
+  "planets_data_large.instruments_surveys"
+ ],
+ "planets_data_large.chemicalabundanceanalysis": [
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.citationrecord": [
+  "planets_data_large.scientificpublication"
+ ],
+ "planets_data_large.data_quality_tracking": [
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.datareductionpipeline": [
+  "planets_data_large.calibrationrecord",
+  "planets_data_large.pipeline_instrument_map",
+  "planets_data_large.pipelinequalitymetric"
+ ],
+ "planets_data_large.dataset_publication_map": [
+  "planets_data_large.astronomical_catalogs",
+  "planets_data_large.scientificpublication"
+ ],
+ "planets_data_large.discovery_teams": [
+  "planets_data_large.observer_team_map",
+  "planets_data_large.planet_discovery_teams"
+ ],
+ "planets_data_large.emissionabsorptionfeature": [
+  "planets_data_large.spectrallinemeasurement"
+ ],
+ "planets_data_large.exomoons": [
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.gravitational_microlensing_events": [
+  "planets_data_large.planets",
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.habitability_metrics": [
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.instrument_specifications": [
+  "planets_data_large.instruments_surveys"
+ ],
+ "planets_data_large.instruments_surveys": [
+  "planets_data_large.calibrationrecord",
+  "planets_data_large.instrument_specifications",
+  "planets_data_large.pipeline_instrument_map",
+  "planets_data_large.planet_instrument_observations",
+  "planets_data_large.spectral_instrument_map",
+  "planets_data_large.spectralcalibration",
+  "planets_data_large.telescopeallocation",
+  "planets_data_large.transitlightcurve"
+ ],
+ "planets_data_large.mission_planet_map": [
+  "planets_data_large.planets",
+  "planets_data_large.spacemission"
+ ],
+ "planets_data_large.missiondataproduct": [
+  "planets_data_large.missioninstrument"
+ ],
+ "planets_data_large.missioninstrument": [
+  "planets_data_large.missiondataproduct",
+  "planets_data_large.spacemission"
+ ],
+ "planets_data_large.missiontarget": [
+  "planets_data_large.planets",
+  "planets_data_large.spacemission"
+ ],
+ "planets_data_large.multi_planet_system_dynamics": [
+  "planets_data_large.planet_system_membership",
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.nearbystarsurvey": [
+  "planets_data_large.neighborhood_catalog_map",
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.neighborhood_catalog_map": [
+  "planets_data_large.astronomical_catalogs",
+  "planets_data_large.nearbystarsurvey"
+ ],
+ "planets_data_large.observation_conditions": [
+  "planets_data_large.planet_instrument_observations"
+ ],
+ "planets_data_large.observationproposal": [
+  "planets_data_large.observer_team_map",
+  "planets_data_large.research_programs"
+ ],
+ "planets_data_large.observer_team_map": [
+  "planets_data_large.discovery_teams",
+  "planets_data_large.observationproposal"
+ ],
+ "planets_data_large.orbital_characteristics": [
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.photometric_variations": [
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.physical_properties": [
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.pipeline_instrument_map": [
+  "planets_data_large.datareductionpipeline",
+  "planets_data_large.instruments_surveys"
+ ],
+ "planets_data_large.pipelinequalitymetric": [
+  "planets_data_large.datareductionpipeline"
+ ],
+ "planets_data_large.planet_discovery_teams": [
+  "planets_data_large.discovery_teams",
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.planet_instrument_observations": [
+  "planets_data_large.instruments_surveys",
+  "planets_data_large.observation_conditions",
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.planet_research_programs": [
+  "planets_data_large.planets",
+  "planets_data_large.research_programs"
+ ],
+ "planets_data_large.planet_system_membership": [
+  "planets_data_large.multi_planet_system_dynamics",
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.planetary_atmospheres": [
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.planetary_formation_models": [
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.planetcharacterizationsummary": [
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.planets": [
+  "planets_data_large.atmospheric_escape_rates",
+  "planets_data_large.data_quality_tracking",
+  "planets_data_large.exomoons",
+  "planets_data_large.gravitational_microlensing_events",
+  "planets_data_large.habitability_metrics",
+  "planets_data_large.mission_planet_map",
+  "planets_data_large.missiontarget",
+  "planets_data_large.orbital_characteristics",
+  "planets_data_large.physical_properties",
+  "planets_data_large.planet_discovery_teams",
+  "planets_data_large.planet_instrument_observations",
+  "planets_data_large.planet_research_programs",
+  "planets_data_large.planet_system_membership",
+  "planets_data_large.planetary_atmospheres",
+  "planets_data_large.planetary_formation_models",
+  "planets_data_large.planetcharacterizationsummary",
+  "planets_data_large.scheduledobservation",
+  "planets_data_large.stars",
+  "planets_data_large.tidal_forces_effects",
+  "planets_data_large.transitlightcurve",
+  "planets_data_large.transmissionspectrum"
+ ],
+ "planets_data_large.propermotioncatalog": [
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.radial_velocity_measurements": [
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.research_programs": [
+  "planets_data_large.observationproposal",
+  "planets_data_large.planet_research_programs",
+  "planets_data_large.scientificpublication"
+ ],
+ "planets_data_large.scheduledobservation": [
+  "planets_data_large.planets",
+  "planets_data_large.telescopeallocation"
+ ],
+ "planets_data_large.scientificpublication": [
+  "planets_data_large.citationrecord",
+  "planets_data_large.dataset_publication_map",
+  "planets_data_large.research_programs"
+ ],
+ "planets_data_large.spacemission": [
+  "planets_data_large.mission_planet_map",
+  "planets_data_large.missioninstrument",
+  "planets_data_large.missiontarget"
+ ],
+ "planets_data_large.spectral_instrument_map": [
+  "planets_data_large.instruments_surveys",
+  "planets_data_large.spectrallinemeasurement"
+ ],
+ "planets_data_large.spectralcalibration": [
+  "planets_data_large.instruments_surveys"
+ ],
+ "planets_data_large.spectrallinemeasurement": [
+  "planets_data_large.emissionabsorptionfeature",
+  "planets_data_large.spectral_instrument_map",
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.star_catalog_entries": [
+  "planets_data_large.astronomical_catalogs",
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.stars": [
+  "planets_data_large.binary_star_systems",
+  "planets_data_large.chemicalabundanceanalysis",
+  "planets_data_large.gravitational_microlensing_events",
+  "planets_data_large.multi_planet_system_dynamics",
+  "planets_data_large.nearbystarsurvey",
+  "planets_data_large.photometric_variations",
+  "planets_data_large.planets",
+  "planets_data_large.propermotioncatalog",
+  "planets_data_large.radial_velocity_measurements",
+  "planets_data_large.spectrallinemeasurement",
+  "planets_data_large.star_catalog_entries",
+  "planets_data_large.stellar_evolution_phases",
+  "planets_data_large.stellar_spectroscopy",
+  "planets_data_large.stellarmultiplicityrecord"
+ ],
+ "planets_data_large.stellar_evolution_phases": [
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.stellar_spectroscopy": [
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.stellarmultiplicityrecord": [
+  "planets_data_large.binary_star_systems",
+  "planets_data_large.stars"
+ ],
+ "planets_data_large.telescopeallocation": [
+  "planets_data_large.instruments_surveys",
+  "planets_data_large.scheduledobservation"
+ ],
+ "planets_data_large.tidal_forces_effects": [
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.transitlightcurve": [
+  "planets_data_large.instruments_surveys",
+  "planets_data_large.planets"
+ ],
+ "planets_data_large.transmissionspectrum": [
+  "planets_data_large.planets"
+ ],
+ "polar_equipment_large.batterychargecyclelog": [
+  "polar_equipment_large.batterydegradationanalysis",
+  "polar_equipment_large.powerbattery"
+ ],
+ "polar_equipment_large.batterydegradationanalysis": [
+  "polar_equipment_large.batterychargecyclelog"
+ ],
+ "polar_equipment_large.cabinairqualitysample": [
+  "polar_equipment_large.cabinoccupancyevent"
+ ],
+ "polar_equipment_large.cabinenvironment": [
+  "polar_equipment_large.cabinoccupancyevent",
+  "polar_equipment_large.communication",
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.location"
+ ],
+ "polar_equipment_large.cabinoccupancyevent": [
+  "polar_equipment_large.cabinairqualitysample",
+  "polar_equipment_large.cabinenvironment"
+ ],
+ "polar_equipment_large.chassisandvehicle": [
+  "polar_equipment_large.chassisdynamicsevent",
+  "polar_equipment_large.engineandfluids",
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.transmission"
+ ],
+ "polar_equipment_large.chassisdynamicsevent": [
+  "polar_equipment_large.chassisandvehicle"
+ ],
+ "polar_equipment_large.communication": [
+  "polar_equipment_large.cabinenvironment",
+  "polar_equipment_large.communicationlinkmetric",
+  "polar_equipment_large.communicationsessionlog",
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.location",
+  "polar_equipment_large.operationmaintenance",
+  "polar_equipment_large.thermalsolarwindandgrid"
+ ],
+ "polar_equipment_large.communicationlinkmetric": [
+  "polar_equipment_large.communication"
+ ],
+ "polar_equipment_large.communicationqualitymetric": [
+  "polar_equipment_large.communicationsessionlog"
+ ],
+ "polar_equipment_large.communicationsessionlog": [
+  "polar_equipment_large.communication",
+  "polar_equipment_large.communicationqualitymetric"
+ ],
+ "polar_equipment_large.crewcertificationrecord": [
+  "polar_equipment_large.crewmember",
+  "polar_equipment_large.crewtrainingsession"
+ ],
+ "polar_equipment_large.crewmember": [
+  "polar_equipment_large.crewcertificationrecord",
+  "polar_equipment_large.crewprojectassignment",
+  "polar_equipment_large.taskcrewassignment"
+ ],
+ "polar_equipment_large.crewprojectassignment": [
+  "polar_equipment_large.crewmember",
+  "polar_equipment_large.project"
+ ],
+ "polar_equipment_large.crewtrainingsession": [
+  "polar_equipment_large.crewcertificationrecord"
+ ],
+ "polar_equipment_large.energygenerationlog": [
+  "polar_equipment_large.thermalsolarwindandgrid"
+ ],
+ "polar_equipment_large.engineandfluids": [
+  "polar_equipment_large.chassisandvehicle",
+  "polar_equipment_large.engineruntimesnapshot",
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.operationmaintenance",
+  "polar_equipment_large.powerbattery",
+  "polar_equipment_large.transmission"
+ ],
+ "polar_equipment_large.engineemissionmeasurement": [
+  "polar_equipment_large.engineruntimesnapshot"
+ ],
+ "polar_equipment_large.engineruntimesnapshot": [
+  "polar_equipment_large.engineandfluids",
+  "polar_equipment_large.engineemissionmeasurement"
+ ],
+ "polar_equipment_large.equipment": [
+  "polar_equipment_large.cabinenvironment",
+  "polar_equipment_large.chassisandvehicle",
+  "polar_equipment_large.communication",
+  "polar_equipment_large.engineandfluids",
+  "polar_equipment_large.equipmentlifecycle",
+  "polar_equipment_large.equipmentlocationhistory",
+  "polar_equipment_large.equipmentperformancelog",
+  "polar_equipment_large.equipmentsensormapping",
+  "polar_equipment_large.equipmentspecification",
+  "polar_equipment_large.equipmenttype",
+  "polar_equipment_large.fuelingandchargingevent",
+  "polar_equipment_large.lightingandsafety",
+  "polar_equipment_large.operationmaintenance",
+  "polar_equipment_large.powerbattery",
+  "polar_equipment_large.scientific",
+  "polar_equipment_large.scientificcalibrationschedule",
+  "polar_equipment_large.transmission",
+  "polar_equipment_large.waterandwaste"
+ ],
+ "polar_equipment_large.equipmentanomalydetection": [
+  "polar_equipment_large.equipmentperformancelog"
+ ],
+ "polar_equipment_large.equipmenthealthassessment": [
+  "polar_equipment_large.equipmentperformancelog"
+ ],
+ "polar_equipment_large.equipmentlifecycle": [
+  "polar_equipment_large.equipment"
+ ],
+ "polar_equipment_large.equipmentlocationhistory": [
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.location"
+ ],
+ "polar_equipment_large.equipmentperformancelog": [
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.equipmentanomalydetection",
+  "polar_equipment_large.equipmenthealthassessment"
+ ],
+ "polar_equipment_large.equipmentsensormapping": [
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.sensormodel",
+  "polar_equipment_large.sensormodelmeasurementprofile"
+ ],
+ "polar_equipment_large.equipmentspecification": [
+  "polar_equipment_large.equipment"
+ ],
+ "polar_equipment_large.equipmenttype": [
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.equipmenttypedetail",
+  "polar_equipment_large.stationequipmenttype"
+ ],
+ "polar_equipment_large.equipmenttypedetail": [
+  "polar_equipment_large.equipmenttype"
+ ],
+ "polar_equipment_large.fuelingandchargingevent": [
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.powerbattery"
+ ],
+ "polar_equipment_large.lightingandsafety": [
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.safetyinspection"
+ ],
+ "polar_equipment_large.location": [
+  "polar_equipment_large.cabinenvironment",
+  "polar_equipment_large.communication",
+  "polar_equipment_large.equipmentlocationhistory",
+  "polar_equipment_large.locationenvironmentallog",
+  "polar_equipment_large.stationequipmenttype",
+  "polar_equipment_large.weatherandstructure"
+ ],
+ "polar_equipment_large.locationenvironmentallog": [
+  "polar_equipment_large.location",
+  "polar_equipment_large.locationweatherobservation"
+ ],
+ "polar_equipment_large.locationweatherobservation": [
+  "polar_equipment_large.locationenvironmentallog"
+ ],
+ "polar_equipment_large.maintenancepartconsumption": [
+  "polar_equipment_large.maintenanceworkorder"
+ ],
+ "polar_equipment_large.maintenancetaskcatalog": [
+  "polar_equipment_large.taskcrewassignment"
+ ],
+ "polar_equipment_large.maintenanceworkorder": [
+  "polar_equipment_large.maintenancepartconsumption",
+  "polar_equipment_large.operationmaintenance"
+ ],
+ "polar_equipment_large.operationmaintenance": [
+  "polar_equipment_large.communication",
+  "polar_equipment_large.engineandfluids",
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.maintenanceworkorder",
+  "polar_equipment_large.transmission",
+  "polar_equipment_large.weatherandstructure"
+ ],
+ "polar_equipment_large.powerbattery": [
+  "polar_equipment_large.batterychargecyclelog",
+  "polar_equipment_large.engineandfluids",
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.fuelingandchargingevent",
+  "polar_equipment_large.thermalsolarwindandgrid"
+ ],
+ "polar_equipment_large.project": [
+  "polar_equipment_large.crewprojectassignment"
+ ],
+ "polar_equipment_large.safetyinspection": [
+  "polar_equipment_large.lightingandsafety"
+ ],
+ "polar_equipment_large.scientific": [
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.scientificcalibrationschedule",
+  "polar_equipment_large.scientificdataacquisition"
+ ],
+ "polar_equipment_large.scientificcalibrationschedule": [
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.scientific"
+ ],
+ "polar_equipment_large.scientificdataacquisition": [
+  "polar_equipment_large.scientific",
+  "polar_equipment_large.scientificexperimentresult"
+ ],
+ "polar_equipment_large.scientificexperimentresult": [
+  "polar_equipment_large.scientificdataacquisition"
+ ],
+ "polar_equipment_large.sensormodel": [
+  "polar_equipment_large.equipmentsensormapping",
+  "polar_equipment_large.sensormodelmeasurementprofile"
+ ],
+ "polar_equipment_large.sensormodelmeasurementprofile": [
+  "polar_equipment_large.equipmentsensormapping",
+  "polar_equipment_large.sensormodel"
+ ],
+ "polar_equipment_large.stationequipmenttype": [
+  "polar_equipment_large.equipmenttype",
+  "polar_equipment_large.location"
+ ],
+ "polar_equipment_large.taskcrewassignment": [
+  "polar_equipment_large.crewmember",
+  "polar_equipment_large.maintenancetaskcatalog"
+ ],
+ "polar_equipment_large.thermalsolarwindandgrid": [
+  "polar_equipment_large.communication",
+  "polar_equipment_large.energygenerationlog",
+  "polar_equipment_large.powerbattery"
+ ],
+ "polar_equipment_large.transmission": [
+  "polar_equipment_large.chassisandvehicle",
+  "polar_equipment_large.engineandfluids",
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.operationmaintenance",
+  "polar_equipment_large.transmissiondiagnosticevent",
+  "polar_equipment_large.transmissionservicehistory"
+ ],
+ "polar_equipment_large.transmissiondiagnosticevent": [
+  "polar_equipment_large.transmission"
+ ],
+ "polar_equipment_large.transmissionfluidanalysis": [
+  "polar_equipment_large.transmissionservicehistory"
+ ],
+ "polar_equipment_large.transmissionservicehistory": [
+  "polar_equipment_large.transmission",
+  "polar_equipment_large.transmissionfluidanalysis"
+ ],
+ "polar_equipment_large.waterandwaste": [
+  "polar_equipment_large.equipment",
+  "polar_equipment_large.watertreatmentcycle"
+ ],
+ "polar_equipment_large.watertreatmentcycle": [
+  "polar_equipment_large.waterandwaste"
+ ],
+ "polar_equipment_large.weatherandstructure": [
+  "polar_equipment_large.location",
+  "polar_equipment_large.operationmaintenance"
+ ],
+ "residential_data_large.air_quality_health_correlation": [
+  "residential_data_large.environmental_microclimate_sensors"
+ ],
+ "residential_data_large.amenities": [
+  "residential_data_large.households"
+ ],
+ "residential_data_large.bridge_structural_monitoring": [
+  "residential_data_large.resilient_infrastructure_health"
+ ],
+ "residential_data_large.commercial_energy_efficiency": [
+  "residential_data_large.commercial_establishments",
+  "residential_data_large.industrial_hvac_sensor_array"
+ ],
+ "residential_data_large.commercial_establishments": [
+  "residential_data_large.commercial_energy_efficiency",
+  "residential_data_large.locations"
+ ],
+ "residential_data_large.community_engagement": [
+  "residential_data_large.households"
+ ],
+ "residential_data_large.crime_statistics": [
+  "residential_data_large.locations",
+  "residential_data_large.public_safety_patrol_logs"
+ ],
+ "residential_data_large.digital_classroom_engagement": [
+  "residential_data_large.education_facility_resources"
+ ],
+ "residential_data_large.digital_payment_transactional_flux": [
+  "residential_data_large.financial_services",
+  "residential_data_large.merchant_settlement_audit"
+ ],
+ "residential_data_large.education_facilities": [
+  "residential_data_large.education_facility_resources",
+  "residential_data_large.locations"
+ ],
+ "residential_data_large.education_facility_resources": [
+  "residential_data_large.digital_classroom_engagement",
+  "residential_data_large.education_facilities"
+ ],
+ "residential_data_large.emergency_vehicle_telematics": [
+  "residential_data_large.public_safety_patrol_logs"
+ ],
+ "residential_data_large.energy_consumption": [
+  "residential_data_large.households"
+ ],
+ "residential_data_large.environmental_data": [
+  "residential_data_large.environmental_microclimate_sensors",
+  "residential_data_large.locations"
+ ],
+ "residential_data_large.environmental_microclimate_sensors": [
+  "residential_data_large.air_quality_health_correlation",
+  "residential_data_large.environmental_data"
+ ],
+ "residential_data_large.financial_services": [
+  "residential_data_large.digital_payment_transactional_flux",
+  "residential_data_large.households"
+ ],
+ "residential_data_large.healthcare_equipment_inventory": [
+  "residential_data_large.healthcare_facilities",
+  "residential_data_large.healthcare_power_resilience",
+  "residential_data_large.hospital_critical_care_telemetry"
+ ],
+ "residential_data_large.healthcare_facilities": [
+  "residential_data_large.healthcare_equipment_inventory",
+  "residential_data_large.locations"
+ ],
+ "residential_data_large.healthcare_power_resilience": [
+  "residential_data_large.healthcare_equipment_inventory"
+ ],
+ "residential_data_large.hospital_critical_care_telemetry": [
+  "residential_data_large.healthcare_equipment_inventory"
+ ],
+ "residential_data_large.household_demographics": [
+  "residential_data_large.households"
+ ],
+ "residential_data_large.household_member_skills": [
+  "residential_data_large.household_skill_progression",
+  "residential_data_large.households",
+  "residential_data_large.skills_inventory"
+ ],
+ "residential_data_large.household_service_enrollment": [
+  "residential_data_large.households",
+  "residential_data_large.service_categories"
+ ],
+ "residential_data_large.household_skill_progression": [
+  "residential_data_large.household_member_skills",
+  "residential_data_large.professional_certification_audit"
+ ],
+ "residential_data_large.household_telecomm_metrix": [
+  "residential_data_large.households",
+  "residential_data_large.smart_home_bandwidth_allocation"
+ ],
+ "residential_data_large.household_transportation_usage": [
+  "residential_data_large.households",
+  "residential_data_large.transportation_modes"
+ ],
+ "residential_data_large.households": [
+  "residential_data_large.amenities",
+  "residential_data_large.community_engagement",
+  "residential_data_large.energy_consumption",
+  "residential_data_large.financial_services",
+  "residential_data_large.household_demographics",
+  "residential_data_large.household_member_skills",
+  "residential_data_large.household_service_enrollment",
+  "residential_data_large.household_telecomm_metrix",
+  "residential_data_large.household_transportation_usage",
+  "residential_data_large.locations",
+  "residential_data_large.properties",
+  "residential_data_large.service_types",
+  "residential_data_large.transportation_assets",
+  "residential_data_large.waste_management"
+ ],
+ "residential_data_large.industrial_hvac_sensor_array": [
+  "residential_data_large.commercial_energy_efficiency"
+ ],
+ "residential_data_large.infrastructure": [
+  "residential_data_large.infrastructure_details",
+  "residential_data_large.properties"
+ ],
+ "residential_data_large.infrastructure_details": [
+  "residential_data_large.infrastructure",
+  "residential_data_large.resilient_infrastructure_health"
+ ],
+ "residential_data_large.locations": [
+  "residential_data_large.commercial_establishments",
+  "residential_data_large.crime_statistics",
+  "residential_data_large.education_facilities",
+  "residential_data_large.environmental_data",
+  "residential_data_large.healthcare_facilities",
+  "residential_data_large.households",
+  "residential_data_large.transportation_network",
+  "residential_data_large.utility_services"
+ ],
+ "residential_data_large.merchant_settlement_audit": [
+  "residential_data_large.digital_payment_transactional_flux"
+ ],
+ "residential_data_large.professional_certification_audit": [
+  "residential_data_large.household_skill_progression"
+ ],
+ "residential_data_large.properties": [
+  "residential_data_large.households",
+  "residential_data_large.infrastructure",
+  "residential_data_large.property_valuations"
+ ],
+ "residential_data_large.property_valuations": [
+  "residential_data_large.properties"
+ ],
+ "residential_data_large.public_safety_patrol_logs": [
+  "residential_data_large.crime_statistics",
+  "residential_data_large.emergency_vehicle_telematics"
+ ],
+ "residential_data_large.resilient_infrastructure_health": [
+  "residential_data_large.bridge_structural_monitoring",
+  "residential_data_large.infrastructure_details"
+ ],
+ "residential_data_large.service_categories": [
+  "residential_data_large.household_service_enrollment"
+ ],
+ "residential_data_large.service_types": [
+  "residential_data_large.households"
+ ],
+ "residential_data_large.skills_inventory": [
+  "residential_data_large.household_member_skills"
+ ],
+ "residential_data_large.smart_home_bandwidth_allocation": [
+  "residential_data_large.household_telecomm_metrix"
+ ],
+ "residential_data_large.transportation_assets": [
+  "residential_data_large.households"
+ ],
+ "residential_data_large.transportation_modes": [
+  "residential_data_large.household_transportation_usage"
+ ],
+ "residential_data_large.transportation_network": [
+  "residential_data_large.locations"
+ ],
+ "residential_data_large.utility_services": [
+  "residential_data_large.locations"
+ ],
+ "residential_data_large.waste_management": [
+  "residential_data_large.households",
+  "residential_data_large.waste_stream_analysis"
+ ],
+ "residential_data_large.waste_processing_plant_efficiency": [
+  "residential_data_large.waste_stream_analysis"
+ ],
+ "residential_data_large.waste_stream_analysis": [
+  "residential_data_large.waste_management",
+  "residential_data_large.waste_processing_plant_efficiency"
+ ],
+ "reverse_logistics_large.appeal_compliance_checks": [
+  "reverse_logistics_large.customer_appeals_records"
+ ],
+ "reverse_logistics_large.automated_sorting_machine_events": [
+  "reverse_logistics_large.returns",
+  "reverse_logistics_large.sorter_jam_incidents",
+  "reverse_logistics_large.warehouses"
+ ],
+ "reverse_logistics_large.carrier_invoice_reconciliations": [
+  "reverse_logistics_large.freight_audit_discrepancies",
+  "reverse_logistics_large.order_shipment_details",
+  "reverse_logistics_large.transportation_carriers"
+ ],
+ "reverse_logistics_large.carrier_supported_regions": [
+  "reverse_logistics_large.transportation_carriers"
+ ],
+ "reverse_logistics_large.case_escalation_records": [
+  "reverse_logistics_large.case_management"
+ ],
+ "reverse_logistics_large.case_management": [
+  "reverse_logistics_large.case_escalation_records",
+  "reverse_logistics_large.returns"
+ ],
+ "reverse_logistics_large.circular_economy_impact_reports": [
+  "reverse_logistics_large.product_disposal_guidelines",
+  "reverse_logistics_large.recycled_material_sales",
+  "reverse_logistics_large.returns"
+ ],
+ "reverse_logistics_large.customer_appeals_records": [
+  "reverse_logistics_large.appeal_compliance_checks",
+  "reverse_logistics_large.customers",
+  "reverse_logistics_large.returns"
+ ],
+ "reverse_logistics_large.customer_communication_logs": [
+  "reverse_logistics_large.customers"
+ ],
+ "reverse_logistics_large.customers": [
+  "reverse_logistics_large.customer_appeals_records",
+  "reverse_logistics_large.customer_communication_logs"
+ ],
+ "reverse_logistics_large.disposal_vendors": [
+  "reverse_logistics_large.product_disposal_guidelines"
+ ],
+ "reverse_logistics_large.dropoff_location_audits": [
+  "reverse_logistics_large.omnichannel_return_points"
+ ],
+ "reverse_logistics_large.employees": [
+  "reverse_logistics_large.refurbishment_job_logs",
+  "reverse_logistics_large.warehouse_staff_assignments"
+ ],
+ "reverse_logistics_large.environmental_alert_history": [
+  "reverse_logistics_large.warehouse_climate_sensor_logs"
+ ],
+ "reverse_logistics_large.financial_management": [
+  "reverse_logistics_large.financial_transaction_audits",
+  "reverse_logistics_large.returns"
+ ],
+ "reverse_logistics_large.financial_transaction_audits": [
+  "reverse_logistics_large.financial_management"
+ ],
+ "reverse_logistics_large.fraud_detection_rules": [
+  "reverse_logistics_large.return_fraud_flags"
+ ],
+ "reverse_logistics_large.freight_audit_discrepancies": [
+  "reverse_logistics_large.carrier_invoice_reconciliations"
+ ],
+ "reverse_logistics_large.liquidation_auction_lots": [
+  "reverse_logistics_large.liquidation_buyer_feedback",
+  "reverse_logistics_large.products",
+  "reverse_logistics_large.warehouses"
+ ],
+ "reverse_logistics_large.liquidation_buyer_feedback": [
+  "reverse_logistics_large.liquidation_auction_lots"
+ ],
+ "reverse_logistics_large.omnichannel_return_points": [
+  "reverse_logistics_large.dropoff_location_audits",
+  "reverse_logistics_large.transportation_carriers"
+ ],
+ "reverse_logistics_large.order_shipment_details": [
+  "reverse_logistics_large.carrier_invoice_reconciliations",
+  "reverse_logistics_large.orders"
+ ],
+ "reverse_logistics_large.orders": [
+  "reverse_logistics_large.order_shipment_details",
+  "reverse_logistics_large.returns"
+ ],
+ "reverse_logistics_large.packaging_compliance_certs": [
+  "reverse_logistics_large.return_packaging_inventory"
+ ],
+ "reverse_logistics_large.product_component_details": [
+  "reverse_logistics_large.products"
+ ],
+ "reverse_logistics_large.product_disposal_guidelines": [
+  "reverse_logistics_large.circular_economy_impact_reports",
+  "reverse_logistics_large.disposal_vendors",
+  "reverse_logistics_large.products"
+ ],
+ "reverse_logistics_large.product_supplier_link": [
+  "reverse_logistics_large.products",
+  "reverse_logistics_large.suppliers"
+ ],
+ "reverse_logistics_large.products": [
+  "reverse_logistics_large.liquidation_auction_lots",
+  "reverse_logistics_large.product_component_details",
+  "reverse_logistics_large.product_disposal_guidelines",
+  "reverse_logistics_large.product_supplier_link",
+  "reverse_logistics_large.returns"
+ ],
+ "reverse_logistics_large.quality_assessment": [
+  "reverse_logistics_large.returns"
+ ],
+ "reverse_logistics_large.recycled_material_sales": [
+  "reverse_logistics_large.circular_economy_impact_reports"
+ ],
+ "reverse_logistics_large.refurb_qa_checklists": [
+  "reverse_logistics_large.refurbishment_job_logs"
+ ],
+ "reverse_logistics_large.refurbishment_job_logs": [
+  "reverse_logistics_large.employees",
+  "reverse_logistics_large.refurb_qa_checklists",
+  "reverse_logistics_large.returns"
+ ],
+ "reverse_logistics_large.repair_parts_inventory": [
+  "reverse_logistics_large.suppliers"
+ ],
+ "reverse_logistics_large.return_fraud_flags": [
+  "reverse_logistics_large.fraud_detection_rules",
+  "reverse_logistics_large.returns"
+ ],
+ "reverse_logistics_large.return_package_inspections": [
+  "reverse_logistics_large.returns"
+ ],
+ "reverse_logistics_large.return_packaging_inventory": [
+  "reverse_logistics_large.packaging_compliance_certs",
+  "reverse_logistics_large.suppliers",
+  "reverse_logistics_large.warehouses"
+ ],
+ "reverse_logistics_large.returns": [
+  "reverse_logistics_large.automated_sorting_machine_events",
+  "reverse_logistics_large.case_management",
+  "reverse_logistics_large.circular_economy_impact_reports",
+  "reverse_logistics_large.customer_appeals_records",
+  "reverse_logistics_large.financial_management",
+  "reverse_logistics_large.orders",
+  "reverse_logistics_large.products",
+  "reverse_logistics_large.quality_assessment",
+  "reverse_logistics_large.refurbishment_job_logs",
+  "reverse_logistics_large.return_fraud_flags",
+  "reverse_logistics_large.return_package_inspections",
+  "reverse_logistics_large.supplier_recovery_claims"
+ ],
+ "reverse_logistics_large.sorter_jam_incidents": [
+  "reverse_logistics_large.automated_sorting_machine_events"
+ ],
+ "reverse_logistics_large.supplier_recovery_claims": [
+  "reverse_logistics_large.returns",
+  "reverse_logistics_large.suppliers",
+  "reverse_logistics_large.vendor_credit_memos"
+ ],
+ "reverse_logistics_large.suppliers": [
+  "reverse_logistics_large.product_supplier_link",
+  "reverse_logistics_large.repair_parts_inventory",
+  "reverse_logistics_large.return_packaging_inventory",
+  "reverse_logistics_large.supplier_recovery_claims"
+ ],
+ "reverse_logistics_large.transportation_carriers": [
+  "reverse_logistics_large.carrier_invoice_reconciliations",
+  "reverse_logistics_large.carrier_supported_regions",
+  "reverse_logistics_large.omnichannel_return_points"
+ ],
+ "reverse_logistics_large.vendor_credit_memos": [
+  "reverse_logistics_large.supplier_recovery_claims"
+ ],
+ "reverse_logistics_large.warehouse_climate_sensor_logs": [
+  "reverse_logistics_large.environmental_alert_history",
+  "reverse_logistics_large.warehouses"
+ ],
+ "reverse_logistics_large.warehouse_staff_assignments": [
+  "reverse_logistics_large.employees",
+  "reverse_logistics_large.warehouses"
+ ],
+ "reverse_logistics_large.warehouses": [
+  "reverse_logistics_large.automated_sorting_machine_events",
+  "reverse_logistics_large.liquidation_auction_lots",
+  "reverse_logistics_large.return_packaging_inventory",
+  "reverse_logistics_large.warehouse_climate_sensor_logs",
+  "reverse_logistics_large.warehouse_staff_assignments"
+ ],
+ "robot_fault_prediction_large.actuation_data": [
+  "robot_fault_prediction_large.anomaly_detection_log",
+  "robot_fault_prediction_large.maintenance_and_fault",
+  "robot_fault_prediction_large.mechanical_status",
+  "robot_fault_prediction_large.operation",
+  "robot_fault_prediction_large.performance_and_safety",
+  "robot_fault_prediction_large.robot_record",
+  "robot_fault_prediction_large.system_controller"
+ ],
+ "robot_fault_prediction_large.anomaly_detection_log": [
+  "robot_fault_prediction_large.actuation_data",
+  "robot_fault_prediction_large.maintenance_logs",
+  "robot_fault_prediction_large.technicians"
+ ],
+ "robot_fault_prediction_large.automated_defect_classification": [
+  "robot_fault_prediction_large.vision_system_telemetry"
+ ],
+ "robot_fault_prediction_large.battery_thermal_management": [
+  "robot_fault_prediction_large.grid_load_optimization"
+ ],
+ "robot_fault_prediction_large.calibration_events": [
+  "robot_fault_prediction_large.end_effectors",
+  "robot_fault_prediction_large.laser_tracker_verification"
+ ],
+ "robot_fault_prediction_large.certifications": [
+  "robot_fault_prediction_large.technician_certifications"
+ ],
+ "robot_fault_prediction_large.digital_twin_sync_log": [
+  "robot_fault_prediction_large.physics_engine_parameters",
+  "robot_fault_prediction_large.simulation_models"
+ ],
+ "robot_fault_prediction_large.effluent_chemical_analysis": [
+  "robot_fault_prediction_large.waste_recycling_log"
+ ],
+ "robot_fault_prediction_large.end_effector_attachment_log": [
+  "robot_fault_prediction_large.end_effectors",
+  "robot_fault_prediction_large.robot_details"
+ ],
+ "robot_fault_prediction_large.end_effectors": [
+  "robot_fault_prediction_large.calibration_events",
+  "robot_fault_prediction_large.end_effector_attachment_log"
+ ],
+ "robot_fault_prediction_large.environmental_readings": [
+  "robot_fault_prediction_large.environmental_sensors"
+ ],
+ "robot_fault_prediction_large.environmental_sensors": [
+  "robot_fault_prediction_large.environmental_readings",
+  "robot_fault_prediction_large.workcells"
+ ],
+ "robot_fault_prediction_large.firmware_deployment_history": [
+  "robot_fault_prediction_large.firmware_security_audit",
+  "robot_fault_prediction_large.robot_record"
+ ],
+ "robot_fault_prediction_large.firmware_security_audit": [
+  "robot_fault_prediction_large.firmware_deployment_history"
+ ],
+ "robot_fault_prediction_large.grid_load_optimization": [
+  "robot_fault_prediction_large.battery_thermal_management",
+  "robot_fault_prediction_large.power_consumption_log"
+ ],
+ "robot_fault_prediction_large.human_proximity_events": [
+  "robot_fault_prediction_large.operator_biometric_telemetry",
+  "robot_fault_prediction_large.robot_record"
+ ],
+ "robot_fault_prediction_large.incident_reports": [
+  "robot_fault_prediction_large.liability_claim_assessments",
+  "robot_fault_prediction_large.technicians"
+ ],
+ "robot_fault_prediction_large.joint_condition": [
+  "robot_fault_prediction_large.operation",
+  "robot_fault_prediction_large.robot_details"
+ ],
+ "robot_fault_prediction_large.joint_lubrication_status": [
+  "robot_fault_prediction_large.vibration_spectral_analysis"
+ ],
+ "robot_fault_prediction_large.joint_performance": [
+  "robot_fault_prediction_large.operation",
+  "robot_fault_prediction_large.robot_details",
+  "robot_fault_prediction_large.vibration_spectral_analysis"
+ ],
+ "robot_fault_prediction_large.laser_tracker_verification": [
+  "robot_fault_prediction_large.calibration_events"
+ ],
+ "robot_fault_prediction_large.liability_claim_assessments": [
+  "robot_fault_prediction_large.incident_reports"
+ ],
+ "robot_fault_prediction_large.maintenance_and_fault": [
+  "robot_fault_prediction_large.actuation_data",
+  "robot_fault_prediction_large.operation"
+ ],
+ "robot_fault_prediction_large.maintenance_logs": [
+  "robot_fault_prediction_large.anomaly_detection_log",
+  "robot_fault_prediction_large.maintenance_parts_usage"
+ ],
+ "robot_fault_prediction_large.maintenance_parts_usage": [
+  "robot_fault_prediction_large.maintenance_logs",
+  "robot_fault_prediction_large.spare_parts_inventory"
+ ],
+ "robot_fault_prediction_large.material_storage_environment": [
+  "robot_fault_prediction_large.supplier_shipments"
+ ],
+ "robot_fault_prediction_large.materials": [
+  "robot_fault_prediction_large.product_materials",
+  "robot_fault_prediction_large.supplier_shipments"
+ ],
+ "robot_fault_prediction_large.mechanical_status": [
+  "robot_fault_prediction_large.actuation_data",
+  "robot_fault_prediction_large.operation",
+  "robot_fault_prediction_large.robot_details"
+ ],
+ "robot_fault_prediction_large.operation": [
+  "robot_fault_prediction_large.actuation_data",
+  "robot_fault_prediction_large.joint_condition",
+  "robot_fault_prediction_large.joint_performance",
+  "robot_fault_prediction_large.maintenance_and_fault",
+  "robot_fault_prediction_large.mechanical_status",
+  "robot_fault_prediction_large.production_log",
+  "robot_fault_prediction_large.robot_record",
+  "robot_fault_prediction_large.system_controller"
+ ],
+ "robot_fault_prediction_large.operator_biometric_telemetry": [
+  "robot_fault_prediction_large.human_proximity_events"
+ ],
+ "robot_fault_prediction_large.performance_and_safety": [
+  "robot_fault_prediction_large.actuation_data",
+  "robot_fault_prediction_large.robot_details"
+ ],
+ "robot_fault_prediction_large.physics_engine_parameters": [
+  "robot_fault_prediction_large.digital_twin_sync_log"
+ ],
+ "robot_fault_prediction_large.power_consumption_log": [
+  "robot_fault_prediction_large.grid_load_optimization",
+  "robot_fault_prediction_large.robot_details"
+ ],
+ "robot_fault_prediction_large.product_materials": [
+  "robot_fault_prediction_large.materials",
+  "robot_fault_prediction_large.products"
+ ],
+ "robot_fault_prediction_large.production_log": [
+  "robot_fault_prediction_large.operation",
+  "robot_fault_prediction_large.production_orders",
+  "robot_fault_prediction_large.quality_inspections",
+  "robot_fault_prediction_large.waste_recycling_log"
+ ],
+ "robot_fault_prediction_large.production_orders": [
+  "robot_fault_prediction_large.production_log",
+  "robot_fault_prediction_large.products",
+  "robot_fault_prediction_large.workcells"
+ ],
+ "robot_fault_prediction_large.products": [
+  "robot_fault_prediction_large.product_materials",
+  "robot_fault_prediction_large.production_orders"
+ ],
+ "robot_fault_prediction_large.quality_inspections": [
+  "robot_fault_prediction_large.production_log",
+  "robot_fault_prediction_large.technicians"
+ ],
+ "robot_fault_prediction_large.robot_details": [
+  "robot_fault_prediction_large.end_effector_attachment_log",
+  "robot_fault_prediction_large.joint_condition",
+  "robot_fault_prediction_large.joint_performance",
+  "robot_fault_prediction_large.mechanical_status",
+  "robot_fault_prediction_large.performance_and_safety",
+  "robot_fault_prediction_large.power_consumption_log",
+  "robot_fault_prediction_large.robot_record",
+  "robot_fault_prediction_large.simulation_models",
+  "robot_fault_prediction_large.workcells"
+ ],
+ "robot_fault_prediction_large.robot_record": [
+  "robot_fault_prediction_large.actuation_data",
+  "robot_fault_prediction_large.firmware_deployment_history",
+  "robot_fault_prediction_large.human_proximity_events",
+  "robot_fault_prediction_large.operation",
+  "robot_fault_prediction_large.robot_details"
+ ],
+ "robot_fault_prediction_large.simulation_models": [
+  "robot_fault_prediction_large.digital_twin_sync_log",
+  "robot_fault_prediction_large.robot_details",
+  "robot_fault_prediction_large.simulation_runs"
+ ],
+ "robot_fault_prediction_large.simulation_runs": [
+  "robot_fault_prediction_large.simulation_models"
+ ],
+ "robot_fault_prediction_large.spare_parts_inventory": [
+  "robot_fault_prediction_large.maintenance_parts_usage",
+  "robot_fault_prediction_large.technicians"
+ ],
+ "robot_fault_prediction_large.supplier_shipments": [
+  "robot_fault_prediction_large.material_storage_environment",
+  "robot_fault_prediction_large.materials"
+ ],
+ "robot_fault_prediction_large.system_controller": [
+  "robot_fault_prediction_large.actuation_data",
+  "robot_fault_prediction_large.operation"
+ ],
+ "robot_fault_prediction_large.technician_certifications": [
+  "robot_fault_prediction_large.certifications",
+  "robot_fault_prediction_large.technicians"
+ ],
+ "robot_fault_prediction_large.technicians": [
+  "robot_fault_prediction_large.anomaly_detection_log",
+  "robot_fault_prediction_large.incident_reports",
+  "robot_fault_prediction_large.quality_inspections",
+  "robot_fault_prediction_large.spare_parts_inventory",
+  "robot_fault_prediction_large.technician_certifications"
+ ],
+ "robot_fault_prediction_large.vibration_spectral_analysis": [
+  "robot_fault_prediction_large.joint_lubrication_status",
+  "robot_fault_prediction_large.joint_performance"
+ ],
+ "robot_fault_prediction_large.vision_system_telemetry": [
+  "robot_fault_prediction_large.automated_defect_classification",
+  "robot_fault_prediction_large.workcells"
+ ],
+ "robot_fault_prediction_large.waste_recycling_log": [
+  "robot_fault_prediction_large.effluent_chemical_analysis",
+  "robot_fault_prediction_large.production_log"
+ ],
+ "robot_fault_prediction_large.workcells": [
+  "robot_fault_prediction_large.environmental_sensors",
+  "robot_fault_prediction_large.production_orders",
+  "robot_fault_prediction_large.robot_details",
+  "robot_fault_prediction_large.vision_system_telemetry"
+ ],
+ "solar_panel_large.alert": [
+  "solar_panel_large.plant_record",
+  "solar_panel_large.work_orders"
+ ],
+ "solar_panel_large.asset_manufacturers": [
+  "solar_panel_large.financial_ledger",
+  "solar_panel_large.inverter_models",
+  "solar_panel_large.spare_parts",
+  "solar_panel_large.supplychainshipments",
+  "solar_panel_large.weather_stations"
+ ],
+ "solar_panel_large.batterystorageunits": [
+  "solar_panel_large.batterythermalevents",
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.batterythermalevents": [
+  "solar_panel_large.batterystorageunits"
+ ],
+ "solar_panel_large.certifications": [
+  "solar_panel_large.technician_certifications",
+  "solar_panel_large.training_sessions"
+ ],
+ "solar_panel_large.claimappealdocuments": [
+  "solar_panel_large.warrantyclaimfilings"
+ ],
+ "solar_panel_large.cleaningrobottelemetry": [
+  "solar_panel_large.plants",
+  "solar_panel_large.robotpathobstacles"
+ ],
+ "solar_panel_large.clients": [
+  "solar_panel_large.clientsupporttickets",
+  "solar_panel_large.financial_ledger",
+  "solar_panel_large.ppa_contracts"
+ ],
+ "solar_panel_large.clientsupporttickets": [
+  "solar_panel_large.clients",
+  "solar_panel_large.ticketresolutionsteps"
+ ],
+ "solar_panel_large.compliance_audits": [
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.droneflightlogs": [
+  "solar_panel_large.droneinspectionfindings",
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.droneinspectionfindings": [
+  "solar_panel_large.droneflightlogs"
+ ],
+ "solar_panel_large.electrical_performance": [
+  "solar_panel_large.plant_record"
+ ],
+ "solar_panel_large.energy_tariffs": [
+  "solar_panel_large.ppa_contracts"
+ ],
+ "solar_panel_large.energygenerationforecasts": [
+  "solar_panel_large.forecastaccuracymetrics",
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.environmental_conditions": [
+  "solar_panel_large.plant_record"
+ ],
+ "solar_panel_large.environmental_reports": [
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.financial_ledger": [
+  "solar_panel_large.asset_manufacturers",
+  "solar_panel_large.clients",
+  "solar_panel_large.plants",
+  "solar_panel_large.ppa_contracts",
+  "solar_panel_large.work_orders"
+ ],
+ "solar_panel_large.forecastaccuracymetrics": [
+  "solar_panel_large.energygenerationforecasts"
+ ],
+ "solar_panel_large.grideventsettlements": [
+  "solar_panel_large.gridinterconnectionevents"
+ ],
+ "solar_panel_large.gridinterconnectionevents": [
+  "solar_panel_large.grideventsettlements",
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.inverter_models": [
+  "solar_panel_large.asset_manufacturers",
+  "solar_panel_large.inverters"
+ ],
+ "solar_panel_large.inverters": [
+  "solar_panel_large.inverter_models",
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.maintenance_procedures": [
+  "solar_panel_large.technicians",
+  "solar_panel_large.work_order_procedures"
+ ],
+ "solar_panel_large.mechanical_condition": [
+  "solar_panel_large.plant_record"
+ ],
+ "solar_panel_large.operational_metrics": [
+  "solar_panel_large.plant_record"
+ ],
+ "solar_panel_large.panel_models": [
+  "solar_panel_large.plant_panel_model",
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.plant_panel_model": [
+  "solar_panel_large.panel_models",
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.plant_record": [
+  "solar_panel_large.alert",
+  "solar_panel_large.electrical_performance",
+  "solar_panel_large.environmental_conditions",
+  "solar_panel_large.mechanical_condition",
+  "solar_panel_large.operational_metrics",
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.plants": [
+  "solar_panel_large.batterystorageunits",
+  "solar_panel_large.cleaningrobottelemetry",
+  "solar_panel_large.compliance_audits",
+  "solar_panel_large.droneflightlogs",
+  "solar_panel_large.energygenerationforecasts",
+  "solar_panel_large.environmental_reports",
+  "solar_panel_large.financial_ledger",
+  "solar_panel_large.gridinterconnectionevents",
+  "solar_panel_large.inverters",
+  "solar_panel_large.panel_models",
+  "solar_panel_large.plant_panel_model",
+  "solar_panel_large.plant_record",
+  "solar_panel_large.ppa_contracts",
+  "solar_panel_large.site_inventory",
+  "solar_panel_large.vegetationmanagementlogs",
+  "solar_panel_large.weather_stations",
+  "solar_panel_large.work_orders"
+ ],
+ "solar_panel_large.ppa_contracts": [
+  "solar_panel_large.clients",
+  "solar_panel_large.energy_tariffs",
+  "solar_panel_large.financial_ledger",
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.robotpathobstacles": [
+  "solar_panel_large.cleaningrobottelemetry"
+ ],
+ "solar_panel_large.safetycorrectiveactions": [
+  "solar_panel_large.safetyincidentreports"
+ ],
+ "solar_panel_large.safetyincidentreports": [
+  "solar_panel_large.safetycorrectiveactions",
+  "solar_panel_large.technicians"
+ ],
+ "solar_panel_large.session_attendance": [
+  "solar_panel_large.technicians",
+  "solar_panel_large.training_sessions"
+ ],
+ "solar_panel_large.shipmenttrackingupdates": [
+  "solar_panel_large.supplychainshipments"
+ ],
+ "solar_panel_large.site_inventory": [
+  "solar_panel_large.plants",
+  "solar_panel_large.spare_parts"
+ ],
+ "solar_panel_large.spare_parts": [
+  "solar_panel_large.asset_manufacturers",
+  "solar_panel_large.site_inventory",
+  "solar_panel_large.work_order_parts_usage"
+ ],
+ "solar_panel_large.supplychainshipments": [
+  "solar_panel_large.asset_manufacturers",
+  "solar_panel_large.shipmenttrackingupdates"
+ ],
+ "solar_panel_large.technician_certifications": [
+  "solar_panel_large.certifications",
+  "solar_panel_large.technicians"
+ ],
+ "solar_panel_large.technicians": [
+  "solar_panel_large.maintenance_procedures",
+  "solar_panel_large.safetyincidentreports",
+  "solar_panel_large.session_attendance",
+  "solar_panel_large.technician_certifications",
+  "solar_panel_large.work_order_updates",
+  "solar_panel_large.work_orders"
+ ],
+ "solar_panel_large.ticketresolutionsteps": [
+  "solar_panel_large.clientsupporttickets"
+ ],
+ "solar_panel_large.training_sessions": [
+  "solar_panel_large.certifications",
+  "solar_panel_large.session_attendance"
+ ],
+ "solar_panel_large.vegetationmanagementlogs": [
+  "solar_panel_large.plants",
+  "solar_panel_large.vegetationtaskmaterials"
+ ],
+ "solar_panel_large.vegetationtaskmaterials": [
+  "solar_panel_large.vegetationmanagementlogs"
+ ],
+ "solar_panel_large.warrantyclaimfilings": [
+  "solar_panel_large.claimappealdocuments",
+  "solar_panel_large.work_orders"
+ ],
+ "solar_panel_large.weather_stations": [
+  "solar_panel_large.asset_manufacturers",
+  "solar_panel_large.plants"
+ ],
+ "solar_panel_large.work_order_parts_usage": [
+  "solar_panel_large.spare_parts",
+  "solar_panel_large.work_orders"
+ ],
+ "solar_panel_large.work_order_procedures": [
+  "solar_panel_large.maintenance_procedures",
+  "solar_panel_large.work_orders"
+ ],
+ "solar_panel_large.work_order_updates": [
+  "solar_panel_large.technicians",
+  "solar_panel_large.work_orders"
+ ],
+ "solar_panel_large.work_orders": [
+  "solar_panel_large.alert",
+  "solar_panel_large.financial_ledger",
+  "solar_panel_large.plants",
+  "solar_panel_large.technicians",
+  "solar_panel_large.warrantyclaimfilings",
+  "solar_panel_large.work_order_parts_usage",
+  "solar_panel_large.work_order_procedures",
+  "solar_panel_large.work_order_updates"
+ ],
+ "sports_events_large.broadcast_media_map": [
+  "sports_events_large.media_assets",
+  "sports_events_large.tvbroadcast"
+ ],
+ "sports_events_large.cardevelopmentprogram": [
+  "sports_events_large.cfdsimulation",
+  "sports_events_large.constructors",
+  "sports_events_large.development_technology_map",
+  "sports_events_large.windtunnelresult"
+ ],
+ "sports_events_large.cartelemetrysnapshot": [
+  "sports_events_large.drivers",
+  "sports_events_large.enginetelemetry",
+  "sports_events_large.races",
+  "sports_events_large.telemetryanomalylog",
+  "sports_events_large.tiretelemetry"
+ ],
+ "sports_events_large.cfdsimulation": [
+  "sports_events_large.cardevelopmentprogram"
+ ],
+ "sports_events_large.circuit_aliases": [
+  "sports_events_large.circuits"
+ ],
+ "sports_events_large.circuit_details": [
+  "sports_events_large.circuits"
+ ],
+ "sports_events_large.circuit_facilities": [
+  "sports_events_large.circuits"
+ ],
+ "sports_events_large.circuits": [
+  "sports_events_large.circuit_aliases",
+  "sports_events_large.circuit_details",
+  "sports_events_large.circuit_facilities",
+  "sports_events_large.equipmentshipment",
+  "sports_events_large.fan_race_attendance",
+  "sports_events_large.logistics_circuit_map",
+  "sports_events_large.races",
+  "sports_events_large.ticketsales",
+  "sports_events_large.tracksidemedicalfacility"
+ ],
+ "sports_events_large.constructor_profiles": [
+  "sports_events_large.constructors"
+ ],
+ "sports_events_large.constructor_results": [
+  "sports_events_large.constructors",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.constructor_standings": [
+  "sports_events_large.constructors",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.constructors": [
+  "sports_events_large.cardevelopmentprogram",
+  "sports_events_large.constructor_profiles",
+  "sports_events_large.constructor_results",
+  "sports_events_large.constructor_standings",
+  "sports_events_large.equipmentshipment",
+  "sports_events_large.merchandisesales",
+  "sports_events_large.qualifying",
+  "sports_events_large.revenuestream",
+  "sports_events_large.safetyequipmentinspection",
+  "sports_events_large.sensorconfiguration",
+  "sports_events_large.sprint_results",
+  "sports_events_large.teambudget",
+  "sports_events_large.teamtravelitinerary"
+ ],
+ "sports_events_large.costcaptracking": [
+  "sports_events_large.teambudget"
+ ],
+ "sports_events_large.development_technology_map": [
+  "sports_events_large.cardevelopmentprogram",
+  "sports_events_large.innovation_technologies"
+ ],
+ "sports_events_large.driver_biometric_metrics": [
+  "sports_events_large.drivers"
+ ],
+ "sports_events_large.driver_profiles": [
+  "sports_events_large.drivers"
+ ],
+ "sports_events_large.driver_social_media": [
+  "sports_events_large.drivers"
+ ],
+ "sports_events_large.driver_standings": [
+  "sports_events_large.drivers",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.drivermedicalrecord": [
+  "sports_events_large.drivers",
+  "sports_events_large.medical_incident_map"
+ ],
+ "sports_events_large.drivers": [
+  "sports_events_large.cartelemetrysnapshot",
+  "sports_events_large.driver_biometric_metrics",
+  "sports_events_large.driver_profiles",
+  "sports_events_large.driver_social_media",
+  "sports_events_large.driver_standings",
+  "sports_events_large.drivermedicalrecord",
+  "sports_events_large.lap_times",
+  "sports_events_large.pit_stops",
+  "sports_events_large.qualifying",
+  "sports_events_large.sprint_results"
+ ],
+ "sports_events_large.enginetelemetry": [
+  "sports_events_large.cartelemetrysnapshot"
+ ],
+ "sports_events_large.equipmentshipment": [
+  "sports_events_large.circuits",
+  "sports_events_large.constructors",
+  "sports_events_large.freightcontainer",
+  "sports_events_large.logistics_circuit_map"
+ ],
+ "sports_events_large.fan_race_attendance": [
+  "sports_events_large.circuits",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.fanzoneactivity": [
+  "sports_events_large.races"
+ ],
+ "sports_events_large.financial_sponsor_map": [
+  "sports_events_large.sponsor_entities",
+  "sports_events_large.teambudget"
+ ],
+ "sports_events_large.freightcontainer": [
+  "sports_events_large.equipmentshipment"
+ ],
+ "sports_events_large.innovation_technologies": [
+  "sports_events_large.development_technology_map",
+  "sports_events_large.regulation_technology_links",
+  "sports_events_large.sponsor_technology_agreements"
+ ],
+ "sports_events_large.lap_times": [
+  "sports_events_large.drivers",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.logistics_circuit_map": [
+  "sports_events_large.circuits",
+  "sports_events_large.equipmentshipment"
+ ],
+ "sports_events_large.media_assets": [
+  "sports_events_large.broadcast_media_map",
+  "sports_events_large.sponsor_media_campaigns"
+ ],
+ "sports_events_large.medical_incident_map": [
+  "sports_events_large.drivermedicalrecord",
+  "sports_events_large.race_incidents"
+ ],
+ "sports_events_large.merchandisesales": [
+  "sports_events_large.constructors",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.pit_stops": [
+  "sports_events_large.drivers",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.qualifying": [
+  "sports_events_large.constructors",
+  "sports_events_large.drivers",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.race_incidents": [
+  "sports_events_large.medical_incident_map",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.races": [
+  "sports_events_large.cartelemetrysnapshot",
+  "sports_events_large.circuits",
+  "sports_events_large.constructor_results",
+  "sports_events_large.constructor_standings",
+  "sports_events_large.driver_standings",
+  "sports_events_large.fan_race_attendance",
+  "sports_events_large.fanzoneactivity",
+  "sports_events_large.lap_times",
+  "sports_events_large.merchandisesales",
+  "sports_events_large.pit_stops",
+  "sports_events_large.qualifying",
+  "sports_events_large.race_incidents",
+  "sports_events_large.sprint_results",
+  "sports_events_large.strategy_scenarios",
+  "sports_events_large.teamtravelitinerary",
+  "sports_events_large.ticketsales",
+  "sports_events_large.tvbroadcast",
+  "sports_events_large.weather_observations"
+ ],
+ "sports_events_large.regulation_technology_links": [
+  "sports_events_large.innovation_technologies",
+  "sports_events_large.technical_regulations"
+ ],
+ "sports_events_large.revenuestream": [
+  "sports_events_large.constructors"
+ ],
+ "sports_events_large.safetyequipmentinspection": [
+  "sports_events_large.constructors",
+  "sports_events_large.technical_regulations"
+ ],
+ "sports_events_large.sensorconfiguration": [
+  "sports_events_large.constructors"
+ ],
+ "sports_events_large.sponsor_entities": [
+  "sports_events_large.financial_sponsor_map",
+  "sports_events_large.sponsor_media_campaigns",
+  "sports_events_large.sponsor_technology_agreements"
+ ],
+ "sports_events_large.sponsor_media_campaigns": [
+  "sports_events_large.media_assets",
+  "sports_events_large.sponsor_entities"
+ ],
+ "sports_events_large.sponsor_technology_agreements": [
+  "sports_events_large.innovation_technologies",
+  "sports_events_large.sponsor_entities"
+ ],
+ "sports_events_large.sprint_results": [
+  "sports_events_large.constructors",
+  "sports_events_large.drivers",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.staff_directory": [
+  "sports_events_large.staff_training_enrollments"
+ ],
+ "sports_events_large.staff_training_enrollments": [
+  "sports_events_large.staff_directory",
+  "sports_events_large.training_programs"
+ ],
+ "sports_events_large.strategy_scenarios": [
+  "sports_events_large.races"
+ ],
+ "sports_events_large.streamingmetrics": [
+  "sports_events_large.tvbroadcast"
+ ],
+ "sports_events_large.teambudget": [
+  "sports_events_large.constructors",
+  "sports_events_large.costcaptracking",
+  "sports_events_large.financial_sponsor_map"
+ ],
+ "sports_events_large.teamtravelitinerary": [
+  "sports_events_large.constructors",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.technical_regulations": [
+  "sports_events_large.regulation_technology_links",
+  "sports_events_large.safetyequipmentinspection"
+ ],
+ "sports_events_large.telemetryanomalylog": [
+  "sports_events_large.cartelemetrysnapshot"
+ ],
+ "sports_events_large.ticketsales": [
+  "sports_events_large.circuits",
+  "sports_events_large.races"
+ ],
+ "sports_events_large.tiretelemetry": [
+  "sports_events_large.cartelemetrysnapshot"
+ ],
+ "sports_events_large.tracksidemedicalfacility": [
+  "sports_events_large.circuits"
+ ],
+ "sports_events_large.training_programs": [
+  "sports_events_large.staff_training_enrollments"
+ ],
+ "sports_events_large.tvbroadcast": [
+  "sports_events_large.broadcast_media_map",
+  "sports_events_large.races",
+  "sports_events_large.streamingmetrics"
+ ],
+ "sports_events_large.weather_observations": [
+  "sports_events_large.races"
+ ],
+ "sports_events_large.windtunnelresult": [
+  "sports_events_large.cardevelopmentprogram"
+ ],
+ "virtual_idol_large.additionalnotes": [
+  "virtual_idol_large.retentionandinfluence"
+ ],
+ "virtual_idol_large.algorithmrecommendationfeeds": [
+  "virtual_idol_large.fans",
+  "virtual_idol_large.recommendationclickstream"
+ ],
+ "virtual_idol_large.auctionpaymentsettlements": [
+  "virtual_idol_large.fanartauctionbidlogs"
+ ],
+ "virtual_idol_large.club_roles": [
+  "virtual_idol_large.fan_club_roles_map"
+ ],
+ "virtual_idol_large.cocreationroyaltysplits": [
+  "virtual_idol_large.collaborativesongwritingsessions"
+ ],
+ "virtual_idol_large.collaborativesongwritingsessions": [
+  "virtual_idol_large.cocreationroyaltysplits",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.commerceandcollection": [
+  "virtual_idol_large.engagement",
+  "virtual_idol_large.idol_merchandise_details",
+  "virtual_idol_large.membershipandspending",
+  "virtual_idol_large.socialcommunity"
+ ],
+ "virtual_idol_large.copyrightinfringementreports": [
+  "virtual_idol_large.copyrighttakedownappeals",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.copyrighttakedownappeals": [
+  "virtual_idol_large.copyrightinfringementreports"
+ ],
+ "virtual_idol_large.designers": [
+  "virtual_idol_large.merchandise_designers_map"
+ ],
+ "virtual_idol_large.digitalskintransactionhistory": [
+  "virtual_idol_large.fans",
+  "virtual_idol_large.skinownershipcertificates"
+ ],
+ "virtual_idol_large.engagement": [
+  "virtual_idol_large.commerceandcollection",
+  "virtual_idol_large.interactions",
+  "virtual_idol_large.loyaltyandachievements",
+  "virtual_idol_large.membershipandspending",
+  "virtual_idol_large.retentionandinfluence",
+  "virtual_idol_large.socialcommunity"
+ ],
+ "virtual_idol_large.event_logistics_and_planning": [
+  "virtual_idol_large.eventsandclub"
+ ],
+ "virtual_idol_large.event_sponsors": [
+  "virtual_idol_large.eventsandclub",
+  "virtual_idol_large.sponsors"
+ ],
+ "virtual_idol_large.eventsandclub": [
+  "virtual_idol_large.event_logistics_and_planning",
+  "virtual_idol_large.event_sponsors",
+  "virtual_idol_large.globalserverlatencystats",
+  "virtual_idol_large.hologramprojectormaintenance",
+  "virtual_idol_large.loyaltyandachievements",
+  "virtual_idol_large.membershipandspending",
+  "virtual_idol_large.socialcommunity"
+ ],
+ "virtual_idol_large.fan_club_roles_map": [
+  "virtual_idol_large.club_roles",
+  "virtual_idol_large.fans"
+ ],
+ "virtual_idol_large.fan_collaboration_projects": [
+  "virtual_idol_large.fans",
+  "virtual_idol_large.idol_fan_collaborations",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.fan_content_submission_details": [
+  "virtual_idol_large.fans",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.fan_interest_tags_map": [
+  "virtual_idol_large.fans",
+  "virtual_idol_large.interest_tags"
+ ],
+ "virtual_idol_large.fan_sentiment_analysis": [
+  "virtual_idol_large.fans",
+  "virtual_idol_large.interactions"
+ ],
+ "virtual_idol_large.fan_technical_profile": [
+  "virtual_idol_large.fans"
+ ],
+ "virtual_idol_large.fanartauctionbidlogs": [
+  "virtual_idol_large.auctionpaymentsettlements",
+  "virtual_idol_large.fans"
+ ],
+ "virtual_idol_large.fans": [
+  "virtual_idol_large.algorithmrecommendationfeeds",
+  "virtual_idol_large.digitalskintransactionhistory",
+  "virtual_idol_large.fan_club_roles_map",
+  "virtual_idol_large.fan_collaboration_projects",
+  "virtual_idol_large.fan_content_submission_details",
+  "virtual_idol_large.fan_interest_tags_map",
+  "virtual_idol_large.fan_sentiment_analysis",
+  "virtual_idol_large.fan_technical_profile",
+  "virtual_idol_large.fanartauctionbidlogs",
+  "virtual_idol_large.idol_fan_collaborations",
+  "virtual_idol_large.interactions",
+  "virtual_idol_large.membershipandspending",
+  "virtual_idol_large.virtualrealitysessiontelemetry"
+ ],
+ "virtual_idol_large.genres": [
+  "virtual_idol_large.idol_genre_map"
+ ],
+ "virtual_idol_large.globalserverlatencystats": [
+  "virtual_idol_large.eventsandclub",
+  "virtual_idol_large.serverregionaloutagelogs"
+ ],
+ "virtual_idol_large.hologramprojectormaintenance": [
+  "virtual_idol_large.eventsandclub",
+  "virtual_idol_large.projectorbulbreplacementhistory"
+ ],
+ "virtual_idol_large.idol_asset_management": [
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.idol_content_platforms_map": [
+  "virtual_idol_large.platforms",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.idol_fan_collaborations": [
+  "virtual_idol_large.fan_collaboration_projects",
+  "virtual_idol_large.fans",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.idol_genre_map": [
+  "virtual_idol_large.genres",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.idol_merchandise_details": [
+  "virtual_idol_large.commerceandcollection",
+  "virtual_idol_large.merchandise_designers_map",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.idol_skill_sets_map": [
+  "virtual_idol_large.skills",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.idol_training_and_development": [
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.interactions": [
+  "virtual_idol_large.engagement",
+  "virtual_idol_large.fan_sentiment_analysis",
+  "virtual_idol_large.fans",
+  "virtual_idol_large.moderationandcompliance",
+  "virtual_idol_large.supportandfeedback",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.interest_tags": [
+  "virtual_idol_large.fan_interest_tags_map"
+ ],
+ "virtual_idol_large.loyaltyandachievements": [
+  "virtual_idol_large.engagement",
+  "virtual_idol_large.eventsandclub",
+  "virtual_idol_large.retentionandinfluence"
+ ],
+ "virtual_idol_large.membershipandspending": [
+  "virtual_idol_large.commerceandcollection",
+  "virtual_idol_large.engagement",
+  "virtual_idol_large.eventsandclub",
+  "virtual_idol_large.fans",
+  "virtual_idol_large.preferencesandsettings"
+ ],
+ "virtual_idol_large.merchandise_designers_map": [
+  "virtual_idol_large.designers",
+  "virtual_idol_large.idol_merchandise_details"
+ ],
+ "virtual_idol_large.moderationandcompliance": [
+  "virtual_idol_large.interactions",
+  "virtual_idol_large.socialcommunity"
+ ],
+ "virtual_idol_large.physics_simulation_data": [
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.platforms": [
+  "virtual_idol_large.idol_content_platforms_map"
+ ],
+ "virtual_idol_large.preferencesandsettings": [
+  "virtual_idol_large.membershipandspending",
+  "virtual_idol_large.socialcommunity",
+  "virtual_idol_large.supportandfeedback"
+ ],
+ "virtual_idol_large.projectorbulbreplacementhistory": [
+  "virtual_idol_large.hologramprojectormaintenance"
+ ],
+ "virtual_idol_large.recommendationclickstream": [
+  "virtual_idol_large.algorithmrecommendationfeeds"
+ ],
+ "virtual_idol_large.retentionandinfluence": [
+  "virtual_idol_large.additionalnotes",
+  "virtual_idol_large.engagement",
+  "virtual_idol_large.loyaltyandachievements"
+ ],
+ "virtual_idol_large.sentimentkeywordtrends": [
+  "virtual_idol_large.socialsentimenttrendsnapshots"
+ ],
+ "virtual_idol_large.serverregionaloutagelogs": [
+  "virtual_idol_large.globalserverlatencystats"
+ ],
+ "virtual_idol_large.skills": [
+  "virtual_idol_large.idol_skill_sets_map"
+ ],
+ "virtual_idol_large.skinownershipcertificates": [
+  "virtual_idol_large.digitalskintransactionhistory"
+ ],
+ "virtual_idol_large.socialcommunity": [
+  "virtual_idol_large.commerceandcollection",
+  "virtual_idol_large.engagement",
+  "virtual_idol_large.eventsandclub",
+  "virtual_idol_large.moderationandcompliance",
+  "virtual_idol_large.preferencesandsettings"
+ ],
+ "virtual_idol_large.socialsentimenttrendsnapshots": [
+  "virtual_idol_large.sentimentkeywordtrends",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.sponsors": [
+  "virtual_idol_large.event_sponsors"
+ ],
+ "virtual_idol_large.streaming_session_logs": [
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.supportandfeedback": [
+  "virtual_idol_large.interactions",
+  "virtual_idol_large.preferencesandsettings"
+ ],
+ "virtual_idol_large.synthesizedvoicefeedback": [
+  "virtual_idol_large.voicesynthesisqualitylogs"
+ ],
+ "virtual_idol_large.virtual_idol_lore_and_storylines": [
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.virtual_idol_performance_metrics": [
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.virtual_idol_sponsorships": [
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.virtualidols": [
+  "virtual_idol_large.collaborativesongwritingsessions",
+  "virtual_idol_large.copyrightinfringementreports",
+  "virtual_idol_large.fan_collaboration_projects",
+  "virtual_idol_large.fan_content_submission_details",
+  "virtual_idol_large.idol_asset_management",
+  "virtual_idol_large.idol_content_platforms_map",
+  "virtual_idol_large.idol_fan_collaborations",
+  "virtual_idol_large.idol_genre_map",
+  "virtual_idol_large.idol_merchandise_details",
+  "virtual_idol_large.idol_skill_sets_map",
+  "virtual_idol_large.idol_training_and_development",
+  "virtual_idol_large.interactions",
+  "virtual_idol_large.physics_simulation_data",
+  "virtual_idol_large.socialsentimenttrendsnapshots",
+  "virtual_idol_large.streaming_session_logs",
+  "virtual_idol_large.virtual_idol_lore_and_storylines",
+  "virtual_idol_large.virtual_idol_performance_metrics",
+  "virtual_idol_large.virtual_idol_sponsorships",
+  "virtual_idol_large.voicesynthesisqualitylogs"
+ ],
+ "virtual_idol_large.virtualrealitysessiontelemetry": [
+  "virtual_idol_large.fans",
+  "virtual_idol_large.vreyetrackingheatmaps"
+ ],
+ "virtual_idol_large.voicesynthesisqualitylogs": [
+  "virtual_idol_large.synthesizedvoicefeedback",
+  "virtual_idol_large.virtualidols"
+ ],
+ "virtual_idol_large.vreyetrackingheatmaps": [
+  "virtual_idol_large.virtualrealitysessiontelemetry"
+ ]
+}
