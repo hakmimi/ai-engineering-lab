@@ -122,7 +122,7 @@ Differences come with a simple bootstrap interval (1,000 resamples on the differ
 
 ## 7. Data (decided)
 
-- Read the NDAs, statements and answer key **from topic 2's data folder** (`topics/01-prompt-vs-workflow-contract-nli/data/`); nothing is copied.
+- Read the NDAs, statements and answer key **from topic 2's data folder** (`topics/02-prompt-vs-workflow-contract-nli/data/`); nothing is copied.
 - Test 1 stacks NDAs from **both** sets (no prompt is tuned in topic 3, so using the held-out set as reading material is fine).
 - Questions for tests 2–4 come from the **main set only**.
 - Pack and question choices are drawn with a fixed seed (2026) and saved in each run file, so a run can be repeated.

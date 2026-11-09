@@ -1,4 +1,4 @@
-# 01 · One big prompt or a workflow? Part 2: real contracts
+# 02 · One big prompt or a workflow? Part 2: real contracts
 
 ## Why I did this
 
@@ -74,7 +74,7 @@ Levels 0–3 use `gpt-6-luna` (small, cheap). Level 0+ uses `gpt-6.1-sol`. Promp
 ## What's in the folder
 
 ```
-01-prompt-vs-workflow-contract-nli/
+02-prompt-vs-workflow-contract-nli/
 ├── README.md           ← this page
 ├── results.md          ← full results tables, built from the run files
 ├── design/
@@ -184,7 +184,7 @@ What held from [part 1](../01-prompt-vs-workflow-claimsflow/), and what changed 
 From the repo root (PowerShell), with `OPENAI_API_KEY` in `.env`:
 
 ```powershell
-$env:PYTHONPATH = ".;topics/01-prompt-vs-workflow-contract-nli"
+$env:PYTHONPATH = ".;topics/02-prompt-vs-workflow-contract-nli"
 .venv\Scripts\python -m ndaflow.run --level 3 --dry-run               # cost estimate only
 .venv\Scripts\python -m ndaflow.run --level 3 --repeats 3 --yes       # main set
 .venv\Scripts\python -m ndaflow.run --level 3 --repeats 3 --yes --set test

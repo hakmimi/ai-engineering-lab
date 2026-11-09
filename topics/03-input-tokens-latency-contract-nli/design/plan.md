@@ -14,7 +14,7 @@
 
 - Work in the worktree `C:\Workshop\ai-engineering-lab-topic03`, branch `topic-03-input-tokens-latency`. Commit locally; never push without the author's OK.
 - The worktree has no `.venv`: run Python as `C:\Workshop\ai-engineering-lab\.venv\Scripts\python.exe` (written `$PY` below) from the worktree root.
-- Do **not** modify `shared/llm.py` or anything under `topics/01-prompt-vs-workflow-contract-nli/`. Import from them only.
+- Do **not** modify `shared/llm.py` or anything under `topics/02-prompt-vs-workflow-contract-nli/`. Import from them only.
 - Models: `shared.llm.default_model("small")` (gpt-6-luna) everywhere; `default_model("large")` (gpt-6.1-sol) in test 1 only. Call `shared.llm.load_env()` first.
 - Timed calls use `openai.OpenAI(max_retries=0)`. Retries happen outside the clock.
 - All API calls are sequential. Variants are interleaved inside each test.

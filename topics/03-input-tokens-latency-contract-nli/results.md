@@ -110,7 +110,7 @@ Total spent: $3.46 (smoke runs in `runs/smoke/` included)
 From the repo root (PowerShell):
 
 ```powershell
-$env:PYTHONPATH = ".;topics/01-prompt-vs-workflow-contract-nli;topics/03-input-tokens-latency-contract-nli"
+$env:PYTHONPATH = ".;topics/02-prompt-vs-workflow-contract-nli;topics/03-input-tokens-latency-contract-nli"
 .venv\Scripts\python -m ndaspeed.run --test 1 --dry-run           # cost estimate only
 .venv\Scripts\python -m ndaspeed.run --test 1 --model both --yes  # tests 0-4, one at a time
 .venv\Scripts\python -m ndaspeed.report                           # rewrites this file

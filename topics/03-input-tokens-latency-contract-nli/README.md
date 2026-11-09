@@ -78,7 +78,7 @@ The NDAs, statements and answer key are read from topic 2's `data/` folder; noth
 From the repo root (PowerShell):
 
 ```powershell
-$env:PYTHONPATH = ".;topics/01-prompt-vs-workflow-contract-nli;topics/03-input-tokens-latency-contract-nli"
+$env:PYTHONPATH = ".;topics/02-prompt-vs-workflow-contract-nli;topics/03-input-tokens-latency-contract-nli"
 .venv\Scripts\python -m ndaspeed.run --test 1 --dry-run           # cost estimate only, nothing sent
 .venv\Scripts\python -m ndaspeed.run --test 1 --model both --yes  # a real run (tests 0-4, one at a time)
 .venv\Scripts\python -m ndaspeed.report                           # rewrites results.md

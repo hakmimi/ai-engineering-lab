@@ -32,7 +32,7 @@ I gave insurance claims to an AI in two ways. One way was a single big prompt ("
 
 **The lesson:** start with one prompt and a test set with known answers. Split the job only where you can show a step is failing, then measure again.
 
-**A fair warning:** my data is small and made up. With real, long policies that don't fit in one prompt, the workflow might win. I ran the same test on real contracts in [part 2](../01-prompt-vs-workflow-contract-nli/). They still fit in one prompt, and one prompt still won.
+**A fair warning:** my data is small and made up. With real, long policies that don't fit in one prompt, the workflow might win. I ran the same test on real contracts in [part 2](../02-prompt-vs-workflow-contract-nli/). They still fit in one prompt, and one prompt still won.
 
 ## What I did
 

@@ -1,7 +1,7 @@
 """Run one level over a set of contracts and save a run file.
 
 From the repo root (PowerShell):
-    $env:PYTHONPATH = ".;topics/01-prompt-vs-workflow-contract-nli"
+    $env:PYTHONPATH = ".;topics/02-prompt-vs-workflow-contract-nli"
     .venv\\Scripts\\python -m ndaflow.run --level 3 --repeats 3
 """
 

@@ -4,11 +4,11 @@
 
 **Goal:** Rebuild topic 1's five levels (0, 1, 2, 3, 0+) on 60 real NDAs from ContractNLI and measure them against the dataset's own labels.
 
-**Architecture:** A new package `ndaflow` in `topics/01-prompt-vs-workflow-contract-nli/`, shaped like topic 1's `claimsflow`: models → data → prompts → levels → score → run → report. It reuses `shared/llm.py` unchanged. A one-off builder script turns the downloaded ContractNLI files into two small committed sets (main = 30 dev NDAs, test = 30 test NDAs).
+**Architecture:** A new package `ndaflow` in `topics/02-prompt-vs-workflow-contract-nli/`, shaped like topic 1's `claimsflow`: models → data → prompts → levels → score → run → report. It reuses `shared/llm.py` unchanged. A one-off builder script turns the downloaded ContractNLI files into two small committed sets (main = 30 dev NDAs, test = 30 test NDAs).
 
 **Tech Stack:** Python 3, OpenAI Responses API via `shared.llm`, pytest, ThreadPoolExecutor.
 
-**Spec:** `topics/01-prompt-vs-workflow-contract-nli/design/design.md`
+**Spec:** `topics/02-prompt-vs-workflow-contract-nli/design/design.md`
 
 ## Global Constraints
 
@@ -35,10 +35,10 @@
 ### Task 1: Data — build the two sets, load them
 
 **Files:**
-- Create: `topics/01-prompt-vs-workflow-contract-nli/ndaflow/__init__.py` (empty), `ndaflow/models.py`, `ndaflow/data.py`, `ndaflow/build_data.py`
-- Create (generated, committed): `topics/01-prompt-vs-workflow-contract-nli/data/main.json`, `data/test.json`, `data/statements.json`, `data/NOTICE.md`
-- Modify: `pyproject.toml` (add `"topics/01-prompt-vs-workflow-contract-nli"` to `pythonpath`, `"topics/01-prompt-vs-workflow-contract-nli/evals"` to `testpaths`)
-- Test: `topics/01-prompt-vs-workflow-contract-nli/evals/test_nda_data.py`, `evals/nda_helpers.py`
+- Create: `topics/02-prompt-vs-workflow-contract-nli/ndaflow/__init__.py` (empty), `ndaflow/models.py`, `ndaflow/data.py`, `ndaflow/build_data.py`
+- Create (generated, committed): `topics/02-prompt-vs-workflow-contract-nli/data/main.json`, `data/test.json`, `data/statements.json`, `data/NOTICE.md`
+- Modify: `pyproject.toml` (add `"topics/02-prompt-vs-workflow-contract-nli"` to `pythonpath`, `"topics/02-prompt-vs-workflow-contract-nli/evals"` to `testpaths`)
+- Test: `topics/02-prompt-vs-workflow-contract-nli/evals/test_nda_data.py`, `evals/nda_helpers.py`
 
 The evals folder has **no `__init__.py`** and every file name starts with `nda_` or `test_nda_`, so it can't clash with topic 1's `evals` package (pytest's default import mode puts the folder on `sys.path`).
 
@@ -85,7 +85,7 @@ def test_every_key_covers_the_17_statements_with_valid_evidence():
                 assert all(0 <= i < len(contracts[doc_id].spans) for i in a.evidence)
 ```
 
-- [ ] **Step 2: Run** `.venv\Scripts\python -m pytest topics/01-prompt-vs-workflow-contract-nli/evals -q` — Expected: FAIL (`ModuleNotFoundError: ndaflow`).
+- [ ] **Step 2: Run** `.venv\Scripts\python -m pytest topics/02-prompt-vs-workflow-contract-nli/evals -q` — Expected: FAIL (`ModuleNotFoundError: ndaflow`).
 - [ ] **Step 3: Implement** `models.py`, `build_data.py` (label map `Entailment→entailment, Contradiction→contradiction, NotMentioned→not_mentioned`; `statements.json` is written from the raw `labels` in the Global Constraints order; NOTICE.md gives citation, URL, licence and "60 of 607 NDAs, unchanged text"), and `data.py`.
 - [ ] **Step 4: Generate the data:** `.venv\Scripts\python -m ndaflow.build_data <scratchpad>\contractnli-dl\x\contract-nli` — Expected: prints `main: 30 contracts (dev)`, `test: 30 contracts (test)`.
 - [ ] **Step 5: Run the tests** — Expected: PASS (topic 1's suite still passes too: `.venv\Scripts\python -m pytest -q`).
@@ -132,7 +132,7 @@ def test_level0_prompt_shows_numbered_spans_and_caches_the_statements(monkeypatc
     assert "nda-20" in calls[0].kwargs["cached_system"]
 ```
 
-- [ ] **Step 2: Run** `pytest topics/01-prompt-vs-workflow-contract-nli/evals/test_nda_levels.py -q` — Expected: FAIL (import error).
+- [ ] **Step 2: Run** `pytest topics/02-prompt-vs-workflow-contract-nli/evals/test_nda_levels.py -q` — Expected: FAIL (import error).
 - [ ] **Step 3: Implement** `prompts.py` and the listed `levels.py` functions. Label rules in the prompt: entailment = the contract says it; contradiction = the contract says the opposite or forbids it; not_mentioned = the contract does not address it; evidence = every span that supports the label.
 - [ ] **Step 4: Run** — Expected: PASS.
 - [ ] **Step 5: Commit** `Topic 2: prompts, answer parsing, level 0`.
@@ -211,7 +211,7 @@ def test_level1_decide_sees_only_picked_spans(monkeypatch): ...
 
 ### Task 7: Runner and report
 
-**Files:** Create `ndaflow/run.py`, `ndaflow/report.py`, `topics/01-prompt-vs-workflow-contract-nli/results.md` (generated "Not run yet"); Test `evals/test_nda_run.py`
+**Files:** Create `ndaflow/run.py`, `ndaflow/report.py`, `topics/02-prompt-vs-workflow-contract-nli/results.md` (generated "Not run yet"); Test `evals/test_nda_run.py`
 
 **Interfaces:**
 - Produces (`run.py`): `RUNS_DIR`, `LEVELS = {"0","1","2","3","0+"}` → run functions (0+ = `run_level0`), `model_for(level)`, `estimate_cost_usd(level, contracts, model, repeats) -> float`, `main(argv) -> int`. Same flags as topic 1 (`--level --repeats --limit --budget --workers --yes --dry-run --runs-dir --set main|test`). The test set saves to `runs_dir / "test"`. Run file: `{"level", "model", "set", "created", "contracts", "repeats": [{"results": {doc_id: {"answers": {sid: {"label", "evidence"}}, "seconds", "calls", "cost_usd"}}, "scores": {...}}]}`.
@@ -227,7 +227,7 @@ def test_level1_decide_sees_only_picked_spans(monkeypatch): ...
 
 ### Task 8: Diagram and README skeleton
 
-**Files:** Create `design/process-diagram.html`, `design/process-diagram.png`, `topics/01-prompt-vs-workflow-contract-nli/README.md`
+**Files:** Create `design/process-diagram.html`, `design/process-diagram.png`, `topics/02-prompt-vs-workflow-contract-nli/README.md`
 
 - [ ] **Step 1:** Diagram in topic 1's style: NDA + 17 statements → route (pick spans per statement) → parallel (one check per statement) → chain (evidence → code checks span ids → label). PNG via headless Chrome screenshot, cropped as in topic 1.
 - [ ] **Step 2:** README with topic 1's section order (Why → Spoiler/bottom line → What I did → The use case + diagram → KPIs → What's in the folder → Results: main → Observations: test set → When to use what → Caveats → Next time → How to run). "Found" sections hold only `<!-- notes, filled from real runs -->` and "Not run yet". Data credit (ContractNLI, CC BY 4.0) in the use-case section.
@@ -236,7 +236,7 @@ def test_level1_decide_sees_only_picked_spans(monkeypatch): ...
 ### Task 9: Smoke run (real API, about $0.10) — then stop for the author
 
 - [ ] **Step 1:** `--dry-run` for every level on both sets; Expected: total estimate under $10.
-- [ ] **Step 2:** Level 0 and level 3, main set, `--limit 2 --repeats 1 --yes --runs-dir topics/01-prompt-vs-workflow-contract-nli/runs/smoke`. Expected: 0 errors; read the raw answers of both contracts by eye for parsing problems.
+- [ ] **Step 2:** Level 0 and level 3, main set, `--limit 2 --repeats 1 --yes --runs-dir topics/02-prompt-vs-workflow-contract-nli/runs/smoke`. Expected: 0 errors; read the raw answers of both contracts by eye for parsing problems.
 - [ ] **Step 3:** Ledger the spend and what the smoke run showed. **Stop and ask the author** before the full runs (real money).
 
 ### Task 10: Full runs and results (after the author's OK)
