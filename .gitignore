@@ -5,3 +5,4 @@ __pycache__/
 .pytest_cache/
 topics/*/runs/
 .superpowers/
+topics/05-evaluator-optimizer-text-to-sql/data/raw/

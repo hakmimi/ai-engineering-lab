@@ -1,0 +1,482 @@
+[
+ {
+  "qid": 95,
+  "db_id": "financial",
+  "question": "List out the account numbers of clients who are youngest and have highest average salary?",
+  "evidence": "If the person A's birthdate < B's birthdate, it means that person B is younger than person A; A11 refers to average salary",
+  "gold_sql": "SELECT T1.account_id  FROM account AS T1 INNER JOIN disp AS T2 ON T1.account_id = T2.account_id INNER JOIN client AS T3 ON T2.client_id = T3.client_id INNER JOIN district AS T4 on T4.district_id = T1.district_id WHERE T2.client_id = ( SELECT client_id FROM client ORDER BY birth_date DESC LIMIT 1) GROUP BY T4.A11, T1.account_id",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 112,
+  "db_id": "financial",
+  "question": "For the female client who was born in 1976/1/29, which district did she opened her account?",
+  "evidence": "Female refers to gender = 'F'; A2 refers to district names",
+  "gold_sql": "SELECT T1.A2 FROM district AS T1 INNER JOIN client AS T2 ON T1.district_id = T2.district_id WHERE T2.birth_date = '1976-01-29' AND T2.gender = 'F'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 118,
+  "db_id": "financial",
+  "question": "For loan amount less than USD100,000, what is the percentage of accounts that is still running with no issue.",
+  "evidence": "Status = 'C' stands for running contract, ok so far; Percentage of accounts by condition = [(total(amount) & condition) / (total amount)] * 100.",
+  "gold_sql": "SELECT CAST(SUM(status = 'C') AS REAL) * 100 / COUNT(account_id) FROM loan WHERE amount < 100000",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 159,
+  "db_id": "financial",
+  "question": "List all the withdrawals in cash transactions that the client with the id 3356 makes.",
+  "evidence": "operation = 'VYBER' refers to withdrawal in cash",
+  "gold_sql": "SELECT T4.trans_id FROM client AS T1 INNER JOIN disp AS T2 ON T1.client_id = T2.client_id INNER JOIN account AS T3 ON T2.account_id = T3.account_id INNER JOIN trans AS T4 ON T3.account_id = T4.account_id WHERE T1.client_id = 3356 AND T4.operation = 'VYBER'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 192,
+  "db_id": "financial",
+  "question": "What is the average amount of loan which are still on running contract with statement issuance after each transaction?",
+  "evidence": "status = 'C' stands for running contract, OK so far; status = 'D' stands for running contract, client in debt. 'POPLATEK PO OBRATU' stands for issuance after transaction",
+  "gold_sql": "SELECT AVG(T2.amount) FROM account AS T1 INNER JOIN loan AS T2 ON T1.account_id = T2.account_id WHERE T2.status IN ('C', 'D') AND T1.frequency = 'POPLATEK PO OBRATU'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 194,
+  "db_id": "financial",
+  "question": "Provide the IDs and age of the client with high level credit card, which is eligible for loans.",
+  "evidence": "the credit card is high-level refers to card.type = 'gold'; eligible for loans refers to disp.type = 'OWNER'",
+  "gold_sql": "SELECT T1.client_id, STRFTIME('%Y', CURRENT_TIMESTAMP) - STRFTIME('%Y', T3.birth_date) FROM disp AS T1 INNER JOIN card AS T2 ON T2.disp_id = T1.disp_id INNER JOIN client AS T3 ON T1.client_id = T3.client_id WHERE T2.type = 'gold' AND T1.type = 'OWNER'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 195,
+  "db_id": "toxicology",
+  "question": "What is the most common bond type?",
+  "evidence": "most common bond type refers MAX(COUNT(bond_type))",
+  "gold_sql": "SELECT T.bond_type FROM ( SELECT bond_type, COUNT(bond_id) FROM bond GROUP BY bond_type ORDER BY COUNT(bond_id) DESC LIMIT 1 ) AS T",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 206,
+  "db_id": "toxicology",
+  "question": "What elements are in the TR004_8_9 bond atoms?",
+  "evidence": "TR004_8_9 bond atoms refers to bond_id = 'TR004_8_9';",
+  "gold_sql": "SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T2.bond_id = 'TR004_8_9'",
+  "difficulty": "challenging"
+ },
+ {
+  "qid": 207,
+  "db_id": "toxicology",
+  "question": "What elements are in a double type bond?",
+  "evidence": "double type bond refers to bond_type = '=';",
+  "gold_sql": "SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN bond AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN connected AS T3 ON T1.atom_id = T3.atom_id WHERE T2.bond_type = '='",
+  "difficulty": "challenging"
+ },
+ {
+  "qid": 208,
+  "db_id": "toxicology",
+  "question": "Which type of label is the most numerous in atoms with hydrogen?",
+  "evidence": "with hydrogen refers to element = 'h'; label most numerous in atoms refers to MAX(COUNT(label)); ",
+  "gold_sql": "SELECT T.label FROM ( SELECT T2.label, COUNT(T2.molecule_id) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.element = 'h' GROUP BY T2.label ORDER BY COUNT(T2.molecule_id) DESC LIMIT 1 ) t",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 213,
+  "db_id": "toxicology",
+  "question": "What type of bond is there between the atoms TR004_8 and TR004_20?",
+  "evidence": "type of bond refers to bond_type; between the atoms TR004_8 and TR004_20 refers to atom_id = 'TR004_8' AND atom_id2 = 'TR004_20' OR another way around",
+  "gold_sql": "SELECT T1.bond_type FROM bond AS T1 INNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id WHERE T2.atom_id = 'TR004_8' AND T2.atom_id2 = 'TR004_20' OR T2.atom_id2 = 'TR004_8' AND T2.atom_id = 'TR004_20'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 215,
+  "db_id": "toxicology",
+  "question": "How many atoms with iodine and with sulfur type elements are there in single bond molecules?",
+  "evidence": "with iodine element refer to element = 'i'; with sulfur element refers to element = 's'; single type bond refers to bond_type = '-'; Should consider the distinct atoms when counting;",
+  "gold_sql": "SELECT COUNT(DISTINCT CASE WHEN T1.element = 'i' THEN T1.atom_id ELSE NULL END) AS iodine_nums , COUNT(DISTINCT CASE WHEN T1.element = 's' THEN T1.atom_id ELSE NULL END) AS sulfur_nums FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id INNER JOIN bond AS T3 ON T2.bond_id = T3.bond_id WHERE T3.bond_type = '-'",
+  "difficulty": "challenging"
+ },
+ {
+  "qid": 230,
+  "db_id": "toxicology",
+  "question": "What are the elements of the toxicology and label of molecule TR060?",
+  "evidence": "TR060 is the molecule id; ",
+  "gold_sql": "SELECT DISTINCT T1.element, T2.label FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.molecule_id = 'TR060'",
+  "difficulty": "challenging"
+ },
+ {
+  "qid": 243,
+  "db_id": "toxicology",
+  "question": "What are the bonds that have phosphorus and nitrogen as their atom elements?",
+  "evidence": "have phosphorus as atom elements refers to element = 'p'; have nitrogen as atom elements refers to element = 'n'",
+  "gold_sql": "SELECT T2.bond_id FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id WHERE T2.bond_id IN ( SELECT T3.bond_id FROM connected AS T3 INNER JOIN atom AS T4 ON T3.atom_id = T4.atom_id WHERE T4.element = 'p' ) AND T1.element = 'n'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 247,
+  "db_id": "toxicology",
+  "question": "List all the elements of atoms that can not bond with any other atoms.",
+  "evidence": " atoms cannot bond with other atoms means atom_id NOT in connected table;",
+  "gold_sql": "SELECT DISTINCT T.element FROM atom AS T WHERE T.element NOT IN ( SELECT DISTINCT T1.element FROM atom AS T1 INNER JOIN connected AS T2 ON T1.atom_id = T2.atom_id )",
+  "difficulty": "challenging"
+ },
+ {
+  "qid": 255,
+  "db_id": "toxicology",
+  "question": "What proportion of single bonds are carcinogenic? Please provide your answer as a percentage with five decimal places.",
+  "evidence": "single bond refers to bond_type = '-'; label = '+' mean molecules are carcinogenic; proportion = DIVIDE(SUM(label = '+') * 100, COUNT(bond_id)) where bond_type = '-'",
+  "gold_sql": "SELECT ROUND(CAST(COUNT(CASE WHEN T2.label = '+' THEN T1.bond_id ELSE NULL END) AS REAL) * 100 / COUNT(T1.bond_id),5) FROM bond AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T1.bond_type = '-'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 268,
+  "db_id": "toxicology",
+  "question": "What are the elements for bond id TR001_10_11?",
+  "evidence": "TR001_10_11 is the bond id;",
+  "gold_sql": "SELECT T2.element FROM connected AS T1 INNER JOIN atom AS T2 ON T1.atom_id = T2.atom_id WHERE T1.bond_id = 'TR001_10_11'",
+  "difficulty": "challenging"
+ },
+ {
+  "qid": 273,
+  "db_id": "toxicology",
+  "question": "What is the percentage of element chlorine in carcinogenic molecules?",
+  "evidence": "chlorine refers to element = 'cl'; label = '+' mean molecules are carcinogenic; percentage = DIVIDE(SUM(element = 'pb'); COUNT(molecule_id)) as percentage where label = '+'",
+  "gold_sql": "SELECT CAST(COUNT( CASE WHEN T1.element = 'cl' THEN T1.element ELSE NULL END) AS REAL) * 100 / COUNT(T1.element) FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id WHERE T2.label = '+'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 340,
+  "db_id": "card_games",
+  "question": "Which are the cards that have incredibly powerful foils.",
+  "evidence": "incredibly poweful foils refers to cardKingdomFoilId is not null AND cardKingdomId is not null",
+  "gold_sql": "SELECT id FROM cards WHERE cardKingdomFoilId IS NOT NULL AND cardKingdomId IS NOT NULL",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 341,
+  "db_id": "card_games",
+  "question": "What are the borderless cards available without powerful foils?",
+  "evidence": "borderless' refers to borderColor; poweful foils refers to cardKingdomFoilId paired with cardKingdomId AND cardKingdomId is not null",
+  "gold_sql": "SELECT id FROM cards WHERE borderColor = 'borderless' AND (cardKingdomId IS NULL OR cardKingdomId IS NULL)",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 344,
+  "db_id": "card_games",
+  "question": "List all the mythic rarity print cards banned in gladiator format.",
+  "evidence": "mythic rarity printing refers to rarity = 'mythic'; card banned refers to status = 'Banned'; in gladiator format refers to format = 'gladiator';",
+  "gold_sql": "SELECT DISTINCT T1.id FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T2.format = 'gladiator' AND T2.status = 'Banned' AND T1.rarity = 'mythic'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 345,
+  "db_id": "card_games",
+  "question": "For artifact type of cards that do not have multiple faces on the same card, state its legalities status for vintage play format.",
+  "evidence": "Artifact type of cards refers to types = 'Artifact'; card does not have multiple faces on the same card refers to side is NULL'; vintage play format refers to format = 'vintage';",
+  "gold_sql": "SELECT DISTINCT T2.status FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T1.type = 'Artifact' AND T2.format = 'vintage' AND T1.side IS NULL",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 346,
+  "db_id": "card_games",
+  "question": "List all the card id and artist with unknown power which are legal for commander play format.",
+  "evidence": "unknown power refers to power = '*' or POWER IS NULL; commander play format refers to format = 'commander'; legal for commander play format refers to format = 'commander' where status = 'Legal'",
+  "gold_sql": "SELECT T1.id, T1.artist FROM cards AS T1 INNER JOIN legalities AS T2 ON T1.uuid = T2.uuid WHERE T2.status = 'Legal' AND T2.format = 'commander' AND (T1.power IS NULL OR T1.power = '*')",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 368,
+  "db_id": "card_games",
+  "question": "What is the percentage of borderless cards?",
+  "evidence": "borderless card refers to borderColor = 'borderless'; percentage = Divide(Count (id) where borderColor = 'borderless', Count(id)) *100",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN borderColor = 'borderless' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(id) FROM cards",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 379,
+  "db_id": "card_games",
+  "question": "What are the cards belong to duel deck a? List the ID.",
+  "evidence": "duel deck a refers to duelDeck = a;",
+  "gold_sql": "SELECT id FROM cards WHERE duelDeck = 'a'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 391,
+  "db_id": "card_games",
+  "question": "Among the Artifact cards, which are black color and comes with foreign languague translation?",
+  "evidence": "Artifact card refers to originalType = 'Artifact'; black color refers to colors = 'B'; foreign language refers to language in foreign_data",
+  "gold_sql": "SELECT DISTINCT T1.name FROM cards AS T1 INNER JOIN foreign_data AS T2 ON T1.uuid = T2.uuid WHERE T1.originalType = 'Artifact' AND T1.colors = 'B'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 412,
+  "db_id": "card_games",
+  "question": "What is the foreign name of the card in French of type Creature, normal layout and black border color, by artist Matthew D. Wilson?",
+  "evidence": "in French refers to language = 'French'; black border color refers to borderColor = 'black'",
+  "gold_sql": "SELECT name FROM foreign_data WHERE uuid IN ( SELECT uuid FROM cards WHERE types = 'Creature' AND layout = 'normal' AND borderColor = 'black' AND artist = 'Matthew D. Wilson' ) AND language = 'French'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 459,
+  "db_id": "card_games",
+  "question": "Which card costs more converted mana, \"Serra Angel\" or \"Shrine Keeper\"?",
+  "evidence": "\"Serra Angel\" refers to name = 'Serra Angel'; \"Shrine Keeper\" refers to name = 'Shrine Keeper'; card costs more converted mana when the value of convertedManaCost is greater",
+  "gold_sql": "SELECT name FROM cards WHERE name IN ('Serra Angel', 'Shrine Keeper') ORDER BY convertedManaCost DESC LIMIT 1",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 465,
+  "db_id": "card_games",
+  "question": "For the set of cards with \"Ancestor's Chosen\" in it, is there a Korean version of it?",
+  "evidence": "set of cards with \"Ancestor''s Chosen\" in it refers to name = 'Ancestor''s Chosen'; Korean version refers to language = 'Korean'",
+  "gold_sql": "SELECT IIF(SUM(CASE WHEN T2.language = 'Korean' AND T2.translation IS NOT NULL THEN 1 ELSE 0 END) > 0, 'YES', 'NO') FROM cards AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.setCode WHERE T1.name = 'Ancestor''s Chosen'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 472,
+  "db_id": "card_games",
+  "question": "Among the sets in the block \"Ice Age\", how many of them have an Italian translation?",
+  "evidence": "sets in the block \"Ice Age\" refers to block = 'Ice Age'; Italian translation refers to language = 'Italian' and translation is not null",
+  "gold_sql": "SELECT COUNT(DISTINCT T1.id) FROM sets AS T1 INNER JOIN set_translations AS T2 ON T2.setCode = T1.code WHERE T1.block = 'Ice Age' AND T2.language = 'Italian' AND T2.translation IS NOT NULL",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 484,
+  "db_id": "card_games",
+  "question": "Please list the Italian names of the cards in the set Coldsnap with the highest converted mana cost.",
+  "evidence": "card set Coldsnap refers to name = 'Coldsnap'; Italian refers to language = 'Italian'; highest converted mana cost refers to MAX(convertedManaCost)",
+  "gold_sql": "SELECT T2.name FROM foreign_data AS T1 INNER JOIN cards AS T2 ON T2.uuid = T1.uuid INNER JOIN sets AS T3 ON T3.code = T2.setCode WHERE T3.name = 'Coldsnap' AND T1.language = 'Italian' ORDER BY T2.convertedManaCost DESC",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 486,
+  "db_id": "card_games",
+  "question": "What is the percentage of the cards with a converted mana cost of 7 in the set Coldsnap?",
+  "evidence": "converted mana cost of 7 refers to convertedManaCost = 7; card set Coldsnap refers to name = 'Coldsnap'; percentage = DIVIDE(SUM(convertedManaCost = 7), SUM(convertedManaCost))*100",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.convertedManaCost = 7 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE T2.name = 'Coldsnap'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 487,
+  "db_id": "card_games",
+  "question": "What is the percentage of incredibly powerful cards in the set Coldsnap?",
+  "evidence": "card set Coldsnap refers to name = 'Coldsnap'; foil is incredibly powerful refers to cardKingdomFoilId is not null AND cardKingdomId is not null; the percentage of incredibly powerful cards in the set refers to DIVIDE(SUM(incredibly powerful), SUM(name = 'Coldsnap'))*100",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.cardKingdomFoilId IS NOT NULL AND T1.cardKingdomId IS NOT NULL THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN sets AS T2 ON T2.code = T1.setCode WHERE T2.name = 'Coldsnap'",
+  "difficulty": "challenging"
+ },
+ {
+  "qid": 730,
+  "db_id": "superhero",
+  "question": "List the superheroes from Marvel Comics who have the super power of 'Super Strength'.",
+  "evidence": "the superheroes from Marvel Comics refers to publisher_name = 'Marvel Comics'; super power of \"Super Strength\" refers to power_name = 'Super Strength';",
+  "gold_sql": "SELECT superhero_name FROM superhero AS T1 WHERE EXISTS (SELECT 1 FROM hero_power AS T2 INNER JOIN superpower AS T3 ON T2.power_id = T3.id WHERE T3.power_name = 'Super Strength' AND T1.id = T2.hero_id)AND EXISTS (SELECT 1 FROM publisher AS T4 WHERE T4.publisher_name = 'Marvel Comics' AND T1.publisher_id = T4.id)",
+  "difficulty": "challenging"
+ },
+ {
+  "qid": 732,
+  "db_id": "superhero",
+  "question": "Which publisher published the slowest superhero?",
+  "evidence": "the slowest superhero refers to attribute_name = 'Speed' where MIN(attribute_value); publisher refers to publisher_name",
+  "gold_sql": "SELECT T2.publisher_name FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id INNER JOIN hero_attribute AS T3 ON T1.id = T3.hero_id INNER JOIN attribute AS T4 ON T3.attribute_id = T4.id WHERE T4.attribute_name = 'Speed' ORDER BY T3.attribute_value LIMIT 1",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 739,
+  "db_id": "superhero",
+  "question": "What are the names of the superheroes with the power of death touch?",
+  "evidence": "name of superheroes refers to refers to superhero_name; the power of death touch refers to power_name = 'Death Touch'",
+  "gold_sql": "SELECT T1.superhero_name FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id WHERE T3.power_name = 'Death Touch'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 745,
+  "db_id": "superhero",
+  "question": "Give the publisher ID of Star Trek.",
+  "evidence": "Star Trek is the publisher_name;",
+  "gold_sql": "SELECT id FROM publisher WHERE publisher_name = 'Star Trek'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 758,
+  "db_id": "superhero",
+  "question": "Provide the hair colour of the human superhero who is 185 cm tall.",
+  "evidence": "185 cm tall refers to height_cm = 185; human superhero refers to race = 'human'; hair colour refers to colour where hair_colour_id = colour.id;",
+  "gold_sql": "SELECT DISTINCT T3.colour FROM superhero AS T1 INNER JOIN race AS T2 ON T1.race_id = T2.id INNER JOIN colour AS T3 ON T1.hair_colour_id = T3.id WHERE T1.height_cm = 185 AND T2.race = 'Human'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 760,
+  "db_id": "superhero",
+  "question": "In superheroes with height between 150 to 180, what is the percentage of heroes published by Marvel Comics?",
+  "evidence": "height between 150 to 180 refers to height_cm BETWEEN 150 AND 180; heroes published by Marvel Comics refers to publisher_name = 'Marvel Comics'; calculation = MULTIPLY(DIVIDE(SUM(publisher.id = 13)), COUNT(publisher.id), 100)",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T2.publisher_name = 'Marvel Comics' THEN 1 ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN publisher AS T2 ON T1.publisher_id = T2.id WHERE T1.height_cm BETWEEN 150 AND 180",
+  "difficulty": "challenging"
+ },
+ {
+  "qid": 775,
+  "db_id": "superhero",
+  "question": "What is the percentage of blue female superheroes among all female superheroes?",
+  "evidence": "percentage = MULTIPLY(DIVIDE(SUM(colour = 'Blue' WHERE gender = 'Female'), COUNT(gender = 'Female')), 100); blue refers to the color = 'Blue' WHERE skin_colour_id = colour.id; female refers to gender = 'Female';",
+  "gold_sql": "SELECT CAST(COUNT(CASE WHEN T3.colour = 'Blue' THEN T1.id ELSE NULL END) AS REAL) * 100 / COUNT(T1.id) FROM superhero AS T1 INNER JOIN gender AS T2 ON T1.gender_id = T2.id INNER JOIN colour AS T3 ON T1.skin_colour_id = T3.id WHERE T2.gender = 'Female'",
+  "difficulty": "challenging"
+ },
+ {
+  "qid": 786,
+  "db_id": "superhero",
+  "question": "How many heroes have the highest attribute value in strength?",
+  "evidence": "highest attribute value in strength refers to MAX(attribute_value) WHERE attribute_name = 'Strength';",
+  "gold_sql": "SELECT COUNT(T1.hero_id) FROM hero_attribute AS T1 INNER JOIN attribute AS T2 ON T1.attribute_id = T2.id WHERE T2.attribute_name = 'Strength' AND T1.attribute_value = ( SELECT MAX(attribute_value) FROM hero_attribute )",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 791,
+  "db_id": "superhero",
+  "question": "Calculate the average height for all superhero.",
+  "evidence": "average = DIVIDE(SUM(height_cm), COUNT(all heros));",
+  "gold_sql": "SELECT CAST(SUM(height_cm) AS REAL) / COUNT(id) FROM superhero",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 792,
+  "db_id": "superhero",
+  "question": "What is Abomination's superpower?",
+  "evidence": "Abomination refers to superhero_name = 'Abomination'; superpower refers to power_name;",
+  "gold_sql": "SELECT T3.power_name FROM superhero AS T1 INNER JOIN hero_power AS T2 ON T1.id = T2.hero_id INNER JOIN superpower AS T3 ON T2.power_id = T3.id WHERE T1.superhero_name = 'Abomination'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 1312,
+  "db_id": "student_club",
+  "question": "What's Angela Sanders's major?",
+  "evidence": "Angela Sanders is the full name; full name refers to first_name, last_name; major refers to major_name.",
+  "gold_sql": "SELECT T2.major_name FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T1.first_name = 'Angela' AND T1.last_name = 'Sanders'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 1322,
+  "db_id": "student_club",
+  "question": "Among the events attended by more than 10 members of the Student_Club, how many of them are meetings?",
+  "evidence": "meetings events refers to type = 'Meeting'; attended by more than 10 members refers to COUNT(event_id) > 10",
+  "gold_sql": "SELECT T1.event_name FROM event AS T1  INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event GROUP BY T1.event_id  HAVING COUNT(T2.link_to_event) > 10 EXCEPT SELECT T1.event_name  FROM event AS T1  WHERE T1.type = 'Meeting'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 1331,
+  "db_id": "student_club",
+  "question": "What is the amount of the funds that the Vice President received?",
+  "evidence": "'Vice President' is a position of Student Club; funds received refers to amount.",
+  "gold_sql": "SELECT T2.amount FROM member AS T1 INNER JOIN income AS T2 ON T1.member_id = T2.link_to_member WHERE T1.position = 'Vice President'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 1334,
+  "db_id": "student_club",
+  "question": "List the full name of the Student_Club members that grew up in Illinois state.",
+  "evidence": "full name of member refers to first_name, last_name",
+  "gold_sql": "SELECT T1.first_name, T1.last_name FROM member AS T1 INNER JOIN zip_code AS T2 ON T1.zip = T2.zip_code WHERE T2.state = 'Illinois'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 1339,
+  "db_id": "student_club",
+  "question": "Calculate the total average cost that Elijah Allen spent in the events on September and October.",
+  "evidence": "Elijah Allen is the full name; full name refers to first_name, last_name; The 5th and 6th string of the expense_date in the expense table can refer to month; events in September and October refers to month(expense_date) = 9 OR month(expense_date) = 10",
+  "gold_sql": "SELECT AVG(T2.cost) FROM member AS T1 INNER JOIN expense AS T2 ON T1.member_id = T2.link_to_member WHERE T1.last_name = 'Allen' AND T1.first_name = 'Elijah' AND (SUBSTR(T2.expense_date, 6, 2) = '09' OR SUBSTR(T2.expense_date, 6, 2) = '10')",
+  "difficulty": "challenging"
+ },
+ {
+  "qid": 1352,
+  "db_id": "student_club",
+  "question": "For all the club members from \"Business\" major, how many of them wear medium size t-shirt?",
+  "evidence": "'Business' is a major name; wear medium size t-shirt refers to t_shirt_size = 'Medium'",
+  "gold_sql": "SELECT COUNT(T1.member_id) FROM member AS T1 INNER JOIN major AS T2 ON T1.link_to_major = T2.major_id WHERE T2.major_name = 'Business' AND T1.t_shirt_size = 'Medium'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 1380,
+  "db_id": "student_club",
+  "question": "What is the total amount of money spent for food?",
+  "evidence": "total amount of money spent refers to SUM(spent); spent for food refers to category = 'Food'",
+  "gold_sql": "SELECT SUM(spent) FROM budget WHERE category = 'Food'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 1381,
+  "db_id": "student_club",
+  "question": "List the name of students that have attended more than 7 events.",
+  "evidence": "name of students means the full name; full name refers to first_name, last_name; attended more than 7 events refers to COUNT(link_to_event) > 7",
+  "gold_sql": "SELECT T1.first_name, T1.last_name FROM member AS T1 INNER JOIN attendance AS T2 ON T1.member_id = T2.link_to_member GROUP BY T2.link_to_member HAVING COUNT(T2.link_to_event) > 7",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 1390,
+  "db_id": "student_club",
+  "question": "Based on the total cost for all event, what is the percentage of cost for Yearly Kickoff event?",
+  "evidence": "percentage = DIVIDE(SUM(cost where event_name = 'Yearly Kickoff'), SUM(cost)) * 100",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T1.event_name = 'Yearly Kickoff' THEN T3.cost ELSE 0 END) AS REAL) * 100 / SUM(T3.cost) FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 1392,
+  "db_id": "student_club",
+  "question": "Indicate the top source of funds received in September 2019 based on their amount.",
+  "evidence": "top source funds refers to MAX(source); September 2019 means date_received BETWEEN '2019-09-01' and '2019-09-30'",
+  "gold_sql": "SELECT source FROM income WHERE date_received BETWEEN '2019-09-01' and '2019-09-30' ORDER BY source DESC LIMIT 1",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 1394,
+  "db_id": "student_club",
+  "question": "How many members of the Student_Club have major in 'Physics Teaching'?",
+  "evidence": "'Physics Teaching' is the major_name;",
+  "gold_sql": "SELECT COUNT(T2.member_id) FROM major AS T1 INNER JOIN member AS T2 ON T1.major_id = T2.link_to_major WHERE T1.major_name = 'Physics Teaching'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 1401,
+  "db_id": "student_club",
+  "question": "Indicate the cost of posters for 'September Speaker' event.",
+  "evidence": "'Posters' is the expense description; 'September Speaker' is an event name",
+  "gold_sql": "SELECT T3.cost FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event INNER JOIN expense AS T3 ON T2.budget_id = T3.link_to_budget WHERE T1.event_name = 'September Speaker' AND T3.expense_description = 'Posters'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 1409,
+  "db_id": "student_club",
+  "question": "Mention the total expense used on 8/20/2019.",
+  "evidence": "total expense refers SUM(cost) where expense_date = '2019-08-20'",
+  "gold_sql": "SELECT SUM(cost) FROM expense WHERE expense_date = '2019-08-20'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 1422,
+  "db_id": "student_club",
+  "question": "State the category of events were held at MU 215.",
+  "evidence": "'MU 215' is the location of event; ",
+  "gold_sql": "SELECT DISTINCT T2.category FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event WHERE T1.location = 'MU 215'",
+  "difficulty": "simple"
+ },
+ {
+  "qid": 1427,
+  "db_id": "student_club",
+  "question": "What are the budget category of the events located at MU 215 and a guest speaker type with a 0 budget spent?",
+  "evidence": "budget category refers to category; events located at refers to location; type = 'Guest Speaker'; 0 budget spent refers to spent = 0; ",
+  "gold_sql": "SELECT DISTINCT T2.category, T1.type FROM event AS T1 INNER JOIN budget AS T2 ON T1.event_id = T2.link_to_event WHERE T1.location = 'MU 215' AND T2.spent = 0 AND T1.type = 'Guest Speaker'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 1432,
+  "db_id": "student_club",
+  "question": "Among the members with t-shirt size of medium, what is the percentage of the amount 50 received by the Student_Club?",
+  "evidence": "t_shirt_size = 'Medium' where position = 'Member'; percentage = DIVIDE(COUNT(amount = 50), COUNT(member_id)) * 100",
+  "gold_sql": "SELECT CAST(SUM(CASE WHEN T2.amount = 50 THEN 1.0 ELSE 0 END) AS REAL) * 100 / COUNT(T2.income_id) FROM member AS T1 INNER JOIN income AS T2 ON T1.member_id = T2.link_to_member WHERE T1.position = 'Member' AND T1.t_shirt_size = 'Medium'",
+  "difficulty": "moderate"
+ },
+ {
+  "qid": 1464,
+  "db_id": "student_club",
+  "question": "Write the full names of students who received funds on the date of 9/9/2019 and include the amount received.",
+  "evidence": "full name refers to first_name, last_name, amount of funds received refers to amount, received funds on date refers to date_received",
+  "gold_sql": "SELECT DISTINCT T3.first_name, T3.last_name, T4.amount FROM event AS T1 INNER JOIN attendance AS T2 ON T1.event_id = T2.link_to_event INNER JOIN member AS T3 ON T3.member_id = T2.link_to_member INNER JOIN income AS T4 ON T4.link_to_member = T3.member_id WHERE T4.date_received = '2019-09-09'",
+  "difficulty": "challenging"
+ }
+]
