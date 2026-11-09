@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import random
+import secrets
 import time
 from dataclasses import dataclass
 
@@ -28,8 +29,13 @@ class Timing:
     incomplete: str | None = None  # why the response stopped early (e.g. max_output_tokens), if it did
 
 
+# New for every process: the seed keeps the drawn questions repeatable, but a re-run must not reuse last
+# run's "fresh" first lines (OpenAI still had them cached 8 minutes later).
+_SALT = secrets.token_hex(4)
+
+
 def nonce(rng: random.Random) -> str:
-    return f"run-id: {rng.getrandbits(64):016x}"
+    return f"run-id: {_SALT}-{rng.getrandbits(64):016x}"
 
 
 def _is_output(event_type: str) -> bool:

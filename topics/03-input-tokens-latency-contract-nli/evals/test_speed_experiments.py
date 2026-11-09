@@ -91,7 +91,10 @@ def test_test3_prewarm_is_not_streamed_and_shares_prefix_with_question():
     i = client.requests.index(warm[0])
     question = client.requests[i + 1]
     assert question["stream"] is True
-    assert question["instructions"] == warm[0]["instructions"] and question["input"][0] == warm[0]["input"][0]
+    assert question["instructions"] == warm[0]["instructions"]
+    # OpenAI only hit the cache when the later prompt starts with the WHOLE earlier prompt (smoke diagnosis
+    # 2026-11-09): the warm-up must send the shared start and nothing after it
+    assert warm[0]["input"] == [question["input"][0]]
     assert question["prompt_cache_key"] == warm[0]["prompt_cache_key"]
     assert 2 in slept
     assert sorted(r["variant"] for r in _measured(run)) == ["cold", "prewarm"]

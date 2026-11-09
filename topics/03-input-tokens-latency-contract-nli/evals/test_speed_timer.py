@@ -51,10 +51,19 @@ def test_timer_error_mid_stream_keeps_partial_times():
     assert t.total_s is None
 
 
-def test_nonce_is_repeatable_with_a_seed():
+def test_nonce_is_repeatable_with_a_seed_within_one_process():
     import random
     a, b = nonce(random.Random(1)), nonce(random.Random(1))
-    assert a == b and a.startswith("run-id: ") and len(a) == len("run-id: ") + 16
+    assert a == b and a.startswith("run-id: ")
+
+
+def test_nonce_differs_between_processes_with_the_same_seed(monkeypatch):
+    # a re-run with the same seed must not reuse last run's "fresh" first lines: OpenAI kept them cached
+    import random
+    import ndaspeed.timer as timer
+    a = nonce(random.Random(1))
+    monkeypatch.setattr(timer, "_SALT", "other")
+    assert nonce(random.Random(1)) != a
 
 
 def test_timer_incomplete_reads_usage_and_reason():

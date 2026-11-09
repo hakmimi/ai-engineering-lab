@@ -211,7 +211,9 @@ def test3(client, model: str, rng: random.Random, budget: Budget, reps: int = 10
                 instr, cache_key = instructions(nonce(rng)), f"t3-{rep}-{v}"
                 if v == "prewarm":
                     _prewarm(run, client, budget, model, {
-                        **_ping_request(model, instr), "input": [pack_msg, {"role": "user", "content": PING}],
+                        # only the shared start: OpenAI hit the cache only when the later prompt began with
+                        # the whole warm-up prompt (a trailing PING made every warm-up miss)
+                        **_ping_request(model, instr), "input": [pack_msg],
                         "max_output_tokens": MIN_OUTPUT_TOKENS, "prompt_cache_key": cache_key}, rep)
                     sleep(2)
                 request = {"model": model, "instructions": instr, "max_output_tokens": ANSWER_TOKENS,
