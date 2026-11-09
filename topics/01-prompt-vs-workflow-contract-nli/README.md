@@ -1,18 +1,35 @@
-# 02 · One big prompt or a workflow, on real contracts
+# 01 · One big prompt or a workflow? Part 2: real contracts
 
 ## Why I did this
 
-<!-- NOTES for the author (rewrite in your own voice, then delete):
-- Topic 1 asked: when is one long prompt enough, and when does a workflow (route → parallel → chain) pay off?
-  On made-up insurance claims, one prompt won, and a bigger model beat splitting the job.
-- Topic 1's own caveats: the data and the answer key were mine, and the documents were short.
-- So this topic runs the same test on real data: real NDAs, with labels written by lawyers.
-- The question: same test, real data: does the answer change?
--->
+In [part 1](../01-prompt-vs-workflow-claimsflow/) I asked: **when is one long prompt enough, and when does a workflow (route → parallel → chain) pay off?** On made-up insurance claims, one prompt won, and a bigger model beat splitting the job.
+
+Part 1 had two weak spots that I named myself: **the data and the answer key were mine**, and **the documents were short**. So this part runs the same test on **real data**: real non-disclosure agreements (NDAs), with labels written by lawyers.
+
+> **Same test, real data: does the answer change?**
 
 ## Spoiler alert: the bottom line
 
-Not run yet. This section is written from `results.md` after the full runs.
+**No. On real contracts, one prompt still beat the workflow. But this time the bigger model didn't win on labels: it found much more of the proof, and also read things into the contracts that the lawyers didn't.**
+
+Numbers from the 30 held-out NDAs (510 contract × statement pairs, 3 repeats), with the main set in brackets:
+
+| | Label right | Proof sentences found | Cost per contract | Time per contract |
+|---|---|---|---|---|
+| **One big prompt** (small model) | **82%** (83%) | 61% | **$0.0013** | 21 s |
+| **Route, then one answer** (small model) | 81% (82%) | 65% | 1.5× | 41 s |
+| **Workflow, all steps** (small model) | 76% (78%) | 59% | 2.5× | 26 s |
+| **One big prompt** (bigger model) | 81% (80%) | **76%** | 7× | **9 s** |
+
+**Why the workflow lost:**
+- **A step only sees the sentences the router picked.** When the router misses the clause, the step honestly answers "not mentioned". The full workflow turned about **1 in 5 "the contract says so" answers into "not mentioned"**; one prompt did that to about 1 in 8.
+- **The glue broke again, twice.** A label written in the wrong tag, and a router that copied a sentence number into its closing tag (`<nda-7>11</nda-11>`). Both were fixed on the main set before the held-out run, but they're the same lesson as part 1.
+
+**What changed from part 1:**
+- **The bigger model is no longer the easy fix.** It catches more of what the contract says, but it also calls "supports" or "contradicts" where the lawyers said "not mentioned" (about 1 in 3 of those pairs). Its label score ends up level with the small model's.
+- **Routing became nearly free in accuracy and helped find proof** (65% vs 61%), but it doubled the wait, because its two calls run one after the other.
+
+**The lesson holds:** start with one prompt and a test set with known answers. A workflow or a bigger model is a change to measure, not an upgrade to assume.
 
 ## What I did
 
@@ -30,12 +47,9 @@ Not run yet. This section is written from `results.md` after the full runs.
 
 ## The use case: reviewing NDAs
 
-<!-- NOTES for the author:
-- Why NDAs: the most common contract a company signs; a legal team checks the same points every time.
-- The 17 statements are fixed (the dataset's "hypotheses"): sharing with employees, with third parties, return or destroy,
-  survival after the end, no reverse engineering, no solicitation, keeping copies, and so on.
-- The contract text comes already split into numbered spans (sentences or list items). Evidence = span numbers.
--->
+An NDA is the most common contract a company signs, and a legal team checks the same points in every one. ContractNLI turns that into a fixed list of **17 statements**: sharing with employees, sharing with third parties, return or destroy at the end, survival after the end, no reverse engineering, no solicitation, keeping copies, and so on.
+
+Each contract comes already split into **numbered spans** (sentences or list items), so "evidence" is simply a list of span numbers that code can check.
 
 ![NDA review flow: route, parallel statement checks, chain](design/process-diagram.png)
 
@@ -53,7 +67,9 @@ Not run yet. This section is written from `results.md` after the full runs.
 | **Errors** | Answers my code could not read (counted as wrong) |
 | **Seconds, $, calls per contract** | What each level costs to run |
 
-<!-- NOTES for the author: what did you expect before the runs? (topic 1's result says one prompt; real, longer text says the workflow might catch up) -->
+**What I expected going in:** part 1 said one prompt wins, but real, longer contracts might let the workflow catch up, because each step gets a smaller, cleaner piece of text.
+
+Levels 0–3 use `gpt-6-luna` (small, cheap). Level 0+ uses `gpt-6.1-sol`. Prompt caching was on at every level.
 
 ## What's in the folder
 
@@ -96,28 +112,72 @@ The shared model helper is outside this folder, in [`shared/llm.py`](../../share
 
 ## Results: the main set
 
-Not run yet.
+30 NDAs × 17 statements × 3 repeats per level. Full tables in [`results.md`](results.md).
+
+| Level | Label right | F1 entailment | F1 contradiction | Evidence found | Evidence precision | Time / contract | $ / contract |
+|---|---|---|---|---|---|---|---|
+| 0 (gpt-6-luna) | **83%** | 0.86 | 0.59 | 56% | 72% | 21 s | $0.0013 |
+| 1, route | 82% | 0.86 | 0.58 | 62% | 67% | 42 s | $0.0019 |
+| 2, + parallel | 78% | 0.82 | 0.57 | 54% | 72% | 23 s | $0.0024 |
+| 3, + chain | 78% | 0.82 | 0.55 | 59% | 63% | 28 s | $0.0031 |
+| 0+ (gpt-6.1-sol) | 80% | **0.87** | 0.56 | **72%** | 59% | **9 s** | $0.0090 |
+
+**What I found:**
+
+- **The smoke test (2 contracts) caught the first glue bug:** level 3's label step wrote `<contradiction>` instead of `<label>contradiction</label>`, so 29 of 34 answers were unreadable. Fixed before the full run.
+- **The first full run caught the second:** the router sometimes copied a sentence number into its closing tag (`<nda-7>11</nda-11>`), which made 1–3% of answers at levels 1–3 unreadable. I found it by calling the router 48 times on the failing contracts (8 had the slip), fixed it, and re-ran levels 1–3. The table shows the re-run.
+- **With the glue fixed, the workflow still came in about 5 points under one prompt.** The errors were never the main gap.
+- **The bigger model was the fastest and found the most proof, but not the most right labels.**
 
 ## Observations: the held-out test set
 
-Not run yet.
+30 different NDAs from the dataset's test split. **No prompt was changed after this run started.**
+
+| Level | Label right | F1 entailment | F1 contradiction | Evidence found | Evidence precision | Time / contract | $ / contract |
+|---|---|---|---|---|---|---|---|
+| 0 (gpt-6-luna) | **82%** | 0.86 | **0.63** | 61% | **73%** | 21 s | $0.0013 |
+| 1, route | 81% | 0.85 | 0.62 | 65% | 66% | 41 s | $0.0019 |
+| 2, + parallel | 77% | 0.80 | 0.62 | 55% | 69% | 21 s | $0.0024 |
+| 3, + chain | 76% | 0.79 | 0.59 | 59% | 58% | 26 s | $0.0032 |
+| 0+ (gpt-6.1-sol) | 81% | **0.88** | 0.61 | **76%** | 58% | **9 s** | $0.0091 |
+
+**What this means:**
+
+- **The held-out numbers match the main set within 1–2 points.** The fixes didn't over-fit, and the ranking is the same.
+- **The workflow's loss is "not mentioned" where the contract does say it.** Of the pairs the lawyers marked as "the contract says so", one prompt answered "not mentioned" about 1 time in 8; levels 2 and 3 did it about 1 time in 5. A step that sees only the router's picks can't find a clause the router missed.
+- **The bigger model has the opposite problem.** It almost never misses what the contract says (5% vs 13%), but on pairs the lawyers marked "not mentioned" it answered "supports" or "contradicts" about 1 time in 3 (one prompt on the small model: about 1 in 6). It reads more into the text than the labels allow. Its weakest statements were "all confidential information must be expressly identified" and "copies may be made" (both 41% right).
+- **Contradictions stay hard for everyone** (F1 0.59–0.63). They are rare (about 1 pair in 10) and often hide in an exception to a clause.
+- **The hardest statement for the small model was "no licensing"** ("the agreement grants no rights to the information": 48–57% right). It's usually implied, not written out, and the lawyers' labels expect you to see it.
 
 ## When to use what
 
-<!-- Filled after the runs. Compare with topic 1's table: what held, what changed on real data? -->
+What held from [part 1](../01-prompt-vs-workflow-claimsflow/), and what changed on real contracts:
+
+| Option | Part 1 (made-up claims) | Part 2 (real NDAs) | So… |
+|---|---|---|---|
+| **One big prompt** | Best on the small model | **Still best** on labels, cheapest | Start here. Every NDA fit in one prompt. |
+| **Route** | Free, didn't help | Nearly free on labels, **found more proof**, but **2× slower** | Use it when you need the evidence list, or when documents don't fit in one prompt. |
+| **Parallel** | Hurt: each check saw too little | Hurt: each check saw only the router's picks | Only for checks that truly stand alone. |
+| **Chain** | Hurt: steps lost the full picture | Hurt the most on labels, lowest evidence precision | Use it for auditability, not for accuracy. |
+| **Bigger model** | Best on hard claims | **Best at finding proof**, fastest, but **over-reads**; labels level with the small model | Measure it before you switch. Tell it to stay literal if the labels are literal. |
+
+**The explanation behind it:** the same as part 1. Splitting a job makes each call see less. On real contracts the miss shows up in one place: a clause the router didn't pick is a clause the next step can never find.
 
 ## Caveats
 
-<!-- NOTES for the author (check after the runs):
-- 30 + 30 NDAs out of 607, 3 repeats per level, one model family (OpenAI).
-- Contradiction is rare (~1 pair in 10), so its F1 moves a lot between runs.
-- Every NDA still fits in one prompt (the longest is about 10k tokens). Routing here cuts context by choice, not by need.
-- The labels are the dataset's; a few may be arguable, but they are not mine.
--->
+- **Small sample:** 30 + 30 NDAs out of 607, 3 repeats per level, one model family (OpenAI).
+- **Contradiction is rare** (about 1 pair in 10), so its F1 moves a few points between runs.
+- **Every NDA still fit in one prompt** (the longest is about 10k tokens). Routing here cut the text by choice, not by need. With contracts too long for one prompt, routing would be required, and the picture could change.
+- **The labels are the dataset's, not mine.** A few look arguable (especially the implied ones, like "no licensing"), and part of the bigger model's "over-reading" may be fair reading.
+- **The two glue fixes were tuned on the main set.** The held-out set had at most 1 unreadable answer per repeat.
 
 ## What I'd improve next time
 
-<!-- Filled after the runs. -->
+- **Save the raw text of every answer the code can't read.** Both glue bugs took extra calls to diagnose.
+- Ask for a **fixed answer format** (structured output) instead of XML tags. That would likely have prevented all three format bugs in this series.
+- Let a step see **the router's picks plus the whole contract**, or ask the router to pick generously by clause, not by sentence.
+- Tell the bigger model to **stay literal** ("not mentioned unless the contract says it") and measure again.
+- Run all **123 test NDAs**, and try a second model family.
 
 ## How to run it
 
