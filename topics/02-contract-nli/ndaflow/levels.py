@@ -14,7 +14,7 @@ from dataclasses import dataclass
 from typing import Callable, TypeVar
 
 from ndaflow import prompts
-from ndaflow.models import Answer, Answers, Contract, Statement
+from ndaflow.models import LABELS, Answer, Answers, Contract, Statement
 from shared.llm import Tracker, extract_xml, llm_call
 
 _LABEL_KEYS = {"entailment": "entailment", "contradiction": "contradiction", "notmentioned": "not_mentioned"}
@@ -32,13 +32,27 @@ def normalize_label(raw: str) -> str | None:
     return _LABEL_KEYS.get(re.sub(r"[\s\-_]+", "", raw.lower()))
 
 
+def read_label(text: str) -> str | None:
+    """Trust <label> when present; otherwise accept the one label the text names.
+
+    The small model sometimes writes the right label in the wrong tag (<contradiction>), as topic 1's router did.
+    Two or more labels named means we can't tell: None.
+    """
+    tagged = extract_xml(text, "label")
+    if tagged:
+        return normalize_label(tagged)
+    flat = re.sub(r"[\s\-]+", "_", text.lower())
+    found = {lab for lab in LABELS if re.search(rf"(?<![a-z]){lab}(?![a-z])", flat)}
+    return found.pop() if len(found) == 1 else None
+
+
 def parse_span_ids(raw: str, valid: set[int]) -> list[int]:
     """Every number in the text that is a real span id here; made-up numbers are dropped."""
     return sorted({int(n) for n in re.findall(r"\d+", raw)} & valid)
 
 
 def parse_answer(block: str, valid: set[int]) -> Answer:
-    label = normalize_label(extract_xml(block, "label"))
+    label = read_label(block)
     if label is None:
         return Answer("error")
     if label == "not_mentioned":
@@ -145,7 +159,7 @@ def run_level3(contract: Contract, ctx: Ctx) -> Answers:
         if not evidence:
             return Answer("not_mentioned")
         text = _call(ctx, prompts.routed_section(contract, s, evidence), f"label:{s.sid}", prompts.LABEL_SYSTEM)
-        label = normalize_label(extract_xml(text, "label"))
+        label = read_label(text)
         if label is None:
             return Answer("error")
         return Answer(label, [] if label == "not_mentioned" else evidence)

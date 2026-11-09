@@ -196,3 +196,27 @@ def test_level3_missing_evidence_tag_is_an_error(monkeypatch):
     calls = fake_llm(monkeypatch, {**_one_pick("1"), "evidence:": "Span 1 is relevant."})
     assert run_level3(SMALL_CONTRACT, ctx())["nda-5"] == Answer("error", [])
     assert "label:nda-5" not in [c.label for c in calls]
+
+
+# ---------------------------------------------------------------- forgiving label reader (smoke run, 2026-11-09)
+from ndaflow.levels import read_label  # noqa: E402
+
+
+@pytest.mark.parametrize(
+    "text, label",
+    [
+        ("<label>Entailment</label>", "entailment"),
+        ("<contradiction>", "contradiction"),  # seen in the smoke run: right answer, wrong tag
+        ("<not_mentioned></not_mentioned>", "not_mentioned"),
+        ("The answer is contradiction.", "contradiction"),
+        ("entailment or contradiction?", None),  # two labels named: can't tell
+        ("yes", None),
+    ],
+)
+def test_read_label_accepts_one_unambiguous_label(text, label):
+    assert read_label(text) == label
+
+
+def test_level3_label_in_the_wrong_tag_is_still_read(monkeypatch):
+    fake_llm(monkeypatch, {**_one_pick("1"), "evidence:": "<evidence>1</evidence>", "label:": "<contradiction>"})
+    assert run_level3(SMALL_CONTRACT, ctx())["nda-5"] == Answer("contradiction", [1])

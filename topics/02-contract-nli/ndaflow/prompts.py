@@ -102,5 +102,5 @@ LABEL_SYSTEM = "\n\n".join([
     "You get one statement and the contract spans that speak to it. Answer one question only: "
     "does the contract support the statement or contradict it? If these spans turn out not to settle it, say not_mentioned.",
     LABEL_RULES.split("## Evidence")[0].strip(),
-    "## Answer format\nThink it through, then answer with this tag only:\n<label>entailment, contradiction or not_mentioned</label>",
+    "## Answer format\nThink it through, then end with the label inside a <label> tag, for example:\n<label>contradiction</label>",
 ])
