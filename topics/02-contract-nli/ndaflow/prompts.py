@@ -48,3 +48,32 @@ def level0_system(statements: list[Statement]) -> str:
         "Think it through, then for every statement, in the order above, write one block like this:\n"
         f"<{first}><label>entailment, contradiction or not_mentioned</label><evidence>span numbers, or none</evidence></{first}>",
     ])
+
+
+# ---------------------------------------------------------------- level 1+: route
+def route_system(statements: list[Statement]) -> str:
+    first = statements[0].sid
+    return "\n\n".join([
+        "You sort the clauses of non-disclosure agreements (NDAs) for a legal team.",
+        "For each statement below, pick the spans of the contract that could decide whether the contract supports it, "
+        "contradicts it, or does not mention it. Pick generously: a later step reads only the spans you pick. "
+        "Write none if no span is about the statement.",
+        statements_text(statements),
+        "## Answer format\n"
+        "For every statement, in the order above, write one tag with span numbers, comma-separated, or none:\n"
+        f"<{first}>3, 17, 18</{first}>",
+    ])
+
+
+def routed_section(c: Contract, s: Statement, span_ids: list[int]) -> str:
+    return f"## {s.sid} ({s.short}): {s.text}\n{render_contract(c, span_ids)}"
+
+
+DECIDE_SYSTEM = "\n\n".join([
+    ROLE,
+    "Each statement below comes with the contract spans picked for it. Judge it by those spans only.",
+    LABEL_RULES,
+    "## Answer format\n"
+    "Think it through, then for every statement given, write one block, using its id as the tag:\n"
+    "<nda-N><label>entailment, contradiction or not_mentioned</label><evidence>span numbers, or none</evidence></nda-N>",
+])

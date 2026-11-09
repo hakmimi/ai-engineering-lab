@@ -1,6 +1,7 @@
 """The levels we compare. Each takes a contract and returns an Answer per statement.
 
 Level 0: one big prompt (the whole contract, all 17 statements).
+Level 1: route first (pick the spans for each statement), then one prompt that sees only the picked spans.
 """
 
 from __future__ import annotations
@@ -64,3 +65,36 @@ def run_level0(contract: Contract, ctx: Ctx) -> Answers:
     sids = [s.sid for s in ctx.statements]
     every = _filled(contract)
     return parse_answers(text, sids, {sid: every for sid in sids})
+
+
+# ---------------------------------------------------------------- level 1
+Routes = dict[str, "list[int] | None"]  # None = the router left the statement out
+
+
+def route(contract: Contract, ctx: Ctx) -> Routes:
+    """Ask which spans matter for each statement. Missing tag -> None; 'none' -> []."""
+    text = _call(ctx, prompts.contract_prompt(contract), "route", prompts.route_system(ctx.statements))
+    every = _filled(contract)
+    out: Routes = {}
+    for s in ctx.statements:
+        if not re.search(rf"<{s.sid}>.*?</{s.sid}>", text, re.DOTALL):
+            out[s.sid] = None
+        else:
+            out[s.sid] = parse_span_ids(extract_xml(text, s.sid), every)
+    return out
+
+
+def _early(routes: Routes) -> Answers:
+    """Answers code can give without another call: router gap -> error, nothing picked -> not_mentioned."""
+    return {sid: Answer("error") if ids is None else Answer("not_mentioned") for sid, ids in routes.items() if not ids}
+
+
+def run_level1(contract: Contract, ctx: Ctx) -> Answers:
+    routes = route(contract, ctx)
+    out = _early(routes)
+    todo = [s for s in ctx.statements if s.sid not in out]
+    if todo:
+        prompt = f"Contract {contract.doc_id}\n\n" + "\n\n".join(prompts.routed_section(contract, s, routes[s.sid]) for s in todo)
+        text = _call(ctx, prompt, "decide", prompts.DECIDE_SYSTEM)
+        out.update(parse_answers(text, [s.sid for s in todo], {s.sid: set(routes[s.sid]) for s in todo}))
+    return {s.sid: out[s.sid] for s in ctx.statements}

@@ -58,3 +58,48 @@ def test_level0_prompt_shows_numbered_spans_and_caches_the_statements(monkeypatc
     run_level0(SMALL_CONTRACT, ctx())
     assert "[1] " + SMALL_CONTRACT.spans[1] in calls[0].prompt
     assert "nda-20" in calls[0].kwargs["cached_system"]
+
+
+# ---------------------------------------------------------------- route + level 1
+from ndaflow.levels import route, run_level1  # noqa: E402
+
+
+def route_text(picks: dict[str, str]) -> str:
+    return "\n".join(f"<{sid}>{ids}</{sid}>" for sid, ids in picks.items())
+
+
+def test_route_reads_picks_and_drops_spans_the_contract_does_not_have(monkeypatch):
+    picks = {sid: "none" for sid in STATEMENT_IDS}
+    picks["nda-5"] = "1, 2, 3, 77"
+    fake_llm(monkeypatch, {"route": route_text(picks)})
+    out = route(SMALL_CONTRACT, ctx())
+    assert out["nda-5"] == [1, 2]  # 3 is empty, 77 does not exist
+    assert out["nda-1"] == []
+
+
+def test_level1_router_gap_is_an_error_not_a_silent_not_mentioned(monkeypatch):
+    picks = {sid: "none" for sid in STATEMENT_IDS[:-1]}
+    fake_llm(monkeypatch, {"route": route_text(picks)})
+    out = run_level1(SMALL_CONTRACT, ctx())
+    assert out["nda-20"] == Answer("error", [])
+    assert out["nda-1"] == Answer("not_mentioned", [])
+
+
+def test_level1_nothing_picked_means_all_not_mentioned_and_no_decide_call(monkeypatch):
+    calls = fake_llm(monkeypatch, {"route": route_text({sid: "none" for sid in STATEMENT_IDS})})
+    out = run_level1(SMALL_CONTRACT, ctx())
+    assert [c.label for c in calls] == ["route"]
+    assert all(a == Answer("not_mentioned", []) for a in out.values())
+    assert list(out) == STATEMENT_IDS
+
+
+def test_level1_decide_sees_only_picked_spans(monkeypatch):
+    picks = {sid: "none" for sid in STATEMENT_IDS}
+    picks["nda-5"] = "1"
+    calls = fake_llm(monkeypatch, {"route": route_text(picks), "decide": tags({"nda-5": "entailment|1, 2"})})
+    out = run_level1(SMALL_CONTRACT, ctx())
+    decide = calls[1]
+    assert SMALL_CONTRACT.spans[1] in decide.prompt and SMALL_CONTRACT.spans[2] not in decide.prompt
+    assert "nda-5" in decide.prompt and "nda-1 " not in decide.prompt
+    assert out["nda-5"] == Answer("entailment", [1])  # 2 was not picked for nda-5
+    assert out["nda-1"] == Answer("not_mentioned", [])
