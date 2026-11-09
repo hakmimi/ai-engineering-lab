@@ -1,3 +1,3 @@
 [tool.pytest.ini_options]
-pythonpath = [".", "topics/01-prompt-vs-workflow-claimsflow", "topics/01-prompt-vs-workflow-contract-nli"]
-testpaths = ["tests", "topics/01-prompt-vs-workflow-claimsflow/evals", "topics/01-prompt-vs-workflow-contract-nli/evals"]
+pythonpath = [".", "topics/01-prompt-vs-workflow-claimsflow", "topics/01-prompt-vs-workflow-contract-nli", "topics/04-agent-security-review-agentdojo"]
+testpaths = ["tests", "topics/01-prompt-vs-workflow-claimsflow/evals", "topics/01-prompt-vs-workflow-contract-nli/evals", "topics/04-agent-security-review-agentdojo/evals"]
