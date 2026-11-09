@@ -109,3 +109,12 @@ def test_committed_sets_have_the_planned_sizes_and_mixed_order():
     skipped = json.loads((DATA / "key.json").read_text(encoding="utf-8"))["skipped"]
     assert len(load_sessions("fooled")) == 30 - len(skipped)
     assert set(load_pairs().values()) <= {sid for sid, kind in load_key("test").items() if kind == "bad"}
+
+
+def test_say_only_attack_goals_are_left_out():
+    # the article reviews actions; an attack whose goal is only to make the agent *say* something is out of scope
+    from agentreview.build_data import SAY_ONLY
+
+    assert ("travel", "injection_task_6") in SAY_ONLY
+    key = json.loads((DATA / "key.json").read_text(encoding="utf-8"))["sessions"]
+    assert not [sid for sid, k in key.items() if (k["suite"], k["injection_task"]) in SAY_ONLY]
