@@ -8,7 +8,7 @@
 
 **Tech Stack:** Python 3.13, `anthropic` (official SDK), `python-dotenv`, `pytest`.
 
-**Spec:** `topics/01-prompt-vs-workflow/design/design.md` (read it before starting any task).
+**Spec:** `topics/01-prompt-vs-workflow-claimsflow/design/design.md` (read it before starting any task).
 
 ## Global Constraints
 
@@ -39,12 +39,12 @@
 
 ```
 requirements.txt                         anthropic, python-dotenv, pytest
-pyproject.toml                           pytest config: pythonpath = [".", "topics/01-prompt-vs-workflow"], testpaths
+pyproject.toml                           pytest config: pythonpath = [".", "topics/01-prompt-vs-workflow-claimsflow"], testpaths
 shared/__init__.py
 shared/llm.py                            llm_call, extract_xml, Tracker, CallRecord, PRICES, cost_usd
 tests/test_llm.py                        offline tests for shared/llm.py
 
-topics/01-prompt-vs-workflow/
+topics/01-prompt-vs-workflow-claimsflow/
   claimsflow/__init__.py
   claimsflow/models.py                   dataclasses: Attachment, Claim, Policy, Customer, Figures, Result
   claimsflow/rules.py                    CLAIM_TYPES, LINE_FOR_TYPE, REQUIRED_DOCS, find_policy, compute_payout
@@ -82,7 +82,7 @@ topics/01-prompt-vs-workflow/
   - `extract_xml(text: str, tag: str) -> str` (returns `""` when the tag is missing)
   - `require_api_key() -> None` (raises `RuntimeError("Missing ANTHROPIC_API_KEY: add it to .env")`)
 
-- [ ] **Step 1: Setup.** Write `requirements.txt` (`anthropic`, `python-dotenv`, `pytest`), `pyproject.toml` with `[tool.pytest.ini_options] pythonpath = [".", "topics/01-prompt-vs-workflow"]` and `testpaths = ["tests", "topics/01-prompt-vs-workflow/evals"]`, then run `.venv\Scripts\python -m pip install -r requirements.txt`. Expected: installs without error.
+- [ ] **Step 1: Setup.** Write `requirements.txt` (`anthropic`, `python-dotenv`, `pytest`), `pyproject.toml` with `[tool.pytest.ini_options] pythonpath = [".", "topics/01-prompt-vs-workflow-claimsflow"]` and `testpaths = ["tests", "topics/01-prompt-vs-workflow-claimsflow/evals"]`, then run `.venv\Scripts\python -m pip install -r requirements.txt`. Expected: installs without error.
 
 - [ ] **Step 2: Write failing tests** in `tests/test_llm.py`:
 
@@ -120,15 +120,15 @@ def test_require_api_key_message(monkeypatch):
 
 - [ ] **Step 5: Run tests.** Same command → PASS.
 
-- [ ] **Step 6: Commit.** First commit the existing topic docs on their own: `git add topics/01-prompt-vs-workflow/README.md topics/01-prompt-vs-workflow/design && git commit -m "Topic 1 design, diagram, plan and README skeleton"`. Then `git add requirements.txt pyproject.toml shared tests .gitignore && git commit -m "Shared LLM helper with call tracking and prompt caching"`
+- [ ] **Step 6: Commit.** First commit the existing topic docs on their own: `git add topics/01-prompt-vs-workflow-claimsflow/README.md topics/01-prompt-vs-workflow-claimsflow/design && git commit -m "Topic 1 design, diagram, plan and README skeleton"`. Then `git add requirements.txt pyproject.toml shared tests .gitignore && git commit -m "Shared LLM helper with call tracking and prompt caching"`
 
 ---
 
 ### Task 2: Domain model and policy rules
 
 **Files:**
-- Create: `topics/01-prompt-vs-workflow/claimsflow/__init__.py`, `claimsflow/models.py`, `claimsflow/rules.py`
-- Test: `topics/01-prompt-vs-workflow/evals/test_rules.py`
+- Create: `topics/01-prompt-vs-workflow-claimsflow/claimsflow/__init__.py`, `claimsflow/models.py`, `claimsflow/rules.py`
+- Test: `topics/01-prompt-vs-workflow-claimsflow/evals/test_rules.py`
 
 **Interfaces:**
 - Produces (`models.py`):
@@ -173,7 +173,7 @@ def test_find_policy_by_line_and_missing_line():
     assert find_policy(c, "water_damage") is None
 ```
 
-- [ ] **Step 2: Run tests.** `.venv\Scripts\python -m pytest topics/01-prompt-vs-workflow/evals/test_rules.py -v` → FAIL.
+- [ ] **Step 2: Run tests.** `.venv\Scripts\python -m pytest topics/01-prompt-vs-workflow-claimsflow/evals/test_rules.py -v` → FAIL.
 
 - [ ] **Step 3: Implement.** `compute_payout` order: `base = round(recognized × rate)` where `rate = private_rate` if `provider == "private"` else `1.0`; `capped = min(base, cap)` if `cap` else `base`; `amount = max(0, capped − deductible)`; decision is `approve_partial` if `rate < 1.0` or `capped < base`, else `approve_full`. For travel cancellation, `recognized_amount` is already "paid in advance − supplier refunds" (computed by the caller, see Task 6).
 
@@ -186,7 +186,7 @@ def test_find_policy_by_line_and_missing_line():
 ### Task 3: Test data, loaders, and the author review gate
 
 **Files:**
-- Create: `data/policies/car.md`, `data/policies/water_damage.md`, `data/policies/travel.md`, `data/customers.json`, `data/claims.json`, `data/answer_key.json` (all under `topics/01-prompt-vs-workflow/`), `claimsflow/data.py`
+- Create: `data/policies/car.md`, `data/policies/water_damage.md`, `data/policies/travel.md`, `data/customers.json`, `data/claims.json`, `data/answer_key.json` (all under `topics/01-prompt-vs-workflow-claimsflow/`), `claimsflow/data.py`
 - Test: `evals/test_data.py`
 
 **Interfaces:**
@@ -307,7 +307,7 @@ def test_level0_single_call(monkeypatch):
     assert [c.label for c in calls] == ["level0"]
 ```
 
-- [ ] **Step 2: Run** `.venv\Scripts\python -m pytest topics/01-prompt-vs-workflow/evals/test_levels.py -v` → FAIL.
+- [ ] **Step 2: Run** `.venv\Scripts\python -m pytest topics/01-prompt-vs-workflow-claimsflow/evals/test_levels.py -v` → FAIL.
 - [ ] **Step 3: Implement** `prompts.py` and the level 0/1 parts of `levels.py`.
 - [ ] **Step 4: Run** → PASS.
 - [ ] **Step 5: Commit.** `git commit -m "Levels 0 and 1: one prompt and routing"`
@@ -413,7 +413,7 @@ def test_level3_cancellation_uses_paid_minus_refunds(monkeypatch):
 ### Task 7: Scoring, runner, budget guard, report
 
 **Files:**
-- Create: `claimsflow/score.py`, `claimsflow/run.py`, `claimsflow/report.py`, `topics/01-prompt-vs-workflow/results.md` (header only: "Not run yet")
+- Create: `claimsflow/score.py`, `claimsflow/run.py`, `claimsflow/report.py`, `topics/01-prompt-vs-workflow-claimsflow/results.md` (header only: "Not run yet")
 - Test: `evals/test_score_run.py`
 
 **Interfaces:**
@@ -437,7 +437,7 @@ def test_level3_cancellation_uses_paid_minus_refunds(monkeypatch):
     - writes `runs/level-<level>-<YYYYMMDD-HHMMSS>.json` with per-claim results, per-call records and scores per repeat
   - `.venv\Scripts\python -m claimsflow.report` rewrites `results.md`: one table (level, model, decision right, amount right, doc problems caught, false alarms, seconds per claim, $ per claim, calls per claim, cached share of input tokens), averaged over repeats, built only from files in `runs/`, with the run file names listed under the table. With no run files it writes "Not run yet".
 
-The module is run from the topic folder (`cd topics/01-prompt-vs-workflow`) with `PYTHONPATH` set to the repo root, or via the pytest pythonpath. Document the exact command in `results.md`.
+The module is run from the topic folder (`cd topics/01-prompt-vs-workflow-claimsflow`) with `PYTHONPATH` set to the repo root, or via the pytest pythonpath. Document the exact command in `results.md`.
 
 - [ ] **Step 1: Write failing tests:**
 
@@ -490,7 +490,7 @@ def test_report_without_runs_says_not_run(tmp_path):
 Needs: Task 3 Step 6 done (answer key reviewed) and `ANTHROPIC_API_KEY` filled in `.env`. If either is missing, stop and tell the author.
 
 **Files:**
-- Modify: `topics/01-prompt-vs-workflow/results.md` (generated), `topics/01-prompt-vs-workflow/README.md` ("What we found" table only)
+- Modify: `topics/01-prompt-vs-workflow-claimsflow/results.md` (generated), `topics/01-prompt-vs-workflow-claimsflow/README.md` ("What we found" table only)
 
 - [ ] **Step 1: Smoke run.** `--level 3 --limit 2 --repeats 1 --yes`. Expected: estimate printed, 2 claims processed, a run file written. Read one result to confirm the call labels and that amounts are integers.
 - [ ] **Step 2: Full runs.** Levels `0`, `1`, `2`, `3`, `0+`, each `--repeats 3`. Note the total spent from the run files.

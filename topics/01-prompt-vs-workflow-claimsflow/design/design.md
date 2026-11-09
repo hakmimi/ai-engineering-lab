@@ -1,7 +1,7 @@
 # Topic 1: Prompt vs Workflow — Design
 
 Date: 2026-11-08
-Folder: `topics/01-prompt-vs-workflow/` in `hakmimi/ai-engineering-lab`
+Folder: `topics/01-prompt-vs-workflow-claimsflow/` in `hakmimi/ai-engineering-lab`
 Source article: Anthropic cookbook, "Basic Multi-LLM Workflows"
 https://platform.claude.com/cookbook/patterns-agents-basic-workflows
 Diagram: `process-diagram.html` in this folder (also at https://claude.ai/artifact/6LRttBAXp4bSDn4rHATJ5R, private to the owner)
@@ -134,7 +134,7 @@ Anti-goals (would make this a failure even if it runs):
 
 ## 8. Deliverables
 
-In `topics/01-prompt-vs-workflow/`:
+In `topics/01-prompt-vs-workflow-claimsflow/`:
 - `README.md` (exists as a skeleton): the topic's front page. It explains what we tried (question, use case, the three steps, the levels) and what we found (the results table, observations, "use it when / skip it when", caveats, what is left for a better version). The "found" sections are filled only from real runs. Text stays short draft notes for the author to rewrite.
 - `data/`: policy wordings, schedules, claims, documents, answer key.
 - The code for levels 0, 1, 2, 3 and 0+, and one runner that scores them against the answer key.

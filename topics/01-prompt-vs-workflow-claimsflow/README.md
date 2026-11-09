@@ -92,7 +92,7 @@ Every answer is compared to the answer key. For each level:
 ## What's in the folder
 
 ```
-01-prompt-vs-workflow/
+01-prompt-vs-workflow-claimsflow/
 ├── README.md           ← this page
 ├── results.md          ← full results tables, built from the run files
 ├── design/
@@ -223,7 +223,7 @@ I reviewed the answer key before the run. After the run I made one ruling (the b
 From the repo root (PowerShell), with `OPENAI_API_KEY` in `.env`:
 
 ```powershell
-$env:PYTHONPATH = ".;topics/01-prompt-vs-workflow"
+$env:PYTHONPATH = ".;topics/01-prompt-vs-workflow-claimsflow"
 .venv\Scripts\python -m claimsflow.run --level 3 --dry-run               # cost estimate only
 .venv\Scripts\python -m claimsflow.run --level 3 --repeats 3 --yes       # main set
 .venv\Scripts\python -m claimsflow.run --level 3 --repeats 3 --yes --set hard

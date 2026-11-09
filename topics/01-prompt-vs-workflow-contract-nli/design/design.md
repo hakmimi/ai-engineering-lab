@@ -1,7 +1,7 @@
 # Topic 2: Prompt vs Workflow on real contracts (ContractNLI) — Design
 
 Date: 2026-11-09
-Folder: `topics/02-contract-nli/` in `hakmimi/ai-engineering-lab`
+Folder: `topics/01-prompt-vs-workflow-contract-nli/` in `hakmimi/ai-engineering-lab`
 Source article: Anthropic cookbook, "Basic Multi-LLM Workflows" (same as topic 1)
 https://platform.claude.com/cookbook/patterns-agents-basic-workflows
 Data: ContractNLI (Koreeda & Manning, 2021), https://stanfordnlp.github.io/contract-nli/ , licence CC BY 4.0
@@ -93,7 +93,7 @@ Decided (carried over from topic 1):
 - API keys only in the git-ignored `.env`. Commits local; push only when the author asks.
 
 Claude's calls (the author can change them):
-- **Package name** `ndaflow`, folder `topics/02-contract-nli/`.
+- **Package name** `ndaflow`, folder `topics/01-prompt-vs-workflow-contract-nli/`.
 - **Branch** `topic-02-contract-nli`, cut from `topic-01-prompt-vs-workflow` (topic 1's `shared/llm.py` fixes live there; `main` doesn't have them yet).
 - **Budget:** about $5–10 for the whole topic, almost all of it level 0+ (the big model reading whole contracts:
   roughly 3k tokens in and 3k out per contract ≈ $0.04, × 30 NDAs × 3 repeats × 2 sets ≈ $7; levels 0–3 on the small model add under $1). To be confirmed by a `--dry-run` and a 2-contract smoke run before the full runs.
@@ -120,7 +120,7 @@ Anti-goals (a failure even if it runs):
 
 ## 8. Deliverables
 
-In `topics/02-contract-nli/`, mirroring topic 1:
+In `topics/01-prompt-vs-workflow-contract-nli/`, mirroring topic 1:
 - `README.md`: same section order as topic 1's README; the "found" sections are filled only from real runs.
 - `design/`: this document, the plan, and a process diagram (`process-diagram.html` + `.png`) like topic 1's.
 - `data/`: the two sets, the 17 statements, the NOTICE.

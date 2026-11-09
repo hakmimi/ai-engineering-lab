@@ -58,7 +58,7 @@ Not run yet. This section is written from `results.md` after the full runs.
 ## What's in the folder
 
 ```
-02-contract-nli/
+01-prompt-vs-workflow-contract-nli/
 ├── README.md           ← this page
 ├── results.md          ← full results tables, built from the run files
 ├── design/
@@ -124,7 +124,7 @@ Not run yet.
 From the repo root (PowerShell), with `OPENAI_API_KEY` in `.env`:
 
 ```powershell
-$env:PYTHONPATH = ".;topics/02-contract-nli"
+$env:PYTHONPATH = ".;topics/01-prompt-vs-workflow-contract-nli"
 .venv\Scripts\python -m ndaflow.run --level 3 --dry-run               # cost estimate only
 .venv\Scripts\python -m ndaflow.run --level 3 --repeats 3 --yes       # main set
 .venv\Scripts\python -m ndaflow.run --level 3 --repeats 3 --yes --set test

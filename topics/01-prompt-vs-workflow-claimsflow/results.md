@@ -47,7 +47,7 @@ Run files:
 From the repo root (PowerShell):
 
 ```powershell
-$env:PYTHONPATH = ".;topics/01-prompt-vs-workflow"
+$env:PYTHONPATH = ".;topics/01-prompt-vs-workflow-claimsflow"
 .venv\Scripts\python -m claimsflow.run --level 3 --dry-run     # cost estimate only
 .venv\Scripts\python -m claimsflow.run --level 3 --repeats 3 --yes
 .venv\Scripts\python -m claimsflow.run --level 3 --repeats 3 --yes --set hard
