@@ -97,8 +97,10 @@ Voice: first person, plain, a bit casual. No "delve", "crucial", "robust", "it's
 
 ```
 python -m shared.publish_post topics/NN-<slug> --slug NN-<short> --title "..." --description "..." \
-    --date 2026-11-12T10:00:00+02:00 --tags a,b --code-blurb "It has ..." --source anthropic
+    --date 2026-11-12T10:00:00+02:00 --tags a,b --code-blurb "It has ..." --source anthropic     --article "Anthropic|Article title|https://...|2026-10-16"
 ```
+- `--article`: the article the post tests, `Publisher|Title|URL|YYYY-MM-DD` with the date **the article came out** (read it on the page). Repeat it for a second article. The blog shows it under the title and orders the Timeline page by it.
+- **`--date` is the real day the post goes out**: never earlier than the work in git. Space posts about a week apart.
 - `--source`: the article companies' logo keys (from the blog's `src/utils/sources.ts`, e.g. `anthropic`, `linkedin`, `pinterest`); the logo shows next to the title. Add a key there first for a new company.
 - Code links point to `tree/main/...`, so **merge the lab first**: in the main checkout, `git merge --no-ff topic-NN-<slug>`, push.
 - Blog: build check in PowerShell `node_modules\.bin\astro.cmd build` (no pnpm on PATH), commit, push. GitHub Actions deploys; a future `pubDatetime` appears on its day (daily rebuild 08:15 UTC).
