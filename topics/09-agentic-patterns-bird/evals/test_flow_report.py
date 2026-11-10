@@ -1,4 +1,4 @@
-from agentflow.report import build_charts, build_results, level_row
+from agentflow.report import agent_paths, build_charts, build_results, level_row
 from shared.runs import save_run
 
 
@@ -62,3 +62,31 @@ def test_charts_written(tmp_path):
 
 def test_no_charts_without_runs(tmp_path):
     assert build_charts(tmp_path, tmp_path / "charts") == []
+
+
+def test_agent_paths_split_by_what_the_agent_looked_at_first():
+    def res(tools, right, final_error="", error=""):
+        return {"trace": [{"tool": t} for t in tools], "right": right, "final_error": final_error, "error": error}
+    run = {"repeats": [{"results": {
+        "1": res(["answer"], True), "2": res([None, "answer"], False, final_error="no such column"),
+        "3": res(["describe", "answer"], False), "4": res(["describe", "run_sql", "answer"], True),
+        "5": res([], False, error="APIError")}}]}
+    rows = agent_paths(run)
+    assert rows == [("answered at once", 2, 1, 1), ("described a database first", 1, 0, 0),
+                    ("ran SQL first", 1, 1, 0)]
+
+
+def test_agent_path_table_in_results(tmp_path):
+    save_run(tmp_path, "main", "5", {"model": "m", "limit": None, "partial": False, "questions": 1, "cost_usd": 0.0,
+                                     "repeats": [{"results": {"1": {"trace": [{"tool": "answer"}], "right": True,
+                                                                    "final_error": "", "error": ""}},
+                                                  "scores": scores(1.0, steps=1.0)}], "consistency": {}})
+    assert "| answered at once | 1 of 1 (100%) | 100% | 0% |" in build_results(tmp_path)
+
+
+def test_prefix_whatif_line_next_to_the_agent(tmp_path):
+    fake_run(tmp_path, "5", [0.4])
+    text = build_results(tmp_path, whatif={"main": {"prefix_failures": 15, "fixed": 6, "right": 0.52}})
+    assert ("What if the agent's `database.table` names had worked (offline rerun of its stored queries): "
+            "15 answers failed on the prefix, 6 of them would be right; right would be 52% instead of 40%.") in text
+    assert "What if" not in build_results(tmp_path)

@@ -64,11 +64,30 @@ def _detail(level: str, run: dict) -> str | None:
     return None
 
 
+PATHS = ("answered at once", "described a database first", "ran SQL first")
+
+
+def agent_paths(run: dict) -> list[tuple[str, int, int, int]]:
+    """The free agent's answers over all repeats, split by what it looked at before answering:
+    (path, answers, right, SQL errors). API errors are left out."""
+    counts = {p: [0, 0, 0] for p in PATHS}
+    for rep in run["repeats"]:
+        for r in rep["results"].values():
+            if r.get("error"):
+                continue
+            tools = {t.get("tool") for t in r.get("trace") or []}
+            path = PATHS[2] if "run_sql" in tools else PATHS[1] if "describe" in tools else PATHS[0]
+            c = counts[path]
+            c[0], c[1], c[2] = c[0] + 1, c[1] + bool(r.get("right")), c[2] + bool(r.get("final_error"))
+    return [(p, *counts[p]) for p in PATHS if counts[p][0]]
+
+
 def latest_runs(runs_dir: Path, set_name: str) -> dict:
     return {lv: latest_run(runs_dir, set_name, lv) for lv in LEVELS}
 
 
-def build_results(runs_dir: Path) -> str:
+def build_results(runs_dir: Path, whatif: dict | None = None) -> str:
+    """whatif: set -> agentflow.whatif.prefix_whatif(...) for level 5, shown as a labelled line."""
     by_set = {s: latest_runs(runs_dir, s) for s, _, _ in SETS}
     models = sorted({r["model"] for runs in by_set.values() for r in runs.values() if r})
     out = ["# 09 · Results", "",
@@ -96,6 +115,20 @@ def build_results(runs_dir: Path) -> str:
         if details:
             out += ["| Level | Inside the pattern |", "|---|---|"] + [f"| {NAMES[lv]} | {d} |" for lv, d in details] + [""]
         five = runs.get("5")
+        paths = agent_paths(five) if five else []
+        if paths:
+            total = sum(n for _, n, _, _ in paths)
+            out += ["How the free agent worked (all repeats; API errors left out):", "",
+                    "| Before answering, it | Answers | Right | SQL errors |", "|---|---|---|---|"]
+            out += [f"| {p} | {n} of {total} ({n / total:.0%}) | {r / n:.0%} | {e / n:.0%} |" for p, n, r, e in paths]
+            out.append("")
+        w = (whatif or {}).get(set_name)
+        if five and w and w.get("right") is not None:
+            out += [f"What if the agent's `database.table` names had worked (offline rerun of its stored queries): "
+                    f"{w['prefix_failures']} answers failed on the prefix, {w['fixed']} of them would be right; "
+                    f"right would be {_p(w['right'])} instead of {_p(_avg(five, 'right'))}"
+                    + (f", same answer 3/3 {_p(w['same'])} instead of {_p((five.get('consistency') or {}).get('same'))}"
+                       if w.get("same") is not None else "") + ".", ""]
         if five:
             r5, s5 = _avg(five, "right"), (five.get("consistency") or {}).get("same")
             gap = lambda a, b: "–" if a is None or b is None else f"{(a - b) * 100:+.0f}"
@@ -143,8 +176,24 @@ def build_charts(runs_dir: Path, out_dir: Path = CHARTS_DIR) -> list[Path]:
     return written
 
 
+def agent_whatif(runs_dir: Path) -> dict:
+    """The offline prefix rerun for each set's newest level-5 run (reads the BIRD databases, no model calls)."""
+    from agentflow.run import gold_rows
+    from agentflow.whatif import prefix_whatif
+    from sqlloop.data import db_path, load_set
+
+    out = {}
+    for set_name, _, _ in SETS:
+        run = latest_run(runs_dir, set_name, "5")
+        if run:
+            questions = load_set(set_name)
+            gold, _ = gold_rows(questions)
+            out[set_name] = prefix_whatif(run, gold, {str(q.qid): q.db_id for q in questions}, path_of=db_path)
+    return out
+
+
 def main() -> int:
-    (TOPIC_DIR / "results.md").write_text(build_results(RUNS_DIR), encoding="utf-8")
+    (TOPIC_DIR / "results.md").write_text(build_results(RUNS_DIR, agent_whatif(RUNS_DIR)), encoding="utf-8")
     print(f"Wrote {TOPIC_DIR / 'results.md'}")
     for p in build_charts(RUNS_DIR):
         print(f"Wrote {p}")
