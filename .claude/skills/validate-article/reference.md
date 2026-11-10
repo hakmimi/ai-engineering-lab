@@ -97,7 +97,8 @@ Voice: first person, plain, a bit casual. No "delve", "crucial", "robust", "it's
 
 ```
 python -m shared.publish_post topics/NN-<slug> --slug NN-<short> --title "..." --description "..." \
-    --date 2026-11-12T10:00:00+02:00 --tags a,b --code-blurb "It has ..." --source anthropic     --article "Anthropic|Article title|https://...|2026-10-16"
+    --date 2026-11-12T10:00:00+02:00 --tags a,b --code-blurb "It has ..." --source anthropic \
+    --article "Anthropic|Article title|https://...|2026-10-16"
 ```
 - `--article`: the article the post tests, `Publisher|Title|URL|YYYY-MM-DD` with the date **the article came out** (read it on the page). Repeat it for a second article. The blog shows it under the title and orders the Timeline page by it.
 - **`--date` is the real day the post goes out**: never earlier than the work in git. Space posts about a week apart.
