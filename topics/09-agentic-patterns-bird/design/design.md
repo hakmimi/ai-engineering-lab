@@ -111,8 +111,8 @@ Claude's calls (the author can change them):
 - **Agent tools are text actions** (`<tool>…</tool>`), not native function calling, so every level uses the same
   `llm_call`. Each step re-sends the whole transcript. Stated in Limitations.
 - **Vote ties** go to the group holding the earliest writer. Queries that fail never win a vote unless all fail.
-- **"Same answer" outcomes:** a hash of the result rows (order and duplicates ignored), or "sql error", "no answer",
-  "handoff".
+- **"Same answer" outcomes:** the database plus a hash of the result rows (order and duplicates ignored), or
+  "sql error", or "no answer". After a level 1h handoff the final answer still counts.
 - **Budget:** upper-side estimate about $3 for all levels and sets; the measured smoke cost decides; per command
   `--budget` $1.5; topic ceiling **$5**.
 - **Package:** `agentflow`.
