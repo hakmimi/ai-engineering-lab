@@ -81,6 +81,8 @@ def readme_to_post(readme: str, *, slug: str, title: str, description: str, pub:
         f"tags: {json.dumps(tags, ensure_ascii=False)}",
         *([f"source: {json.dumps(sources, ensure_ascii=False)}"] if sources else []),
         *(["articles:"] + [_article_yaml(*a) for a in articles] if articles else []),
+        # the lab folder the post comes from (post file names carry no number; this keeps the link)
+        f"topics: {json.dumps([posixpath.basename(topic_dir.rstrip(chr(47)))], ensure_ascii=False)}",
         "draft: false",
         "---",
         "",
