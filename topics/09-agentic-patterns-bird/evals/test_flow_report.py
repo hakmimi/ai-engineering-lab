@@ -36,7 +36,8 @@ def test_results_with_missing_levels_and_sets(tmp_path):
 def test_smoke_runs_are_not_reported(tmp_path):
     save_run(tmp_path, "main", "1", {"model": "m", "limit": 5, "partial": False, "questions": 5, "cost_usd": 0.01,
                                      "repeats": [{"results": {}, "scores": scores(0.9)}], "consistency": {}})
-    assert "| 1 · routing | not run |" in build_results(tmp_path)
+    text = build_results(tmp_path)
+    assert "90%" not in text and text.count("No full run yet") == 2
 
 
 def test_charts_written(tmp_path):
