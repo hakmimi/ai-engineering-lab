@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workflow or Agent</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --surface: #ffffff; --fg: #1b2230; --muted: #5a6475; --line: #dde1e8;
+    --ai: #4f46e5; --route: #b45309; --code: #0f766e; --score: #15803d; --agent: #be123c;
+    --sans: "Segoe UI", system-ui, sans-serif; --mono: Consolas, ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442;
+    --ai: #a5a1ff; --route: #f4b267; --code: #5fd3c4; --score: #6ee7a0; --agent: #fb7f9b; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #12161d; --surface: #1a2029; --fg: #e6e9ef; --muted: #9aa4b5; --line: #2c3442;
+    --ai: #a5a1ff; --route: #f4b267; --code: #5fd3c4; --score: #6ee7a0; --agent: #fb7f9b; color-scheme: dark; }
+  body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--sans); margin: 0; }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 32px 16px 40px; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 22px; }
+  .row { display: grid; grid-template-columns: 54px 1fr; gap: 10px; align-items: stretch; margin-bottom: 10px; }
+  .tag { font: 700 18px var(--mono); color: var(--c); display: flex; align-items: center; justify-content: center;
+         background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+  .flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; background: var(--surface);
+          border: 1px solid var(--line); border-left: 4px solid var(--c); border-radius: 8px; padding: 10px 12px; }
+  .flow b { margin-right: 8px; min-width: 190px; }
+  .step { font-size: 14px; border: 1px solid var(--line); border-top: 3px solid var(--s); border-radius: 6px; padding: 3px 8px; }
+  .arrow { color: var(--muted); }
+  .ai { --s: var(--ai); } .rt { --s: var(--route); } .cd { --s: var(--code); } .ag { --s: var(--agent); }
+  .end { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .box { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--c); border-radius: 8px; padding: 10px 12px; }
+  .box b { display: block; color: var(--c); }
+  .box span { font-size: 14px; color: var(--muted); }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; background: var(--s); margin-right: 5px; vertical-align: -1px; }
+  @media (max-width: 760px) { .end { grid-template-columns: 1fr; } .flow b { min-width: 0; width: 100%; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Five workflows and one free agent, one question</h1>
+  <p class="sub">A BIRD Mini-Dev question + hint goes in. The warehouse is all 11 databases (75 tables). The SQL writer prompt is the same everywhere.</p>
+  <div class="legend"><span class="ai"><i></i>AI call</span><span class="rt"><i></i>AI router</span><span class="cd"><i></i>code</span><span class="ag"><i></i>agent decides</span></div>
+
+  <div class="row" style="--c: var(--muted)"><div class="tag">0</div><div class="flow"><b>One prompt</b>
+    <span class="step ai">all 75 tables → database + SQL</span></div></div>
+  <div class="row" style="--c: var(--route)"><div class="tag">1</div><div class="flow"><b>Routing</b>
+    <span class="step rt">router picks the database</span><span class="arrow">→</span><span class="step ai">writer sees that database</span></div></div>
+  <div class="row" style="--c: var(--route)"><div class="tag">1h</div><div class="flow"><b>Routing + handoff</b>
+    <span class="step rt">router, or "HUMAN" if unsure</span><span class="arrow">→</span><span class="step cd">stand-in human picks</span><span class="arrow">→</span><span class="step ai">writer</span></div></div>
+  <div class="row" style="--c: var(--ai)"><div class="tag">2</div><div class="flow"><b>Parallel vote</b>
+    <span class="step rt">router</span><span class="arrow">→</span><span class="step ai">3 writers at once</span><span class="arrow">→</span><span class="step cd">run all, majority rows win</span></div></div>
+  <div class="row" style="--c: var(--ai)"><div class="tag">3</div><div class="flow"><b>Orchestrator-worker</b>
+    <span class="step rt">router</span><span class="arrow">→</span><span class="step ai">planner: 1–4 sub-questions</span><span class="arrow">→</span><span class="step ai">one worker each</span><span class="arrow">→</span><span class="step ai">combiner</span></div></div>
+  <div class="row" style="--c: var(--ai)"><div class="tag">4</div><div class="flow"><b>Evaluator-optimizer</b>
+    <span class="step rt">router</span><span class="arrow">→</span><span class="step ai">writer</span><span class="arrow">⇄</span><span class="step ai">grader sees the rows (≤ 3 rounds)</span></div></div>
+  <div class="row" style="--c: var(--agent)"><div class="tag">5</div><div class="flow"><b>Free agent</b>
+    <span class="step ag">describe(db) · run_sql(db, sql) · answer(db, sql), its own order, ≤ 10 steps</span></div></div>
+
+  <div class="end">
+    <div class="box" style="--c: var(--code)"><b>Run (code)</b><span>final SQL, read-only, on the database the level chose</span></div>
+    <div class="box" style="--c: var(--score)"><b>Right?</b><span>the question's own database and the gold rows (BIRD's rule)</span></div>
+    <div class="box" style="--c: var(--score)"><b>Same answer?</b><span>3 repeats per question: same rows (or same failure) every time</span></div>
+  </div>
+</div>
+</body>
+</html>
