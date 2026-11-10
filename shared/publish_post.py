@@ -13,6 +13,7 @@ A post with a future date stays hidden until that day (the blog rebuilds daily).
 from __future__ import annotations
 
 import argparse
+import datetime
 import json
 import posixpath
 import re
@@ -40,7 +41,8 @@ def _github(target: str, topic_dir: str, repo_url: str) -> str:
 
 def readme_to_post(readme: str, *, slug: str, title: str, description: str, pub: str, tags: list[str],
                    topic_dir: str, repo_url: str = REPO_URL, code_blurb: str = "",
-                   sources: list[str] | None = None) -> tuple[str, list[str]]:
+                   sources: list[str] | None = None,
+                   articles: list[tuple[str, str, str, str]] | None = None) -> tuple[str, list[str]]:
     """Return (post text, image paths relative to the topic folder, in order of first use)."""
     body = re.sub(r"\A\s*# [^\n]*\n+", "", readme)
     code_url = f"{repo_url}/tree/main/{topic_dir}"
@@ -78,6 +80,7 @@ def readme_to_post(readme: str, *, slug: str, title: str, description: str, pub:
         f"pubDatetime: {pub}",
         f"tags: {json.dumps(tags, ensure_ascii=False)}",
         *([f"source: {json.dumps(sources, ensure_ascii=False)}"] if sources else []),
+        *(["articles:"] + [_article_yaml(*a) for a in articles] if articles else []),
         "draft: false",
         "---",
         "",
@@ -85,12 +88,18 @@ def readme_to_post(readme: str, *, slug: str, title: str, description: str, pub:
     return front + "\n" + "".join(parts).rstrip() + "\n", images
 
 
+def _article_yaml(publisher: str, title: str, url: str, day: str) -> str:
+    q = lambda s: json.dumps(s, ensure_ascii=False)  # noqa: E731
+    return "\n".join([f"  - publisher: {q(publisher)}", f"    title: {q(title)}", f"    url: {q(url)}", f"    date: {day}"])
+
+
 def publish(topic: Path, blog: Path, *, slug: str, title: str, description: str, pub: str, tags: list[str],
-            code_blurb: str = "", force: bool = False, repo_url: str = REPO_URL, sources: list[str] | None = None) -> Path:
+            code_blurb: str = "", force: bool = False, repo_url: str = REPO_URL, sources: list[str] | None = None,
+            articles: list[tuple[str, str, str, str]] | None = None) -> Path:
     """Write <blog>/src/content/posts/<slug>.md and copy the images. Checks everything before writing."""
     post, images = readme_to_post((topic / "README.md").read_text(encoding="utf-8"), slug=slug, title=title,
                                   description=description, pub=pub, tags=tags, topic_dir=f"topics/{topic.name}",
-                                  repo_url=repo_url, code_blurb=code_blurb, sources=sources)
+                                  repo_url=repo_url, code_blurb=code_blurb, sources=sources, articles=articles)
     post_path = blog / "src" / "content" / "posts" / f"{slug}.md"
     if post_path.exists() and not force:
         raise FileExistsError(f"{post_path} exists; pass force=True (--force) to replace it")
@@ -106,6 +115,23 @@ def publish(topic: Path, blog: Path, *, slug: str, title: str, description: str,
     return post_path
 
 
+def parse_article(arg: str) -> tuple[str, str, str, str]:
+    """ "Publisher|Title|URL|YYYY-MM-DD" → a tuple; the date is when the article came out (shown on the post and the Timeline)."""
+    parts = [x.strip() for x in arg.split("|")]
+    if len(parts) != 4:
+        raise ValueError(f"--article needs Publisher|Title|URL|YYYY-MM-DD, got {arg!r}")
+    publisher, title, url, day = parts
+    if not url.startswith(("https://", "http://")):
+        raise ValueError(f"--article URL must start with http(s)://, got {url!r}")
+    try:
+        datetime.date.fromisoformat(day)
+    except ValueError:
+        raise ValueError(f"--article date must be YYYY-MM-DD, got {day!r}") from None
+    if len(day) != 10:
+        raise ValueError(f"--article date must be YYYY-MM-DD, got {day!r}")
+    return publisher, title, url, day
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description="Publish a topic README as a blog post.")
     p.add_argument("topic", type=Path, help="the topic folder, e.g. topics/05-x")
@@ -117,11 +143,13 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--tags", required=True, help="comma separated")
     p.add_argument("--code-blurb", default="")
     p.add_argument("--source", default="", help="logo keys from the blog's src/utils/sources.ts, comma separated (e.g. linkedin,pinterest)")
+    p.add_argument("--article", action="append", default=[], type=parse_article,
+                   help='the article the post tests, "Publisher|Title|URL|YYYY-MM-DD"; repeat for more than one')
     p.add_argument("--force", action="store_true")
     a = p.parse_args(argv)
     path = publish(a.topic.resolve(), a.blog, slug=a.slug, title=a.title, description=a.description, pub=a.date,
                    tags=[t.strip() for t in a.tags.split(",") if t.strip()], code_blurb=a.code_blurb, force=a.force,
-                   sources=[s.strip() for s in a.source.split(",") if s.strip()] or None)
+                   sources=[s.strip() for s in a.source.split(",") if s.strip()] or None, articles=a.article or None)
     print(f"Wrote {path}")
     return 0
 

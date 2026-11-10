@@ -123,3 +123,22 @@ def test_source_logos_field_only_when_given():
     assert 'source: ["linkedin", "pinterest"]' in post.split("---")[1]
     plain, _ = readme_to_post(README, **KW)
     assert "source:" not in plain.split("---")[1]
+
+
+def test_articles_field_only_when_given():
+    arts = [("LinkedIn", 'Practical "text-to-SQL"', "https://example.com/li", "2024-12-09"),
+            ("Pinterest", "Text-to-SQL at Pinterest", "https://example.com/pin", "2024-04-02")]
+    front = readme_to_post(README, **KW, articles=arts)[0].split("---")[1]
+    assert ('articles:\n  - publisher: "LinkedIn"\n    title: "Practical \\"text-to-SQL\\""\n'
+            '    url: "https://example.com/li"\n    date: 2024-12-09\n  - publisher: "Pinterest"') in front
+    assert "articles:" not in readme_to_post(README, **KW)[0].split("---")[1]
+
+
+def test_article_argument_is_checked():
+    from shared.publish_post import parse_article
+    assert parse_article(" Uber | QueryGPT | https://example.com/q | 2024-09-19 ") == (
+        "Uber", "QueryGPT", "https://example.com/q", "2024-09-19")
+    for bad in ("Uber|QueryGPT|https://example.com/q", "Uber|QueryGPT|https://example.com/q|19/09/2024",
+                "Uber|QueryGPT|not-a-url|2024-09-19"):
+        with pytest.raises(ValueError):
+            parse_article(bad)
