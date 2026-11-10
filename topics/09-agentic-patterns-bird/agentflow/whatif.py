@@ -41,10 +41,18 @@ def is_prefix_failure(r: dict) -> bool:
     return bool(r.get("db")) and r.get("final_error", "").startswith(f"no such table: {r['db']}.")
 
 
+def ran_before_answering(r: dict) -> bool:
+    """Did the agent run this exact final query with run_sql before it answered? (Spaces at the ends ignored.)"""
+    sql = r.get("sql", "").strip()
+    return any(isinstance(t, dict) and t.get("tool") == "run_sql" and t.get("sql", "").strip() == sql
+               for t in r.get("trace", [])[:-1])
+
+
 def prefix_whatif(run: dict, gold: dict, db_of: dict, path_of: Callable) -> dict:
-    """{"prefix_failures", "fixed", "right", "same"} if the prefix had worked. right: the share right per repeat
-    (API errors left out, as in the main scores), averaged over repeats. same: as agentflow.score.consistency."""
-    failures = fixed = 0
+    """{"prefix_failures", "run_before", "fixed", "right", "same"} if the prefix had worked. run_before: failing
+    queries the agent had run itself before answering. right: the share right per repeat (API errors left out, as in
+    the main scores), averaged over repeats. same: as agentflow.score.consistency."""
+    failures = fixed = run_before = 0
     rates, repeats = [], []
     for rep in run["repeats"]:
         results = {}
@@ -52,6 +60,7 @@ def prefix_whatif(run: dict, gold: dict, db_of: dict, path_of: Callable) -> dict
             r = dict(r)
             if not r.get("error") and is_prefix_failure(r):
                 failures += 1
+                run_before += ran_before_answering(r)
                 res = run_with_db_name(path_of(r["db"]), r["db"], r["sql"])
                 if res.rows is not None:
                     r.update(final_error="", rows_hash=rows_hash(res.rows),
@@ -62,5 +71,5 @@ def prefix_whatif(run: dict, gold: dict, db_of: dict, path_of: Callable) -> dict
         if ok:
             rates.append(sum(bool(r.get("right")) for r in ok) / len(ok))
         repeats.append(results)
-    return {"prefix_failures": failures, "fixed": fixed, "right": sum(rates) / len(rates) if rates else None,
+    return {"prefix_failures": failures, "run_before": run_before, "fixed": fixed, "right": sum(rates) / len(rates) if rates else None,
             "same": consistency(repeats)["same"]}

@@ -35,7 +35,7 @@ How the free agent worked (all repeats; API errors left out):
 | described a database first | 47 of 180 (26%) | 30% | 11% |
 | ran SQL first | 14 of 180 (8%) | 36% | 21% |
 
-What if the agent's `database.table` names had worked (offline rerun of its stored queries): 15 answers failed on the prefix, 3 of them would be right; right would be 51% instead of 49%, same answer 3/3 77% instead of 62%.
+What if the agent's `database.table` names had worked (offline rerun of its stored queries): 15 answers failed on the prefix (the agent had run 0 of these queries before answering), 3 of them would be right; right would be 51% instead of 49%, same answer 3/3 77% instead of 62%.
 
 Workflow minus the free agent (level 5), in points:
 
@@ -80,7 +80,7 @@ How the free agent worked (all repeats; API errors left out):
 | described a database first | 37 of 179 (21%) | 32% | 19% |
 | ran SQL first | 5 of 179 (3%) | 60% | 20% |
 
-What if the agent's `database.table` names had worked (offline rerun of its stored queries): 35 answers failed on the prefix, 29 of them would be right; right would be 61% instead of 45%, same answer 3/3 83% instead of 61%.
+What if the agent's `database.table` names had worked (offline rerun of its stored queries): 35 answers failed on the prefix (the agent had run 0 of these queries before answering), 29 of them would be right; right would be 61% instead of 45%, same answer 3/3 83% instead of 61%.
 
 Workflow minus the free agent (level 5), in points:
 

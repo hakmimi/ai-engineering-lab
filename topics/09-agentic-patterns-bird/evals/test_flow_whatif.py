@@ -49,3 +49,18 @@ def test_prefix_whatif_same_answer_counts_the_rerun_rows(tmp_path):
     run = {"repeats": [{"results": {"1": fail}}, {"results": {"1": ran}}]}
     w = prefix_whatif(run, {"1": [(9.5,), (3.0,)]}, {"1": "shop"}, path_of=lambda d: paths[d])
     assert w["same"] == 1.0
+
+
+def test_prefix_whatif_counts_failing_queries_the_agent_had_run_before_answering(tmp_path):
+    paths = make_dbs(tmp_path)
+    sql = "SELECT total FROM shop.orders"
+    tested = _res("shop", sql, "no such table: shop.orders") | {"trace": [
+        {"tool": "run_sql", "database": "shop", "sql": f"  {sql}\n"}, {"tool": "answer", "database": "shop", "sql": sql}]}
+    other = _res("shop", sql, "no such table: shop.orders") | {"trace": [
+        {"tool": "run_sql", "database": "shop", "sql": "SELECT total FROM orders"},  # a different query
+        {"tool": "answer", "database": "shop", "sql": sql}]}
+    untraced = _res("shop", sql, "no such table: shop.orders")  # no trace stored: not counted as run
+    run = {"repeats": [{"results": {"1": tested, "2": other, "3": untraced}}]}
+    w = prefix_whatif(run, {"1": [(1,)], "2": [(1,)], "3": [(1,)]}, {"1": "shop", "2": "shop", "3": "shop"},
+                      path_of=lambda d: paths[d])
+    assert w["prefix_failures"] == 3 and w["run_before"] == 1
