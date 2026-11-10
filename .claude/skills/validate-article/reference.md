@@ -96,10 +96,11 @@ Voice: first person, plain, a bit casual. No "delve", "crucial", "robust", "it's
 ## 11 · Publish and finish
 
 ```
-python -m shared.publish_post topics/NN-<slug> --slug NN-<short> --title "..." --description "..." \
+python -m shared.publish_post topics/NN-<slug> --slug <short-no-number> --title "..." --description "..." \
     --date 2026-11-12T10:00:00+02:00 --tags a,b --code-blurb "It has ..." --source anthropic \
     --article "Anthropic|Article title|https://...|2026-10-16"
 ```
+- `--slug`: **no number prefix** (e.g. `better-table-search`); it is the post's file name and URL. The post gets `topics: ["NN-<slug>"]` automatically, which links it back to the lab folder.
 - `--article`: the article the post tests, `Publisher|Title|URL|YYYY-MM-DD` with the date **the article came out** (read it on the page). Repeat it for a second article. The blog shows it under the title and orders the Timeline page by it.
 - **`--date` is the real day the post goes out**: never earlier than the work in git. Space posts about a week apart.
 - `--source`: the article companies' logo keys (from the blog's `src/utils/sources.ts`, e.g. `anthropic`, `linkedin`, `pinterest`); the logo shows next to the title. Add a key there first for a new company.

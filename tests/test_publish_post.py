@@ -142,3 +142,21 @@ def test_article_argument_is_checked():
                 "Uber|QueryGPT|not-a-url|2024-09-19"):
         with pytest.raises(ValueError):
             parse_article(bad)
+
+
+def test_topics_field_names_the_lab_folder():
+    front = readme_to_post(README, **KW)[0].split("---")[1]
+    assert 'topics: ["07-x-thing"]' in front
+
+
+def test_publish_records_the_topic_folder(tmp_path):
+    topic = tmp_path / "topics" / "09-better-search"
+    (topic / "design").mkdir(parents=True)
+    (topic / "charts").mkdir()
+    (topic / "README.md").write_text(README, encoding="utf-8")
+    (topic / "design" / "process-diagram.png").write_bytes(b"png")
+    (topic / "charts" / "caught.svg").write_text("<svg/>", encoding="utf-8")
+    blog = tmp_path / "blog"
+    path = publish(topic, blog, **{k: v for k, v in KW.items() if k != "topic_dir"} | {"slug": "better-search"})
+    assert path.name == "better-search.md"
+    assert 'topics: ["09-better-search"]' in path.read_text(encoding="utf-8")
