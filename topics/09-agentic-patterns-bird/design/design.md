@@ -113,8 +113,13 @@ Claude's calls (the author can change them):
 - **Vote ties** go to the group holding the earliest writer. Queries that fail never win a vote unless all fail.
 - **"Same answer" outcomes:** the database plus a hash of the result rows (order and duplicates ignored), or
   "sql error", or "no answer". After a level 1h handoff the final answer still counts.
-- **Budget:** upper-side estimate about $3 for all levels and sets; the measured smoke cost decides; per command
-  `--budget` $1.5; topic ceiling **$5**.
+- **The agent starts with the same table cards as the router** (`db.table: columns`), so neither starts with more
+  (from the fresh review). An `answer` without SQL, or with an unknown database, is shown back to it as an
+  observation, not taken as final.
+- **Time is the median** seconds per question (a smoke run had two single API calls of about 400 s), timed over the
+  level only; running and scoring the final SQL is not counted. Gold SQL runs once before any model call.
+- **Budget:** the upper-side guess was about $10 for all 14 runs (no caching, long answers). 8-question smoke runs
+  measured about $2.5 for all 14 with a 1.5× margin, so that decides; per command `--budget` $1; topic ceiling **$5**.
 - **Package:** `agentflow`.
 
 ## 8. Goals, non-goals, anti-goals
