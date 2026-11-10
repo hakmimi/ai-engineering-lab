@@ -131,8 +131,9 @@ def _agent(q, ctx, cards, path_of, out):
         prompt = AGENT_STEP.format(question=q.question, evidence=q.evidence or "(none)",
                                    history="\n" + "\n".join(history) + "\n" if history else "", n=n,
                                    max_steps=AGENT_MAX_STEPS, last=AGENT_LAST if n == AGENT_MAX_STEPS else "")
-        tool, args = read_action(_call(ctx, prompt, system, f"agent-{n}"))
-        trace.append({"tool": tool, **args})
+        text = _call(ctx, prompt, system, f"agent-{n}")
+        tool, args = read_action(text)
+        trace.append({"tool": tool, **args} if tool else {"tool": None, "raw": text[-500:]})
         db = dbs.get(args.get("database", "").lower()) if tool else None
         if tool is None:
             obs, action = BAD_ACTION, "(no tool call)"

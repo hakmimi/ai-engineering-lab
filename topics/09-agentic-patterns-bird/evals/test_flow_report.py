@@ -23,6 +23,11 @@ def test_level_row_averages_over_repeats():
     assert row.rstrip().endswith("| 1 |")
 
 
+def test_time_column_is_the_median():
+    run = {"repeats": [{"scores": scores(0.5, seconds=50.0, seconds_median=1.5)}], "consistency": {}}
+    assert "| 1.5 |" in level_row("1", run) and "50.0" not in level_row("1", run)
+
+
 def test_results_with_missing_levels_and_sets(tmp_path):
     fake_run(tmp_path, "1", [0.5, 0.5, 0.5])
     fake_run(tmp_path, "5", [0.0, 0.5, 1.0], steps=6.0, cap=0.1)

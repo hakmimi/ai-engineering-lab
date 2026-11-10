@@ -26,6 +26,11 @@ def test_score_repeat_basic_rates_and_api_errors_left_out():
     assert s["cost"] == 0.001 and s["seconds"] == 2.0 and s["calls"] == 2.0
 
 
+def test_median_seconds_ignore_one_slow_api_call():
+    res = {"1": o(seconds=1.0), "2": o(seconds=2.0), "3": o(seconds=400.0)}
+    assert score_repeat(res, dict.fromkeys(res, "shop"))["seconds_median"] == 2.0
+
+
 def test_score_repeat_handoff_and_level_extras():
     res = {"1": o(right=True, handoff=True), "2": o(right=True), "3": o(), "4": o(stop="cap", steps=10, db=None, sql=""),
            "5": o(steps=4)}

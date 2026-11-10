@@ -17,7 +17,7 @@ NAMES = {"0": "0 · one prompt", "1": "1 · routing", "1h": "1h · routing + han
          "3": "3 · orchestrator-worker", "4": "4 · evaluator-optimizer", "5": "5 · free agent"}
 SETS = (("main", "Main set", "60 questions, 6 databases"), ("test", "Held-out set", "60 questions, 5 other databases"))
 HEAD = ("| Level | Right | Right, lowest–highest repeat | Same answer 3/3 | Right 3/3 | Questions in 3/3 | Right database "
-        "| No answer | SQL errors | $ / question | s / question | Calls / question | API errors |\n"
+        "| No answer | SQL errors | $ / question | s / question (median) | Calls / question | API errors |\n"
         "|---|---|---|---|---|---|---|---|---|---|---|---|---|")
 
 
@@ -39,7 +39,7 @@ def level_row(level: str, run: dict | None) -> str:
     if run is None:
         return f"| {NAMES[level]} | not run |" + " |" * 11
     c = run.get("consistency") or {}
-    cost, secs, calls = _avg(run, "cost"), _avg(run, "seconds"), _avg(run, "calls")
+    cost, secs, calls = _avg(run, "cost"), _avg(run, "seconds_median") or _avg(run, "seconds"), _avg(run, "calls")
     errors = sum(r["scores"]["api_errors"] for r in run["repeats"])
     lo, hi = _spread(run)
     spread = "–" if lo is None else f"{lo * 100:.0f}–{hi * 100:.0f}%"
@@ -125,13 +125,13 @@ def build_charts(runs_dir: Path, out_dir: Path = CHARTS_DIR) -> list[Path]:
         return max([v for row in rows for v in row if v is not None] or [1.0])
 
     same = lambda r: (r.get("consistency") or {}).get("same")
-    secs, cost = vals(lambda r: _avg(r, "seconds")), vals(lambda r: _avg(r, "cost"))
+    secs, cost = vals(lambda r: _avg(r, "seconds_median") or _avg(r, "seconds")), vals(lambda r: _avg(r, "cost"))
     charts = {
         "right-by-level.svg": bar_chart("Right answers by pattern", "Share of questions whose final SQL returns the gold rows",
                                         [("", cats, vals(lambda r: _avg(r, "right")))], series, 1.0, pct),
         "same-answer.svg": bar_chart("Same answer in all 3 runs", "Share of questions where the 3 repeats ended the same way",
                                      [("", cats, vals(same))], series, 1.0, pct),
-        "seconds.svg": bar_chart("Time per question", "Wall-clock seconds, parallel calls overlap",
+        "seconds.svg": bar_chart("Time per question", "Median wall-clock seconds; parallel calls overlap",
                                  [("", cats, secs)], series, biggest(secs) * 1.1, lambda v: f"{v:.1f} s"),
         "cost.svg": bar_chart("Cost per question", "US dollars at list prices",
                               [("", cats, cost)], series, biggest(cost) * 1.1, lambda v: f"${v:.4f}"),

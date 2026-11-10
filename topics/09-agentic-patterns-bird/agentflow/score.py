@@ -7,6 +7,7 @@ a question with an API error in any repeat is left out.
 from __future__ import annotations
 
 import hashlib
+import statistics
 
 from sqlloop.execute import normalize_rows
 
@@ -48,6 +49,7 @@ def score_repeat(results: dict, db_of: dict) -> dict:
         "sql_errors": _rate(sum(outcome_key(o) == "sql error" for o in vals), n),
         "cost": _mean([o["cost_usd"] for o in vals]),
         "seconds": _mean([o["seconds"] for o in vals]),
+        "seconds_median": statistics.median([o["seconds"] for o in vals]) if vals else None,
         "calls": _mean([len(o["calls"]) for o in vals]),
         "handoff": _rate(sum(bool(o.get("handoff")) for o in vals), n),
         "right_rest": _rate(sum(o["right"] for o in rest), len(rest)),

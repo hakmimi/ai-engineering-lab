@@ -154,6 +154,7 @@ def test_level_5_unknown_database_and_bad_actions_are_observations(world):
              "<tool>answer</tool><database>zoo</database><sql>SELECT 1</sql>"]
     out, llm = run("5", {"agent": steps}, world)
     assert "Unknown database" in llm.calls[1][1] and "Could not read a tool call" in llm.calls[2][1]
+    assert out["trace"][1] == {"tool": None, "raw": "let me think"}  # kept to see what went wrong
     assert (out["db"], out["steps"]) == ("zoo", 4)
 
 
