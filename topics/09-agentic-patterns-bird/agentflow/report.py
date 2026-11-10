@@ -125,7 +125,10 @@ def build_results(runs_dir: Path, whatif: dict | None = None) -> str:
         w = (whatif or {}).get(set_name)
         if five and w and w.get("right") is not None:
             out += [f"What if the agent's `database.table` names had worked (offline rerun of its stored queries): "
-                    f"{w['prefix_failures']} answers failed on the prefix, {w['fixed']} of them would be right; "
+                    f"{w['prefix_failures']} answers failed on the prefix"
+                    + (f" (the agent had run {w['run_before']} of these queries before answering)"
+                       if w.get("run_before") is not None else "")
+                    + f", {w['fixed']} of them would be right; "
                     f"right would be {_p(w['right'])} instead of {_p(_avg(five, 'right'))}"
                     + (f", same answer 3/3 {_p(w['same'])} instead of {_p((five.get('consistency') or {}).get('same'))}"
                        if w.get("same") is not None else "") + ".", ""]

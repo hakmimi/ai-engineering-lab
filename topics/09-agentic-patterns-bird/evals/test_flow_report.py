@@ -90,3 +90,10 @@ def test_prefix_whatif_line_next_to_the_agent(tmp_path):
     assert ("What if the agent's `database.table` names had worked (offline rerun of its stored queries): "
             "15 answers failed on the prefix, 6 of them would be right; right would be 52% instead of 40%.") in text
     assert "What if" not in build_results(tmp_path)
+
+
+def test_prefix_whatif_line_says_how_many_failing_queries_the_agent_had_run(tmp_path):
+    fake_run(tmp_path, "5", [0.4])
+    w = {"prefix_failures": 15, "fixed": 6, "right": 0.52, "run_before": 0}
+    assert ("15 answers failed on the prefix (the agent had run 0 of these queries before answering), "
+            "6 of them would be right") in build_results(tmp_path, whatif={"main": w})
