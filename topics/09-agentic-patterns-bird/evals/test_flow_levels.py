@@ -6,7 +6,7 @@ from sqlblame.warehouse import load_warehouse
 from sqlloop.execute import ExecResult
 from sqlloop.models import Question
 
-Q = Question(7, "shop", "How much did Ann spend?", "Ann is customer 1", "SELECT 'GOLD-MARK' FROM orders", "simple")
+Q = Question(7, "shop", "How much did Ann spend?", "Ann is customer 1", "SELECT 'GOLD-MARK' FROM orders", "DIFF-MARK")
 ROUTE_SHOP = "<thoughts>orders</thoughts><database>shop</database>"
 SQL_SUM = "<sql>SELECT sum(total) FROM orders WHERE cid = 1</sql>"
 
@@ -74,7 +74,7 @@ def test_gold_sql_never_reaches_a_prompt(level, world):
                "agent": "<tool>answer</tool><database>shop</database>" + SQL_SUM}
     _, llm = run(level, replies, world)
     assert llm.calls
-    assert all("GOLD-MARK" not in p and "GOLD-MARK" not in s for _, p, s in llm.calls)
+    assert all(m not in p and m not in s for _, p, s in llm.calls for m in ("GOLD-MARK", "DIFF-MARK"))
 
 
 R = lambda rows: ExecResult(rows, "", len(rows))
@@ -143,7 +143,7 @@ def test_level_5_agent_uses_tools_then_answers(world):
              "<tool>answer</tool><database>shop</database>" + SQL_SUM]
     out, llm = run("5", {"agent": steps}, world)
     assert llm.labels() == ["agent-1", "agent-2", "agent-3"]
-    assert "shop: Customer, orders" in llm.calls[0][2]
+    assert "shop.Customer: id INTEGER, name TEXT" in llm.calls[0][2]  # the same table cards the router reads
     assert "CREATE TABLE orders" in llm.calls[1][1]  # describe's observation is in the next step
     assert "9.5" in llm.calls[2][1]  # run_sql's rows too
     assert (out["db"], out["sql"], out["stop"], out["steps"]) == ("shop", "SELECT sum(total) FROM orders WHERE cid = 1", "answer", 3)
@@ -155,6 +155,13 @@ def test_level_5_unknown_database_and_bad_actions_are_observations(world):
     out, llm = run("5", {"agent": steps}, world)
     assert "Unknown database" in llm.calls[1][1] and "Could not read a tool call" in llm.calls[2][1]
     assert (out["db"], out["steps"]) == ("zoo", 4)
+
+
+def test_level_5_answer_without_sql_is_an_observation_not_the_end(world):
+    steps = ["<tool>answer</tool><database>shop</database>", "<tool>answer</tool><database>shop</database>" + SQL_SUM]
+    out, llm = run("5", {"agent": steps}, world)
+    assert "no SQL" in llm.calls[1][1]
+    assert (out["sql"], out["steps"]) == ("SELECT sum(total) FROM orders WHERE cid = 1", 2)
 
 
 def test_level_5_stops_at_the_cap_without_an_answer(world):

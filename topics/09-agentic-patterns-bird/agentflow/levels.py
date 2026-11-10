@@ -19,8 +19,8 @@ from dataclasses import dataclass, field
 from typing import Callable
 
 from agentflow.prompts import (AGENT_INTRO, AGENT_LAST, AGENT_STEP, BAD_ACTION, COMBINE, DATABASE_LINE, HANDOFF_LINE,
-                               PART, PLAN, ROUTER, ROUTER_INTRO, STEP, WAREHOUSE_INTRO, read_action, read_database,
-                               read_subquestions, render_action, render_db_list)
+                               NO_SQL, PART, PLAN, ROUTER, ROUTER_INTRO, STEP, WAREHOUSE_INTRO, read_action, read_database,
+                               read_subquestions, render_action)
 from shared.llm import Tracker, llm_call
 from sqlblame.warehouse import render_cards
 from sqlloop import levels as loop05
@@ -124,7 +124,7 @@ def _evaluator(q, ctx, path_of, db, out):
 
 def _agent(q, ctx, cards, path_of, out):
     dbs = {d.lower(): d for d in _db_ids(cards)}
-    system = AGENT_INTRO.format(db_list=render_db_list(cards), max_steps=AGENT_MAX_STEPS)
+    system = AGENT_INTRO.format(cards=render_cards(cards), max_steps=AGENT_MAX_STEPS)
     history: list[str] = []
     trace: list[dict] = []
     for n in range(1, AGENT_MAX_STEPS + 1):
@@ -140,6 +140,8 @@ def _agent(q, ctx, cards, path_of, out):
             action = render_action(tool, args)
             if db is None:
                 obs = f"Unknown database {args.get('database', '')!r}. Use one from the list."
+            elif tool != "describe" and not args["sql"]:
+                obs = NO_SQL
             elif tool == "answer":
                 return {**out, "db": db, "sql": args["sql"], "stop": "answer", "steps": n, "trace": trace}
             elif tool == "describe":

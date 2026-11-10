@@ -1,5 +1,4 @@
-from agentflow.prompts import read_action, read_database, read_subquestions, render_db_list
-from sqlblame.warehouse import Card
+from agentflow.prompts import read_action, read_database, read_subquestions
 
 DBS = ("shop", "zoo")
 
@@ -39,6 +38,6 @@ def test_read_action_without_a_known_tool():
     assert read_action("<tool>drop_table</tool>") == (None, {})
 
 
-def test_render_db_list_one_line_per_database():
-    cards = [Card("shop", "Customer", (("id", "INTEGER"),)), Card("shop", "orders", ()), Card("zoo", "animal", ())]
-    assert render_db_list(cards) == "shop: Customer, orders\nzoo: animal"
+def test_read_action_strips_quotes_and_reads_a_fenced_answer():
+    tool, args = read_action("<tool>answer</tool><database>`zoo`</database>\n```sql\nSELECT 1\n```")
+    assert (tool, args) == ("answer", {"database": "zoo", "sql": "SELECT 1"})

@@ -67,9 +67,9 @@ PART = "<part>\n<subquestion>{sub}</subquestion>\n<sql>{sql}</sql>\n<result>{res
 
 AGENT_INTRO = """\
 You are a data analyst with a data warehouse of SQLite databases. You answer a question by writing one SQLite query.
-The databases and their tables:
+These are all its tables, as database.table with their columns:
 
-{db_list}
+{cards}
 
 You work in steps. In each step, call exactly one tool:
 <tool>describe</tool><database>name</database>
@@ -91,6 +91,7 @@ Step {n} of {max_steps}. {last}Think it through in <thoughts></thoughts>, then c
 
 AGENT_LAST = "This is your last step: call answer. "
 STEP = "<step>\n{action}\n<observation>\n{observation}\n</observation>\n</step>"
+NO_SQL = "Your call had no SQL. Put the query in <sql></sql>."
 BAD_ACTION = ("Could not read a tool call. Use <tool>describe</tool>, <tool>run_sql</tool> or <tool>answer</tool>, "
               "with <database></database> and, for run_sql and answer, <sql></sql>.")
 
@@ -113,17 +114,11 @@ def read_action(text: str) -> tuple[str | None, dict]:
     tool = extract_xml(text, "tool").strip().lower()
     if tool not in TOOLS:
         return None, {}
-    sql = read_sql(text) if "<sql>" in text else ""
-    return tool, {"database": extract_xml(text, "database").strip(), "sql": sql}
+    sql = read_sql(text) if tool in ("run_sql", "answer") else ""
+    return tool, {"database": extract_xml(text, "database").strip().strip("`\"'").strip(), "sql": sql}
 
 
 def render_action(tool: str, args: dict) -> str:
     out = f"<tool>{tool}</tool><database>{args.get('database', '')}</database>"
     return out + (f"<sql>{args['sql']}</sql>" if args.get("sql") else "")
 
-
-def render_db_list(cards) -> str:
-    by_db: dict[str, list[str]] = {}
-    for c in cards:
-        by_db.setdefault(c.db_id, []).append(c.table)
-    return "\n".join(f"{db}: {', '.join(tables)}" for db, tables in by_db.items())

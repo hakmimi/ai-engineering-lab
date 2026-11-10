@@ -1,9 +1,11 @@
 import json
 
+import openai
 import pytest
 
 from agentflow import run as runmod
 from flow_helpers import FakeLLM, make_dbs
+from shared.llm import CallRecord
 from sqlblame.warehouse import load_warehouse
 from sqlloop.models import Question
 
@@ -25,8 +27,12 @@ def setup(tmp_path, monkeypatch):
     monkeypatch.setattr(runmod, "load_cards", lambda: load_warehouse(["shop", "zoo"], path_of=path_of))
     monkeypatch.setattr(runmod, "db_path", path_of)
     monkeypatch.setattr(runmod, "require_api_key", lambda model: None)
-    runmod._gold_rows.cache_clear()
     return tmp_path / "runs", monkeypatch
+
+
+class FakeAPIError(openai.APIError):
+    def __init__(self, msg):
+        Exception.__init__(self, msg)
 
 
 def saved(runs_dir):
@@ -71,11 +77,11 @@ def test_right_needs_the_right_database(setup):
 
 def test_api_error_is_recorded_not_scored(setup):
     runs_dir, mp = setup
-    mp.setattr(runmod, "llm_call", FakeLLM({"route": RuntimeError("APIConnectionError: down")}))
+    mp.setattr(runmod, "llm_call", FakeLLM({"route": FakeAPIError("connection down")}))
     assert runmod.main(["--level", "1", "--yes", "--repeats", "1", "--runs-dir", str(runs_dir)]) == 0
     run = saved(runs_dir)[0]
     assert run["repeats"][0]["scores"]["api_errors"] == 2 and run["repeats"][0]["scores"]["right"] is None
-    assert "APIConnectionError" in run["repeats"][0]["results"]["1"]["error"]
+    assert "connection down" in run["repeats"][0]["results"]["1"]["error"]
 
 
 def test_limit_marks_a_smoke_run(setup):
@@ -95,3 +101,56 @@ def test_measured_estimate_from_the_latest_smoke_run(tmp_path):
                                                                  "repeats": [{}]}), encoding="utf-8")
     assert runmod.measured_estimate("2", 60, 3, tmp_path) == pytest.approx(0.01 / 5 * 60 * 3 * runmod.SMOKE_MARGIN)
     assert runmod.measured_estimate("3", 60, 3, tmp_path) is None
+
+
+def test_a_bug_in_our_code_crashes_the_run_but_the_spend_is_saved(setup):
+    runs_dir, mp = setup
+    mp.setattr(runmod, "llm_call", FakeLLM({"route": "<database>shop</database>", "write": KeyError("bug")}))
+    with pytest.raises(KeyError):
+        runmod.main(["--level", "1", "--yes", "--repeats", "2", "--runs-dir", str(runs_dir)])
+    (run,) = saved(runs_dir)
+    assert run["partial"] is True and "cost_usd" in run
+
+
+def test_a_failing_gold_query_stops_before_any_model_call(setup):
+    runs_dir, mp = setup
+    llm = FakeLLM({})
+    mp.setattr(runmod, "llm_call", llm)
+    mp.setattr(runmod, "load_set", lambda name: QS + [Question(3, "shop", "?", "", "SELECT nope FROM nowhere", "simple")])
+    assert runmod.main(["--level", "1", "--yes", "--runs-dir", str(runs_dir)]) == 3
+    assert llm.calls == [] and saved(runs_dir) == []
+
+
+def costly(reply):
+    """A fake model call that bills $0.006 (12,000 output tokens on gpt-6-luna)."""
+    def llm(prompt, *, tracker=None, label="", **kw):
+        tracker.add(CallRecord(label=label, model="gpt-6-luna", seconds=0.0, input_tokens=0, output_tokens=12000,
+                               cache_write_tokens=0, cache_read_tokens=0))
+        return reply(label)
+    return llm
+
+
+def test_budget_is_checked_inside_a_repeat(setup):
+    runs_dir, mp = setup
+    mp.setattr(runmod, "llm_call", costly(lambda label: "<database>shop</database>" if label == "route" else "<sql>SELECT 1</sql>"))
+    assert runmod.main(["--level", "1", "--yes", "--repeats", "1", "--workers", "1", "--budget", "0.01",
+                        "--runs-dir", str(runs_dir)]) == 0
+    (run,) = saved(runs_dir)
+    assert run["partial"] is True and run["cost_usd"] == pytest.approx(0.012)
+    assert run["repeats"][0]["results"]["2"]["error"] == "skipped: over budget"
+
+
+def test_seconds_time_the_level_not_the_scoring(setup):
+    runs_dir, mp = setup
+    mp.setattr(runmod, "llm_call", FakeLLM({"route": "<database>shop</database>", "write": writer}))
+    calls = []
+    real = runmod.run_sql
+    def slow_run(*a, **k):
+        import time
+        calls.append(1)
+        time.sleep(0.3)
+        return real(*a, **k)
+    mp.setattr(runmod, "run_sql", slow_run)
+    assert runmod.main(["--level", "1", "--yes", "--repeats", "1", "--runs-dir", str(runs_dir)]) == 0
+    r = saved(runs_dir)[0]["repeats"][0]["results"]
+    assert calls and all(o["seconds"] < 0.25 for o in r.values())

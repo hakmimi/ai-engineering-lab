@@ -19,7 +19,7 @@ def test_level_row_averages_over_repeats():
     run = {"repeats": [{"scores": scores(0.5)}, {"scores": scores(1.0, api_errors=1)}],
            "consistency": {"n": 2, "same": 1.0, "right_all": 0.5}}
     row = level_row("1", run)
-    assert row.startswith("| 1 · routing | 75% | 100% | 50% | 100% |")
+    assert row.startswith("| 1 · routing | 75% | 50–100% | 100% | 50% | 2 | 100% |")
     assert row.rstrip().endswith("| 1 |")
 
 
@@ -31,6 +31,14 @@ def test_results_with_missing_levels_and_sets(tmp_path):
     assert "| 2 · parallel vote | not run |" in text
     assert "Held-out set" in text and "No full run yet" in text
     assert "6.0 steps" in text and "cap hit 10%" in text
+    assert "Model: m." in text
+    assert "moved by up to 100 points" in text  # level 5's repeats: 0% to 100%
+
+
+def test_handoff_level_is_marked_as_helped(tmp_path):
+    fake_run(tmp_path, "1h", [0.5])
+    fake_run(tmp_path, "5", [0.5])
+    assert "1h · routing + handoff (a person helps)" in build_results(tmp_path)
 
 
 def test_smoke_runs_are_not_reported(tmp_path):

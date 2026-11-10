@@ -31,6 +31,7 @@ def test_score_repeat_handoff_and_level_extras():
            "5": o(steps=4)}
     s = score_repeat(res, dict.fromkeys(res, "shop"))
     assert s["handoff"] == 0.2 and s["right_rest"] == 0.25
+    assert s["right_db"] == 3 / 4  # handoffs left out: the human picked; question 4 has no database
     assert s["steps"] == 7.0 and s["cap"] == 0.2
     assert s["agree"] is None and s["n_sub"] is None and s["rounds"] is None
 

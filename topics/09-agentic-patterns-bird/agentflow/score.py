@@ -43,7 +43,7 @@ def score_repeat(results: dict, db_of: dict) -> dict:
         "n": n,
         "api_errors": len(results) - n,
         "right": _rate(sum(o["right"] for o in vals), n),
-        "right_db": _rate(sum(o.get("db") == db_of[k] for k, o in ok.items()), n),
+        "right_db": _rate(sum(o.get("db") == db_of[k] for k, o in ok.items() if not o.get("handoff")), len(rest)),
         "no_answer": _rate(sum(outcome_key(o) == "no answer" for o in vals), n),
         "sql_errors": _rate(sum(outcome_key(o) == "sql error" for o in vals), n),
         "cost": _mean([o["cost_usd"] for o in vals]),

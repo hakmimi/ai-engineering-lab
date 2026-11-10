@@ -16,13 +16,19 @@ from shared.runs import latest_run
 NAMES = {"0": "0 · one prompt", "1": "1 · routing", "1h": "1h · routing + handoff", "2": "2 · parallel vote",
          "3": "3 · orchestrator-worker", "4": "4 · evaluator-optimizer", "5": "5 · free agent"}
 SETS = (("main", "Main set", "60 questions, 6 databases"), ("test", "Held-out set", "60 questions, 5 other databases"))
-HEAD = ("| Level | Right | Same answer 3/3 | Right 3/3 | Right database | No answer | SQL errors | $ / question "
-        "| s / question | Calls / question | API errors |\n|---|---|---|---|---|---|---|---|---|---|---|")
+HEAD = ("| Level | Right | Right, lowest–highest repeat | Same answer 3/3 | Right 3/3 | Questions in 3/3 | Right database "
+        "| No answer | SQL errors | $ / question | s / question | Calls / question | API errors |\n"
+        "|---|---|---|---|---|---|---|---|---|---|---|---|---|")
 
 
 def _avg(run: dict, key: str):
     vals = [r["scores"][key] for r in run["repeats"] if r["scores"].get(key) is not None]
     return sum(vals) / len(vals) if vals else None
+
+
+def _spread(run: dict) -> tuple:
+    vals = [r["scores"]["right"] for r in run["repeats"] if r["scores"].get("right") is not None]
+    return (min(vals), max(vals)) if vals else (None, None)
 
 
 def _p(v) -> str:
@@ -31,12 +37,14 @@ def _p(v) -> str:
 
 def level_row(level: str, run: dict | None) -> str:
     if run is None:
-        return f"| {NAMES[level]} | not run |" + " |" * 9
+        return f"| {NAMES[level]} | not run |" + " |" * 11
     c = run.get("consistency") or {}
     cost, secs, calls = _avg(run, "cost"), _avg(run, "seconds"), _avg(run, "calls")
     errors = sum(r["scores"]["api_errors"] for r in run["repeats"])
-    return (f"| {NAMES[level]} | {_p(_avg(run, 'right'))} | {_p(c.get('same'))} | {_p(c.get('right_all'))} "
-            f"| {_p(_avg(run, 'right_db'))} | {_p(_avg(run, 'no_answer'))} | {_p(_avg(run, 'sql_errors'))} "
+    lo, hi = _spread(run)
+    spread = "–" if lo is None else f"{lo * 100:.0f}–{hi * 100:.0f}%"
+    return (f"| {NAMES[level]} | {_p(_avg(run, 'right'))} | {spread} | {_p(c.get('same'))} | {_p(c.get('right_all'))} "
+            f"| {c.get('n', '–')} | {_p(_avg(run, 'right_db'))} | {_p(_avg(run, 'no_answer'))} | {_p(_avg(run, 'sql_errors'))} "
             f"| {'–' if cost is None else f'${cost:.5f}'} | {'–' if secs is None else f'{secs:.1f}'} "
             f"| {'–' if calls is None else f'{calls:.1f}'} | {errors} |")
 
@@ -61,20 +69,28 @@ def latest_runs(runs_dir: Path, set_name: str) -> dict:
 
 
 def build_results(runs_dir: Path) -> str:
+    by_set = {s: latest_runs(runs_dir, s) for s, _, _ in SETS}
+    models = sorted({r["model"] for runs in by_set.values() for r in runs.values() if r})
     out = ["# 09 · Results", "",
            "Built by `python -m agentflow.report` from the run files only. Do not edit by hand.",
-           "Model: gpt-6-luna in every role. Right = the final query runs on the question's own database and returns "
+           f"Model: {', '.join(models) or '–'}. Right = the final query runs on the question's own database and returns "
            "the gold rows (order and duplicates ignored). Same answer 3/3 = all repeats end the same way (same "
            "database and rows, or the same failure). Rates are averaged over repeats; API errors are left out of "
            "them and counted.", ""]
     for set_name, title, what in SETS:
-        runs = latest_runs(runs_dir, set_name)
+        runs = by_set[set_name]
         out += [f"## {title} ({what})", ""]
         if not any(runs.values()):
             out += ["No full run yet.", ""]
             continue
         reps = ", ".join(f"{lv} {len(r['repeats'])}" for lv, r in runs.items() if r)
         out += [f"Repeats per level: {reps}.", "", HEAD] + [level_row(lv, runs[lv]) for lv in LEVELS] + [""]
+        moves = [(hi - lo, lv) for lv, r in runs.items() if r and len(r["repeats"]) > 1 for lo, hi in [_spread(r)]
+                 if lo is not None]
+        if moves:
+            move, lv = max(moves)
+            out += [f"Noise floor: one question is {100 / 60:.1f} points. Repeats of the same level moved by up to "
+                    f"{move * 100:.0f} points (level {lv}), so smaller gaps between levels are not clear effects.", ""]
         details = [(lv, _detail(lv, r)) for lv, r in runs.items() if r]
         details = [(lv, d) for lv, d in details if d]
         if details:
@@ -87,7 +103,8 @@ def build_results(runs_dir: Path) -> str:
                     "| Level | Right | Same answer 3/3 |", "|---|---|---|"]
             for lv in LEVELS[:-1]:
                 if runs[lv]:
-                    out.append(f"| {NAMES[lv]} | {gap(_avg(runs[lv], 'right'), r5)} "
+                    name = NAMES[lv] + (" (a person helps)" if lv == "1h" else "")
+                    out.append(f"| {name} | {gap(_avg(runs[lv], 'right'), r5)} "
                                f"| {gap((runs[lv].get('consistency') or {}).get('same'), s5)} |")
             out.append("")
     return "\n".join(out)

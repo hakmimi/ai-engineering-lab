@@ -15,8 +15,11 @@ import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict
-from functools import lru_cache
+import threading
 from pathlib import Path
+
+import anthropic
+import openai
 
 from agentflow.levels import AGENT_MAX_STEPS, LEVELS, N_WRITERS, Ctx, solve
 from agentflow.paths import RUNS_DIR
@@ -34,6 +37,8 @@ RUN_TIMEOUT_S = 10.0
 GOLD_TIMEOUT_S = 30.0
 PROMPT_CHARS = 2500  # instructions and question on top of the schema or cards
 OUTPUT_TOKENS_PER_CALL = 1500  # includes reasoning, billed as output
+API_ERRORS = (openai.OpenAIError, anthropic.AnthropicError)  # anything else is our bug: the run stops
+SKIPPED = "skipped: over budget"
 
 
 def load_cards():
@@ -60,8 +65,9 @@ def estimate_cost_usd(level: str, questions: list[Question], model: str, repeats
             "2": lambda: route + _price(model, db, N_WRITERS),
             "3": lambda: route + _price(model, db, 4),  # planner, 2 workers, combiner
             "4": lambda: route + _price(model, db, 4),  # about 2 rounds of writer + grader
-            # the agent: half the cap in steps, each re-reading about two databases' worth of text
-            "5": lambda: _price(model, cards_chars / 4 + 2 * db, AGENT_MAX_STEPS / 2),
+            # the agent: 8 of its 10 steps, each re-reading the cards plus a history that grows to about
+            # one described database and a few result previews
+            "5": lambda: _price(model, cards_chars + 1.5 * db + 4000, 8),
         }[level]()
     return total * repeats
 
@@ -80,31 +86,57 @@ def measured_estimate(level: str, n_items: int, repeats: int, runs_dir: Path) ->
     return per * n_items * repeats * SMOKE_MARGIN
 
 
-@lru_cache(maxsize=None)
-def _gold_rows(db: str, sql: str):
-    r = run_sql(db, sql, timeout_s=GOLD_TIMEOUT_S)
-    if r.rows is None:
-        raise RuntimeError(f"gold SQL failed: {r.error}")
-    return r.rows
+class Ledger:
+    """Money spent in this command, shared by the worker threads; new questions stop once it passes the budget."""
+
+    def __init__(self, budget: float):
+        self.budget, self.total, self._lock = budget, 0.0, threading.Lock()
+
+    def add(self, usd: float) -> None:
+        with self._lock:
+            self.total += usd
+
+    def over(self) -> bool:
+        with self._lock:
+            return self.total > self.budget
 
 
-def _process(q: Question, level: str, model: str, cards) -> dict:
+def gold_rows(questions: list[Question]) -> tuple[dict, list[str]]:
+    """Every gold query run once, before any model call: (qid -> rows, failures)."""
+    rows, failed = {}, []
+    for q in questions:
+        r = run_sql(db_path(q.db_id), q.gold_sql, timeout_s=GOLD_TIMEOUT_S)
+        if r.rows is None:
+            failed.append(f"question {q.qid}: {r.error}")
+        rows[str(q.qid)] = r.rows
+    return rows, failed
+
+
+def _empty(error: str) -> dict:
+    return {"db": None, "sql": "", "stop": "", "handoff": False, "error": error, "final_error": "", "rows_hash": "",
+            "n_rows": None, "right": False}
+
+
+def _process(q: Question, level: str, model: str, cards, gold, ledger: Ledger) -> dict:
+    if ledger.over():
+        return _empty(SKIPPED) | {"seconds": 0.0, "calls": [], "cost_usd": 0.0}
     ctx = Ctx(model, Tracker(), llm=llm_call)
     start = time.perf_counter()
     try:
         out = solve(q, level, ctx, cards, path_of=db_path)
+        seconds = time.perf_counter() - start  # the level only; running and scoring the final SQL is not counted
         out.update(error="", final_error="", rows_hash="", n_rows=None, right=False)
         if out["db"] and out["sql"]:
             r = run_sql(db_path(out["db"]), out["sql"], timeout_s=RUN_TIMEOUT_S)
             out["final_error"] = r.error
             if r.rows is not None:
                 out["rows_hash"], out["n_rows"] = rows_hash(r.rows), r.n_rows
-                gold = _gold_rows(str(db_path(q.db_id)), q.gold_sql)
                 out["right"] = out["db"] == q.db_id and same_result(r.rows, gold)
-    except Exception as exc:  # the SDK already retried; record and move on
-        out = {"db": None, "sql": "", "stop": "", "handoff": False, "error": f"{type(exc).__name__}: {exc}",
-               "final_error": "", "rows_hash": "", "n_rows": None, "right": False}
-    out["seconds"] = time.perf_counter() - start
+    except API_ERRORS as exc:  # the SDK already retried; record and move on
+        out, seconds = _empty(f"{type(exc).__name__}: {exc}"), time.perf_counter() - start
+    finally:
+        ledger.add(sum(cost_usd(r) for r in ctx.tracker.records))
+    out["seconds"] = seconds
     out["calls"] = [asdict(r) for r in ctx.tracker.records]
     out["cost_usd"] = sum(cost_usd(r) for r in ctx.tracker.records)
     return out
@@ -116,8 +148,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--set", default="main", choices=SETS, help="main (tuning allowed) or test (held out)")
     ap.add_argument("--repeats", type=int, default=3)
     ap.add_argument("--limit", type=int, default=None, help="only the first N questions (a smoke run, never reported)")
-    ap.add_argument("--budget", type=float, default=1.5, help="refuse if the estimate is over this many USD")
-    ap.add_argument("--workers", type=int, default=6)
+    ap.add_argument("--budget", type=float, default=1.5, help="refuse if the estimate is over this many USD; "
+                                                              "stop starting questions once this much is spent")
+    ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--yes", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--runs-dir", type=Path, default=RUNS_DIR)
@@ -143,30 +176,41 @@ def main(argv: list[str] | None = None) -> int:
     if over_ceiling(spent, estimate):
         print(f"Would pass the ${DEFAULT_CEILING_USD:.0f} topic ceiling. Not running.")
         return 2
+    gold, failed = gold_rows(questions)
+    if failed:
+        print("Gold SQL failed, nothing run:\n  " + "\n  ".join(failed))
+        return 3
     require_api_key(model)
     if not args.yes and input("Run? [y/N] ").strip().lower() != "y":
         return 1
 
     db_of = {str(q.qid): q.db_id for q in questions}
-    repeats, cost, partial = [], 0.0, False
-    for i in range(args.repeats):
-        with ThreadPoolExecutor(max_workers=args.workers) as pool:
-            outs = list(pool.map(lambda q: _process(q, args.level, model, cards), questions))
-        results = {str(q.qid): o for q, o in zip(questions, outs)}
-        s = score_repeat(results, db_of)
-        repeats.append({"results": results, "scores": s})
-        cost += sum(o["cost_usd"] for o in outs)
-        right = "-" if s["right"] is None else f"{s['right']:.0%}"
-        print(f"  repeat {i + 1}: right {right}, api errors {s['api_errors']}, ${sum(o['cost_usd'] for o in outs):.4f}")
-        if i + 1 < args.repeats and cost / (i + 1) * (i + 2) > args.budget:
-            print(f"The next repeat would pass the ${args.budget:.2f} budget. Stopping; the run is marked partial.")
-            partial = True
-            break
-
-    run = {"model": model, "limit": args.limit, "partial": partial, "questions": len(questions), "cost_usd": cost,
-           "repeats": repeats, "consistency": consistency([r["results"] for r in repeats])}
-    path = save_run(args.runs_dir, args.set, args.level, run)
-    print(f"Saved {path}. Spent ${cost:.4f}")
+    ledger = Ledger(min(args.budget, DEFAULT_CEILING_USD - spent))
+    repeats, partial, done = [], False, False
+    try:
+        for i in range(args.repeats):
+            with ThreadPoolExecutor(max_workers=args.workers) as pool:
+                outs = list(pool.map(lambda q: _process(q, args.level, model, cards, gold[str(q.qid)], ledger), questions))
+            results = {str(q.qid): o for q, o in zip(questions, outs)}
+            s = score_repeat(results, db_of)
+            repeats.append({"results": results, "scores": s})
+            right = "-" if s["right"] is None else f"{s['right']:.0%}"
+            print(f"  repeat {i + 1}: right {right}, api errors {s['api_errors']}, "
+                  f"${sum(o['cost_usd'] for o in outs):.4f}")
+            if any(o["error"] == SKIPPED for o in outs):
+                print(f"Passed the ${ledger.budget:.2f} budget inside the repeat. Stopping; the run is marked partial.")
+                partial = True
+                break
+            if i + 1 < args.repeats and ledger.total / (i + 1) * (i + 2) > ledger.budget:
+                print(f"The next repeat would pass the ${ledger.budget:.2f} budget. Stopping; the run is marked partial.")
+                partial = True
+                break
+        done = True
+    finally:  # a crash still leaves a record of the money spent (marked partial, never reported)
+        run = {"model": model, "limit": args.limit, "partial": partial or not done, "questions": len(questions),
+               "cost_usd": ledger.total, "repeats": repeats, "consistency": consistency([r["results"] for r in repeats])}
+        path = save_run(args.runs_dir, args.set, args.level, run)
+        print(f"Saved {path}. Spent ${ledger.total:.4f}")
     return 0
 
 
